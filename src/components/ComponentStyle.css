@@ -1,0 +1,31 @@
+.pa{padding:.5rem}
+/*platform style*/
+.platformStyle{
+	background-color:#9EEBCF;
+	text-align:center;
+	border-radius: .5rem;
+	padding:1rem;
+	display:inline-block;
+	margin:.5rem;
+	box-shadow:4px 4px 8px 0 rgba(0,0,0,.2);
+	border-width:.25rem
+}
+.grow {
+  -moz-osx-font-smoothing: grayscale;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  transition: transform 0.25s ease-out;
+}
+.grow:hover,
+.grow:focus {
+  transform: scale(1.05);
+}
+
+/*search box style*/
+.searchBoxStyle{
+	padding:1rem;
+	border-style:solid;
+	border-width:1px;
+	border-color:#19a974;
+	background-color: #cdecff;
+}
