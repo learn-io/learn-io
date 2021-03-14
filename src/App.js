@@ -1,8 +1,9 @@
 import React,{Component} from 'react';
-import PlatformList from '../components/PlatformList';
-import SearchBox from '../components/SearchBox';
-import {platforms} from '../platforms';
-import Menus from '../components/Menus';
+import PlatformList from './components/PlatformList';
+import SearchBox from './components/SearchBox';
+import {platforms} from './platforms';
+import Menus from './components/Menus';
+import Signin from './components/Signin';
 import './App.css'
 
 
