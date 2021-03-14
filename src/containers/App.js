@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import PlatformList from '../components/PlatformList';
 import SearchBox from '../components/SearchBox';
 import {platforms} from '../platforms';
+import Menus from '../components/Menus';
 import './App.css'
 
 
@@ -28,7 +29,7 @@ class App extends Component{
 		return !platforms.length ?
 			<h1 className='splashStyle'>Loading</h1> :
 			<div className='appStyle'>
-				<h1>Learn-io Menus Here</h1>
+				<Menus/>
 				<SearchBox searchChange={this.onSearchChange}/>
 	  			<PlatformList platforms={filteredPlatforms}/>
 	  		</div>
