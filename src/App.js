@@ -30,6 +30,7 @@ class App extends Component{
 		return !platforms.length ?
 			<h1 className='splashStyle'>Loading</h1> :
 			<div className='appStyle'>
+				{/*<Signin/>*/}
 				<Menus/>
 				<SearchBox searchChange={this.onSearchChange}/>
 	  			<PlatformList platforms={filteredPlatforms}/>
