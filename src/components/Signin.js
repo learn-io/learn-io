@@ -4,12 +4,12 @@ const Signin=()=>{
 	return (
 		<div className='signinStyle'>
 			<div className='pa2'>
-				<label>Username:</label>
-				<input  type="text" placeholder='Username' name="username"  id="username"/>
+				<label className='signinLabel'>Username</label>
+				<input  className='signinInput' type="text" placeholder='Username' name="username"  id="username"/>
 			</div>
-		    <div className='pa2' style={{marginLeft: '4px'}}>
-		    	<label htmlFor="password">Password:</label>
-		    	<input type="password" placeholder='Password' name="password"  id="password"/>
+		    <div className='pa2'>
+		    	<label className='signinLabel'>Password</label>
+		    	<input className='signinInput' type="password" placeholder='Password' name="password"  id="password"/>
 		    </div>
 		    <div>
 		      <input className='buttonStyle' style={{marginRight: '10px'}} type="submit" value="Sign in"/>

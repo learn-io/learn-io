@@ -3,7 +3,8 @@ import PlatformList from './components/PlatformList';
 import SearchBox from './components/SearchBox';
 import {platforms} from './platforms';
 import Menus from './components/Menus';
-import Signin from './components/Signin';
+// import Signin from './components/Signin';
+// import Register from './components/Register';
 import './App.css'
 
 
@@ -31,6 +32,7 @@ class App extends Component{
 			<h1 className='splashStyle'>Loading</h1> :
 			<div className='appStyle'>
 				{/*<Signin/>*/}
+				{/*<Register />*/}
 				<Menus/>
 				<SearchBox searchChange={this.onSearchChange}/>
 	  			<PlatformList platforms={filteredPlatforms}/>
