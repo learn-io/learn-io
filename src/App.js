@@ -13,7 +13,9 @@ class App extends Component{
 		super();
 		this.state={
 			platforms:[],
-			searchfield:''
+			searchfield:'',
+			isSignedIn:false,
+			isAdmin:false
 		}
 	}
 	componentDidMount(){
@@ -24,7 +26,7 @@ class App extends Component{
 		this.setState({searchfield :event.target.value});
 	}
 	render(){
-		const{platforms,searchfield}=this.state;
+		const{platforms,searchfield,isSignedIn,isAdmin}=this.state;
 		const filteredPlatforms=platforms.filter(platform=>{
 			return platform.name.toLowerCase().includes(searchfield.toLowerCase());
 		})
@@ -33,7 +35,7 @@ class App extends Component{
 			<div className='appStyle'>
 				{/*<Signin/>*/}
 				{/*<Register />*/}
-				<Menus/>
+				<Menus isSignedIn={isSignedIn} isAdmin={isAdmin}/>
 				<SearchBox searchChange={this.onSearchChange}/>
 	  			<PlatformList platforms={filteredPlatforms}/>
 	  		</div>

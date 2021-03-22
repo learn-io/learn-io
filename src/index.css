@@ -1,8 +1,4 @@
 body {
-  margin: 0;
-  font-family: sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   background:linear-gradient(to left,rgba(46,139,148,1) 10%, rgba(18,35,58,1) 70%);
 }
 
