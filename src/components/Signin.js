@@ -1,6 +1,6 @@
 import React from 'react';
 import './ComponentStyle.css';
-const Signin=()=>{
+const Signin=({onRouteChange})=>{
 	return (
 		<div className='signinStyle'>
 			<div className='pa2'>
@@ -13,7 +13,7 @@ const Signin=()=>{
 		    </div>
 		    <div>
 		      <input className='buttonStyle' style={{marginRight: '10px'}} type="submit" value="Sign in"/>
-		      <input className='buttonStyle' type="button" value="Register"/>
+		      <input onClick={()=>onRouteChange('register')} className='buttonStyle' type="button" value="Register"/>
 		    </div>
 		</div>
 	);

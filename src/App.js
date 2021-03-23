@@ -3,10 +3,9 @@ import PlatformList from './components/PlatformList';
 import SearchBox from './components/SearchBox';
 import {platforms} from './platforms';
 import Menus from './components/Menus';
-// import Signin from './components/Signin';
-// import Register from './components/Register';
+import Signin from './components/Signin';
+import Register from './components/Register';
 import './App.css'
-
 
 class App extends Component{
 	constructor(){
@@ -14,6 +13,8 @@ class App extends Component{
 		this.state={
 			platforms:[],
 			searchfield:'',
+			route:'menus',
+			menusClick:false,
 			isSignedIn:false,
 			isAdmin:false
 		}
@@ -25,20 +26,52 @@ class App extends Component{
 	onSearchChange=(event)=>{
 		this.setState({searchfield :event.target.value});
 	}
+	onRouteChange=(route)=>{
+		if(route==='signin'){
+			this.setState({menusClick:true});
+		}else if(route==='register'){
+			this.setState({menusClick:true});
+		}else{
+			this.setState({menusClick:false});
+		}
+		this.setState({route:route});
+	}
 	render(){
-		const{platforms,searchfield,isSignedIn,isAdmin}=this.state;
+		const{platforms,searchfield,isSignedIn,isAdmin,menusClick,route}=this.state;
 		const filteredPlatforms=platforms.filter(platform=>{
 			return platform.name.toLowerCase().includes(searchfield.toLowerCase());
 		})
-		return !platforms.length ?
-			<h1 className='splashStyle'>Loading</h1> :
-			<div className='appStyle'>
-				{/*<Signin/>*/}
-				{/*<Register />*/}
-				<Menus isSignedIn={isSignedIn} isAdmin={isAdmin}/>
-				<SearchBox searchChange={this.onSearchChange}/>
-	  			<PlatformList platforms={filteredPlatforms}/>
-	  		</div>
+		if(!platforms.length){
+			return(<h1 className='splashStyle'>Loading</h1>);
+		}else if(menusClick&&route==='signin'){
+			return(
+				<div className='appStyle'>
+					<Menus onRouteChange={this.onRouteChange} route={route} menusClick={menusClick} isSignedIn={isSignedIn} isAdmin={isAdmin}/>
+					<Signin onRouteChange={this.onRouteChange}/>
+					<SearchBox searchChange={this.onSearchChange}/>
+		  			<PlatformList platforms={filteredPlatforms}/>
+		  		</div>
+			);
+		}else if(menusClick&&route==='register'){
+			return(
+				<div className='appStyle'>
+					<Menus onRouteChange={this.onRouteChange} route={route} menusClick={menusClick} isSignedIn={isSignedIn} isAdmin={isAdmin}/>
+					<Register onRouteChange={this.onRouteChange}/>
+					<SearchBox searchChange={this.onSearchChange}/>
+		  			<PlatformList platforms={filteredPlatforms}/>
+		  		</div>
+			);
+		}else{
+			return(
+				<div className='appStyle'>
+					{/*<Signin/>*/}
+					{/*<Register />*/}
+					<Menus onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} isAdmin={isAdmin}/>
+					<SearchBox searchChange={this.onSearchChange}/>
+		  			<PlatformList platforms={filteredPlatforms}/>
+		  		</div>
+			);
+		}
 	}
 	
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import './ComponentStyle.css';
 
-const Register=()=>{
+const Register=({onRouteChange})=>{
 	return (
 		<div className='signinStyle'>
 			<div className='pa2'>
@@ -27,7 +27,7 @@ const Register=()=>{
 		    	<input className='signinInput' type="date" placeholder='MM-DD-YYYY' name="DOB"  id="DOB"/>
 		    </div>
 		    <div>
-		      <input className='buttonStyle' style={{marginRight: '10px'}} type="button" value="Back"/>
+		      <input onClick={()=>onRouteChange('signin')} className='buttonStyle' style={{marginRight: '10px'}} type="button" value="Back"/>
 		      <input className='buttonStyle' type="button" value="Register"/>
 		    </div>
 		</div>
