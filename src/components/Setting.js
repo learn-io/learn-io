@@ -21,7 +21,7 @@ const Setting=()=>{
 			    		Date of Birth
 			    	</Form.Label>
 			    	<Col>
-			      		<Form.Control size="lg" type="text" placeholder="Date of Birth" />
+			      		<Form.Control size="lg" type="date" placeholder="MM-DD-YYYY" name="newDOB"  id="newDOB"/>
 			    	</Col>
 			  	</Form.Row>
 			  	<br />
