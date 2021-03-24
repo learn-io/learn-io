@@ -5,7 +5,7 @@ const Platform =({name})=>{
 		<div className='platformStyle grow'>
 			<img alt='platformImage' src={`https://robohash.org/${name}?200x200`}/>
 			<div>
-				<h3>{name}</h3>
+				<h4>{name}</h4>
 			</div>
 		</div>
 	);

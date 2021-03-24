@@ -92,7 +92,7 @@
 	background-color: #f9f9f9;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 	z-index: 1;
-	margin: -0.6rem 5rem .5rem .5rem;
+	margin: -0.7rem 5rem .5rem .5rem;
 }
 .buttonStyle{
 	font-weight: bold;
@@ -114,4 +114,17 @@
 .signinInput{
 	height:100%;
 	width:100%;
+}
+/*Setting Style*/
+.settingStyle{
+	position: relative;
+	color:#fff;
+	top:50px;
+	width: 700px;
+	margin:0px auto;
+}
+input.largeCheckbox{
+	width:30px;
+	height: 30px;
+	margin-top: 13px;
 }

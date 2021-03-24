@@ -5,6 +5,7 @@ import {platforms} from './platforms';
 import Menus from './components/Menus';
 import Signin from './components/Signin';
 import Register from './components/Register';
+import Setting from './components/Setting';
 import './App.css'
 
 class App extends Component{
@@ -13,7 +14,7 @@ class App extends Component{
 		this.state={
 			platforms:[],
 			searchfield:'',
-			route:'menus',
+			route:'home',
 			menusClick:false,
 			isSignedIn:false,
 			isAdmin:false
@@ -61,11 +62,16 @@ class App extends Component{
 		  			<PlatformList platforms={filteredPlatforms}/>
 		  		</div>
 			);
+		}else if(route==='setting'){
+			return(
+				<div className='appStyle'>
+					<Menus onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} isAdmin={isAdmin}/>
+					<Setting />
+		  		</div>
+			);
 		}else{
 			return(
 				<div className='appStyle'>
-					{/*<Signin/>*/}
-					{/*<Register />*/}
 					<Menus onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} isAdmin={isAdmin}/>
 					<SearchBox searchChange={this.onSearchChange}/>
 		  			<PlatformList platforms={filteredPlatforms}/>
