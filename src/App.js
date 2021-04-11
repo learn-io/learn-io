@@ -6,6 +6,7 @@ import Signin from './components/Signin';
 import Register from './components/Register';
 import Setting from './components/Setting';
 import YourPage from './components/YourPage';
+import axios from 'axios';
 import './App.css'
 
 const platform_url="http://localhost:3000/platform";
@@ -28,15 +29,19 @@ class App extends Component{
 	}
 	componentDidMount(){
 		// loading platforms value from database
-		// this.setState({platforms:platforms});
-		fetch(platform_url,{
-	        method:'get'
-	      })
-	      .then(response=>response.json())
-	      .then(response=> {
-	        this.setState({platforms:response});
-	      })
-	      .catch(err=>console.log(err));
+        axios.get(platform_url)
+	        .then((res)=>{
+	        	this.setState({platforms:res.data});
+	    	})
+	    	.catch(err=>console.log(err));
+		// fetch(platform_url,{
+	 //        method:'get'
+	 //      })
+	 //      .then(response=>response.json())
+	 //      .then(response=> {
+	 //        this.setState({platforms:response});
+	 //      })
+	 //      .catch(err=>console.log(err));
 
 	}
 	onSearchChange=(event)=>{
