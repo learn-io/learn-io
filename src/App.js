@@ -22,7 +22,7 @@ class App extends Component{
 			searchfield:'',
 			route:'home',
 			menusClick:false,
-			isSignedIn:true,
+			isSignedIn:false,
 			isAdmin:false
 		}
 	}
