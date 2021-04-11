@@ -21,7 +21,7 @@ const menus=({onRouteChange, route, menusClick, isSignedIn,isAdmin})=>{
 							<a href="#2">Admin</a>
 						    <a href="#2">My Profile</a>
 						    <a href="#Setting" onClick={()=>onRouteChange('setting')}>Setting</a>
-						    <a href="#3">Your Page</a>
+						    <a href="#YourPage" onClick={()=>onRouteChange('yourpage')}>Your Page</a>
 						    <a href="#3">Sign Out</a>
 						</div>
 					</div>
@@ -36,7 +36,7 @@ const menus=({onRouteChange, route, menusClick, isSignedIn,isAdmin})=>{
 						<div className='dropdown-content'>
 						    <a href="#2">My Profile</a>
 						    <a href="#Setting" onClick={()=>onRouteChange('setting')}>Setting</a>
-						    <a href="#3">Your Page</a>
+						    <a href="#YourPage" onClick={()=>onRouteChange('yourpage')}>Your Page</a>
 						    <a href="#3">Sign Out</a>
 						</div>
 					</div>

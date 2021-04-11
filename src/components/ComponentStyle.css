@@ -128,3 +128,11 @@ input.largeCheckbox{
 	height: 30px;
 	margin-top: 13px;
 }
+
+/*Your Page Style*/
+
+.yourPageStyle{
+	position: relative;
+	color:#fff;
+	top:50px;
+}

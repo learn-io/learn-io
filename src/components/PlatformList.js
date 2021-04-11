@@ -9,7 +9,7 @@ const PlatformList=({platforms})=>{
 					return (
 						<Platform 
 						key={i}
-						name={platforms[i].name}/>
+						name={platforms[i].platformName}/>
 					);
 				})
 			}

@@ -1,32 +1,32 @@
 export const platforms = [
   {
-    name: 'Tuvan Throat Singing Facts'
+    platformName: 'Tuvan Throat Singing Facts'
   },
   {
-    name: 'Tuvan Throat'
+    platformName: 'Tuvan Throat'
   },
   {
-    name: 'Clementine Bauch'
+    platformName: 'Clementine Bauch'
   },
   {
-    name: 'Patricia Lebsack'
+    platformName: 'Patricia Lebsack'
   },
   {
-    name: 'Chelsey Dietrich'
+    platformName: 'Chelsey Dietrich'
   },
   {
-    name: 'Mrs. Dennis Schulist'
+    platformName: 'Mrs. Dennis Schulist'
   },
   {
-    name: 'Kurtis Weissnat'
+    platformName: 'Kurtis Weissnat'
   },
   {
-    name: 'Nicholas Runolfsdottir V'
+    platformName: 'Nicholas Runolfsdottir V'
   },
   {
-    name: 'Glenna Reichert'
+    platformName: 'Glenna Reichert'
   },
   {
-    name: 'Clementina DuBuque'
+    platformName: 'Clementina DuBuque'
   }
 ];
