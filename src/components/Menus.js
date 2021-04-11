@@ -1,61 +1,88 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ComponentStyle.css';
 import menusIcon from './images/menus.png';
-const menus=({onRouteChange, route, menusClick, isSignedIn,isAdmin})=>{
-		if(menusClick&&(route==='signin'||route==='register')){
-			return(
-				<div className='menusStyle'>
-					<a href="#home" onClick={()=>onRouteChange('home')} className='homeButton'>Learn-io</a>
-					<div className='dropdown'>
-						<button onClick={()=>onRouteChange('home')} className='disableButton'><img src={menusIcon} height='40px' width='40px' alt="menus"/></button>
-					</div>
-				</div>
-			);
-		}else if(isAdmin){
-			return(
-				<div className='menusStyle'>
-					<a href="#home" onClick={()=>onRouteChange('home')} className='homeButton'>Learn-io</a>
-					<div className='dropdown'>
-						<button className='dropbtn'><img src={menusIcon} height='40px' width='40px' alt="menus"/></button>
-						<div className='dropdown-content'>
-							<a href="#2">Admin</a>
-						    <a href="#2">My Profile</a>
-						    <a href="#Setting" onClick={()=>onRouteChange('setting')}>Setting</a>
-						    <a href="#YourPage" onClick={()=>onRouteChange('yourpage')}>Your Page</a>
-						    <a href="#3">Sign Out</a>
-						</div>
-					</div>
-				</div>
-			);
-		}else if(isSignedIn){
-			return(
-				<div className='menusStyle'>
-					<a href="#home" onClick={()=>onRouteChange('home')} className='homeButton'>Learn-io</a>
-					<div className='dropdown'>
-						<button className='dropbtn'><img src={menusIcon} height='40px' width='40px' alt="menus"/></button>
-						<div className='dropdown-content'>
-						    <a href="#2">My Profile</a>
-						    <a href="#Setting" onClick={()=>onRouteChange('setting')}>Setting</a>
-						    <a href="#YourPage" onClick={()=>onRouteChange('yourpage')}>Your Page</a>
-						    <a href="#3">Sign Out</a>
-						</div>
-					</div>
-				</div>
-			);
-		}else{
-			return(
-				<div className='menusStyle'>
-					<a href="#home" onClick={()=>onRouteChange('home')} className='homeButton'>Learn-io</a>
-					<div className='dropdown'>
-						<button className='dropbtn'><img src={menusIcon} height='40px' width='40px' alt="menus"/></button>
-						<div className='dropdown-content'>
-							<a href="#signin" onClick={()=>onRouteChange('signin')}>Sign In</a>
-						</div>
-					</div>
-				</div>
-			);
-		}
-		
+
+
+const Dropdown = require("react-bootstrap").Dropdown;
+const Link = require("react-router-dom").Link;
+const MenuController = (props) =>{
+
+	const [isReg, setIsReg] = useState(false);
+    let dropdown;
+
+	if (props.isSignedIn)
+	{
+		dropdown = <MenuDropdown isAdmin={props.isAdmin}/>;
+	}
+	else
+	{
+		if (isReg)
+			dropdown = <LoginDropdown setIsSignedIn={props.setIsSignedIn} setIsAdmin={props.setIsAdmin} setIsReg={setIsReg}/>
+		else
+		dropdown = <RegisterDropdown setIsSignedIn={props.setIsSignedIn} setIsAdmin={props.setIsAdmin} setIsReg={setIsReg}/>
+	}
+	return (
+	<div className='menusStyle'>
+		<Link to="/home" className='homeButton'> Learn-io </Link>
+		{dropdown}
+	</div>
+    )
 }
 
-export default menus;
+const MenuDropdown = (props) =>{
+
+	let admin;
+	if(props.isAdmin)
+	{
+		admin = <Dropdown.Item className="dropdown-content"><Link to="/admin"> Admin </Link></Dropdown.Item>;
+	}
+
+	return (
+		<Dropdown>
+			<Dropdown.Toggle variant="success" id="dropdown-basic">
+				<img src={menusIcon} height='40px' width='40px' alt="menus"/>
+			</Dropdown.Toggle>
+
+			<Dropdown.Menu>
+				{admin}
+				<Dropdown.Item className="dropdown-content"><Link to="/yourpages"> Your Platforms </Link></Dropdown.Item>
+				<Dropdown.Item className="dropdown-content"><Link to="/profile"> Profile </Link></Dropdown.Item>
+				<Dropdown.Item className="dropdown-content"><Link to="/setting"> Settings </Link></Dropdown.Item>
+				<Dropdown.Item className="dropdown-content"><Link to="/logout"> Sign Out </Link></Dropdown.Item>
+			</Dropdown.Menu>
+		</Dropdown>
+	)
+}
+
+const LoginDropdown = (props) =>{
+	
+	return (
+		<Dropdown>
+			<Dropdown.Toggle variant="success" id="dropdown-basic">
+				<img src={menusIcon} height='40px' width='40px' alt="menus"/>
+			</Dropdown.Toggle>
+
+			<Dropdown.Menu>
+				<Dropdown.Item className="dropdown-content">Please Log In</Dropdown.Item>
+				
+			</Dropdown.Menu>
+		</Dropdown>
+	)
+}
+
+const RegisterDropdown = (props) =>{
+	
+	return (
+		<Dropdown>
+			<Dropdown.Toggle variant="success" id="dropdown-basic">
+				<img src={menusIcon} height='40px' width='40px' alt="menus"/>
+			</Dropdown.Toggle>
+
+			<Dropdown.Menu>
+				<Dropdown.Item className="dropdown-content">Please Register</Dropdown.Item>
+			</Dropdown.Menu>
+		</Dropdown>
+	)
+}
+
+export default MenuController;
