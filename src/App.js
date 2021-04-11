@@ -68,18 +68,32 @@ function App(){
 
 /*
 class App extends Component{
-	
+	constructor(){
+		super();
+		this.state={
+			platforms:[],
+			searchfield:'',
+			route:'home',
+			menusClick:false,
+			isSignedIn:false,
+			isAdmin:false
+		}
+	}
 	componentDidMount(){
 		// loading platforms value from database
-		// this.setState({platforms:platforms});
-		fetch(platform_url,{
-	        method:'get'
-	      })
-	      .then(response=>response.json())
-	      .then(response=> {
-	        this.setState({platforms:response});
-	      })
-	      .catch(err=>console.log(err));
+        axios.get(platform_url)
+	        .then((res)=>{
+	        	this.setState({platforms:res.data});
+	    	})
+	    	.catch(err=>console.log(err));
+		// fetch(platform_url,{
+	 //        method:'get'
+	 //      })
+	 //      .then(response=>response.json())
+	 //      .then(response=> {
+	 //        this.setState({platforms:response});
+	 //      })
+	 //      .catch(err=>console.log(err));
 
 	}
 	onSearchChange=(event)=>{

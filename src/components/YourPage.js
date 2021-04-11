@@ -3,6 +3,7 @@ import './ComponentStyle.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SearchBox from './SearchBox';
 import PlatformList from './PlatformList';
+import axios from 'axios';
 const search_url="http://localhost:3000/search";
 class YourPage extends Component{
 	constructor(props){
@@ -17,16 +18,19 @@ class YourPage extends Component{
 	}
 	componentDidMount(){
 		// loading platforms value from database
-		// this.setState({platforms:platforms});
-
-		fetch(search_url+"/platforms/test",{
-	        method:'get'
-	      })
-	      .then(response=>response.json())
-	      .then(response=> {
-	        this.setState({platforms:response});
-	      })
-	      .catch(err=>console.log(err));
+		axios.get(search_url+"/platforms/test")
+	        .then((res)=>{
+	        	this.setState({platforms:res.data});
+	    	})
+	    	.catch(err=>console.log(err));
+		// fetch(search_url+"/platforms/test",{
+	 //        method:'get'
+	 //      })
+	 //      .then(response=>response.json())
+	 //      .then(response=> {
+	 //        this.setState({platforms:response});
+	 //      })
+	 //      .catch(err=>console.log(err));
 
 	}
 	render(){
