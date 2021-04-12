@@ -91,4 +91,48 @@ class YourPage extends Component{
 	}
 }
 
+const Platform =({name})=>{
+	return(
+		<div className='platformStyle grow'>
+			<img alt='platformImage' src={`https://robohash.org/${name}?200x200`}/>
+			<div>
+				<h4>{name}</h4>
+			</div>
+		</div>
+	);
+}
+
+const DeleteConfirmBox=({deletePlatform,onDeletePlatform,onChangeDelete})=>{
+	return (
+		<section id="overlay">
+			<div className='overlayStyle'>
+				<div className='deleteConfirm'>
+					<h2>Are you sure you want to delete</h2>
+					<h2>"{deletePlatform.platformName}"?</h2>
+					<button className='deleteButtonStyle' onClick={()=>onDeletePlatform(deletePlatform)}>Yes</button>
+					<button className='deleteButtonStyle' onClick={()=>onChangeDelete('',false)}>No</button>
+				</div>
+			</div>
+		</section>
+	);
+}
+
+const DeletePlatformList=({platforms, onChangeDelete})=>{
+	return(
+		// loop for all platforms
+		<div >
+  			{
+  				platforms.map((user,i)=>{
+					return (
+						<div className='deleteList' key={i} >
+							<Platform name={platforms[i].platformName}/>
+							<button onClick={()=>onChangeDelete(platforms[i],true)} className='deleteButton'><img src={deleteIcon} height='40px' width='40px' alt="delete"/></button>
+						</div>
+					);
+				})
+			}
+  		</div>
+	);
+}
+
 export default YourPage;
