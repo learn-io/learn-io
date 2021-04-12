@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './ComponentStyle.css';
 
-const target_url="http://learn-io-api.herokuapp.com/search/platforms"
+const target_url="https://learn-io-api.herokuapp.com/search/platforms"
 
 const HomeController = () =>{
     const [platforms, setPlatforms] = useState([])
