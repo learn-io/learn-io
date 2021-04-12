@@ -34,21 +34,21 @@ const MenuDropdown = (props) =>{
 	let admin;
 	if(props.isAdmin)
 	{
-		admin = <Dropdown.Item className="dropdown-content"><Link to="/admin"> Admin </Link></Dropdown.Item>;
+		admin = <Dropdown.Item href="/admin"><div className="dropdown-content">Admin</div></Dropdown.Item>;
 	}
 
 	return (
 		<Dropdown>
-			<Dropdown.Toggle variant="success" id="dropdown-basic">
+			<Dropdown.Toggle id="dropdown-basic" className="dropbtn" menuAlign="right">
 				<img src={menusIcon} height='40px' width='40px' alt="menus"/>
 			</Dropdown.Toggle>
 
 			<Dropdown.Menu>
 				{admin}
-				<Dropdown.Item className="dropdown-content"><Link to="/yourpages"> Your Platforms </Link></Dropdown.Item>
-				<Dropdown.Item className="dropdown-content"><Link to="/profile"> Profile </Link></Dropdown.Item>
-				<Dropdown.Item className="dropdown-content"><Link to="/setting"> Settings </Link></Dropdown.Item>
-				<Dropdown.Item className="dropdown-content"><Link to="/logout"> Sign Out </Link></Dropdown.Item>
+				<Dropdown.Item className="dropdown" href="/yourpages"><div className="dropdown-content">Your Platforms</div></Dropdown.Item>
+				<Dropdown.Item className="dropdown" href="/profile"><div className="dropdown-content">Profile</div></Dropdown.Item>
+				<Dropdown.Item className="dropdown" href="/setting"><div className="dropdown-content">Settings</div></Dropdown.Item>
+				<Dropdown.Item className="dropdown" href="/logout"><div className="dropdown-content">Sign Out</div></Dropdown.Item>
 			</Dropdown.Menu>
 		</Dropdown>
 	)
@@ -58,13 +58,12 @@ const LoginDropdown = (props) =>{
 	
 	return (
 		<Dropdown>
-			<Dropdown.Toggle variant="success" id="dropdown-basic">
+			<Dropdown.Toggle id="dropdown-basic" className="dropbtn" menuAlign="right">
 				<img src={menusIcon} height='40px' width='40px' alt="menus"/>
 			</Dropdown.Toggle>
 
 			<Dropdown.Menu>
-				<Dropdown.Item className="dropdown-content">Please Log In</Dropdown.Item>
-				
+				<Dropdown.Item className="dropdown"><div className="dropdown-content">Please Log In</div></Dropdown.Item>			
 			</Dropdown.Menu>
 		</Dropdown>
 	)
@@ -74,12 +73,12 @@ const RegisterDropdown = (props) =>{
 	
 	return (
 		<Dropdown>
-			<Dropdown.Toggle variant="success" id="dropdown-basic">
+			<Dropdown.Toggle id="dropdown-basic" className="dropbtn" menuAlign="right">
 				<img src={menusIcon} height='40px' width='40px' alt="menus"/>
 			</Dropdown.Toggle>
 
 			<Dropdown.Menu>
-				<Dropdown.Item className="dropdown-content">Please Register</Dropdown.Item>
+				<Dropdown.Item className="dropdown"><div className="dropdown-content">Please Register</div></Dropdown.Item>
 			</Dropdown.Menu>
 		</Dropdown>
 	)

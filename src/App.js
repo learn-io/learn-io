@@ -29,7 +29,7 @@ function App(){
 	const [isAdmin, setIsAdmin] = useState(true);
 
 	return (
-	<div>
+	<div className="appStyle">
 		<MenuController isSignedIn={isSignedIn} isAdmin={isAdmin} setIsSignedIn={setIsSignedIn} setIsAdmin={setIsAdmin}/>
 		<Switch>
 			<Route path="/home">
