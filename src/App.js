@@ -52,6 +52,8 @@ class App extends Component{
 			this.setState({menusClick:true});
 		}else if(route==='register'){
 			this.setState({menusClick:true});
+		}else if(route==='home'){
+			window.location.reload();
 		}else{
 			this.setState({menusClick:false});
 		}
