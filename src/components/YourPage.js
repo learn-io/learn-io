@@ -1,13 +1,41 @@
-import React,{Component} from 'react';
+import React,{useEffect, useState} from 'react';
 import './ComponentStyle.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import SearchBox from './SearchBox';
-import DeleteConfirmBox from './DeleteConfirmBox';
-import DeletePlatformList from './DeletePlatformList';
 import axios from 'axios';
 const search_url="http://localhost:3000/search";
 const deleteplat_url = "http://localhost:3000/admin/platforms/delete"
-class YourPage extends Component{
+
+
+const YourPageController = () =>{
+	const [platforms, setPlatforms] = useState([]);
+	const [text, setText] = useState("");
+    const [skip, setSkip] = useState(0);
+    const [limit, setLimit] = useState(10);
+
+    // useEffect(
+    //     ()=>{
+    //     	axios({
+    //             method: 'get',
+    //             url: search_url+"/platforms/test"
+    //         }).then(function(response){
+    //         	console.log(response.data);
+    //             setPlatforms(response.data);
+    //         }).catch(function(err){
+    //             console.log(err);
+    //         });
+    //     },[text, skip, limit]
+    // );
+
+    // return (
+    // <div className='appStyle'>
+    //     <SearchBox setText={setText}/>
+    //     <PlatformList platforms={platforms}/>
+    // </div>
+    // )
+}
+
+export default YourPageController;
+/*class YourPage extends Component{
 	constructor(props){
 		super();
 		this.state={
@@ -135,4 +163,18 @@ const DeletePlatformList=({platforms, onChangeDelete})=>{
 	);
 }
 
-export default YourPage;
+const SearchBox =({text, setText})=>{
+	return (
+		<div className='pa'>
+			<input 
+				className='searchBoxStyle'
+				type='search'
+                value={text}
+				placeholder='Search platform'
+				onChange={(e)=>{setText(e.target.value)}}
+			/>
+		</div>
+	);
+}
+
+export default YourPage;*/
