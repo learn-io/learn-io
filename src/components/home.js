@@ -12,13 +12,14 @@ const HomeController = () =>{
 
     useEffect(
         ()=>{
+			let queryText = text
             if (text.length < 2)
-                return;
+			queryText = ' '
 			if (limit < 1)
                 return;
             axios({
                 method: 'get',
-                url: target_url+"/all/"+text+"/"+skip+"/"+limit
+                url: target_url+"/all/"+queryText+"/"+skip+"/"+limit
             }).then(function(response){
                 setPlatforms(response.data);
             }).catch(function(err){
