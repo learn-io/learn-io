@@ -1,9 +1,6 @@
-import axios from 'axios';
+import axios_instance from './axios_instance.js';
 import React, { useEffect, useState } from 'react';
 import './ComponentStyle.css';
-
-const target_url="https://learn-io-api.herokuapp.com/search/platforms"
-// const target_url="http://localhost:3000/search/platforms"
 
 const HomeController = () =>{
     const [platforms, setPlatforms] = useState([])
@@ -18,9 +15,9 @@ const HomeController = () =>{
 				queryText = ' '
 			if (limit < 1)
                 return;
-            axios({
+			axios_instance({
                 method: 'get',
-                url: target_url+"/all/"+queryText+"/"+skip+"/"+limit
+                url: "search/platforms/all/"+queryText+"/"+skip+"/"+limit
             }).then(function(response){
                 setPlatforms(response.data);
             }).catch(function(err){

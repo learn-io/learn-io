@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios_instance from './axios_instance.js';
 import './ComponentStyle.css';
 import menusIcon from './images/menus.png';
-
-const target_url="https://learn-io-api.herokuapp.com/"
 
 const {Dropdown, Form, Button} = require("react-bootstrap");
 const Link = require("react-router-dom").Link;
@@ -59,14 +57,15 @@ const MenuDropdown = (props) =>{
 
 const login = (e, setIsAdmin, setIsSignedIn) =>{
 	e.preventDefault();
-	axios({
+	axios_instance({
 		method: 'post',
-		url: target_url+"signin",
+		url: "signin",
 		data: {
 		  username: e.target.elements.username.value,
 		  password: e.target.elements.password.value
 		}
 	}).then(function(response){
+		console.log(response);
 		setIsSignedIn(response.data);
 		setIsAdmin('admin' === response.data);
 	}).catch(function(err){
@@ -102,9 +101,9 @@ const LoginDropdown = (props) =>{
 }
 const register = (e, setIsAdmin, setIsSignedIn) =>{
 	e.preventDefault();
-	axios({
+	axios_instance({
 		method: 'post',
-		url: target_url+"register",
+		url: "register",
 		data: {
 		  username: e.target.elements.username.value,
 		  password: e.target.elements.password.value,
