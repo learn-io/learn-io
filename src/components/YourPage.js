@@ -2,6 +2,7 @@ import React,{useEffect, useState} from 'react';
 import './ComponentStyle.css';
 import axios from 'axios';
 import deleteIcon from './images/delete.png';
+import plusIcon from './images/plus.png';
 const deleteplat_url = "http://localhost:3000/platform/deletePlatform";
 const target_url="http://localhost:3000/search/platforms";
 
@@ -65,7 +66,10 @@ const YourPagesController = () =>{
 
     return (
 	    <div className='appStyle'>
-	    	<h1>Your Page</h1>
+	    	<div style={{display:'flex',justifyContent: 'space-between',paddingTop:'1rem'}}>
+		    	<h1>Your Page</h1>
+		    	<button className='deleteButton'><img src={plusIcon} height='50px' width='50px' alt="plus"/></button>
+	    	</div>
 	        <SearchBox setText={setText}/>
 	        <DeletePlatformList platforms={platforms} onChangeDelete={onChangeDelete}/>
 	        {<DeleteConfirmBox deletePlatform={deletePlatform} onDeletePlatform={onDeletePlatform} onChangeDelete={onChangeDelete}/>}
