@@ -13,27 +13,19 @@ const HomeController = () =>{
 
     useEffect(
         ()=>{
-            if (text.length < 1){
-                axios({
-	                method: 'get',
-	                url: target_url+"/all/ /"+skip+"/"+limit
-	            }).then(function(response){
-	                setPlatforms(response.data);
-	            }).catch(function(err){
-	                console.log(err);
-	            });
-            }else{
-            	if (limit < 1)
-	                return;
-	            axios({
-	                method: 'get',
-	                url: target_url+"/all/"+text+"/"+skip+"/"+limit
-	            }).then(function(response){
-	                setPlatforms(response.data);
-	            }).catch(function(err){
-	                console.log(err);
-	            });
-            }
+			let queryText = text
+            if (text.length < 2)
+				queryText = ' '
+			if (limit < 1)
+                return;
+            axios({
+                method: 'get',
+                url: target_url+"/all/"+queryText+"/"+skip+"/"+limit
+            }).then(function(response){
+                setPlatforms(response.data);
+            }).catch(function(err){
+                console.log(err);
+            });
         },[text, skip, limit]
     );
 

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import './App.css'
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import MenuController from "./components/Menus";
 import HomeController from "./components/home";
 import YourPagesController from "./components/YourPage";
@@ -25,11 +27,11 @@ const Switch = require("react-router-dom").Switch;
 const Route = require("react-router-dom").Route;
 
 function App(){
-	const [isSignedIn, setIsSignedIn] = useState(true);
-	const [isAdmin, setIsAdmin] = useState(true);
+	const [isSignedIn, setIsSignedIn] = useState(false);
+	const [isAdmin, setIsAdmin] = useState(false);
 
 	return (
-	<div>
+	<div className="appStyle">
 		<MenuController isSignedIn={isSignedIn} isAdmin={isAdmin} setIsSignedIn={setIsSignedIn} setIsAdmin={setIsAdmin}/>
 		<Switch>
 			<Route path="/home">
