@@ -13,6 +13,9 @@ import PlatformController from "./components/home";
 import SettingsController from "./components/home";
 import ProfileController from "./components/home";
 
+import axios from 'axios';
+axios.defaults.withCredentials = true;
+
 /*
 import PlatformList from './components/PlatformList';
 import SearchBox from './components/SearchBox';
