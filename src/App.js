@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import MenuController from "./components/Menus";
 import HomeController from "./components/home";
+import LogoutController from "./components/logout";
 import YourPagesController from "./components/home";
 import AdminController from "./components/home"; 
 import PlatformController from "./components/home"; 
@@ -34,6 +35,11 @@ function App(){
 	<div className="appStyle">
 		<MenuController isSignedIn={isSignedIn} isAdmin={isAdmin} setIsSignedIn={setIsSignedIn} setIsAdmin={setIsAdmin}/>
 		<Switch>
+
+			<Route path="/logout">
+				<LogoutController isSignedIn={isSignedIn} isAdmin={isAdmin} setIsSignedIn={setIsSignedIn} setIsAdmin={setIsAdmin}/>
+			</Route>
+
 			<Route path="/home">
 				<HomeController isSignedIn={isSignedIn}/>
 			</Route>
