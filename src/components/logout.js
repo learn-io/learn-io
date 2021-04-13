@@ -5,8 +5,6 @@ import './ComponentStyle.css';
 
 const target_url="https://learn-io-api.herokuapp.com/"
 
-const {Redirect} = require("react-bootstrap");
-
 const LogoutController = (props) =>{
     const history = useHistory();
 	useEffect(()=>{
@@ -14,11 +12,12 @@ const LogoutController = (props) =>{
             method: 'post',
             url: target_url+"signout",
         }).then(function(response){
-            props.setIsSignedIn(false);
-            props.setIsAdmin(false);
+            
         }).catch(function(err){
             console.log(err);
         });
+        props.setIsSignedIn(false);
+        props.setIsAdmin(false);
         history.push('/home');
     })
 	return (

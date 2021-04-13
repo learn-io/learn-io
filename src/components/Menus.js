@@ -43,16 +43,16 @@ const MenuDropdown = (props) =>{
 	let admin;
 	if(props.isAdmin)
 	{
-		admin = <Dropdown.Item className="dropdown" href="/admin">Admin</Dropdown.Item>;
+		admin = <Link to="/admin" className="dropdown-content">Admin</Link>;
 	}
 
 	return (
 		<>
 			{admin}
-			<Dropdown.Item className="dropdown" href="/yourpages">Your Platforms</Dropdown.Item>
-			<Dropdown.Item className="dropdown" href="/profile">Profile</Dropdown.Item>
-			<Dropdown.Item className="dropdown" href="/setting">Settings</Dropdown.Item>
-			<Dropdown.Item className="dropdown" href="/logout">Sign Out</Dropdown.Item>
+			<Link to="/yourplatforms" className="dropdown-content">Your Platforms</Link>
+			<Link to="/profile" className="dropdown-content">Profile</Link>
+			<Link to="/settings" className="dropdown-content">Settings</Link>
+			<Link to="/logout" className="dropdown-content">Sign Out</Link>
 		</>
 	)
 }
