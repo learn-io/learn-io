@@ -27,8 +27,8 @@ const Switch = require("react-router-dom").Switch;
 const Route = require("react-router-dom").Route;
 
 function App(){
-	const [isSignedIn, setIsSignedIn] = useState(true);
-	const [isAdmin, setIsAdmin] = useState(true);
+	const [isSignedIn, setIsSignedIn] = useState(false);
+	const [isAdmin, setIsAdmin] = useState(false);
 
 	return (
 	<div className="appStyle">
