@@ -4,7 +4,7 @@ import './App.css'
 
 import MenuController from "./components/Menus";
 import HomeController from "./components/home";
-import YourPagesController from "./components/home";
+import YourPagesController from "./components/YourPage";
 import AdminController from "./components/home"; 
 import PlatformController from "./components/home"; 
 import SettingsController from "./components/home";
