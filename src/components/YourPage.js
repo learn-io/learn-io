@@ -3,6 +3,7 @@ import './ComponentStyle.css';
 import axios from 'axios';
 import deleteIcon from './images/delete.png';
 import plusIcon from './images/plus.png';
+import axios_instance from './axios_instance.js';
 const deleteplat_url = "http://localhost:3000/platform/deletePlatform";
 const target_url="http://localhost:3000/search/platforms";
 
@@ -16,10 +17,23 @@ const YourPagesController = () =>{
 
     useEffect(
         ()=>{
+   //      	let queryText = text
+   //          if (text.length < 2)
+			// 	queryText = ' '
+			// if (limit < 1)
+   //              return;
+   //          axios_instance({
+   //              method: 'get',
+   //              url: "search/platforms/admin/"+queryText+"/"+skip+"/"+limit
+   //          }).then(function(response){
+   //              setPlatforms(response.data);
+   //          }).catch(function(err){
+   //              console.log(err);
+   //          });
 	        if (text.length < 1){
 	     		axios({
 	                method: 'get',
-	                url: target_url+"/test/ /"+skip+"/"+limit
+	                url: target_url+"/admin/ /"+skip+"/"+limit
 	            }).then(function(response){
 	                setPlatforms(response.data);
 	            }).catch(function(err){
@@ -30,7 +44,7 @@ const YourPagesController = () =>{
 	                return;
 	            axios({
 	                method: 'get',
-	                url: target_url+"/test/"+text+"/"+skip+"/"+limit
+	                url: target_url+"/admin/"+text+"/"+skip+"/"+limit
 	            }).then(function(response){
 	                setPlatforms(response.data);
 	            }).catch(function(err){
@@ -49,6 +63,19 @@ const YourPagesController = () =>{
 	}
 
 	const onDeletePlatform=(platform)=>{
+		// axios_instance({
+  //           method: 'post',
+  //           url: "platform/deletePlatform",
+  //           data: {
+  //               _id: platform._id
+  //           }
+  //       })
+  //       .then((res)=>{
+  //       	let filter = platforms.filter(item => item !== platform)
+  //       	setPlatforms(filter);
+  //       	setDeletePlatform('');
+	 //    })
+	 //    .catch(err=>console.log(err));
 		axios({
             method: 'post',
             url: deleteplat_url,
@@ -67,7 +94,7 @@ const YourPagesController = () =>{
     return (
 	    <div className='appStyle'>
 	    	<div style={{display:'flex',justifyContent: 'space-between',paddingTop:'1rem'}}>
-		    	<h1>Your Page</h1>
+		    	<h1>Your Pages</h1>
 		    	<button className='deleteButton'><img src={plusIcon} height='50px' width='50px' alt="plus"/></button>
 	    	</div>
 	        <SearchBox setText={setText}/>
