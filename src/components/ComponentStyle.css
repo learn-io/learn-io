@@ -51,6 +51,7 @@
 /*dropdown button style*/
 .dropdown {
 	margin:none;
+	text-decoration: none;
 }
 .dropbtn {
 	margin: 10px 30px 10px 10px;
