@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import './App.css'
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import MenuController from "./components/Menus";
 import HomeController from "./components/home";
 import YourPagesController from "./components/home";
