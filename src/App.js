@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import './App.css'
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import MenuController from "./components/Menus";
 import HomeController from "./components/home";
-import YourPagesController from "./components/home";
+import LogoutController from "./components/logout";
+import YourPagesController from "./components/YourPage";
 import AdminController from "./components/home"; 
 import PlatformController from "./components/home"; 
 import SettingsController from "./components/home";
@@ -25,13 +28,18 @@ const Switch = require("react-router-dom").Switch;
 const Route = require("react-router-dom").Route;
 
 function App(){
-	const [isSignedIn, setIsSignedIn] = useState(true);
-	const [isAdmin, setIsAdmin] = useState(true);
+	const [isSignedIn, setIsSignedIn] = useState(false);
+	const [isAdmin, setIsAdmin] = useState(false);
 
 	return (
-	<div>
+	<div className="appStyle">
 		<MenuController isSignedIn={isSignedIn} isAdmin={isAdmin} setIsSignedIn={setIsSignedIn} setIsAdmin={setIsAdmin}/>
 		<Switch>
+
+			<Route path="/logout">
+				<LogoutController isSignedIn={isSignedIn} isAdmin={isAdmin} setIsSignedIn={setIsSignedIn} setIsAdmin={setIsAdmin}/>
+			</Route>
+
 			<Route path="/home">
 				<HomeController isSignedIn={isSignedIn}/>
 			</Route>
@@ -104,6 +112,8 @@ class App extends Component{
 			this.setState({menusClick:true});
 		}else if(route==='register'){
 			this.setState({menusClick:true});
+		}else if(route==='home'){
+			window.location.reload();
 		}else{
 			this.setState({menusClick:false});
 		}

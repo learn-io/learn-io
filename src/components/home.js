@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './ComponentStyle.css';
 
 const target_url="https://learn-io-api.herokuapp.com/search/platforms"
+// const target_url="http://localhost:3000/search/platforms"
 
 const HomeController = () =>{
     const [platforms, setPlatforms] = useState([])
@@ -12,13 +13,14 @@ const HomeController = () =>{
 
     useEffect(
         ()=>{
+			let queryText = text
             if (text.length < 2)
-                return;
+				queryText = ' '
 			if (limit < 1)
                 return;
             axios({
                 method: 'get',
-                url: target_url+"/all/"+text+"/"+skip+"/"+limit
+                url: target_url+"/all/"+queryText+"/"+skip+"/"+limit
             }).then(function(response){
                 setPlatforms(response.data);
             }).catch(function(err){
@@ -51,9 +53,10 @@ const PlatformList=({platforms})=>{
 		// loop for all platforms
 		<div>
   			{
-  				platforms.map(x => {
+  				platforms.map((x,i) => {
 					return (
 						<Platform 
+						key={i}
 						desc={x.description}
 						img={x.imageData}
 						name={x.platformName}/>
