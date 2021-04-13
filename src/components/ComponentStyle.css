@@ -137,6 +137,7 @@ input.largeCheckbox{
 	border-style:none;
 	justify-content: flex-start;
 	align-content: flex-start;
+	cursor: pointer;
 }
 
 /*Delete List style*/
