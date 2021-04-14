@@ -110,6 +110,7 @@
 	height:100%;
 	width:100%;
 }
+
 /*Setting Style*/
 .settingStyle{
 	position: relative;
@@ -122,6 +123,17 @@ input.largeCheckbox{
 	width:30px;
 	height: 30px;
 	margin-top: 13px;
+}
+
+/*Profile Style*/
+#profileTabs{
+	padding-top:"2rem";
+}
+
+/*Profile Form*/
+.profileForm label{
+	padding:"1rem";
+
 }
 
 /*Your Page Style*/

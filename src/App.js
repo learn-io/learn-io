@@ -10,8 +10,8 @@ import LogoutController from "./components/logout";
 import YourPagesController from "./components/YourPage";
 import AdminController from "./components/home"; 
 import PlatformController from "./components/home"; 
-import SettingsController from "./components/home";
-import ProfileController from "./components/home";
+import SettingsController from "./components/Setting";
+import ProfileController from "./components/Profile";
 
 import axios from 'axios';
 axios.defaults.withCredentials = true;
@@ -59,7 +59,7 @@ function App(){
 				<PlatformController isSignedIn={isSignedIn}/>
 			</Route>
 
-			<Route path="/settings">
+			<Route path="/setting">
 				<SettingsController isSignedIn={isSignedIn}/>
 			</Route>
 
