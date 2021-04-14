@@ -1,60 +1,51 @@
 import React,{useEffect, useState} from 'react';
 import './ComponentStyle.css';
-import axios from 'axios';
+// import axios from 'axios';
 import deleteIcon from './images/delete.png';
 import plusIcon from './images/plus.png';
 import axios_instance from './axios_instance.js';
-const deleteplat_url = "http://localhost:3000/platform/deletePlatform";
-const target_url="http://localhost:3000/search/platforms";
+// const deleteplat_url = "http://localhost:3000/platform/deletePlatform";
+// const target_url="http://localhost:3000/search/platforms";
 
 
-const YourPagesController = () =>{
+const YourPagesController = (props) =>{
 	const [platforms, setPlatforms] = useState([]);
 	const [text, setText] = useState("");
     const [skip, setSkip] = useState(0);
     const [limit, setLimit] = useState(10);
+	// limit is the maximum number of platforms to be returned
+	// less are only returned if there are no more in the databse
     const [deletePlatform, setDeletePlatform]=useState("");
+    const [nextPlatforms, setNextPlatforms] = useState([])
 
     useEffect(
         ()=>{
-   //      	let queryText = text
-   //          if (text.length < 2)
-			// 	queryText = ' '
-			// if (limit < 1)
-   //              return;
-   //          axios_instance({
-   //              method: 'get',
-   //              url: "search/platforms/admin/"+queryText+"/"+skip+"/"+limit
-   //          }).then(function(response){
-   //              setPlatforms(response.data);
-   //          }).catch(function(err){
-   //              console.log(err);
-   //          });
-	        if (text.length < 1){
-	     		axios({
-	                method: 'get',
-	                url: target_url+"/admin/ /"+skip+"/"+limit
-	            }).then(function(response){
-	                setPlatforms(response.data);
-	            }).catch(function(err){
-	                console.log(err);
-	            });
-	        }else{
-	        	if (limit < 1)
-	                return;
-	            axios({
-	                method: 'get',
-	                url: target_url+"/admin/"+text+"/"+skip+"/"+limit
-	            }).then(function(response){
-	                setPlatforms(response.data);
-	            }).catch(function(err){
-	                console.log(err);
-	            });
-	        }
-        },[text, skip, limit]
+        	// props.username
+        	let queryText = text
+            if (text.length < 2)
+				queryText = ' '
+			if (limit < 1)
+                return;
+            axios_instance({
+                method: 'get',
+                url: "search/platforms/admin/"+queryText+"/"+skip+"/"+limit
+            }).then(function(response){
+                setPlatforms(response.data);
+            }).catch(function(err){
+                console.log(err);
+            });
+            axios_instance({
+                method: 'get',
+                url: "search/platforms/admin/"+queryText+"/"+(skip+limit)+"/"+limit
+            }).then(function(response){
+                setNextPlatforms(response.data);
+            }).catch(function(err){
+                console.log(err);
+            });
+        },[text, skip, limit,platforms]
     );
 
-    const onChangeDelete=(platform,state)=>{
+    const onChangeDelete=(platform)=>{
 		if(platform!==''){
 			setDeletePlatform(platform);
 		}else{
@@ -76,9 +67,9 @@ const YourPagesController = () =>{
   //       	setDeletePlatform('');
 	 //    })
 	 //    .catch(err=>console.log(err));
-		axios({
+		axios_instance({
             method: 'post',
-            url: deleteplat_url,
+            url: "platform/deletePlatform",
             data: {
                 _id: platform._id
             }
@@ -99,7 +90,9 @@ const YourPagesController = () =>{
 	    	</div>
 	        <SearchBox setText={setText}/>
 	        <DeletePlatformList platforms={platforms} onChangeDelete={onChangeDelete}/>
-	        {<DeleteConfirmBox deletePlatform={deletePlatform} onDeletePlatform={onDeletePlatform} onChangeDelete={onChangeDelete}/>}
+	        <DeleteConfirmBox deletePlatform={deletePlatform} onDeletePlatform={onDeletePlatform} onChangeDelete={onChangeDelete}/>
+	        <PreviousButton skip={skip} setSkip={setSkip} />
+        	<NextButton nextPlatforms={nextPlatforms} skip={skip} setSkip={setSkip}/>
 	    </div>
     )
 }
@@ -118,6 +111,31 @@ const SearchBox =({text, setText})=>{
 			/>
 		</div>
 	);
+}
+
+const PreviousButton=(props)=>{
+	if(props.skip===0){
+		return(
+			<button disabled style={{color:'grey'}} className='homeButton'>Previous</button>
+		);
+	}else{
+		return(
+			<button className='homeButton' onClick={()=>{props.setSkip(props.skip-10)}}>Previous</button>
+		);
+	}
+	
+}
+
+const NextButton=(props)=>{
+	if(props.nextPlatforms.length===0){
+		return(
+			<button disabled style={{color:'grey'}} className='homeButton'>Next</button>
+		);
+	}else{
+		return(
+			<button className='homeButton' onClick={()=>{props.setSkip(props.skip+10)}}>Next</button>
+		);
+	}
 }
 
 const Platform =({name})=>{
@@ -156,7 +174,7 @@ const DeleteConfirmBox=({deletePlatform,onDeletePlatform,onChangeDelete})=>{
 			<div className='overlayStyle'>
 				<div className='deleteConfirm'>
 					<h2>Are you sure you want to delete</h2>
-					{<h2>"{deletePlatform.platformName}"?</h2>}
+					<h2>"{deletePlatform.platformName}"?</h2>
 					<button className='deleteButtonStyle' onClick={()=>onDeletePlatform(deletePlatform)}>Yes</button>
 					<button className='deleteButtonStyle' onClick={()=>onChangeDelete('')}>No</button>
 				</div>

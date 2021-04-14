@@ -7,7 +7,7 @@ const {Dropdown, Form, Button} = require("react-bootstrap");
 const Link = require("react-router-dom").Link;
 const MenuController = (props) =>{
 	
-	const [isReg, setIsReg] = useState(true);
+	const [isReg, setIsReg] = useState(false);
     let dropdown;
 
 	if (props.isSignedIn)

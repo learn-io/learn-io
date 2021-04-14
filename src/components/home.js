@@ -2,11 +2,13 @@ import axios_instance from './axios_instance.js';
 import React, { useEffect, useState } from 'react';
 import './ComponentStyle.css';
 
-const HomeController = () =>{
+const HomeController = (props) =>{
     const [platforms, setPlatforms] = useState([])
     const [text, setText] = useState("");
     const [skip, setSkip] = useState(0);
     const [limit, setLimit] = useState(10);
+    const [nextPlatforms, setNextPlatforms] = useState([])
+    const [selectPlatform, setSelectPlatform] = useState("")
 
     useEffect(
         ()=>{
@@ -23,20 +25,72 @@ const HomeController = () =>{
             }).catch(function(err){
                 console.log(err);
             });
+            axios_instance({
+                method: 'get',
+                url: "search/platforms/all/"+queryText+"/"+(skip+10)+"/"+limit
+            }).then(function(response){
+                setNextPlatforms(response.data);
+            }).catch(function(err){
+                console.log(err);
+            });
         },[text, skip, limit]
     );
 
+    // const onPreviousPlatform=()=>{
+    // 	console.log('Previous');
+    // 	// onClick={()=>{props.setSkip(props.skip-10)}
+    // }
+    // const onNextPlatform=()=>{
+    // 	setSkip(skip+10);
+    // }
+    const onSelectPlatform=(platform)=>{
+		if(platform!==''){
+			setSelectPlatform(platform);
+		}else{
+			setSelectPlatform('');
+		}
+	}
+    const onSearchPlatform=(value)=>{
+    	setText(value);
+    	setSkip(0);
+    }
     return (
     <div className='appStyle'>
-        <SearchBox setText={setText}/>
-        <PlatformList platforms={platforms}/>
+        <SearchBox onSearchPlatform={onSearchPlatform} />
+        <PlatformList platforms={platforms} onSelectPlatform={onSelectPlatform}/>
+       	<PreviousButton skip={skip} setSkip={setSkip} />
+       	<ConfirmBox selectPlatform={selectPlatform} onSelectPlatform={onSelectPlatform}/>
+        <NextButton nextPlatforms={nextPlatforms} skip={skip} setSkip={setSkip}/>
     </div>
     )
 }
 
-const Platform =({name})=>{
+const ConfirmBox=({selectPlatform,onSelectPlatform})=>{
+	if(selectPlatform==='') return null
+	return (
+		<section id="overlay">
+			<div className='overlayStyle'>
+				<div className='selectConfirm'>
+					<button className='closeButton' onClick={()=>{onSelectPlatform('')}}>X</button>
+					<h2>{selectPlatform.platformName}</h2>
+					<div className='selectImage'>
+						<img alt='platformImage' src={`https://robohash.org/${selectPlatform.platformName}?200x200`}/>
+					</div>
+					<div>
+						<p className='paragraph'>Geckos are a group of usually small, usually nocturnal lizards. They are found on every continent except Australia.</p>
+					</div>
+					<div className='clearfix'>
+						<button className='playButton'>Play</button>
+					</div>
+				</div>
+			</div>
+		</section>
+	);
+}
+
+const Platform =({name,platform,onSelectPlatform})=>{
 	return(
-		<div className='platformStyle grow'>
+		<div className='platformStyle grow' onClick={()=>{onSelectPlatform(platform)}}>
 			<img alt='platformImage' src={`https://robohash.org/${name}?200x200`}/>
 			<div>
 				<h4>{name}</h4>
@@ -45,7 +99,32 @@ const Platform =({name})=>{
 	);
 }
 
-const PlatformList=({platforms})=>{
+const PreviousButton=(props)=>{
+	if(props.skip===0){
+		return(
+			<button disabled style={{color:'grey'}} className='homeButton'>Previous</button>
+		);
+	}else{
+		return(
+			<button className='homeButton' onClick={()=>{props.setSkip(props.skip-10)}}>Previous</button>
+		);
+	}
+	
+}
+
+const NextButton=(props)=>{
+	if(props.nextPlatforms.length===0){
+		return(
+			<button disabled style={{color:'grey'}} className='homeButton'>Next</button>
+		);
+	}else{
+		return(
+			<button className='homeButton' onClick={()=>{props.setSkip(props.skip+10)}}>Next</button>
+		);
+	}
+}
+
+const PlatformList=({platforms,onSelectPlatform})=>{
 	return(
 		// loop for all platforms
 		<div>
@@ -54,9 +133,10 @@ const PlatformList=({platforms})=>{
 					return (
 						<Platform 
 						key={i}
-						desc={x.description}
-						img={x.imageData}
-						name={x.platformName}/>
+						platform={x}
+						name={x.platformName}
+						onSelectPlatform={onSelectPlatform}
+						/>
 					);
 				})
 			}
@@ -64,7 +144,7 @@ const PlatformList=({platforms})=>{
 	);
 }
 
-const SearchBox =({text, setText})=>{
+const SearchBox =({text, onSearchPlatform})=>{
 	return (
 		<div className='pa'>
 			<input 
@@ -72,7 +152,7 @@ const SearchBox =({text, setText})=>{
 				type='search'
                 value={text}
 				placeholder='Search platform'
-				onChange={(e)=>{setText(e.target.value)}}
+				onChange={(e)=>{onSearchPlatform(e.target.value)}}
 			/>
 		</div>
 	);
