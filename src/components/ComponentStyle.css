@@ -130,13 +130,21 @@ input.largeCheckbox{
 
 /*Profile Style*/
 #profileTabs{
-	padding-top:"2rem";
+	padding-top:"";
 }
 
 /*Profile Form*/
-.profileForm label{
-	padding:"1rem";
+.profileFormGroupLabel{
+	color:#fff;
+	font-size: large;
+}
 
+/*Profile Form*/
+/* .profileTabHeader ul > li > a { */
+.profileTabHeader ul > li > a {
+	background-color:black;
+	color:#fff;
+	font-size: large;
 }
 
 /*Your Page Style*/
