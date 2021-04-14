@@ -2,15 +2,15 @@ import axios_instance from './axios_instance.js';
 import React, { useEffect, useState } from 'react';
 import './ComponentStyle.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {DropdownButton,Dropdown} from 'react-bootstrap';
+import {Dropdown} from 'react-bootstrap';
 
 const HomeController = (props) =>{
     const [platforms, setPlatforms] = useState([])
     const [text, setText] = useState("");
     const [skip, setSkip] = useState(0);
     const [limit, setLimit] = useState(10);
-    const [nextPlatforms, setNextPlatforms] = useState([])
-    const [selectPlatform, setSelectPlatform] = useState("")
+    const [nextPlatforms, setNextPlatforms] = useState([]);
+    const [selectPlatform, setSelectPlatform] = useState("");
 
     useEffect(
         ()=>{
@@ -63,14 +63,14 @@ const HomeController = (props) =>{
     <div className='appStyle'>
         <SearchBox onSearchPlatform={onSearchPlatform} />
         <Dropdown>
-		  <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
-		    Platfroms per page: {limit}
-		  </Dropdown.Toggle>
-		  <Dropdown.Menu>
-		    <Dropdown.Item onClick={()=>{onChangeLimit(10)}}>10</Dropdown.Item>
-		    <Dropdown.Item onClick={()=>{onChangeLimit(15)}}>15</Dropdown.Item>
-		    <Dropdown.Item onClick={()=>{onChangeLimit(20)}}>20</Dropdown.Item>
-		  </Dropdown.Menu>
+			<Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
+		    	Platfroms per page: {limit}
+			</Dropdown.Toggle>
+			<Dropdown.Menu>
+		    	<Dropdown.Item onClick={()=>{onChangeLimit(10)}}>10</Dropdown.Item>
+		    	<Dropdown.Item onClick={()=>{onChangeLimit(15)}}>15</Dropdown.Item>
+		    	<Dropdown.Item onClick={()=>{onChangeLimit(20)}}>20</Dropdown.Item>
+			</Dropdown.Menu>
 		</Dropdown>
         <PlatformList platforms={platforms} onSelectPlatform={onSelectPlatform}/>
        	<PreviousButton skip={skip} setSkip={setSkip} />
