@@ -1,6 +1,8 @@
 import axios_instance from './axios_instance.js';
 import React, { useEffect, useState } from 'react';
 import './ComponentStyle.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {DropdownButton,Dropdown} from 'react-bootstrap';
 
 const HomeController = (props) =>{
     const [platforms, setPlatforms] = useState([])
@@ -54,9 +56,22 @@ const HomeController = (props) =>{
     	setText(value);
     	setSkip(0);
     }
+    const onChangeLimit=(value)=>{
+    	setLimit(value);
+    }
     return (
     <div className='appStyle'>
         <SearchBox onSearchPlatform={onSearchPlatform} />
+        <Dropdown>
+		  <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
+		    Platfroms per page: {limit}
+		  </Dropdown.Toggle>
+		  <Dropdown.Menu>
+		    <Dropdown.Item onClick={()=>{onChangeLimit(10)}}>10</Dropdown.Item>
+		    <Dropdown.Item onClick={()=>{onChangeLimit(15)}}>15</Dropdown.Item>
+		    <Dropdown.Item onClick={()=>{onChangeLimit(20)}}>20</Dropdown.Item>
+		  </Dropdown.Menu>
+		</Dropdown>
         <PlatformList platforms={platforms} onSelectPlatform={onSelectPlatform}/>
        	<PreviousButton skip={skip} setSkip={setSkip} />
        	<ConfirmBox selectPlatform={selectPlatform} onSelectPlatform={onSelectPlatform}/>
