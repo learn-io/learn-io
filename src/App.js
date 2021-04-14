@@ -51,6 +51,8 @@ function App(){
 				setIsPendingRefresh(false);
 			}).catch(function(err){
                 console.log(err);
+				setIsPendingRefresh(false);
+				setIsPendingRefresh(true);
             });
         },[isPendingRefresh]
     );

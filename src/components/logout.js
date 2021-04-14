@@ -10,12 +10,11 @@ const LogoutController = (props) =>{
             method: 'post',
             url: "signout",
         }).then(function(response){
-            
+            props.setIsPendingRefresh(true);
         }).catch(function(err){
             console.log(err);
             console.log(err.response);
         });
-        props.setIsPendingRefresh(true);
         history.push('/home');
     })
 	return (
