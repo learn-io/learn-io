@@ -1,14 +1,14 @@
 import React,{useEffect, useState} from 'react';
 import './ComponentStyle.css';
-import axios from 'axios';
+// import axios from 'axios';
 import deleteIcon from './images/delete.png';
 import plusIcon from './images/plus.png';
 import axios_instance from './axios_instance.js';
-const deleteplat_url = "http://localhost:3000/platform/deletePlatform";
-const target_url="http://localhost:3000/search/platforms";
+// const deleteplat_url = "http://localhost:3000/platform/deletePlatform";
+// const target_url="http://localhost:3000/search/platforms";
 
 
-const YourPagesController = () =>{
+const YourPagesController = (props) =>{
 	const [platforms, setPlatforms] = useState([]);
 	const [text, setText] = useState("");
     const [skip, setSkip] = useState(0);
@@ -18,6 +18,7 @@ const YourPagesController = () =>{
 
     useEffect(
         ()=>{
+        	// props.username
         	let queryText = text
             if (text.length < 2)
 				queryText = ' '
@@ -63,7 +64,7 @@ const YourPagesController = () =>{
         },[text, skip, limit,platforms]
     );
 
-    const onChangeDelete=(platform,state)=>{
+    const onChangeDelete=(platform)=>{
 		if(platform!==''){
 			setDeletePlatform(platform);
 		}else{
@@ -192,7 +193,7 @@ const DeleteConfirmBox=({deletePlatform,onDeletePlatform,onChangeDelete})=>{
 			<div className='overlayStyle'>
 				<div className='deleteConfirm'>
 					<h2>Are you sure you want to delete</h2>
-					{<h2>"{deletePlatform.platformName}"?</h2>}
+					<h2>"{deletePlatform.platformName}"?</h2>
 					<button className='deleteButtonStyle' onClick={()=>onDeletePlatform(deletePlatform)}>Yes</button>
 					<button className='deleteButtonStyle' onClick={()=>onChangeDelete('')}>No</button>
 				</div>

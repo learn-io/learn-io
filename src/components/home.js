@@ -8,6 +8,7 @@ const HomeController = (props) =>{
     const [skip, setSkip] = useState(0);
     const [limit, setLimit] = useState(10);
     const [nextPlatforms, setNextPlatforms] = useState([])
+    const [selectPlatform, setSelectPlatform] = useState("")
 
     useEffect(
         ()=>{
@@ -42,6 +43,13 @@ const HomeController = (props) =>{
     // const onNextPlatform=()=>{
     // 	setSkip(skip+10);
     // }
+    const onSelectPlatform=(platform)=>{
+		if(platform!==''){
+			setSelectPlatform(platform);
+		}else{
+			setSelectPlatform('');
+		}
+	}
     const onSearchPlatform=(value)=>{
     	setText(value);
     	setSkip(0);
@@ -49,16 +57,40 @@ const HomeController = (props) =>{
     return (
     <div className='appStyle'>
         <SearchBox onSearchPlatform={onSearchPlatform} />
-        <PlatformList platforms={platforms}/>
+        <PlatformList platforms={platforms} onSelectPlatform={onSelectPlatform}/>
        	<PreviousButton skip={skip} setSkip={setSkip} />
+       	<ConfirmBox selectPlatform={selectPlatform} onSelectPlatform={onSelectPlatform}/>
         <NextButton nextPlatforms={nextPlatforms} skip={skip} setSkip={setSkip}/>
     </div>
     )
 }
 
-const Platform =({name})=>{
+const ConfirmBox=({selectPlatform,onSelectPlatform})=>{
+	if(selectPlatform==='') return null
+	return (
+		<section id="overlay">
+			<div className='overlayStyle'>
+				<div className='selectConfirm'>
+					<button className='closeButton' onClick={()=>{onSelectPlatform('')}}>X</button>
+					<h2>{selectPlatform.platformName}</h2>
+					<div className='selectImage'>
+						<img alt='platformImage' src={`https://robohash.org/${selectPlatform.platformName}?200x200`}/>
+					</div>
+					<div>
+						<p className='paragraph'>Geckos are a group of usually small, usually nocturnal lizards. They are found on every continent except Australia.</p>
+					</div>
+					<div className='clearfix'>
+						<button className='playButton'>Play</button>
+					</div>
+				</div>
+			</div>
+		</section>
+	);
+}
+
+const Platform =({name,platform,onSelectPlatform})=>{
 	return(
-		<div className='platformStyle grow'>
+		<div className='platformStyle grow' onClick={()=>{onSelectPlatform(platform)}}>
 			<img alt='platformImage' src={`https://robohash.org/${name}?200x200`}/>
 			<div>
 				<h4>{name}</h4>
@@ -92,7 +124,7 @@ const NextButton=(props)=>{
 	}
 }
 
-const PlatformList=({platforms})=>{
+const PlatformList=({platforms,onSelectPlatform})=>{
 	return(
 		// loop for all platforms
 		<div>
@@ -101,9 +133,10 @@ const PlatformList=({platforms})=>{
 					return (
 						<Platform 
 						key={i}
-						desc={x.description}
-						img={x.imageData}
-						name={x.platformName}/>
+						platform={x}
+						name={x.platformName}
+						onSelectPlatform={onSelectPlatform}
+						/>
 					);
 				})
 			}
