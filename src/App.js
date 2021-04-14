@@ -81,7 +81,7 @@ function App(){
 				<PlatformController isSignedIn={isSignedIn}/>
 			</Route>
 
-			<Route path="/setting">
+			<Route path="/settings">
 				<SettingsController isSignedIn={isSignedIn}/>
 			</Route>
 
