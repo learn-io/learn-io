@@ -99,7 +99,7 @@ const YourPagesController = () =>{
 	    	</div>
 	        <SearchBox setText={setText}/>
 	        <DeletePlatformList platforms={platforms} onChangeDelete={onChangeDelete}/>
-	        {<DeleteConfirmBox deletePlatform={deletePlatform} onDeletePlatform={onDeletePlatform} onChangeDelete={onChangeDelete}/>}
+	        <DeleteConfirmBox deletePlatform={deletePlatform} onDeletePlatform={onDeletePlatform} onChangeDelete={onChangeDelete}/>
 	    </div>
     )
 }

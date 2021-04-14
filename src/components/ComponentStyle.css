@@ -42,7 +42,9 @@
 /*home button style*/
 .homeButton{
 	margin: 16px 10px 10px 30px;
-	text-decoration: none;
+	background-color: transparent;
+	border:none;
+	width: 400px;
 	font-size: 30px;
 	color: white;
 	font-family: 'SEGA LOGO FONT';
