@@ -70,11 +70,11 @@ function App(){
 			</Route>
 
 			<Route path="/home">
-				<HomeController isSignedIn={isSignedIn} username={username}/>
+				<HomeController isSignedIn={isSignedIn} username={username} />
 			</Route>
 
 			<Route path="/yourplatforms">
-				<YourPagesController isSignedIn={isSignedIn} username={username}/>
+				<YourPagesController isSignedIn={isSignedIn} username={username} isSignedIn={isSignedIn}/>
 			</Route>
 
 			<Route path="/admin">
