@@ -1,15 +1,13 @@
-import axios from 'axios';
+import axios_instance from './axios_instance.js';
 import React, { useEffect, useState } from 'react';
 import './ComponentStyle.css';
 
-const target_url="https://learn-io-api.herokuapp.com/search/platforms"
-// const target_url="http://localhost:3000/search/platforms"
-
-const HomeController = () =>{
+const HomeController = (props) =>{
     const [platforms, setPlatforms] = useState([])
     const [text, setText] = useState("");
     const [skip, setSkip] = useState(0);
     const [limit, setLimit] = useState(10);
+    const [nextPlatforms, setNextPlatforms] = useState([])
 
     useEffect(
         ()=>{
@@ -18,21 +16,42 @@ const HomeController = () =>{
 				queryText = ' '
 			if (limit < 1)
                 return;
-            axios({
+			axios_instance({
                 method: 'get',
-                url: target_url+"/all/"+queryText+"/"+skip+"/"+limit
+                url: "search/platforms/all/"+queryText+"/"+skip+"/"+limit
             }).then(function(response){
                 setPlatforms(response.data);
+            }).catch(function(err){
+                console.log(err);
+            });
+            axios_instance({
+                method: 'get',
+                url: "search/platforms/all/"+queryText+"/"+(skip+10)+"/"+limit
+            }).then(function(response){
+                setNextPlatforms(response.data);
             }).catch(function(err){
                 console.log(err);
             });
         },[text, skip, limit]
     );
 
+    // const onPreviousPlatform=()=>{
+    // 	console.log('Previous');
+    // 	// onClick={()=>{props.setSkip(props.skip-10)}
+    // }
+    // const onNextPlatform=()=>{
+    // 	setSkip(skip+10);
+    // }
+    const onSearchPlatform=(value)=>{
+    	setText(value);
+    	setSkip(0);
+    }
     return (
     <div className='appStyle'>
-        <SearchBox setText={setText}/>
+        <SearchBox onSearchPlatform={onSearchPlatform} />
         <PlatformList platforms={platforms}/>
+       	<PreviousButton skip={skip} setSkip={setSkip} />
+        <NextButton nextPlatforms={nextPlatforms} skip={skip} setSkip={setSkip}/>
     </div>
     )
 }
@@ -46,6 +65,31 @@ const Platform =({name})=>{
 			</div>
 		</div>
 	);
+}
+
+const PreviousButton=(props)=>{
+	if(props.skip===0){
+		return(
+			<button disabled style={{color:'grey'}} className='homeButton'>Previous</button>
+		);
+	}else{
+		return(
+			<button className='homeButton' onClick={()=>{props.setSkip(props.skip-10)}}>Previous</button>
+		);
+	}
+	
+}
+
+const NextButton=(props)=>{
+	if(props.nextPlatforms.length===0){
+		return(
+			<button disabled style={{color:'grey'}} className='homeButton'>Next</button>
+		);
+	}else{
+		return(
+			<button className='homeButton' onClick={()=>{props.setSkip(props.skip+10)}}>Next</button>
+		);
+	}
 }
 
 const PlatformList=({platforms})=>{
@@ -67,7 +111,7 @@ const PlatformList=({platforms})=>{
 	);
 }
 
-const SearchBox =({text, setText})=>{
+const SearchBox =({text, onSearchPlatform})=>{
 	return (
 		<div className='pa'>
 			<input 
@@ -75,7 +119,7 @@ const SearchBox =({text, setText})=>{
 				type='search'
                 value={text}
 				placeholder='Search platform'
-				onChange={(e)=>{setText(e.target.value)}}
+				onChange={(e)=>{onSearchPlatform(e.target.value)}}
 			/>
 		</div>
 	);

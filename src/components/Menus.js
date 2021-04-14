@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios_instance from './axios_instance.js';
 import './ComponentStyle.css';
 import menusIcon from './images/menus.png';
-
-const target_url="https://learn-io-api.herokuapp.com/"
 
 const {Dropdown, Form, Button} = require("react-bootstrap");
 const Link = require("react-router-dom").Link;
@@ -43,30 +41,31 @@ const MenuDropdown = (props) =>{
 	let admin;
 	if(props.isAdmin)
 	{
-		admin = <Dropdown.Item className="dropdown" href="/admin">Admin</Dropdown.Item>;
+		admin = <Link to="/admin" className="dropdown-content">Admin</Link>;
 	}
 
 	return (
 		<>
 			{admin}
-			<Dropdown.Item className="dropdown" href="/yourpages">Your Platforms</Dropdown.Item>
-			<Dropdown.Item className="dropdown" href="/profile">Profile</Dropdown.Item>
-			<Dropdown.Item className="dropdown" href="/setting">Settings</Dropdown.Item>
-			<Dropdown.Item className="dropdown" href="/logout">Sign Out</Dropdown.Item>
+			<Link to="/yourplatforms" className="dropdown-content">Your Platforms</Link>
+			<Link to="/profile" className="dropdown-content">Profile</Link>
+			<Link to="/settings" className="dropdown-content">Settings</Link>
+			<Link to="/logout" className="dropdown-content">Sign Out</Link>
 		</>
 	)
 }
 
 const login = (e, setIsAdmin, setIsSignedIn) =>{
 	e.preventDefault();
-	axios({
+	axios_instance({
 		method: 'post',
-		url: target_url+"signin",
+		url: "signin",
 		data: {
 		  username: e.target.elements.username.value,
 		  password: e.target.elements.password.value
 		}
 	}).then(function(response){
+		console.log(response);
 		setIsSignedIn(response.data);
 		setIsAdmin('admin' === response.data);
 	}).catch(function(err){
@@ -102,9 +101,9 @@ const LoginDropdown = (props) =>{
 }
 const register = (e, setIsAdmin, setIsSignedIn) =>{
 	e.preventDefault();
-	axios({
+	axios_instance({
 		method: 'post',
-		url: target_url+"register",
+		url: "register",
 		data: {
 		  username: e.target.elements.username.value,
 		  password: e.target.elements.password.value,

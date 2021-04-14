@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import './App.css'
+import axios_instance from './components/axios_instance.js';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -12,9 +13,6 @@ import AdminController from "./components/home";
 import PlatformController from "./components/home"; 
 import SettingsController from "./components/Setting";
 import ProfileController from "./components/Profile";
-
-import axios from 'axios';
-axios.defaults.withCredentials = true;
 
 /*
 import PlatformList from './components/PlatformList';
@@ -31,8 +29,32 @@ const Switch = require("react-router-dom").Switch;
 const Route = require("react-router-dom").Route;
 
 function App(){
+	const [isSplash, setIsSplash] = useState(true);
 	const [isSignedIn, setIsSignedIn] = useState(false);
 	const [isAdmin, setIsAdmin] = useState(false);
+	const [username, setUsername] = useState(undefined);
+
+	useEffect(
+        ()=>{
+			axios_instance({
+                method: 'get',
+                url: "signin/whoami"
+            }).then(function(response){
+				console.log(response.data);
+                setIsSignedIn(response.data[0] !== null);
+				setUsername(response.data[0]);
+                setIsAdmin(response.data[1]);
+				setIsSplash(false);
+			}).catch(function(err){
+                console.log(err);
+            });
+        },[]
+    );
+
+	if(isSplash)
+	{
+		return (<div>Splash Screen!</div>)
+	}
 
 	return (
 	<div className="appStyle">
