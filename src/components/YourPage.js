@@ -40,27 +40,6 @@ const YourPagesController = (props) =>{
             }).catch(function(err){
                 console.log(err);
             });
-	       //  if (text.length < 1){
-	     		// axios({
-	       //          method: 'get',
-	       //          url: target_url+"/admin/ /"+skip+"/"+limit
-	       //      }).then(function(response){
-	       //          setPlatforms(response.data);
-	       //      }).catch(function(err){
-	       //          console.log(err);
-	       //      });
-	       //  }else{
-	       //  	if (limit < 1)
-	       //          return;
-	       //      axios({
-	       //          method: 'get',
-	       //          url: target_url+"/admin/"+text+"/"+skip+"/"+limit
-	       //      }).then(function(response){
-	       //          setPlatforms(response.data);
-	       //      }).catch(function(err){
-	       //          console.log(err);
-	       //      });
-	       //  }
         },[text, skip, limit,platforms]
     );
 

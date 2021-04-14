@@ -9,10 +9,6 @@ import axios_instance from './axios_instance.js';
 
 import './ComponentStyle.css';
 
-
-
-const target_url="https://learn-io-api.herokuapp.com/profile"
-
 const Profile=()=>{
     const[key, setKey] = useState('progress');
     const[skip, setSkip] = useState(0);
@@ -23,7 +19,7 @@ const Profile=()=>{
         ()=>{
             axios_instance({
                 method: 'get',
-                url: target_url+"/stats/"+skip+"/"+count
+                url: "profile/stats/"+skip+"/"+count
             }).then(function(response){
                 console.log(response.data);
                 setPlatforms(response.data);
