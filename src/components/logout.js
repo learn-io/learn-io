@@ -15,8 +15,7 @@ const LogoutController = (props) =>{
             console.log(err);
             console.log(err.response);
         });
-        props.setIsSignedIn(false);
-        props.setIsAdmin(false);
+        props.setIsPendingRefresh(true);
         history.push('/home');
     })
 	return (

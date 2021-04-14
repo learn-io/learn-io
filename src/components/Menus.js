@@ -17,9 +17,9 @@ const MenuController = (props) =>{
 	else
 	{
 		if (!isReg)
-			dropdown = <LoginDropdown setIsSignedIn={props.setIsSignedIn} setIsAdmin={props.setIsAdmin} setIsReg={setIsReg}/>
+			dropdown = <LoginDropdown setIsPendingRefresh={props.setIsPendingRefresh} setIsReg={setIsReg}/>
 		else
-			dropdown = <RegisterDropdown setIsSignedIn={props.setIsSignedIn} setIsAdmin={props.setIsAdmin} setIsReg={setIsReg}/>
+			dropdown = <RegisterDropdown setIsPendingRefresh={props.setIsPendingRefresh} setIsReg={setIsReg}/>
 	}
 	return (
 	<div className='menusStyle'>
@@ -55,7 +55,7 @@ const MenuDropdown = (props) =>{
 	)
 }
 
-const login = (e, setIsAdmin, setIsSignedIn) =>{
+const login = (e, setIsPendingRefresh) =>{
 	e.preventDefault();
 	axios_instance({
 		method: 'post',
@@ -66,17 +66,18 @@ const login = (e, setIsAdmin, setIsSignedIn) =>{
 		}
 	}).then(function(response){
 		console.log(response);
-		setIsSignedIn(response.data);
-		setIsAdmin('admin' === response.data);
+		setIsPendingRefresh(true);
 	}).catch(function(err){
 		console.log(err);
+		setIsPendingRefresh(true);
 	});
+	
 }
 
 const LoginDropdown = (props) =>{
 	return (
 		<>
-			<Form onSubmit={(e) => login(e,props.setIsAdmin,props.setIsSignedIn)}>
+			<Form onSubmit={(e) => login(e,props.setIsPendingRefresh)}>
 				<Form.Group controlId="username">
 					<Form.Label>Username</Form.Label>
 					<Form.Control type="username" placeholder="Enter username" />
@@ -99,7 +100,7 @@ const LoginDropdown = (props) =>{
 		</>
 	)
 }
-const register = (e, setIsAdmin, setIsSignedIn) =>{
+const register = (e, setIsPendingRefresh) =>{
 	e.preventDefault();
 	axios_instance({
 		method: 'post',
@@ -112,17 +113,17 @@ const register = (e, setIsAdmin, setIsSignedIn) =>{
 		  dateOfBirth: e.target.elements.dateOfBirth.value
 		}
 	}).then(function(response){
-		setIsSignedIn(response.data);
-		setIsAdmin('admin' === response.data);
+		setIsPendingRefresh(true);
 	}).catch(function(err){
 		console.log(err);
+		setIsPendingRefresh(true);
 	});
 }
 
 const RegisterDropdown = (props) =>{
 	return (
 		<>
-			<Form onSubmit={(e) => register(e,props.setIsAdmin,props.setIsSignedIn)}>
+			<Form onSubmit={(e) => register(e,props.setIsPendingRefresh)}>
 				<Form.Group controlId="username">
 					<Form.Label>Username</Form.Label>
 					<Form.Control type="username" placeholder="Enter username" />
