@@ -25,10 +25,12 @@
 /*search box style*/
 .searchBoxStyle{
 	padding:1rem;
+	width: 40%;
 	border-style:solid;
 	border-width:1px;
 	border-color:#19a974;
 	background-color: #cdecff;
+	border-radius: 1rem;
 }
 /*menus style*/
 .menusStyle{
