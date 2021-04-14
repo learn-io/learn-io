@@ -13,6 +13,8 @@ const YourPagesController = (props) =>{
 	const [text, setText] = useState("");
     const [skip, setSkip] = useState(0);
     const [limit, setLimit] = useState(10);
+	// limit is the maximum number of platforms to be returned
+	// less are only returned if there are no more in the databse
     const [deletePlatform, setDeletePlatform]=useState("");
     const [nextPlatforms, setNextPlatforms] = useState([])
 
@@ -34,7 +36,7 @@ const YourPagesController = (props) =>{
             });
             axios_instance({
                 method: 'get',
-                url: "search/platforms/admin/"+queryText+"/"+(skip+10)+"/"+limit
+                url: "search/platforms/admin/"+queryText+"/"+(skip+limit)+"/"+limit
             }).then(function(response){
                 setNextPlatforms(response.data);
             }).catch(function(err){
