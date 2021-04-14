@@ -14,44 +14,53 @@ const YourPagesController = () =>{
     const [skip, setSkip] = useState(0);
     const [limit, setLimit] = useState(10);
     const [deletePlatform, setDeletePlatform]=useState("");
+    const [nextPlatforms, setNextPlatforms] = useState([])
 
     useEffect(
         ()=>{
-   //      	let queryText = text
-   //          if (text.length < 2)
-			// 	queryText = ' '
-			// if (limit < 1)
-   //              return;
-   //          axios_instance({
-   //              method: 'get',
-   //              url: "search/platforms/admin/"+queryText+"/"+skip+"/"+limit
-   //          }).then(function(response){
-   //              setPlatforms(response.data);
-   //          }).catch(function(err){
-   //              console.log(err);
-   //          });
-	        if (text.length < 1){
-	     		axios({
-	                method: 'get',
-	                url: target_url+"/admin/ /"+skip+"/"+limit
-	            }).then(function(response){
-	                setPlatforms(response.data);
-	            }).catch(function(err){
-	                console.log(err);
-	            });
-	        }else{
-	        	if (limit < 1)
-	                return;
-	            axios({
-	                method: 'get',
-	                url: target_url+"/admin/"+text+"/"+skip+"/"+limit
-	            }).then(function(response){
-	                setPlatforms(response.data);
-	            }).catch(function(err){
-	                console.log(err);
-	            });
-	        }
-        },[text, skip, limit]
+        	let queryText = text
+            if (text.length < 2)
+				queryText = ' '
+			if (limit < 1)
+                return;
+            axios_instance({
+                method: 'get',
+                url: "search/platforms/admin/"+queryText+"/"+skip+"/"+limit
+            }).then(function(response){
+                setPlatforms(response.data);
+            }).catch(function(err){
+                console.log(err);
+            });
+            axios_instance({
+                method: 'get',
+                url: "search/platforms/admin/"+queryText+"/"+(skip+10)+"/"+limit
+            }).then(function(response){
+                setNextPlatforms(response.data);
+            }).catch(function(err){
+                console.log(err);
+            });
+	       //  if (text.length < 1){
+	     		// axios({
+	       //          method: 'get',
+	       //          url: target_url+"/admin/ /"+skip+"/"+limit
+	       //      }).then(function(response){
+	       //          setPlatforms(response.data);
+	       //      }).catch(function(err){
+	       //          console.log(err);
+	       //      });
+	       //  }else{
+	       //  	if (limit < 1)
+	       //          return;
+	       //      axios({
+	       //          method: 'get',
+	       //          url: target_url+"/admin/"+text+"/"+skip+"/"+limit
+	       //      }).then(function(response){
+	       //          setPlatforms(response.data);
+	       //      }).catch(function(err){
+	       //          console.log(err);
+	       //      });
+	       //  }
+        },[text, skip, limit,platforms]
     );
 
     const onChangeDelete=(platform,state)=>{
@@ -76,9 +85,9 @@ const YourPagesController = () =>{
   //       	setDeletePlatform('');
 	 //    })
 	 //    .catch(err=>console.log(err));
-		axios({
+		axios_instance({
             method: 'post',
-            url: deleteplat_url,
+            url: "platform/deletePlatform",
             data: {
                 _id: platform._id
             }
@@ -100,6 +109,8 @@ const YourPagesController = () =>{
 	        <SearchBox setText={setText}/>
 	        <DeletePlatformList platforms={platforms} onChangeDelete={onChangeDelete}/>
 	        <DeleteConfirmBox deletePlatform={deletePlatform} onDeletePlatform={onDeletePlatform} onChangeDelete={onChangeDelete}/>
+	        <PreviousButton skip={skip} setSkip={setSkip} />
+        	<NextButton nextPlatforms={nextPlatforms} skip={skip} setSkip={setSkip}/>
 	    </div>
     )
 }
@@ -118,6 +129,31 @@ const SearchBox =({text, setText})=>{
 			/>
 		</div>
 	);
+}
+
+const PreviousButton=(props)=>{
+	if(props.skip===0){
+		return(
+			<button disabled style={{color:'grey'}} className='homeButton'>Previous</button>
+		);
+	}else{
+		return(
+			<button className='homeButton' onClick={()=>{props.setSkip(props.skip-10)}}>Previous</button>
+		);
+	}
+	
+}
+
+const NextButton=(props)=>{
+	if(props.nextPlatforms.length===0){
+		return(
+			<button disabled style={{color:'grey'}} className='homeButton'>Next</button>
+		);
+	}else{
+		return(
+			<button className='homeButton' onClick={()=>{props.setSkip(props.skip+10)}}>Next</button>
+		);
+	}
 }
 
 const Platform =({name})=>{
