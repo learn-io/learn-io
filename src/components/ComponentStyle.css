@@ -141,7 +141,7 @@ input.largeCheckbox{
 
 /*Profile Form*/
 /* .profileTabHeader ul > li > a { */
-.profileTabHeader ul > li > a {
+.profileTabHeader a{
 	background-color:black;
 	color:#fff;
 	font-size: large;
