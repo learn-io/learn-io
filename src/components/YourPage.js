@@ -31,7 +31,7 @@ const YourPagesController = (props) =>{
                 return;
             axios_instance({
                 method: 'get',
-                url: "search/platforms/admin/"+queryText+"/"+skip+"/"+limit
+                url: "search/platforms/"+props.username+"/"+queryText+"/"+skip+"/"+limit
             }).then(function(response){
                 setPlatforms(response.data);
             }).catch(function(err){
@@ -39,7 +39,7 @@ const YourPagesController = (props) =>{
             });
             axios_instance({
                 method: 'get',
-                url: "search/platforms/admin/"+queryText+"/"+(skip+limit)+"/"+limit
+                url: "search/platforms/"+props.username+"/"+queryText+"/"+(skip+limit)+"/"+limit
             }).then(function(response){
                 setNextPlatforms(response.data);
             }).catch(function(err){
@@ -86,6 +86,8 @@ const YourPagesController = (props) =>{
 	const onChangeLimit=(value)=>{
     	setLimit(value);
     }
+
+    // console.log(props.username);
 
 	if(props.isSignedIn){
 		return (
