@@ -81,20 +81,26 @@ const YourPagesController = (props) =>{
 	    })
 	    .catch(err=>console.log(err));
 	}
-
-    return (
-	    <div className='appStyle'>
-	    	<div style={{display:'flex',justifyContent: 'space-between',paddingTop:'1rem'}}>
-		    	<h1>Your Pages</h1>
-		    	<button className='deleteButton'><img src={plusIcon} height='50px' width='50px' alt="plus"/></button>
-	    	</div>
-	        <SearchBox setText={setText}/>
-	        <DeletePlatformList platforms={platforms} onChangeDelete={onChangeDelete}/>
-	        <DeleteConfirmBox deletePlatform={deletePlatform} onDeletePlatform={onDeletePlatform} onChangeDelete={onChangeDelete}/>
-	        <PreviousButton skip={skip} setSkip={setSkip} />
-        	<NextButton nextPlatforms={nextPlatforms} skip={skip} setSkip={setSkip}/>
-	    </div>
-    )
+	console.log(1);
+	console.log(props.username)
+	if(props.isSignedIn){
+		return (
+		    <div className='appStyle'>
+		    	<div style={{display:'flex',justifyContent: 'space-between',paddingTop:'1rem'}}>
+			    	<h1>Your Pages</h1>
+			    	<button className='deleteButton'><img src={plusIcon} height='50px' width='50px' alt="plus"/></button>
+		    	</div>
+		        <SearchBox setText={setText}/>
+		        <DeletePlatformList platforms={platforms} onChangeDelete={onChangeDelete}/>
+		        <DeleteConfirmBox deletePlatform={deletePlatform} onDeletePlatform={onDeletePlatform} onChangeDelete={onChangeDelete}/>
+		        <PreviousButton skip={skip} setSkip={setSkip} />
+	        	<NextButton nextPlatforms={nextPlatforms} skip={skip} setSkip={setSkip}/>
+		    </div>
+	    )
+	}else{
+		return (<h1>You must log in first!!!</h1>);
+	}
+    
 }
 
 
