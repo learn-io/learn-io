@@ -66,11 +66,11 @@ function App(){
 			</Route>
 
 			<Route path="/home">
-				<HomeController isSignedIn={isSignedIn}/>
+				<HomeController isSignedIn={isSignedIn} username={username}/>
 			</Route>
 
 			<Route path="/yourplatforms">
-				<YourPagesController isSignedIn={isSignedIn}/>
+				<YourPagesController isSignedIn={isSignedIn} username={username}/>
 			</Route>
 
 			<Route path="/admin">

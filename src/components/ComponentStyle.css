@@ -201,7 +201,7 @@ input.largeCheckbox{
 	left:50%;
 	border-radius: .5rem;
 	transform: translate(-50%,-50%);
-	background-color: #2e5894;
+	background-color: #9EEBCF;
 	padding:50px;
 	z-index: 100;
 }
@@ -235,7 +235,7 @@ input.largeCheckbox{
 	width: 50%;
 	border-radius: .5rem;
 	transform: translate(-50%,-50%);
-	background-color: #2e5894;
+	background-color: #9EEBCF;
 	/*padding:5px;*/
 	z-index: 100;
 }
