@@ -69,7 +69,7 @@ function App(){
 				<HomeController isSignedIn={isSignedIn}/>
 			</Route>
 
-			<Route path="/yourpages">
+			<Route path="/yourplatforms">
 				<YourPagesController isSignedIn={isSignedIn}/>
 			</Route>
 
@@ -81,7 +81,7 @@ function App(){
 				<PlatformController isSignedIn={isSignedIn}/>
 			</Route>
 
-			<Route path="/setting">
+			<Route path="/settings">
 				<SettingsController isSignedIn={isSignedIn}/>
 			</Route>
 
