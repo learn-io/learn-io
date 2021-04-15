@@ -52,7 +52,7 @@ function App(){
 			}).catch(function(err){
                 console.log(err);
 				setIsPendingRefresh(false);
-				setIsPendingRefresh(true);
+				//setIsPendingRefresh(true);
             });
         },[isPendingRefresh]
     );
