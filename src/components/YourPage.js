@@ -1,14 +1,21 @@
 import React,{useEffect, useState} from 'react';
 import './ComponentStyle.css';
 // import axios from 'axios';
-import deleteIcon from './images/delete.png';
+// import deleteIcon from './images/delete.png';
 import plusIcon from './images/plus.png';
 import axios_instance from './axios_instance.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Dropdown} from 'react-bootstrap';
-import uploadIcon from './images/upload.png';
-import editIcon from './images/edit.png';
-import saveIcon from './images/save.png';
+// import uploadIcon from './images/upload.png';
+// import editIcon from './images/edit.png';
+// import saveIcon from './images/save.png';
+import Platform from './components/Platform';
+import PreviousButton from './components/PreviousButton';
+import NextButton from './components/NextButton';
+import SearchBox from './components/SearchBox';
+import ConfirmBox from './components/ConfirmBox';
+import DeletePlatformList from './components/DeletePlatformList';
+import DeleteConfirmBox from './components/DeleteConfirmBox';
 // const deleteplat_url = "http://localhost:3000/platform/deletePlatform";
 // const target_url="http://localhost:3000/search/platforms";
 
@@ -163,9 +170,10 @@ const YourPagesController = (props) =>{
 		        <DeletePlatformList platforms={platforms} onChangeDelete={onChangeDelete} onSelectPlatform={onSelectPlatform}/>
 		        <DeleteConfirmBox deletePlatform={deletePlatform} onDeletePlatform={onDeletePlatform} onChangeDelete={onChangeDelete}/>
 		        <ConfirmBox 
-		        	selectPlatform={selectPlatform}
+		        	username={props.username}
 		        	header={header}
 		        	description={description}
+		        	selectPlatform={selectPlatform}
 		        	onSelectPlatform={onSelectPlatform}
 		        	onSavePlatformInfo={onSavePlatformInfo}
 		        	onUploadImage={onUploadImage}
@@ -184,135 +192,135 @@ const YourPagesController = (props) =>{
     
 }
 
-const ConfirmBox=({selectPlatform,header,description,onSelectPlatform,onSavePlatformInfo,onUploadImage,onEditHeader,onEditDescription,changeHeader,changeD})=>{
-	if(selectPlatform==='') return null
-	let hdr;
-	let hdrButton;
-	if(changeHeader){
-		hdr=<input style={{width:'50%'}} type="text" id="header" name="header"/>
-		hdrButton=<button className='deleteButton' onClick={()=>{onEditHeader(document.getElementById("header").value)}}><img src={editIcon} height='50px' width='50px' alt="edit"/></button>
-	}
-	else{
-		hdr=<h2>{header}</h2>
-		hdrButton=<button className='deleteButton' onClick={()=>{onEditHeader()}}><img src={editIcon} height='50px' width='50px' alt="edit"/></button>
-	}
-	let desc;
-	let descButton;
-	if(changeD){
-		desc=<input style={{width:'40%'}} type="text" id="desc" name="desc"/>
-		descButton=<button className='deleteButton' onClick={()=>{onEditDescription(document.getElementById("desc").value)}}><img src={editIcon} height='50px' width='50px' alt="edit"/></button>
-	}
-	else{
-		desc=<p className='paragraph'>{description}</p>
-		descButton=<button className='deleteButton' onClick={()=>{onEditDescription()}}><img src={editIcon} height='50px' width='50px' alt="edit"/></button>
-	}
-	return (
-		<section id="overlay">
-			<div className='overlayStyle'>
-				<div className='selectConfirm'>
-					<div style={{justifyContent:'space-between',display:'flex'}}>
-						<button className='deleteButton' onClick={()=>{onSavePlatformInfo(selectPlatform)}}><img src={saveIcon} height='50px' width='50px' alt="save"/></button>
-						<button className='closeButton' onClick={()=>{onSelectPlatform('')}}>X</button>
-					</div>
-					<div style={{justifyContent:'center',display:'flex'}}>
-						{hdr}
-						{hdrButton}
-					</div>
-					<div style={{justifyContent:'space-between',display:'flex'}}>
-						<button className='deleteButton' onClick={()=>{onUploadImage()}}><img src={uploadIcon} height='50px' width='50px' alt="upload"/></button>
-						{descButton}
-					</div>
-					<div style={{justifyContent:'center',display:'flex'}}>
-						<img alt='platformImage' src={`https://robohash.org/${selectPlatform.platformName}?200x200`}/>
-						{desc}
-					</div>
-					<div className='clearfix'>
-						<button className='playButton'>Play</button>
-					</div>
-				</div>
-			</div>
-		</section>
-	);
-}
+// const ConfirmBox=({selectPlatform,header,description,onSelectPlatform,onSavePlatformInfo,onUploadImage,onEditHeader,onEditDescription,changeHeader,changeD})=>{
+// 	if(selectPlatform==='') return null
+// 	let hdr;
+// 	let hdrButton;
+// 	if(changeHeader){
+// 		hdr=<input style={{width:'50%'}} type="text" id="header" name="header"/>
+// 		hdrButton=<button className='deleteButton' onClick={()=>{onEditHeader(document.getElementById("header").value)}}><img src={editIcon} height='50px' width='50px' alt="edit"/></button>
+// 	}
+// 	else{
+// 		hdr=<h2>{header}</h2>
+// 		hdrButton=<button className='deleteButton' onClick={()=>{onEditHeader()}}><img src={editIcon} height='50px' width='50px' alt="edit"/></button>
+// 	}
+// 	let desc;
+// 	let descButton;
+// 	if(changeD){
+// 		desc=<input style={{width:'40%'}} type="text" id="desc" name="desc"/>
+// 		descButton=<button className='deleteButton' onClick={()=>{onEditDescription(document.getElementById("desc").value)}}><img src={editIcon} height='50px' width='50px' alt="edit"/></button>
+// 	}
+// 	else{
+// 		desc=<p className='paragraph'>{description}</p>
+// 		descButton=<button className='deleteButton' onClick={()=>{onEditDescription()}}><img src={editIcon} height='50px' width='50px' alt="edit"/></button>
+// 	}
+// 	return (
+// 		<section id="overlay">
+// 			<div className='overlayStyle'>
+// 				<div className='selectConfirm'>
+// 					<div style={{justifyContent:'space-between',display:'flex'}}>
+// 						<button className='deleteButton' onClick={()=>{onSavePlatformInfo(selectPlatform)}}><img src={saveIcon} height='50px' width='50px' alt="save"/></button>
+// 						<button className='closeButton' onClick={()=>{onSelectPlatform('')}}>X</button>
+// 					</div>
+// 					<div style={{justifyContent:'center',display:'flex'}}>
+// 						{hdr}
+// 						{hdrButton}
+// 					</div>
+// 					<div style={{justifyContent:'space-between',display:'flex'}}>
+// 						<button className='deleteButton' onClick={()=>{onUploadImage()}}><img src={uploadIcon} height='50px' width='50px' alt="upload"/></button>
+// 						{descButton}
+// 					</div>
+// 					<div style={{justifyContent:'center',display:'flex'}}>
+// 						<img alt='platformImage' src={`https://robohash.org/${selectPlatform.platformName}?200x200`}/>
+// 						{desc}
+// 					</div>
+// 					<div className='clearfix'>
+// 						<button className='playButton'>Play</button>
+// 					</div>
+// 				</div>
+// 			</div>
+// 		</section>
+// 	);
+// }
 
 
-const SearchBox =({text, onSearchPlatform})=>{
-	return (
-		<div className='pa'>
-			<input 
-				className='searchBoxStyle'
-				type='search'
-                value={text}
-				placeholder='Search platform'
-				onChange={(e)=>{onSearchPlatform(e.target.value)}}
-			/>
-		</div>
-	);
-}
+// const SearchBox =({text, onSearchPlatform})=>{
+// 	return (
+// 		<div className='pa'>
+// 			<input 
+// 				className='searchBoxStyle'
+// 				type='search'
+//                 value={text}
+// 				placeholder='Search platform'
+// 				onChange={(e)=>{onSearchPlatform(e.target.value)}}
+// 			/>
+// 		</div>
+// 	);
+// }
 
-const PreviousButton=(props)=>{
-	let but;
-	if(props.skip===0){
-		but=<button disabled style={{color:'grey'}} className='homeButton'>Previous</button>
-	}else{
-		but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip-props.limit)}}>Previous</button>
-	}
-	return but;
-}
+// const PreviousButton=(props)=>{
+// 	let but;
+// 	if(props.skip===0){
+// 		but=<button disabled style={{color:'grey'}} className='homeButton'>Previous</button>
+// 	}else{
+// 		but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip-props.limit)}}>Previous</button>
+// 	}
+// 	return but;
+// }
 
-const NextButton=(props)=>{
-	let but;
-	if(props.nextPlatforms===false){
-		but=<button disabled style={{color:'grey'}} className='homeButton'>Next</button>
-	}else{
-			but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip+props.limit)}}>Next</button>
-	}
-	return but;
-}
+// const NextButton=(props)=>{
+// 	let but;
+// 	if(props.nextPlatforms===false){
+// 		but=<button disabled style={{color:'grey'}} className='homeButton'>Next</button>
+// 	}else{
+// 			but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip+props.limit)}}>Next</button>
+// 	}
+// 	return but;
+// }
 
-const Platform =({name,platform,onSelectPlatform})=>{
-	return(
-		<div className='platformStyle grow' onClick={()=>{onSelectPlatform(platform)}}>
-			<img alt='platformImage' src={`https://robohash.org/${name}?200x200`}/>
-			<div>
-				<h4>{name}</h4>
-			</div>
-		</div>
-	);
-}
+// const Platform =({name,platform,onSelectPlatform})=>{
+// 	return(
+// 		<div className='platformStyle grow' onClick={()=>{onSelectPlatform(platform)}}>
+// 			<img alt='platformImage' src={`https://robohash.org/${name}?200x200`}/>
+// 			<div>
+// 				<h4>{name}</h4>
+// 			</div>
+// 		</div>
+// 	);
+// }
 
-const DeletePlatformList=({platforms, onChangeDelete,onSelectPlatform})=>{
-	return(
-		// loop for all platforms
-		<div >
-  			{
-  				platforms.map((user,i)=>{
-					return (
-						<div className='deleteList' key={i} >
-							<Platform name={platforms[i].platformName} platform={platforms[i]} onSelectPlatform={onSelectPlatform}/>
-							<button onClick={()=>onChangeDelete(platforms[i])} className='deleteButton'><img src={deleteIcon} height='40px' width='40px' alt="delete"/></button>
-						</div>
-					);
-				})
-			}
-  		</div>
-	);
-}
+// const DeletePlatformList=({platforms, onChangeDelete,onSelectPlatform})=>{
+// 	return(
+// 		// loop for all platforms
+// 		<div >
+//   			{
+//   				platforms.map((user,i)=>{
+// 					return (
+// 						<div className='deleteList' key={i} >
+// 							<Platform name={platforms[i].platformName} platform={platforms[i]} onSelectPlatform={onSelectPlatform}/>
+// 							<button onClick={()=>onChangeDelete(platforms[i])} className='deleteButton'><img src={deleteIcon} height='40px' width='40px' alt="delete"/></button>
+// 						</div>
+// 					);
+// 				})
+// 			}
+//   		</div>
+// 	);
+// }
 
-const DeleteConfirmBox=({deletePlatform,onDeletePlatform,onChangeDelete})=>{
-	if(deletePlatform==='') return null
-	return (
-		<section id="overlay">
-			<div className='overlayStyle'>
-				<div className='deleteConfirm'>
-					<h2>Are you sure you want to delete</h2>
-					<h2>"{deletePlatform.platformName}"?</h2>
-					<button className='deleteButtonStyle' onClick={()=>onDeletePlatform(deletePlatform)}>Yes</button>
-					<button className='deleteButtonStyle' onClick={()=>onChangeDelete('')}>No</button>
-				</div>
-			</div>
-		</section>
-	);
-}
+// const DeleteConfirmBox=({deletePlatform,onDeletePlatform,onChangeDelete})=>{
+// 	if(deletePlatform==='') return null
+// 	return (
+// 		<section id="overlay">
+// 			<div className='overlayStyle'>
+// 				<div className='deleteConfirm'>
+// 					<h2>Are you sure you want to delete</h2>
+// 					<h2>"{deletePlatform.platformName}"?</h2>
+// 					<button className='deleteButtonStyle' onClick={()=>onDeletePlatform(deletePlatform)}>Yes</button>
+// 					<button className='deleteButtonStyle' onClick={()=>onChangeDelete('')}>No</button>
+// 				</div>
+// 			</div>
+// 		</section>
+// 	);
+// }
 
 export default YourPagesController;
