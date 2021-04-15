@@ -1,10 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import MenuController from "./Menus";
+import {default as MenuController, LoginDropdown, RegisterDropdown} from "./Menus";
 
 const BrowserRouter = require("react-router-dom").BrowserRouter;
 
-it('Not Logged In', () => {
+it('Not Logged In (all)', () => {
 	
 	const tree = renderer.create(
 	<BrowserRouter>
@@ -16,20 +16,27 @@ it('Not Logged In', () => {
 	).toJSON();
 	expect(tree).toMatchSnapshot();
 });
-it('Not Logged In But Admin', () => {
+it('Not Logged In (login) ', () => {
 	
 	const tree = renderer.create(
 	<BrowserRouter>
-		<MenuController 
-		isSignedIn={false} 
-		isAdmin={true} 
+		<LoginDropdown 
+		/>
+	</BrowserRouter>
+	).toJSON();
+	expect(tree).toMatchSnapshot();
+});
+it('Not Logged In (register) ', () => {
+	
+	const tree = renderer.create(
+	<BrowserRouter>
+		<RegisterDropdown 
 		/>
 	</BrowserRouter>
 	).toJSON();
 	expect(tree).toMatchSnapshot();
 });
 it('Logged In', () => {
-	
 	const tree = renderer.create(
 	<BrowserRouter>
 		<MenuController 
@@ -41,7 +48,6 @@ it('Logged In', () => {
 	expect(tree).toMatchSnapshot();
 });
 it('Logged In And Admin', () => {
-	
 	const tree = renderer.create(
 	<BrowserRouter>
 		<MenuController 
@@ -52,6 +58,3 @@ it('Logged In And Admin', () => {
 	).toJSON();;
 	expect(tree).toMatchSnapshot();
 });
-
-
-export default MenuController;
