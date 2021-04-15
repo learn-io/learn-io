@@ -125,6 +125,11 @@
 	width: 700px;
 	margin:0px auto;
 }
+
+.form-row{
+	padding-top:2rem;
+}
+
 input.largeCheckbox{
 	width:30px;
 	height: 30px;
@@ -140,6 +145,24 @@ input.largeCheckbox{
 .profileFormGroupLabel{
 	color:#fff;
 	font-size: large;
+}
+
+.form-inline{
+	margin-left:0px;
+}
+
+.form-inline > *{
+	margin:0rem 10rem; 
+	/* padding:2rem; */
+}
+
+.form-inline > * > * {
+	margin:1rem 10rem; 
+}
+
+.userPlatformInfoPadding{
+	padding-top:3rem;
+	color:white;
 }
 
 /*Profile Form*/

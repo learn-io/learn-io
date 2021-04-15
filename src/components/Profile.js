@@ -21,8 +21,9 @@ const Profile=()=>{
                 method: 'get',
                 url: "profile/stats/"+skip+"/"+count
             }).then(function(response){
-                console.log(response.data);
-                setPlatforms(response.data);
+                // console.log("The response data is ");
+                // console.log(response.data.resp);
+                setPlatforms(response.data.resp);
             }).catch(function(err){
                 console.log(err);
             })
@@ -34,28 +35,24 @@ const Profile=()=>{
             <div style={{display:'flex', justifyContent:"left", padding:"2rem"}}>
                 <h1>Profile</h1>
             </div>
-            <Form>
+            <Form className="form-inline w-100">
                 <Form.Group controlId="skipBy" >
                     <Form.Label className="profileFormGroupLabel">Skip By:</Form.Label>
-                    <Form.Control type="number" value={skip} onChange={setSkip}></Form.Control>
+                    <Form.Control type="number" onBlur={(e)=>{e.preventDefault(); setSkip(e.target.value);}}></Form.Control>
                 </Form.Group>
-                <Form.Group controlId="count" >
+                <Form.Group controlId="countBy" >
                     <Form.Label className="profileFormGroupLabel">Platforms per page:</Form.Label>
-                    <Form.Control as="select" value={count} onChange={setCount}>
-                        <option>10</option>
-                        <option>25</option>
-                        <option>50</option>
+                    <Form.Control as="select">
+                        <option onClick={(e)=>{e.preventDefault(); setCount(10);}}>10</option>
+                        <option onClick={(e)=>{e.preventDefault(); setCount(25)}}>25</option>
+                        <option onClick={(e)=>{e.preventDefault(); setCount(50)}}>50</option>
                     </Form.Control>
                 </Form.Group>
-                {/* <label>
-                    Skip by:
-                    <input type="text" name="skip" />
-                </label>
-                <label>
-                    Platforms per page:
-                    <input type="text" name="count" />
-                </label> */}
             </Form>
+            
+            <h1>Skip: {JSON.stringify(skip)}</h1>
+            <h1>Count: {JSON.stringify(count)}</h1>
+            
             <Tabs className="profileTabHeader" fill justify id="profileTabs" activeKey={key} onSelect={(k) => setKey(k)}>
                     <Tab eventKey="progress" title="Progress" >
                         {/* Progress */}
@@ -75,10 +72,11 @@ const Profile=()=>{
 }
 
 const Progress=({userPlatformInfo})=>{
-    if(userPlatformInfo.length==0){
+    // console.log("Called Progress");
+    if(userPlatformInfo.length===0){
         return (
-            <div>
-                <h1>No progress to display at this time.</h1>
+            <div className="userPlatformInfoPadding">
+                <h2>No progress to display at this time.</h2>
             </div>
         )
     } else {
@@ -92,15 +90,16 @@ const Progress=({userPlatformInfo})=>{
 }
 
 const Badges=({userPlatformInfo})=>{
-    if(userPlatformInfo.length==0){
+    // console.log("Called Badges");
+    if(userPlatformInfo.length===0){
         return (
-            <div>
+            <div className="userPlatformInfoPadding">
                 <h1>No badges to display at this time.</h1>
             </div>
         )
     } else {
         return (
-            <div>
+            <div >
     
     
             </div>
@@ -109,9 +108,10 @@ const Badges=({userPlatformInfo})=>{
 }
 
 const Stats=({userPlatformInfo})=>{
-    if(userPlatformInfo.length==0){
+    // console.log("Called Stats");
+    if(userPlatformInfo.length===0){
         return (
-            <div>
+            <div className="userPlatformInfoPadding">
                 <h1>No stats to display at this time.</h1>
             </div>
         )
