@@ -49,6 +49,7 @@ const HomeController = (props) =>{
     }
     const onChangeLimit=(value)=>{
     	setLimit(value);
+    	setSkip(0);
     }
     return (
     <div className='appStyle'>
@@ -64,9 +65,9 @@ const HomeController = (props) =>{
 			</Dropdown.Menu>
 		</Dropdown>
         <PlatformList platforms={platforms} onSelectPlatform={onSelectPlatform}/>
-       	<PreviousButton skip={skip} setSkip={setSkip} />
+       	<PreviousButton limit={limit} skip={skip} setSkip={setSkip} />
        	<ConfirmBox selectPlatform={selectPlatform} onSelectPlatform={onSelectPlatform}/>
-        <NextButton nextPlatforms={nextPlatforms} skip={skip} setSkip={setSkip}/>
+        <NextButton limit={limit} nextPlatforms={nextPlatforms} skip={skip} setSkip={setSkip}/>
     </div>
     )
 }
@@ -110,7 +111,7 @@ const PreviousButton=(props)=>{
 	if(props.skip===0){
 		but=<button disabled style={{color:'grey'}} className='homeButton'>Previous</button>
 	}else{
-		but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip-10)}}>Previous</button>
+		but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip-props.limit)}}>Previous</button>
 	}
 	return but;
 }
@@ -118,7 +119,7 @@ const PreviousButton=(props)=>{
 const NextButton=(props)=>{
 	let but;
 	if(props.nextPlatforms){
-		but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip+10)}}>Next</button>
+		but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip+props.limit)}}>Next</button>
 	}else{
 		but=<button disabled style={{color:'grey'}} className='homeButton'>Next</button>
 	}

@@ -139,6 +139,7 @@ const YourPagesController = (props) =>{
 
 	const onChangeLimit=(value)=>{
     	setLimit(value);
+    	setSkip(0);
     }
 
 	if(props.isSignedIn){
@@ -173,8 +174,8 @@ const YourPagesController = (props) =>{
 		        	changeHeader={changeHeader}
 		        	changeD={changeD}
 		        />
-		        <PreviousButton skip={skip} setSkip={setSkip} />
-	        	<NextButton nextPlatforms={nextPlatforms} skip={skip} setSkip={setSkip}/>
+		        <PreviousButton limit={limit} skip={skip} setSkip={setSkip} />
+	        	<NextButton limit={limit} nextPlatforms={nextPlatforms} skip={skip} setSkip={setSkip}/>
 		    </div>
 	    )
 	}else{
@@ -254,7 +255,7 @@ const PreviousButton=(props)=>{
 	if(props.skip===0){
 		but=<button disabled style={{color:'grey'}} className='homeButton'>Previous</button>
 	}else{
-		but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip-10)}}>Previous</button>
+		but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip-props.limit)}}>Previous</button>
 	}
 	return but;
 }
@@ -264,7 +265,7 @@ const NextButton=(props)=>{
 	if(props.nextPlatforms===false){
 		but=<button disabled style={{color:'grey'}} className='homeButton'>Next</button>
 	}else{
-			but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip+10)}}>Next</button>
+			but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip+props.limit)}}>Next</button>
 	}
 	return but;
 }
