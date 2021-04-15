@@ -59,6 +59,7 @@ const HomeController = (props) =>{
 		    	Platfroms per page: {limit}
 			</Dropdown.Toggle>
 			<Dropdown.Menu>
+				<Dropdown.Item onClick={()=>{onChangeLimit(3)}}>3</Dropdown.Item>
 		    	<Dropdown.Item onClick={()=>{onChangeLimit(10)}}>10</Dropdown.Item>
 		    	<Dropdown.Item onClick={()=>{onChangeLimit(15)}}>15</Dropdown.Item>
 		    	<Dropdown.Item onClick={()=>{onChangeLimit(20)}}>20</Dropdown.Item>
