@@ -31,9 +31,12 @@ const Route = require("react-router-dom").Route;
 function App(){
 	const [isPendingRefresh, setIsPendingRefresh] = useState(true);
 	const [isSplash, setIsSplash] = useState(true);
+
 	const [isSignedIn, setIsSignedIn] = useState(false);
 	const [isAdmin, setIsAdmin] = useState(false);
 	const [username, setUsername] = useState(null);
+
+	const [globalError, setGlobalError] = useState("");
 
 	useEffect(
         ()=>{
@@ -52,14 +55,20 @@ function App(){
 			}).catch(function(err){
                 console.log(err);
 				setIsPendingRefresh(false);
-				setIsPendingRefresh(true);
+				setGlobalError("Unable to sync state with API");
+				//setIsPendingRefresh(true);
             });
         },[isPendingRefresh]
     );
 
+	if (globalError !== "")
+	{
+		return (<div className="errorStyle">{globalError}</div>)
+	}
+
 	if(isSplash)
 	{
-		return (<div>Splash Screen!</div>)
+		return (<div className="splashStyle">Loading...</div>)
 	}
 
 	return (
@@ -76,7 +85,7 @@ function App(){
 			</Route>
 
 			<Route path="/yourplatforms">
-				<YourPagesController isSignedIn={isSignedIn} username={username} isSignedIn={isSignedIn}/>
+				<YourPagesController isSignedIn={isSignedIn} username={username}/>
 			</Route>
 
 			<Route path="/admin">

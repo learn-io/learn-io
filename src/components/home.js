@@ -9,7 +9,7 @@ const HomeController = (props) =>{
     const [text, setText] = useState("");
     const [skip, setSkip] = useState(0);
     const [limit, setLimit] = useState(10);
-    const [nextPlatforms, setNextPlatforms] = useState([]);
+    const [nextPlatforms, setNextPlatforms] = useState(false);
     const [selectPlatform, setSelectPlatform] = useState("");
 
     useEffect(
@@ -21,30 +21,21 @@ const HomeController = (props) =>{
                 return;
 			axios_instance({
                 method: 'get',
-                url: "search/platforms/all/"+queryText+"/"+skip+"/"+limit
+                url: "search/platforms/all/"+queryText+"/"+skip+"/"+(limit+1)
             }).then(function(response){
+                if(response.data.length===(limit+1)){
+            		response.data.pop();
+            		setNextPlatforms(true);
+            	}else{
+            		setNextPlatforms(false);
+            	}
                 setPlatforms(response.data);
-            }).catch(function(err){
-                console.log(err);
-            });
-            axios_instance({
-                method: 'get',
-                url: "search/platforms/all/"+queryText+"/"+(skip+10)+"/"+limit
-            }).then(function(response){
-                setNextPlatforms(response.data);
             }).catch(function(err){
                 console.log(err);
             });
         },[text, skip, limit]
     );
 
-    // const onPreviousPlatform=()=>{
-    // 	console.log('Previous');
-    // 	// onClick={()=>{props.setSkip(props.skip-10)}
-    // }
-    // const onNextPlatform=()=>{
-    // 	setSkip(skip+10);
-    // }
     const onSelectPlatform=(platform)=>{
 		if(platform!==''){
 			setSelectPlatform(platform);
@@ -67,6 +58,7 @@ const HomeController = (props) =>{
 		    	Platfroms per page: {limit}
 			</Dropdown.Toggle>
 			<Dropdown.Menu>
+				<Dropdown.Item onClick={()=>{onChangeLimit(3)}}>3</Dropdown.Item>
 		    	<Dropdown.Item onClick={()=>{onChangeLimit(10)}}>10</Dropdown.Item>
 		    	<Dropdown.Item onClick={()=>{onChangeLimit(15)}}>15</Dropdown.Item>
 		    	<Dropdown.Item onClick={()=>{onChangeLimit(20)}}>20</Dropdown.Item>
@@ -92,7 +84,7 @@ const ConfirmBox=({selectPlatform,onSelectPlatform})=>{
 						<img alt='platformImage' src={`https://robohash.org/${selectPlatform.platformName}?200x200`}/>
 					</div>
 					<div>
-						<p className='paragraph'>Geckos are a group of usually small, usually nocturnal lizards. They are found on every continent except Australia.</p>
+						<p className='paragraph'>{selectPlatform.description}</p>
 					</div>
 					<div className='clearfix'>
 						<button className='playButton'>Play</button>
@@ -115,28 +107,23 @@ const Platform =({name,platform,onSelectPlatform})=>{
 }
 
 const PreviousButton=(props)=>{
+	let but;
 	if(props.skip===0){
-		return(
-			<button disabled style={{color:'grey'}} className='homeButton'>Previous</button>
-		);
+		but=<button disabled style={{color:'grey'}} className='homeButton'>Previous</button>
 	}else{
-		return(
-			<button className='homeButton' onClick={()=>{props.setSkip(props.skip-10)}}>Previous</button>
-		);
+		but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip-10)}}>Previous</button>
 	}
-	
+	return but;
 }
 
 const NextButton=(props)=>{
-	if(props.nextPlatforms.length===0){
-		return(
-			<button disabled style={{color:'grey'}} className='homeButton'>Next</button>
-		);
+	let but;
+	if(props.nextPlatforms){
+		but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip+10)}}>Next</button>
 	}else{
-		return(
-			<button className='homeButton' onClick={()=>{props.setSkip(props.skip+10)}}>Next</button>
-		);
+		but=<button disabled style={{color:'grey'}} className='homeButton'>Next</button>
 	}
+	return but;
 }
 
 const PlatformList=({platforms,onSelectPlatform})=>{
