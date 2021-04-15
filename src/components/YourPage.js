@@ -21,7 +21,7 @@ const YourPagesController = (props) =>{
 	// limit is the maximum number of platforms to be returned
 	// less are only returned if there are no more in the databse
     const [deletePlatform, setDeletePlatform]=useState("");
-    const [nextPlatforms, setNextPlatforms] = useState([]);
+    const [nextPlatforms, setNextPlatforms] = useState(false);
     const [selectPlatform, setSelectPlatform] = useState("");
     const [header,setHeader]=useState("");
     const [changeHeader,setChangeHeader]=useState(false);
@@ -30,7 +30,6 @@ const YourPagesController = (props) =>{
     const [save,setSave]=useState(0);
     useEffect(
         ()=>{
-        	// props.username
         	let queryText = text
             if (text.length < 2)
 				queryText = ' '
@@ -38,21 +37,19 @@ const YourPagesController = (props) =>{
                 return;
             axios_instance({
                 method: 'get',
-                url: "search/platforms/"+props.username+"/"+queryText+"/"+skip+"/"+limit
+                url: "search/platforms/"+props.username+"/"+queryText+"/"+skip+"/"+(limit+1)
             }).then(function(response){
+            	if(response.data.length===(limit+1)){
+            		response.data.pop();
+            		setNextPlatforms(true);
+            	}else{
+            		setNextPlatforms(false);
+            	}
                 setPlatforms(response.data);
             }).catch(function(err){
                 console.log(err);
             });
-            axios_instance({
-                method: 'get',
-                url: "search/platforms/"+props.username+"/"+queryText+"/"+(skip+limit)+"/"+limit
-            }).then(function(response){
-                setNextPlatforms(response.data);
-            }).catch(function(err){
-                console.log(err);
-            });
-        },[text, skip, limit,platforms,save,props.username]
+        },[text, skip, limit,save,props.username]
     );
 
     const onSavePlatformInfo=(platform)=>{
@@ -135,6 +132,7 @@ const YourPagesController = (props) =>{
         	let filter = platforms.filter(item => item !== platform)
         	setPlatforms(filter);
         	setDeletePlatform('');
+        	setSave(save+1);
 	    })
 	    .catch(err=>console.log(err));
 	}
@@ -142,8 +140,6 @@ const YourPagesController = (props) =>{
 	const onChangeLimit=(value)=>{
     	setLimit(value);
     }
-
-    // console.log(props.username);
 
 	if(props.isSignedIn){
 		return (
@@ -254,28 +250,23 @@ const SearchBox =({text, onSearchPlatform})=>{
 }
 
 const PreviousButton=(props)=>{
+	let but;
 	if(props.skip===0){
-		return(
-			<button disabled style={{color:'grey'}} className='homeButton'>Previous</button>
-		);
+		but=<button disabled style={{color:'grey'}} className='homeButton'>Previous</button>
 	}else{
-		return(
-			<button className='homeButton' onClick={()=>{props.setSkip(props.skip-10)}}>Previous</button>
-		);
+		but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip-10)}}>Previous</button>
 	}
-	
+	return but;
 }
 
 const NextButton=(props)=>{
-	if(props.nextPlatforms.length===0){
-		return(
-			<button disabled style={{color:'grey'}} className='homeButton'>Next</button>
-		);
+	let but;
+	if(props.nextPlatforms===false){
+		but=<button disabled style={{color:'grey'}} className='homeButton'>Next</button>
 	}else{
-		return(
-			<button className='homeButton' onClick={()=>{props.setSkip(props.skip+10)}}>Next</button>
-		);
+			but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip+10)}}>Next</button>
 	}
+	return but;
 }
 
 const Platform =({name,platform,onSelectPlatform})=>{
