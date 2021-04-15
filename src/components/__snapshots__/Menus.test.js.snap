@@ -1,0 +1,137 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Logged In 1`] = `
+<div
+  className="menusStyle"
+>
+  <a
+    className="homeButton"
+    href="/home"
+    onClick={[Function]}
+  >
+     Learn-io 
+  </a>
+  <div
+    className="dropdown"
+  >
+    <button
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="dropbtn dropdown-toggle btn btn-primary"
+      disabled={false}
+      id="dropdown-basic"
+      onClick={[Function]}
+      type="button"
+    >
+      <img
+        alt="menus"
+        height="40px"
+        src="menus.png"
+        width="40px"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Logged In And Admin 1`] = `
+<div
+  className="menusStyle"
+>
+  <a
+    className="homeButton"
+    href="/home"
+    onClick={[Function]}
+  >
+     Learn-io 
+  </a>
+  <div
+    className="dropdown"
+  >
+    <button
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="dropbtn dropdown-toggle btn btn-primary"
+      disabled={false}
+      id="dropdown-basic"
+      onClick={[Function]}
+      type="button"
+    >
+      <img
+        alt="menus"
+        height="40px"
+        src="menus.png"
+        width="40px"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Not Logged In 1`] = `
+<div
+  className="menusStyle"
+>
+  <a
+    className="homeButton"
+    href="/home"
+    onClick={[Function]}
+  >
+     Learn-io 
+  </a>
+  <div
+    className="dropdown"
+  >
+    <button
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="dropbtn dropdown-toggle btn btn-primary"
+      disabled={false}
+      id="dropdown-basic"
+      onClick={[Function]}
+      type="button"
+    >
+      <img
+        alt="menus"
+        height="40px"
+        src="menus.png"
+        width="40px"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Not Logged In But Admin 1`] = `
+<div
+  className="menusStyle"
+>
+  <a
+    className="homeButton"
+    href="/home"
+    onClick={[Function]}
+  >
+     Learn-io 
+  </a>
+  <div
+    className="dropdown"
+  >
+    <button
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="dropbtn dropdown-toggle btn btn-primary"
+      disabled={false}
+      id="dropdown-basic"
+      onClick={[Function]}
+      type="button"
+    >
+      <img
+        alt="menus"
+        height="40px"
+        src="menus.png"
+        width="40px"
+      />
+    </button>
+  </div>
+</div>
+`;
