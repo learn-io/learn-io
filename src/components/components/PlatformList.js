@@ -5,20 +5,23 @@ import Platform from './Platform';
 const PlatformList=({platforms,onSelectPlatform})=>{
 	return(
 		// loop for all platforms
-		<div>
-  			{
-  				platforms.map((x,i) => {
-					return (
-						<Platform 
-						key={i}
-						platform={x}
-						name={x.platformName}
-						onSelectPlatform={onSelectPlatform}
-						/>
-					);
-				})
-			}
-  		</div>
+		<>
+			<Popup username={props.username}/>
+			<div>
+				{
+					platforms.map((x,i) => {
+						return (
+							<Platform 
+							key={i}
+							platform={x}
+							name={x.platformName}
+							onSelectPlatform={onSelectPlatform}
+							/>
+						);
+					})
+				}
+			</div>
+		</>
 	);
 }
 
