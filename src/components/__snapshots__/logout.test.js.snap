@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Log Out 1`] = `
+exports[`Log Out Controller Log Out 1`] = `
 <div
   className="menusStyle"
 >
