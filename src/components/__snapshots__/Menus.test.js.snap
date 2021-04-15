@@ -1,0 +1,269 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Logged In 1`] = `
+<div
+  className="menusStyle"
+>
+  <a
+    className="homeButton"
+    href="/home"
+    onClick={[Function]}
+  >
+     Learn-io 
+  </a>
+  <div
+    className="dropdown"
+  >
+    <button
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="dropbtn dropdown-toggle btn btn-primary"
+      disabled={false}
+      id="dropdown-basic"
+      onClick={[Function]}
+      type="button"
+    >
+      <img
+        alt="menus"
+        height="40px"
+        src="menus.png"
+        width="40px"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Logged In And Admin 1`] = `
+<div
+  className="menusStyle"
+>
+  <a
+    className="homeButton"
+    href="/home"
+    onClick={[Function]}
+  >
+     Learn-io 
+  </a>
+  <div
+    className="dropdown"
+  >
+    <button
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="dropbtn dropdown-toggle btn btn-primary"
+      disabled={false}
+      id="dropdown-basic"
+      onClick={[Function]}
+      type="button"
+    >
+      <img
+        alt="menus"
+        height="40px"
+        src="menus.png"
+        width="40px"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Not Logged In (all) 1`] = `
+<div
+  className="menusStyle"
+>
+  <a
+    className="homeButton"
+    href="/home"
+    onClick={[Function]}
+  >
+     Learn-io 
+  </a>
+  <div
+    className="dropdown"
+  >
+    <button
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="dropbtn dropdown-toggle btn btn-primary"
+      disabled={false}
+      id="dropdown-basic"
+      onClick={[Function]}
+      type="button"
+    >
+      <img
+        alt="menus"
+        height="40px"
+        src="menus.png"
+        width="40px"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Not Logged In (login)  1`] = `
+<form
+  className=""
+  onSubmit={[Function]}
+>
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+      htmlFor="username"
+    >
+      Username
+    </label>
+    <input
+      className="form-control"
+      id="username"
+      placeholder="Enter username"
+      type="username"
+    />
+  </div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+      htmlFor="password"
+    >
+      Password
+    </label>
+    <input
+      className="form-control"
+      id="password"
+      placeholder="Enter Password"
+      type="password"
+    />
+  </div>
+  <div
+    className="dropdown-content"
+  >
+    <button
+      className="btn btn-primary"
+      disabled={false}
+      onClick={[Function]}
+      type="button"
+    >
+      Back To Register
+    </button>
+    <button
+      className="btn btn-primary"
+      disabled={false}
+      type="submit"
+    >
+      Login
+    </button>
+  </div>
+</form>
+`;
+
+exports[`Not Logged In (register)  1`] = `
+<form
+  className=""
+  onSubmit={[Function]}
+>
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+      htmlFor="username"
+    >
+      Username
+    </label>
+    <input
+      className="form-control"
+      id="username"
+      placeholder="Enter username"
+      type="username"
+    />
+  </div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+      htmlFor="password"
+    >
+      Password
+    </label>
+    <input
+      className="form-control"
+      id="password"
+      placeholder="Enter Password"
+      type="password"
+    />
+  </div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+      htmlFor="verifyPassword"
+    >
+      Verify Password
+    </label>
+    <input
+      className="form-control"
+      id="verifyPassword"
+      placeholder="Enter Password Again"
+      type="password"
+    />
+  </div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+      htmlFor="email"
+    >
+      Email
+    </label>
+    <input
+      className="form-control"
+      id="email"
+      placeholder="Enter Email"
+      type="email"
+    />
+  </div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+      htmlFor="dateOfBirth"
+    >
+      Date Of Birth
+    </label>
+    <input
+      className="form-control"
+      id="dateOfBirth"
+      placeholder="Enter Date Of Birth"
+      type="dateOfBirth"
+    />
+  </div>
+  <div
+    className="dropdown-content"
+  >
+    <button
+      className="btn btn-primary"
+      disabled={false}
+      onClick={[Function]}
+      type="button"
+    >
+      Back To Login
+    </button>
+    <button
+      className="btn btn-primary"
+      disabled={false}
+      type="submit"
+    >
+      Register
+    </button>
+  </div>
+</form>
+`;

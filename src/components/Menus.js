@@ -163,3 +163,4 @@ const RegisterDropdown = (props) =>{
 }
 
 export default MenuController;
+export {LoginDropdown, RegisterDropdown};
