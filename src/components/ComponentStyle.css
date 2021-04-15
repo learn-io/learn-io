@@ -223,7 +223,7 @@ input.largeCheckbox{
 	background-color: transparent;
 	border:none;
 	font-size: 50px;
-	margin-left:90%;
+	margin-left:70%;
 	position:relative;
 	bottom:5px;
 }
@@ -232,7 +232,7 @@ input.largeCheckbox{
 	position:fixed;
 	top:50%;
 	left:50%;
-	height: 65%;
+	height: 70%;
 	width: 50%;
 	border-radius: .5rem;
 	transform: translate(-50%,-50%);

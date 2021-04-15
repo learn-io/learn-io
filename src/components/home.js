@@ -92,7 +92,7 @@ const ConfirmBox=({selectPlatform,onSelectPlatform})=>{
 						<img alt='platformImage' src={`https://robohash.org/${selectPlatform.platformName}?200x200`}/>
 					</div>
 					<div>
-						<p className='paragraph'>Geckos are a group of usually small, usually nocturnal lizards. They are found on every continent except Australia.</p>
+						<p className='paragraph'>{selectPlatform.description}</p>
 					</div>
 					<div className='clearfix'>
 						<button className='playButton'>Play</button>
