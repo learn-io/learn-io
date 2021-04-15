@@ -3,15 +3,10 @@ import React, { useEffect, useState } from 'react';
 import './ComponentStyle.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Dropdown} from 'react-bootstrap';
-// import uploadIcon from './images/upload.png';
-// import editIcon from './images/edit.png';
-// import saveIcon from './images/save.png';
-// import Platform from './components/Platform';
 import PreviousButton from './components/PreviousButton';
 import NextButton from './components/NextButton';
 import SearchBox from './components/SearchBox';
-import SearchBox from './components/SearchBox';
-
+import ConfirmBox from './components/ConfirmBox';
 import PlatformList from './components/PlatformList';
 
 const HomeController = (props) =>{
@@ -20,8 +15,8 @@ const HomeController = (props) =>{
     const [skip, setSkip] = useState(0);
     const [limit, setLimit] = useState(10);
     const [nextPlatforms, setNextPlatforms] = useState(false);
-    const [save,setSave]=useState(0);
-	const [selectPlatform, setSelectPlatform] = useState("");
+    const [selectPlatform, setSelectPlatform] = useState("");
+	const [save,setSave]=useState(0);
 
     useEffect(
         ()=>{
@@ -47,19 +42,6 @@ const HomeController = (props) =>{
         },[text, skip, limit,save]
     );
 
-    const onSelectPlatform=(platform)=>{
-		if(platform!==''){
-			setSelectPlatform(platform);
-			setHeader(platform.platformName);
-			setDescription(platform.description);
-		}else{
-			setSelectPlatform('');
-			setHeader('');
-			setDescription('');
-			setChangeHeader(false);
-			setChangeD(false);
-		}
-	}
     const onSearchPlatform=(value)=>{
     	setText(value);
     	setSkip(0);
@@ -82,8 +64,9 @@ const HomeController = (props) =>{
 			    	<Dropdown.Item onClick={()=>{onChangeLimit(20)}}>20</Dropdown.Item>
 				</Dropdown.Menu>
 			</Dropdown>
-	        <PlatformList platforms={platforms} onSelectPlatform={onSelectPlatform}/>
+	        <PlatformList platforms={platforms} setSelectPlatform={setSelectPlatform}/>
 	       	<PreviousButton limit={limit} skip={skip} setSkip={setSkip} />
+	       	<ConfirmBox username={props.username} selectPlatform={selectPlatform} setSelectPlatform={setSelectPlatform} setSave={setSave} save={save}/>
 	        <NextButton limit={limit} nextPlatforms={nextPlatforms} skip={skip} setSkip={setSkip}/>
 	    </div>
     )

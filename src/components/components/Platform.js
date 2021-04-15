@@ -1,9 +1,9 @@
 import React from 'react';
 import '../ComponentStyle.css';
 
-const Platform =({name,platform,onSelectPlatform})=>{
+const Platform =({name,platform,setSelectPlatform})=>{
 	return(
-		<div className='platformStyle grow' onClick={()=>{onSelectPlatform(platform)}}>
+		<div className='platformStyle grow' onClick={()=>{setSelectPlatform(platform)}}>
 			<img alt='platformImage' src={`https://robohash.org/${name}?200x200`}/>
 			<div>
 				<h4>{name}</h4>

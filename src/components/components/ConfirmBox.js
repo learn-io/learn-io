@@ -1,16 +1,81 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../ComponentStyle.css';
 import uploadIcon from '../images/upload.png';
 import editIcon from '../images/edit.png';
 import saveIcon from '../images/save.png';
+import axios_instance from '../axios_instance.js';
 
-const ConfirmBox=({username,header,description,selectPlatform,onSelectPlatform,onSavePlatformInfo,onUploadImage,onEditHeader,onEditDescription,changeHeader,changeD})=>{
-	if(selectPlatform==='') return null
+const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
+	const [header,setHeader]=useState('');
+    const [changeHeader,setChangeHeader]=useState(false);
+    const [description,setDescription]=useState('');
+    const [changeD,setChangeD]=useState(false);
+    useEffect(
+        ()=>{
+        	if(header===undefined||header===''){
+        		setHeader(selectPlatform.platformName);
+        	}
+        	if(description===undefined||description===''){
+        		setDescription(selectPlatform.description);
+        	}
+        },[header,changeHeader,description,changeD,selectPlatform]
+    );
+    const onSavePlatformInfo=(platform)=>{
+    	axios_instance({
+            method: 'post',
+            url: "platform/about",
+            data: {
+                _id: selectPlatform._id,
+                platformName:header,
+                image:"",
+                description:description
+            }
+        })
+        .then((res)=>{
+        	setSave(save+1);
+	    })
+	    .catch(err=>console.log(err));
+    }
+
+    const onUploadImage=()=>{
+    	console.log('upload');
+    }
+
+    const onEditHeader=(value)=>{
+    	if(changeHeader===false){
+    		setChangeHeader(true);
+    	}else{
+    		setChangeHeader(false);
+    		if(value!==""){
+    			setHeader(value);
+    		}
+    		
+    	}
+    }
+    const onEditDescription=(value)=>{
+    	if(changeD===false){
+    		setChangeD(true);
+    	}else{
+    		setChangeD(false);
+    		if(value!==""){
+    			setDescription(value);
+    		}
+    	}
+    }
+
+    const onClosePlatform=()=>{
+		setSelectPlatform('');
+		setHeader('');
+		setDescription('');
+		setChangeHeader(false);
+		setChangeD(false);
+	}
+
 	let closehdr;
 	let titlehdr;
 	let centerpart;
 	if(username!==selectPlatform.owner){
-		closehdr=<button className='closeButton' onClick={()=>{onSelectPlatform('')}}>X</button>
+		closehdr=<button className='closeButton' onClick={()=>{onClosePlatform('')}}>X</button>
 		titlehdr=<h2>{header}</h2>
 		centerpart=<div style={{justifyContent:'center',display:'flex'}}>
  						<img alt='platformImage' src={`https://robohash.org/${selectPlatform.platformName}?200x200`}/>
@@ -18,9 +83,9 @@ const ConfirmBox=({username,header,description,selectPlatform,onSelectPlatform,o
 	 				</div>
 	}else{
 		closehdr=<div style={{justifyContent:'space-between',display:'flex'}}>
-			<button className='deleteButton' onClick={()=>{onSavePlatformInfo(selectPlatform)}}><img src={saveIcon} height='50px' width='50px' alt="save"/></button>
-			<button className='closeButton' onClick={()=>{onSelectPlatform('')}}>X</button>
-		</div>
+					<button className='deleteButton' onClick={()=>{onSavePlatformInfo(selectPlatform)}}><img src={saveIcon} height='50px' width='50px' alt="save"/></button>
+					<button className='closeButton' onClick={()=>{onClosePlatform('')}}>X</button>
+				</div>
 		let hdr;
 		let hdrButton;
 		if(changeHeader){
@@ -55,20 +120,25 @@ const ConfirmBox=({username,header,description,selectPlatform,onSelectPlatform,o
 						</div>
 					</>
 	}
-	return (
-		<section id="overlay">
-			<div className='overlayStyle'>
-				<div className='selectConfirm'>
-					{closehdr}
-					{titlehdr}
-					{centerpart}
-					<div className='clearfix'>
-						<button className='playButton'>Play</button>
+	if(selectPlatform===''){
+		return null
+	}else{
+		return (
+			<section id="overlay">
+				<div className='overlayStyle'>
+					<div className='selectConfirm'>
+						{closehdr}
+						{titlehdr}
+						{centerpart}
+						<div className='clearfix'>
+							<button className='playButton'>Play</button>
+						</div>
 					</div>
 				</div>
-			</div>
-		</section>
-	);
+			</section>
+		);
+	}
+	
 }
 
 export default ConfirmBox;
