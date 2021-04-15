@@ -126,3 +126,4 @@ const Stats=({userPlatformInfo})=>{
 }
 
 export default Profile;
+export {Badges, Stats, Progress};

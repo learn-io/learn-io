@@ -1,6 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Delete Confirm Box 1`] = `
+exports[`Delete Confirm Box Component Empty Name 1`] = `
+<section
+  id="overlay"
+>
+  <div
+    className="overlayStyle"
+  >
+    <div
+      className="deleteConfirm"
+    >
+      <h2>
+        Are you sure you want to delete
+      </h2>
+      <h2>
+        "
+        
+        "?
+      </h2>
+      <button
+        className="deleteButtonStyle"
+        onClick={[Function]}
+      >
+        Yes
+      </button>
+      <button
+        className="deleteButtonStyle"
+        onClick={[Function]}
+      >
+        No
+      </button>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`Delete Confirm Box Component test name 1`] = `
 <section
   id="overlay"
 >
