@@ -37,44 +37,45 @@ const Profile=()=>{
 
     useEffect(
         ()=>{
-            if(platforms !== undefined){
-                let i=0;
-                let url_path = "" ;
-                
-                let promises = [];
+            if(platforms == undefined || platforms == []){
+                return;
+            }
+            let i=0;
+            let url_path = "" ;
+            
+            let promises = [];
 
-                for(i;i<platforms.length;i++){
-                    url_path = platforms[i].platformId;
-                    // console.log(platforms[i].platformId);
-                    promises.push(axios_instance({
-                        method: 'get',
-                        url: "platform/"+url_path
-                    }));
+            for(i;i<platforms.length;i++){
+                url_path = platforms[i].platformId;
+                // console.log(platforms[i].platformId);
+                promises.push(axios_instance({
+                    method: 'get',
+                    url: "platform/"+url_path
+                }));
+            }
+
+            Promise.all(promises).then((values) => {
+                // console.log(values);
+                var tempArr = [];
+                for(var j=0; j<values.length; j++){
+                    // console.log(values[j].data)
+                    tempArr.push(values[j].data);
+                }
+                setplatformInfo(tempArr);
+
+                var tempArr2 = []
+                for(var k=0;k<platforms.length;k++){
+                    var together = {platforms:platforms[k], platformInfo:tempArr[k]};
+                    tempArr2.push(together);
                 }
 
-                Promise.all(promises).then((values) => {
-                    // console.log(values);
-                    var tempArr = [];
-                    for(var j=0; j<values.length; j++){
-                        // console.log(values[j].data)
-                        tempArr.push(values[j].data);
-                    }
-                    setplatformInfo(tempArr);
+                // console.log("tempArr2");
+                // console.log(tempArr2);
 
-                    var tempArr2 = []
-                    for(var k=0;k<platforms.length;k++){
-                        var together = {platforms:platforms[k], platformInfo:tempArr[k]};
-                        tempArr2.push(together);
-                    }
-
-                    // console.log("tempArr2");
-                    // console.log(tempArr2);
-
-                    setAllInfo(tempArr2);
-                    // console.log("All Info");
-                    // console.log(allInfo);
-                });
-            }
+                setAllInfo(tempArr2);
+                // console.log("All Info");
+                // console.log(allInfo);
+            });
         },[platforms]
     );
 

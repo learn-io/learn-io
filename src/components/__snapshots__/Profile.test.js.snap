@@ -25,64 +25,53 @@ exports[`Profile Controller Logged Out 1`] = `
       Profile
     </h1>
   </div>
-  <form
-    className="form-inline w-100"
+  <div
+    className="form-group"
   >
-    <div
-      className="form-group"
+    <label
+      className="profileFormGroupLabel form-label"
+      htmlFor="skipBy"
     >
-      <label
-        className="profileFormGroupLabel form-label"
-        htmlFor="skipBy"
-      >
-        Skip By:
-      </label>
-      <input
-        className="form-control"
-        id="skipBy"
-        onBlur={[Function]}
-        type="number"
-      />
-    </div>
-    <div
-      className="form-group"
+      Skip By:
+    </label>
+    <input
+      className="form-control"
+      id="skipBy"
+      onBlur={[Function]}
+      type="number"
+    />
+  </div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="profileFormGroupLabel form-label"
+      htmlFor="countBy"
     >
-      <label
-        className="profileFormGroupLabel form-label"
-        htmlFor="countBy"
+      Platforms per page:
+    </label>
+    <div
+      className="dropdown"
+    >
+      <button
+        aria-expanded={false}
+        aria-haspopup={true}
+        className="dropdown-toggle btn btn-success"
+        disabled={false}
+        id="dropdown-basic"
+        onClick={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#cdecff",
+            "color": "#000",
+          }
+        }
+        type="button"
       >
-        Platforms per page:
-      </label>
-      <select
-        className="form-control"
-        id="countBy"
-      >
-        <option
-          onClick={[Function]}
-        >
-          10
-        </option>
-        <option
-          onClick={[Function]}
-        >
-          25
-        </option>
-        <option
-          onClick={[Function]}
-        >
-          50
-        </option>
-      </select>
+        10
+      </button>
     </div>
-  </form>
-  <h1>
-    Skip: 
-    0
-  </h1>
-  <h1>
-    Count: 
-    10
-  </h1>
+  </div>
   <nav
     className="profileTabHeader nav nav-tabs nav-fill nav-justified"
     onKeyDown={[Function]}
@@ -139,12 +128,8 @@ exports[`Profile Controller Logged Out 1`] = `
       role="tabpanel"
     >
       <div
-        className="userPlatformInfoPadding"
-      >
-        <h2>
-          No progress to display at this time.
-        </h2>
-      </div>
+        className="boundaryBox"
+      />
     </div>
     <div
       aria-hidden={true}
@@ -154,12 +139,8 @@ exports[`Profile Controller Logged Out 1`] = `
       role="tabpanel"
     >
       <div
-        className="userPlatformInfoPadding"
-      >
-        <h1>
-          No badges to display at this time.
-        </h1>
-      </div>
+        className="container userPlatformInfoPaddingBottom"
+      />
     </div>
     <div
       aria-hidden={true}
@@ -169,12 +150,8 @@ exports[`Profile Controller Logged Out 1`] = `
       role="tabpanel"
     >
       <div
-        className="userPlatformInfoPadding"
-      >
-        <h1>
-          No stats to display at this time.
-        </h1>
-      </div>
+        className="container userPlatformInfoPaddingBottom"
+      />
     </div>
   </div>
 </div>

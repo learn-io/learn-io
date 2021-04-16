@@ -141,7 +141,7 @@ exports[`Dropdown Tests Not Logged In (register)  1`] = `
       className="form-control"
       id="dateOfBirth"
       placeholder="Enter Date Of Birth"
-      type="dateOfBirth"
+      type="date"
     />
   </div>
   <div
