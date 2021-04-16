@@ -17,7 +17,7 @@ const Setting=()=>{
 				method: 'get',
 				url:"setting/"
 			}).then(function(response){
-				console.log(response.data);
+				// console.log(response.data);
 				setEmail(response.data.email);
 				// console.log(response.data.dateOfBirth);
 				// var temp = response.data.dateOfBirth.split("/")

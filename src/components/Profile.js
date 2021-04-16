@@ -53,7 +53,7 @@ const Profile=()=>{
                 }
 
                 Promise.all(promises).then((values) => {
-                    console.log(values);
+                    // console.log(values);
                     var tempArr = [];
                     for(var j=0; j<values.length; j++){
                         // console.log(values[j].data)
@@ -67,12 +67,12 @@ const Profile=()=>{
                         tempArr2.push(together);
                     }
 
-                    console.log("tempArr2");
-                    console.log(tempArr2);
+                    // console.log("tempArr2");
+                    // console.log(tempArr2);
 
                     setAllInfo(tempArr2);
-                    console.log("All Info");
-                    console.log(allInfo);
+                    // console.log("All Info");
+                    // console.log(allInfo);
                 });
             }
         },[platforms]
@@ -145,7 +145,7 @@ const Progress=({platforms, platformInfo})=>{
             <div className="boundaryBox">
                 {platformInfo.map((pI)=>{
                     return(
-                        <div className="userPlatformInfoPadding">
+                        <div key={pI.platformName} className="userPlatformInfoPadding">
                             <h2 className="text-left ml-4">{pI.platformName}</h2>
                             <div className="container">
                                 <ProgressBar animated now={50}/>
@@ -175,9 +175,9 @@ const Badges=({platformInfo})=>{
             <div className="container userPlatformInfoPaddingBottom">
                 {platformInfo.map((pI)=>{
                     return(
-                        <div className="userPlatformInfoPadding">
+                        <div key={pI.platformName} className="userPlatformInfoPadding">
                             <h2 className="text-left ml-4">{pI.platformName}</h2>
-                            <text>No badges to display at this time.</text>
+                            <div>No badges to display at this time.</div>
                         </div>
                     );
                 })}                
@@ -190,8 +190,8 @@ const Stats=({allInfo})=>{
     // console.log("Called Stats");
 
     // const [allInfo, setAllInfo] = useState({platforms,platformInfo});
-    console.log("All Info");
-    console.log(allInfo);
+    // console.log("All Info");
+    // console.log(allInfo);
 
     if(allInfo.length===0){
         return (
@@ -202,53 +202,53 @@ const Stats=({allInfo})=>{
     } else {
         return (
             <div className="container userPlatformInfoPaddingBottom">
-                {allInfo.map((pI)=>{
-                    console.log("pI");
-                    console.log(pI);
+                {allInfo.map((pI, index)=>{
+                    // console.log("pI");
+                    // console.log(pI);
                     return(
-                        <div className="userPlatformInfoPadding">
+                        <div key={index} className="userPlatformInfoPadding">
                             <h2 className="text-left ml-4">{pI.platformInfo.platformName}</h2>
                             <Form.Row>
                                 <Col>
-                                    <text>Badges:</text>
+                                    <p>Badges:</p>
                                 </Col>
                                 <Col>
-                                    <text>No stats to display at this time.</text>
+                                    <p>No badges to display at this time.</p>
                                     {pI.platforms.badges.map((b)=>{
-                                        return (<image src=""></image>);
+                                        return (<image key={b.hash} src=""></image>);
                                     })}
                                 </Col>
                             </Form.Row>
-                            <Form.Row>
+                            <Form.Row >
                                 <Col>
-                                    <text>Modules Completed:</text>
+                                    <p>Modules Completed:</p>
                                 </Col>
                                 <Col>
-                                    <text>{pI.platforms.modulesCompleted}</text>
-                                </Col>
-                            </Form.Row>
-                            <Form.Row>
-                                <Col>
-                                    <text>Pages Visited:</text>
-                                </Col>
-                                <Col>
-                                    <text>{pI.platforms.pageVisited}</text>
+                                    <p>{pI.platforms.modulesCompleted}</p>
                                 </Col>
                             </Form.Row>
                             <Form.Row>
                                 <Col>
-                                    <text>Time Spent:</text>
+                                    <p>Pages Visited:</p>
                                 </Col>
                                 <Col>
-                                    <text>{pI.platforms.timeSpend}</text>
+                                    <p>{pI.platforms.pageVisited}</p>
                                 </Col>
                             </Form.Row>
                             <Form.Row>
                                 <Col>
-                                    <text>Widgets Clicked:</text>
+                                    <p>Time Spent:</p>
                                 </Col>
                                 <Col>
-                                    <text>{pI.platforms.widgetsClicked}</text>
+                                    <p>{pI.platforms.timeSpend}</p>
+                                </Col>
+                            </Form.Row>
+                            <Form.Row>
+                                <Col>
+                                    <p>Widgets Clicked:</p>
+                                </Col>
+                                <Col>
+                                    <p>{pI.platforms.widgetsClicked}</p>
                                 </Col>
                             </Form.Row>
                         </div>
