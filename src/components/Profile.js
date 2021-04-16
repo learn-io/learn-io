@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form';
 import axios_instance from './axios_instance.js';
 
 import './ComponentStyle.css';
+import { Dropdown } from 'react-bootstrap';
 
 const Profile=()=>{
     const[key, setKey] = useState('progress');
@@ -35,23 +36,37 @@ const Profile=()=>{
             <div style={{display:'flex', justifyContent:"left", padding:"2rem"}}>
                 <h1>Profile</h1>
             </div>
-            <Form className="form-inline w-100">
-                <Form.Group controlId="skipBy" >
-                    <Form.Label className="profileFormGroupLabel">Skip By:</Form.Label>
-                    <Form.Control type="number" onBlur={(e)=>{e.preventDefault(); setSkip(e.target.value);}}></Form.Control>
-                </Form.Group>
-                <Form.Group controlId="countBy" >
-                    <Form.Label className="profileFormGroupLabel">Platforms per page:</Form.Label>
-                    <Form.Control as="select">
-                        <option onClick={(e)=>{e.preventDefault(); setCount(10);}}>10</option>
-                        <option onClick={(e)=>{e.preventDefault(); setCount(25)}}>25</option>
-                        <option onClick={(e)=>{e.preventDefault(); setCount(50)}}>50</option>
-                    </Form.Control>
-                </Form.Group>
-            </Form>
+            <Form.Group controlId="skipBy" >
+                <Form.Label className="profileFormGroupLabel">Skip By:</Form.Label>
+                <Form.Control type="number" onBlur={(e)=>{e.preventDefault(); setSkip(e.target.value);}}></Form.Control>
+            </Form.Group>
             
-            <h1>Skip: {JSON.stringify(skip)}</h1>
-            <h1>Count: {JSON.stringify(count)}</h1>
+            <Form.Group controlId="countBy" >
+                <Form.Label className="profileFormGroupLabel">Platforms per page:</Form.Label>
+                <Dropdown>
+                    <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
+                        {count}
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        <Dropdown.Item onClick={(e)=>{e.preventDefault(); setCount(5)}}>5</Dropdown.Item>
+                        <Dropdown.Item onClick={(e)=>{e.preventDefault(); setCount(10)}}>10</Dropdown.Item>
+                        <Dropdown.Item onClick={(e)=>{e.preventDefault(); setCount(15)}}>15</Dropdown.Item>
+                        <Dropdown.Item onClick={(e)=>{e.preventDefault(); setCount(20)}}>20</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+            </Form.Group>
+            
+            {/* <Form.Group controlId="countBy" >
+                <Form.Label className="profileFormGroupLabel">Platforms per page:</Form.Label>
+                <Form.Control as="select">
+                    <option onClick={(e)=>{e.preventDefault(); setCount(10);}}>10</option>
+                    <option onClick={(e)=>{e.preventDefault(); setCount(25)}}>25</option>
+                    <option onClick={(e)=>{e.preventDefault(); setCount(50)}}>50</option>
+                </Form.Control>
+            </Form.Group> */}
+            
+            {/* <h1>Skip: {JSON.stringify(skip)}</h1>
+            <h1>Count: {JSON.stringify(count)}</h1> */}
             
             <Tabs className="profileTabHeader" fill justify id="profileTabs" activeKey={key} onSelect={(k) => setKey(k)}>
                     <Tab eventKey="progress" title="Progress" >

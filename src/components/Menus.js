@@ -146,7 +146,7 @@ const RegisterDropdown = (props) =>{
 
 				<Form.Group controlId="dateOfBirth">
 					<Form.Label>Date Of Birth</Form.Label>
-					<Form.Control type="dateOfBirth" placeholder="Enter Date Of Birth" />
+					<Form.Control type="date" placeholder="Enter Date Of Birth" />
 				</Form.Group>
 
 				<div className="dropdown-content">
