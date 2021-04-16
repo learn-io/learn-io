@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home Controller home test 1`] = `
+<div
+  className="appStyle"
+>
+  <div
+    className="pa"
+  >
+    <input
+      className="searchBoxStyle"
+      onChange={[Function]}
+      placeholder="Search platform"
+      type="search"
+    />
+  </div>
+  <div
+    className="dropdown"
+  >
+    <button
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="dropdown-toggle btn btn-success"
+      disabled={false}
+      id="dropdown-basic"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#cdecff",
+          "color": "#000",
+        }
+      }
+      type="button"
+    >
+      Platfroms per page: 
+      10
+    </button>
+  </div>
+  <div />
+  <button
+    className="homeButton"
+    disabled={true}
+    style={
+      Object {
+        "color": "grey",
+      }
+    }
+  >
+    Previous
+  </button>
+  <button
+    className="homeButton"
+    disabled={true}
+    style={
+      Object {
+        "color": "grey",
+      }
+    }
+  >
+    Next
+  </button>
+</div>
+`;

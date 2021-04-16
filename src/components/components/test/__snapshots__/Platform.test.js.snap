@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Single Platform Component no name 1`] = `
+<div
+  className="platformStyle grow"
+  onClick={[Function]}
+>
+  <img
+    alt="platformImage"
+    src="https://robohash.org/?200x200"
+  />
+  <div>
+    <h4>
+      
+    </h4>
+  </div>
+</div>
+`;
+
+exports[`Single Platform Component test name 1`] = `
+<div
+  className="platformStyle grow"
+  onClick={[Function]}
+>
+  <img
+    alt="platformImage"
+    src="https://robohash.org/test?200x200"
+  />
+  <div>
+    <h4>
+      test
+    </h4>
+  </div>
+</div>
+`;

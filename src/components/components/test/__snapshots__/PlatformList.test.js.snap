@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Platform List Component test four platforms 1`] = `
+<div>
+  <div
+    className="platformStyle grow"
+    onClick={[Function]}
+  >
+    <img
+      alt="platformImage"
+      src="https://robohash.org/test?200x200"
+    />
+    <div>
+      <h4>
+        test
+      </h4>
+    </div>
+  </div>
+  <div
+    className="platformStyle grow"
+    onClick={[Function]}
+  >
+    <img
+      alt="platformImage"
+      src="https://robohash.org/test2?200x200"
+    />
+    <div>
+      <h4>
+        test2
+      </h4>
+    </div>
+  </div>
+  <div
+    className="platformStyle grow"
+    onClick={[Function]}
+  >
+    <img
+      alt="platformImage"
+      src="https://robohash.org/test3?200x200"
+    />
+    <div>
+      <h4>
+        test3
+      </h4>
+    </div>
+  </div>
+  <div
+    className="platformStyle grow"
+    onClick={[Function]}
+  >
+    <img
+      alt="platformImage"
+      src="https://robohash.org/test4?200x200"
+    />
+    <div>
+      <h4>
+        test4
+      </h4>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Platform List Component test no platform 1`] = `<div />`;
+
+exports[`Platform List Component test three platforms 1`] = `
+<div>
+  <div
+    className="platformStyle grow"
+    onClick={[Function]}
+  >
+    <img
+      alt="platformImage"
+      src="https://robohash.org/test?200x200"
+    />
+    <div>
+      <h4>
+        test
+      </h4>
+    </div>
+  </div>
+  <div
+    className="platformStyle grow"
+    onClick={[Function]}
+  >
+    <img
+      alt="platformImage"
+      src="https://robohash.org/test2?200x200"
+    />
+    <div>
+      <h4>
+        test2
+      </h4>
+    </div>
+  </div>
+  <div
+    className="platformStyle grow"
+    onClick={[Function]}
+  >
+    <img
+      alt="platformImage"
+      src="https://robohash.org/test3?200x200"
+    />
+    <div>
+      <h4>
+        test3
+      </h4>
+    </div>
+  </div>
+</div>
+`;

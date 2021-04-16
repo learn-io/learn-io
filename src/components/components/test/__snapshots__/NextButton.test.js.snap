@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Next Button Component not platforms for next page 1`] = `
+<button
+  className="homeButton"
+  disabled={true}
+  style={
+    Object {
+      "color": "grey",
+    }
+  }
+>
+  Next
+</button>
+`;
+
+exports[`Next Button Component some platforms for next page 1`] = `
+<button
+  className="homeButton"
+  onClick={[Function]}
+>
+  Next
+</button>
+`;

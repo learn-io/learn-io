@@ -10,6 +10,7 @@
 	margin:.5rem;
 	box-shadow:4px 4px 8px 0 rgba(0,0,0,.2);
 	border-width:.25rem;
+	cursor: pointer;
 }
 .grow {
   -moz-osx-font-smoothing: grayscale;
@@ -124,6 +125,11 @@
 	width: 700px;
 	margin:0px auto;
 }
+
+.form-row{
+	padding-top:2rem;
+}
+
 input.largeCheckbox{
 	width:30px;
 	height: 30px;
@@ -139,6 +145,34 @@ input.largeCheckbox{
 .profileFormGroupLabel{
 	color:#fff;
 	font-size: large;
+}
+
+.form-inline{
+	margin-left:0px;
+}
+
+.form-inline > *{
+	margin:0rem 10rem; 
+	/* padding:2rem; */
+}
+
+.form-inline > * > * {
+	margin:1rem 10rem; 
+}
+
+.userPlatformInfoPadding{
+	padding-top:3rem;
+	color:white;
+}
+
+.userPlatformInfoPaddingBottom{
+	padding-bottom:3rem;
+	color:white;
+}
+
+.boundaryBox{
+	width:75%,
+	
 }
 
 /*Profile Form*/
@@ -222,7 +256,7 @@ input.largeCheckbox{
 	background-color: transparent;
 	border:none;
 	font-size: 50px;
-	margin-left:90%;
+	margin-left:70%;
 	position:relative;
 	bottom:5px;
 }
@@ -231,7 +265,7 @@ input.largeCheckbox{
 	position:fixed;
 	top:50%;
 	left:50%;
-	height: 65%;
+	height: 70%;
 	width: 50%;
 	border-radius: .5rem;
 	transform: translate(-50%,-50%);

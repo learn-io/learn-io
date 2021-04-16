@@ -1,11 +1,15 @@
 import React,{useEffect, useState} from 'react';
 import './ComponentStyle.css';
-// import axios from 'axios';
-import deleteIcon from './images/delete.png';
 import plusIcon from './images/plus.png';
 import axios_instance from './axios_instance.js';
-// const deleteplat_url = "http://localhost:3000/platform/deletePlatform";
-// const target_url="http://localhost:3000/search/platforms";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Dropdown} from 'react-bootstrap';
+import PreviousButton from './components/PreviousButton';
+import NextButton from './components/NextButton';
+import SearchBox from './components/SearchBox';
+import ConfirmBox from './components/ConfirmBox';
+import DeletePlatformList from './components/DeletePlatformList';
+import DeleteConfirmBox from './components/DeleteConfirmBox';
 
 
 const YourPagesController = (props) =>{
@@ -13,14 +17,12 @@ const YourPagesController = (props) =>{
 	const [text, setText] = useState("");
     const [skip, setSkip] = useState(0);
     const [limit, setLimit] = useState(10);
-	// limit is the maximum number of platforms to be returned
-	// less are only returned if there are no more in the databse
     const [deletePlatform, setDeletePlatform]=useState("");
-    const [nextPlatforms, setNextPlatforms] = useState([])
-
+    const [nextPlatforms, setNextPlatforms] = useState(false);
+    const [selectPlatform, setSelectPlatform] = useState("");
+    const [save,setSave]=useState(0);
     useEffect(
         ()=>{
-        	// props.username
         	let queryText = text
             if (text.length < 2)
 				queryText = ' '
@@ -28,45 +30,26 @@ const YourPagesController = (props) =>{
                 return;
             axios_instance({
                 method: 'get',
-                url: "search/platforms/admin/"+queryText+"/"+skip+"/"+limit
+                url: "search/platforms/"+props.username+"/"+queryText+"/"+skip+"/"+(limit+1)
             }).then(function(response){
+            	if(response.data.length===(limit+1)){
+            		response.data.pop();
+            		setNextPlatforms(true);
+            	}else{
+            		setNextPlatforms(false);
+            	}
                 setPlatforms(response.data);
             }).catch(function(err){
                 console.log(err);
             });
-            axios_instance({
-                method: 'get',
-                url: "search/platforms/admin/"+queryText+"/"+(skip+limit)+"/"+limit
-            }).then(function(response){
-                setNextPlatforms(response.data);
-            }).catch(function(err){
-                console.log(err);
-            });
-        },[text, skip, limit,platforms]
+        },[text, skip, limit,save,props.username]
     );
 
-    const onChangeDelete=(platform)=>{
-		if(platform!==''){
-			setDeletePlatform(platform);
-		}else{
-			setDeletePlatform('');
-		}
-	}
-
+	const onSearchPlatform=(value)=>{
+    	setText(value);
+    	setSkip(0);
+    }
 	const onDeletePlatform=(platform)=>{
-		// axios_instance({
-  //           method: 'post',
-  //           url: "platform/deletePlatform",
-  //           data: {
-  //               _id: platform._id
-  //           }
-  //       })
-  //       .then((res)=>{
-  //       	let filter = platforms.filter(item => item !== platform)
-  //       	setPlatforms(filter);
-  //       	setDeletePlatform('');
-	 //    })
-	 //    .catch(err=>console.log(err));
 		axios_instance({
             method: 'post',
             url: "platform/deletePlatform",
@@ -78,109 +61,45 @@ const YourPagesController = (props) =>{
         	let filter = platforms.filter(item => item !== platform)
         	setPlatforms(filter);
         	setDeletePlatform('');
+        	setSave(save+1);
 	    })
 	    .catch(err=>console.log(err));
 	}
 
-    return (
-	    <div className='appStyle'>
-	    	<div style={{display:'flex',justifyContent: 'space-between',paddingTop:'1rem'}}>
-		    	<h1>Your Pages</h1>
-		    	<button className='deleteButton'><img src={plusIcon} height='50px' width='50px' alt="plus"/></button>
-	    	</div>
-	        <SearchBox setText={setText}/>
-	        <DeletePlatformList platforms={platforms} onChangeDelete={onChangeDelete}/>
-	        <DeleteConfirmBox deletePlatform={deletePlatform} onDeletePlatform={onDeletePlatform} onChangeDelete={onChangeDelete}/>
-	        <PreviousButton skip={skip} setSkip={setSkip} />
-        	<NextButton nextPlatforms={nextPlatforms} skip={skip} setSkip={setSkip}/>
-	    </div>
-    )
-}
+	const onChangeLimit=(value)=>{
+    	setLimit(value);
+    	setSkip(0);
+    }
 
-
-
-const SearchBox =({text, setText})=>{
-	return (
-		<div className='pa'>
-			<input 
-				className='searchBoxStyle'
-				type='search'
-                value={text}
-				placeholder='Search platform'
-				onChange={(e)=>{setText(e.target.value)}}
-			/>
-		</div>
-	);
-}
-
-const PreviousButton=(props)=>{
-	if(props.skip===0){
-		return(
-			<button disabled style={{color:'grey'}} className='homeButton'>Previous</button>
-		);
+	if(props.isSignedIn){
+		return (
+		    <div className='appStyle'>
+		    	<div style={{display:'flex',justifyContent: 'space-between',paddingTop:'1rem'}}>
+			    	<h1>Your Pages</h1>
+			    	<button className='deleteButton'><img src={plusIcon} height='50px' width='50px' alt="plus"/></button>
+		    	</div>
+		        <SearchBox onSearchPlatform={onSearchPlatform} />
+		        <Dropdown>
+					<Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
+				    	Platfroms per page: {limit}
+					</Dropdown.Toggle>
+					<Dropdown.Menu>
+				    	<Dropdown.Item onClick={()=>{onChangeLimit(10)}}>10</Dropdown.Item>
+				    	<Dropdown.Item onClick={()=>{onChangeLimit(15)}}>15</Dropdown.Item>
+				    	<Dropdown.Item onClick={()=>{onChangeLimit(20)}}>20</Dropdown.Item>
+					</Dropdown.Menu>
+				</Dropdown>
+		        <DeletePlatformList platforms={platforms} setDeletePlatform={setDeletePlatform} setSelectPlatform={setSelectPlatform}/>
+		        <DeleteConfirmBox deletePlatform={deletePlatform} onDeletePlatform={onDeletePlatform} setDeletePlatform={setDeletePlatform}/>
+		        <ConfirmBox username={props.username} selectPlatform={selectPlatform} setSelectPlatform={setSelectPlatform} setSave={setSave} save={save}/>
+		        <PreviousButton limit={limit} skip={skip} setSkip={setSkip} />
+	        	<NextButton limit={limit} nextPlatforms={nextPlatforms} skip={skip} setSkip={setSkip}/>
+		    </div>
+	    )
 	}else{
-		return(
-			<button className='homeButton' onClick={()=>{props.setSkip(props.skip-10)}}>Previous</button>
-		);
+		return (<h1>You must log in first!!!</h1>);
 	}
-	
-}
-
-const NextButton=(props)=>{
-	if(props.nextPlatforms.length===0){
-		return(
-			<button disabled style={{color:'grey'}} className='homeButton'>Next</button>
-		);
-	}else{
-		return(
-			<button className='homeButton' onClick={()=>{props.setSkip(props.skip+10)}}>Next</button>
-		);
-	}
-}
-
-const Platform =({name})=>{
-	return(
-		<div className='platformStyle grow'>
-			<img alt='platformImage' src={`https://robohash.org/${name}?200x200`}/>
-			<div>
-				<h4>{name}</h4>
-			</div>
-		</div>
-	);
-}
-
-const DeletePlatformList=({platforms, onChangeDelete})=>{
-	return(
-		// loop for all platforms
-		<div >
-  			{
-  				platforms.map((user,i)=>{
-					return (
-						<div className='deleteList' key={i} >
-							<Platform name={platforms[i].platformName}/>
-							<button onClick={()=>onChangeDelete(platforms[i])} className='deleteButton'><img src={deleteIcon} height='40px' width='40px' alt="delete"/></button>
-						</div>
-					);
-				})
-			}
-  		</div>
-	);
-}
-
-const DeleteConfirmBox=({deletePlatform,onDeletePlatform,onChangeDelete})=>{
-	if(deletePlatform==='') return null
-	return (
-		<section id="overlay">
-			<div className='overlayStyle'>
-				<div className='deleteConfirm'>
-					<h2>Are you sure you want to delete</h2>
-					<h2>"{deletePlatform.platformName}"?</h2>
-					<button className='deleteButtonStyle' onClick={()=>onDeletePlatform(deletePlatform)}>Yes</button>
-					<button className='deleteButtonStyle' onClick={()=>onChangeDelete('')}>No</button>
-				</div>
-			</div>
-		</section>
-	);
+    
 }
 
 export default YourPagesController;

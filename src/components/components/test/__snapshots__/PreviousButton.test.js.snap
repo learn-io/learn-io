@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Previous Button Component first page 1`] = `
+<button
+  className="homeButton"
+  disabled={true}
+  style={
+    Object {
+      "color": "grey",
+    }
+  }
+>
+  Previous
+</button>
+`;
+
+exports[`Previous Button Component skip some platforms to show next page 1`] = `
+<button
+  className="homeButton"
+  onClick={[Function]}
+>
+  Previous
+</button>
+`;
