@@ -1,0 +1,417 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Confirm Box Component Empty Name 1`] = `
+<section
+  id="overlay"
+>
+  <div
+    className="overlayStyle"
+  >
+    <div
+      className="selectConfirm"
+    >
+      <div
+        style={
+          Object {
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <button
+          className="deleteButton"
+          onClick={[Function]}
+        >
+          <img
+            alt="save"
+            height="50px"
+            src="save.png"
+            width="50px"
+          />
+        </button>
+        <button
+          className="closeButton"
+          onClick={[Function]}
+        >
+          X
+        </button>
+      </div>
+      <div
+        style={
+          Object {
+            "display": "flex",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <h2>
+          
+        </h2>
+        <button
+          className="deleteButton"
+          onClick={[Function]}
+        >
+          <img
+            alt="edit"
+            height="50px"
+            src="edit.png"
+            width="50px"
+          />
+        </button>
+      </div>
+       
+      <div
+        style={
+          Object {
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <button
+          className="deleteButton"
+          onClick={[Function]}
+        >
+          <img
+            alt="upload"
+            height="50px"
+            src="upload.png"
+            width="50px"
+          />
+        </button>
+        <button
+          className="deleteButton"
+          onClick={[Function]}
+        >
+          <img
+            alt="edit"
+            height="50px"
+            src="edit.png"
+            width="50px"
+          />
+        </button>
+      </div>
+      <div
+        style={
+          Object {
+            "display": "flex",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <img
+          alt="platformImage"
+          src="https://robohash.org/?200x200"
+        />
+        <p
+          className="paragraph"
+        />
+      </div>
+      <div
+        className="clearfix"
+      >
+        <button
+          className="playButton"
+        >
+          Play
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`Confirm Box Component Platform belong to this user 1`] = `
+<section
+  id="overlay"
+>
+  <div
+    className="overlayStyle"
+  >
+    <div
+      className="selectConfirm"
+    >
+      <div
+        style={
+          Object {
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <button
+          className="deleteButton"
+          onClick={[Function]}
+        >
+          <img
+            alt="save"
+            height="50px"
+            src="save.png"
+            width="50px"
+          />
+        </button>
+        <button
+          className="closeButton"
+          onClick={[Function]}
+        >
+          X
+        </button>
+      </div>
+      <div
+        style={
+          Object {
+            "display": "flex",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <h2>
+          
+        </h2>
+        <button
+          className="deleteButton"
+          onClick={[Function]}
+        >
+          <img
+            alt="edit"
+            height="50px"
+            src="edit.png"
+            width="50px"
+          />
+        </button>
+      </div>
+       
+      <div
+        style={
+          Object {
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <button
+          className="deleteButton"
+          onClick={[Function]}
+        >
+          <img
+            alt="upload"
+            height="50px"
+            src="upload.png"
+            width="50px"
+          />
+        </button>
+        <button
+          className="deleteButton"
+          onClick={[Function]}
+        >
+          <img
+            alt="edit"
+            height="50px"
+            src="edit.png"
+            width="50px"
+          />
+        </button>
+      </div>
+      <div
+        style={
+          Object {
+            "display": "flex",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <img
+          alt="platformImage"
+          src="https://robohash.org/test?200x200"
+        />
+        <p
+          className="paragraph"
+        >
+          
+        </p>
+      </div>
+      <div
+        className="clearfix"
+      >
+        <button
+          className="playButton"
+        >
+          Play
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`Confirm Box Component Platform is not belong to this user 1`] = `
+<section
+  id="overlay"
+>
+  <div
+    className="overlayStyle"
+  >
+    <div
+      className="selectConfirm"
+    >
+      <button
+        className="closeButton"
+        onClick={[Function]}
+      >
+        X
+      </button>
+      <h2>
+        test
+      </h2>
+      <div
+        style={
+          Object {
+            "display": "flex",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <img
+          alt="platformImage"
+          src="https://robohash.org/test?200x200"
+        />
+        <p
+          className="paragraph"
+        />
+      </div>
+      <div
+        className="clearfix"
+      >
+        <button
+          className="playButton"
+        >
+          Play
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`Confirm Box Component test name 1`] = `
+<section
+  id="overlay"
+>
+  <div
+    className="overlayStyle"
+  >
+    <div
+      className="selectConfirm"
+    >
+      <div
+        style={
+          Object {
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <button
+          className="deleteButton"
+          onClick={[Function]}
+        >
+          <img
+            alt="save"
+            height="50px"
+            src="save.png"
+            width="50px"
+          />
+        </button>
+        <button
+          className="closeButton"
+          onClick={[Function]}
+        >
+          X
+        </button>
+      </div>
+      <div
+        style={
+          Object {
+            "display": "flex",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <h2>
+          
+        </h2>
+        <button
+          className="deleteButton"
+          onClick={[Function]}
+        >
+          <img
+            alt="edit"
+            height="50px"
+            src="edit.png"
+            width="50px"
+          />
+        </button>
+      </div>
+       
+      <div
+        style={
+          Object {
+            "display": "flex",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <button
+          className="deleteButton"
+          onClick={[Function]}
+        >
+          <img
+            alt="upload"
+            height="50px"
+            src="upload.png"
+            width="50px"
+          />
+        </button>
+        <button
+          className="deleteButton"
+          onClick={[Function]}
+        >
+          <img
+            alt="edit"
+            height="50px"
+            src="edit.png"
+            width="50px"
+          />
+        </button>
+      </div>
+      <div
+        style={
+          Object {
+            "display": "flex",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <img
+          alt="platformImage"
+          src="https://robohash.org/test?200x200"
+        />
+        <p
+          className="paragraph"
+        >
+          
+        </p>
+      </div>
+      <div
+        className="clearfix"
+      >
+        <button
+          className="playButton"
+        >
+          Play
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+`;

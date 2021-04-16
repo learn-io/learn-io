@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {default as DeleteConfirmBox} from "./DeleteConfirmBox";
+import {default as DeleteConfirmBox} from "../DeleteConfirmBox";
 describe("Delete Confirm Box Component", ()=>{
 	it('test name', () => {
 		

@@ -45,14 +45,6 @@ const YourPagesController = (props) =>{
         },[text, skip, limit,save,props.username]
     );
 
-    const onChangeDelete=(platform)=>{
-		if(platform!==''){
-			setDeletePlatform(platform);
-		}else{
-			setDeletePlatform('');
-		}
-	}
-
 	const onSearchPlatform=(value)=>{
     	setText(value);
     	setSkip(0);
@@ -97,8 +89,8 @@ const YourPagesController = (props) =>{
 				    	<Dropdown.Item onClick={()=>{onChangeLimit(20)}}>20</Dropdown.Item>
 					</Dropdown.Menu>
 				</Dropdown>
-		        <DeletePlatformList platforms={platforms} onChangeDelete={onChangeDelete} setSelectPlatform={setSelectPlatform}/>
-		        <DeleteConfirmBox deletePlatform={deletePlatform} onDeletePlatform={onDeletePlatform} onChangeDelete={onChangeDelete}/>
+		        <DeletePlatformList platforms={platforms} setDeletePlatform={setDeletePlatform} setSelectPlatform={setSelectPlatform}/>
+		        <DeleteConfirmBox deletePlatform={deletePlatform} onDeletePlatform={onDeletePlatform} setDeletePlatform={setDeletePlatform}/>
 		        <ConfirmBox username={props.username} selectPlatform={selectPlatform} setSelectPlatform={setSelectPlatform} setSave={setSave} save={save}/>
 		        <PreviousButton limit={limit} skip={skip} setSkip={setSkip} />
 	        	<NextButton limit={limit} nextPlatforms={nextPlatforms} skip={skip} setSkip={setSkip}/>
