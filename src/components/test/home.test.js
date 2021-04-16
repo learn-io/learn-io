@@ -12,14 +12,3 @@ describe("Home Controller", ()=>{
 	});
 
 });
-describe("Home ", ()=>{
-
-	it('home test', () => {
-		
-		const tree = renderer.create(
-			<HomeController isSignedIn={false}
-			/>
-		).toJSON();
-		expect(tree).toMatchSnapshot();
-	});
-});

@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search Box Component no text 1`] = `
+<div
+  className="pa"
+>
+  <input
+    className="searchBoxStyle"
+    onChange={[Function]}
+    placeholder="Search platform"
+    type="search"
+    value=""
+  />
+</div>
+`;
+
+exports[`Search Box Component test text 1`] = `
+<div
+  className="pa"
+>
+  <input
+    className="searchBoxStyle"
+    onChange={[Function]}
+    placeholder="Search platform"
+    type="search"
+    value="test"
+  />
+</div>
+`;

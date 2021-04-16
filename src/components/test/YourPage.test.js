@@ -10,13 +10,4 @@ describe("Your page controller", ()=>{
 		).toJSON();
 		expect(tree).toMatchSnapshot();
 	});
-
-	// it('test login', () => {
-		
-	// 	const tree = renderer.create(
-	// 		<YourPagesController isSignedIn={true} username={"test"}
-	// 		/>
-	// 	).toJSON();
-	// 	expect(tree).toMatchSnapshot();
-	// });
 });
