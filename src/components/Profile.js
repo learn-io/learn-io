@@ -134,7 +134,7 @@ const Progress=({platforms, platformInfo})=>{
     // console.log("All Info");
     // console.log(allInfo);
    
-    if(platformInfo.length===0){
+    if(typeof platformInfo==='undefined' || typeof platforms==='undefined'){
         return (
             <div className="userPlatformInfoPadding">
                 <h2>No progress to display at this time.</h2>
@@ -164,7 +164,7 @@ const Badges=({platformInfo})=>{
     // console.log("platformInfo");
     // console.log(platformInfo);
 
-    if(platformInfo.length===0){
+    if(typeof platformInfo==='undefined'){
         return (
             <div className="userPlatformInfoPadding">
                 <h1>No badges to display at this time.</h1>
@@ -193,7 +193,7 @@ const Stats=({allInfo})=>{
     // console.log("All Info");
     // console.log(allInfo);
 
-    if(allInfo.length===0){
+    if(typeof allInfo==='undefined'){
         return (
             <div className="userPlatformInfoPadding">
                 <h1>No stats to display at this time.</h1>
