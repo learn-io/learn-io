@@ -1,0 +1,201 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Badges Empty 1`] = `
+<div
+  className="userPlatformInfoPadding"
+>
+  <h1>
+    No badges to display at this time.
+  </h1>
+</div>
+`;
+
+exports[`Profile Controller Logged Out 1`] = `
+<div>
+  <div
+    style={
+      Object {
+        "display": "flex",
+        "justifyContent": "left",
+        "padding": "2rem",
+      }
+    }
+  >
+    <h1>
+      Profile
+    </h1>
+  </div>
+  <form
+    className="form-inline w-100"
+  >
+    <div
+      className="form-group"
+    >
+      <label
+        className="profileFormGroupLabel form-label"
+        htmlFor="skipBy"
+      >
+        Skip By:
+      </label>
+      <input
+        className="form-control"
+        id="skipBy"
+        onBlur={[Function]}
+        type="number"
+      />
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        className="profileFormGroupLabel form-label"
+        htmlFor="countBy"
+      >
+        Platforms per page:
+      </label>
+      <select
+        className="form-control"
+        id="countBy"
+      >
+        <option
+          onClick={[Function]}
+        >
+          10
+        </option>
+        <option
+          onClick={[Function]}
+        >
+          25
+        </option>
+        <option
+          onClick={[Function]}
+        >
+          50
+        </option>
+      </select>
+    </div>
+  </form>
+  <h1>
+    Skip: 
+    0
+  </h1>
+  <h1>
+    Count: 
+    10
+  </h1>
+  <nav
+    className="profileTabHeader nav nav-tabs nav-fill nav-justified"
+    onKeyDown={[Function]}
+    role="tablist"
+  >
+    <a
+      aria-controls="profileTabs-tabpane-progress"
+      aria-selected={true}
+      className="nav-item nav-link active"
+      data-rb-event-key="progress"
+      href="#"
+      id="profileTabs-tab-progress"
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      role="tab"
+    >
+      Progress
+    </a>
+    <a
+      aria-controls="profileTabs-tabpane-badges"
+      aria-selected={false}
+      className="nav-item nav-link"
+      data-rb-event-key="badges"
+      href="#"
+      id="profileTabs-tab-badges"
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      role="tab"
+    >
+      Badges
+    </a>
+    <a
+      aria-controls="profileTabs-tabpane-stats"
+      aria-selected={false}
+      className="nav-item nav-link"
+      data-rb-event-key="stats"
+      href="#"
+      id="profileTabs-tab-stats"
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      role="tab"
+    >
+      Stats
+    </a>
+  </nav>
+  <div
+    className="tab-content"
+  >
+    <div
+      aria-hidden={false}
+      aria-labelledby="profileTabs-tab-progress"
+      className="fade tab-pane active show"
+      id="profileTabs-tabpane-progress"
+      role="tabpanel"
+    >
+      <div
+        className="userPlatformInfoPadding"
+      >
+        <h2>
+          No progress to display at this time.
+        </h2>
+      </div>
+    </div>
+    <div
+      aria-hidden={true}
+      aria-labelledby="profileTabs-tab-badges"
+      className="fade tab-pane"
+      id="profileTabs-tabpane-badges"
+      role="tabpanel"
+    >
+      <div
+        className="userPlatformInfoPadding"
+      >
+        <h1>
+          No badges to display at this time.
+        </h1>
+      </div>
+    </div>
+    <div
+      aria-hidden={true}
+      aria-labelledby="profileTabs-tab-stats"
+      className="fade tab-pane"
+      id="profileTabs-tabpane-stats"
+      role="tabpanel"
+    >
+      <div
+        className="userPlatformInfoPadding"
+      >
+        <h1>
+          No stats to display at this time.
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Progress Empty 1`] = `
+<div
+  className="userPlatformInfoPadding"
+>
+  <h2>
+    No progress to display at this time.
+  </h2>
+</div>
+`;
+
+exports[`Stats Empty 1`] = `
+<div
+  className="userPlatformInfoPadding"
+>
+  <h1>
+    No stats to display at this time.
+  </h1>
+</div>
+`;

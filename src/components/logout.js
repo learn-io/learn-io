@@ -18,7 +18,7 @@ const LogoutController = (props) =>{
         history.push('/home');
     })
 	return (
-        <dir>
+        <dir className="splashStyle">
             Logging out...
         </dir>
     )
