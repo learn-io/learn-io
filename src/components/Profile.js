@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 // import React from "react";
 // import useState from "react";
-import Tabs from 'react-bootstrap/Tabs';
-import Tab from 'react-bootstrap/Tab'
-import Form from 'react-bootstrap/Form';
+// import Tabs from 'react-bootstrap/Tabs';
+// import Tab from 'react-bootstrap/Tab'
+// import Form from 'react-bootstrap/Form';
+import {Tabs, Tab, Form, Col} from 'react-bootstrap';
 
 import axios_instance from './axios_instance.js';
 
@@ -16,7 +17,7 @@ const Profile=()=>{
     const[count, setCount] = useState(10);
     const [platforms, setPlatforms] = useState([]);
     const [platformInfo,setplatformInfo] = useState([]);
-    
+    const [allInfo, setAllInfo] = useState([]);
 
     useEffect(
         ()=>{
@@ -36,29 +37,44 @@ const Profile=()=>{
 
     useEffect(
         ()=>{
-            let i=0;
-            let url_path = "" ;
-            
-            let promises = [];
+            if(platforms !== undefined){
+                let i=0;
+                let url_path = "" ;
+                
+                let promises = [];
 
-            for(i;i<platforms.length;i++){
-                url_path = platforms[i].platformId;
-                // console.log(platforms[i].platformId);
-                promises.push(axios_instance({
-                    method: 'get',
-                    url: "platform/"+url_path
-                }));
-            }
-
-            Promise.all(promises).then((values) => {
-                console.log(values);
-                var tempArr = [];
-                for(var j=0; j<values.length; j++){
-                    // console.log(values[j].data)
-                    tempArr.push(values[j].data);
+                for(i;i<platforms.length;i++){
+                    url_path = platforms[i].platformId;
+                    // console.log(platforms[i].platformId);
+                    promises.push(axios_instance({
+                        method: 'get',
+                        url: "platform/"+url_path
+                    }));
                 }
-                setplatformInfo(tempArr);
-            });
+
+                Promise.all(promises).then((values) => {
+                    console.log(values);
+                    var tempArr = [];
+                    for(var j=0; j<values.length; j++){
+                        // console.log(values[j].data)
+                        tempArr.push(values[j].data);
+                    }
+                    setplatformInfo(tempArr);
+
+                    var tempArr2 = []
+                    for(var k=0;k<platforms.length;k++){
+                        var together = {platforms:platforms[k], platformInfo:tempArr[k]};
+                        tempArr2.push(together);
+                    }
+
+                    console.log("tempArr2");
+                    console.log(tempArr2);
+
+                    setAllInfo(tempArr2);
+                    console.log("All Info");
+                    console.log(allInfo);
+                });
+            }
         },[platforms]
     );
 
@@ -98,7 +114,7 @@ const Profile=()=>{
                     </Tab>
                     <Tab eventKey="stats" title="Stats">
                         {/* Stats */}
-                        <Stats platformInfo={platformInfo} platforms={platforms}></Stats>
+                        <Stats allInfo={allInfo} ></Stats>
                     </Tab>
             </Tabs>
         </div>
@@ -112,6 +128,11 @@ const Progress=({platforms, platformInfo})=>{
     // console.log(platforms[0]);
     // console.log("platformInfo");
     // console.log(platformInfo[0]);
+    
+    
+    //const [allInfo, setAllInfo] = useState({platforms,platformInfo});
+    // console.log("All Info");
+    // console.log(allInfo);
    
     if(platformInfo.length===0){
         return (
@@ -121,12 +142,12 @@ const Progress=({platforms, platformInfo})=>{
         )
     } else {
         return (
-            <div className="userPlatformInfoPadding">
+            <div className="boundaryBox">
                 {platformInfo.map((pI)=>{
                     return(
                         <div className="userPlatformInfoPadding">
-                            <h2>{pI.platformName}</h2>
-                            <div>
+                            <h2 className="text-left ml-4">{pI.platformName}</h2>
+                            <div className="container">
                                 <ProgressBar animated now={50}/>
                             </div>
                         </div>
@@ -140,8 +161,8 @@ const Progress=({platforms, platformInfo})=>{
 const Badges=({platformInfo})=>{
     // console.log("Called Badges");
 
-    console.log("platformInfo");
-    console.log(platformInfo);
+    // console.log("platformInfo");
+    // console.log(platformInfo);
 
     if(platformInfo.length===0){
         return (
@@ -151,11 +172,11 @@ const Badges=({platformInfo})=>{
         )
     } else {
         return (
-            <div className="userPlatformInfoPadding">
+            <div className="container userPlatformInfoPaddingBottom">
                 {platformInfo.map((pI)=>{
                     return(
                         <div className="userPlatformInfoPadding">
-                            <h2>{pI.platformName}</h2>
+                            <h2 className="text-left ml-4">{pI.platformName}</h2>
                             <text>No badges to display at this time.</text>
                         </div>
                     );
@@ -165,9 +186,14 @@ const Badges=({platformInfo})=>{
     }
 }
 
-const Stats=({platforms, platformInfo})=>{
+const Stats=({allInfo})=>{
     // console.log("Called Stats");
-    if(platformInfo.length===0){
+
+    // const [allInfo, setAllInfo] = useState({platforms,platformInfo});
+    console.log("All Info");
+    console.log(allInfo);
+
+    if(allInfo.length===0){
         return (
             <div className="userPlatformInfoPadding">
                 <h1>No stats to display at this time.</h1>
@@ -175,12 +201,56 @@ const Stats=({platforms, platformInfo})=>{
         )
     } else {
         return (
-            <div className="userPlatformInfoPadding">
-                {platformInfo.map((pI)=>{
+            <div className="container userPlatformInfoPaddingBottom">
+                {allInfo.map((pI)=>{
+                    console.log("pI");
+                    console.log(pI);
                     return(
                         <div className="userPlatformInfoPadding">
-                            <h2>{pI.platformName}</h2>
-                            <text>No stats to display at this time.</text>
+                            <h2 className="text-left ml-4">{pI.platformInfo.platformName}</h2>
+                            <Form.Row>
+                                <Col>
+                                    <text>Badges:</text>
+                                </Col>
+                                <Col>
+                                    <text>No stats to display at this time.</text>
+                                    {pI.platforms.badges.map((b)=>{
+                                        return (<image src=""></image>);
+                                    })}
+                                </Col>
+                            </Form.Row>
+                            <Form.Row>
+                                <Col>
+                                    <text>Modules Completed:</text>
+                                </Col>
+                                <Col>
+                                    <text>{pI.platforms.modulesCompleted}</text>
+                                </Col>
+                            </Form.Row>
+                            <Form.Row>
+                                <Col>
+                                    <text>Pages Visited:</text>
+                                </Col>
+                                <Col>
+                                    <text>{pI.platforms.pageVisited}</text>
+                                </Col>
+                            </Form.Row>
+                            <Form.Row>
+                                <Col>
+                                    <text>Time Spent:</text>
+                                </Col>
+                                <Col>
+                                    <text>{pI.platforms.timeSpend}</text>
+                                </Col>
+                            </Form.Row>
+                            <Form.Row>
+                                <Col>
+                                    <text>Widgets Clicked:</text>
+                                </Col>
+                                <Col>
+                                    <text>{pI.platforms.widgetsClicked}</text>
+                                </Col>
+                            </Form.Row>
                         </div>
                     );
                 })}                

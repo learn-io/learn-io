@@ -165,6 +165,16 @@ input.largeCheckbox{
 	color:white;
 }
 
+.userPlatformInfoPaddingBottom{
+	padding-bottom:3rem;
+	color:white;
+}
+
+.boundaryBox{
+	width:75%,
+	
+}
+
 /*Profile Form*/
 /* .profileTabHeader ul > li > a { */
 .profileTabHeader a{
