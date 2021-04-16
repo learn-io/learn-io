@@ -8,13 +8,15 @@ import Form from 'react-bootstrap/Form';
 import axios_instance from './axios_instance.js';
 
 import './ComponentStyle.css';
-import { Dropdown } from 'react-bootstrap';
+import { Dropdown, ProgressBar } from 'react-bootstrap';
 
 const Profile=()=>{
     const[key, setKey] = useState('progress');
     const[skip, setSkip] = useState(0);
     const[count, setCount] = useState(10);
     const [platforms, setPlatforms] = useState([]);
+    const [platformInfo,setplatformInfo] = useState([]);
+    
 
     useEffect(
         ()=>{
@@ -25,10 +27,39 @@ const Profile=()=>{
                 // console.log("The response data is ");
                 // console.log(response.data.resp);
                 setPlatforms(response.data.resp);
+                // console.log(platforms);
             }).catch(function(err){
                 console.log(err);
-            })
+            });
         },[skip,count]
+    );
+
+    useEffect(
+        ()=>{
+            let i=0;
+            let url_path = "" ;
+            
+            let promises = [];
+
+            for(i;i<platforms.length;i++){
+                url_path = platforms[i].platformId;
+                // console.log(platforms[i].platformId);
+                promises.push(axios_instance({
+                    method: 'get',
+                    url: "platform/"+url_path
+                }));
+            }
+
+            Promise.all(promises).then((values) => {
+                console.log(values);
+                var tempArr = [];
+                for(var j=0; j<values.length; j++){
+                    // console.log(values[j].data)
+                    tempArr.push(values[j].data);
+                }
+                setplatformInfo(tempArr);
+            });
+        },[platforms]
     );
 
     return (
@@ -56,39 +87,33 @@ const Profile=()=>{
                 </Dropdown>
             </Form.Group>
             
-            {/* <Form.Group controlId="countBy" >
-                <Form.Label className="profileFormGroupLabel">Platforms per page:</Form.Label>
-                <Form.Control as="select">
-                    <option onClick={(e)=>{e.preventDefault(); setCount(10);}}>10</option>
-                    <option onClick={(e)=>{e.preventDefault(); setCount(25)}}>25</option>
-                    <option onClick={(e)=>{e.preventDefault(); setCount(50)}}>50</option>
-                </Form.Control>
-            </Form.Group> */}
-            
-            {/* <h1>Skip: {JSON.stringify(skip)}</h1>
-            <h1>Count: {JSON.stringify(count)}</h1> */}
-            
             <Tabs className="profileTabHeader" fill justify id="profileTabs" activeKey={key} onSelect={(k) => setKey(k)}>
                     <Tab eventKey="progress" title="Progress" >
                         {/* Progress */}
-                        <Progress userPlatformInfo={platforms}></Progress>
+                        <Progress platformInfo={platformInfo} platforms={platforms}></Progress>
                     </Tab>
                     <Tab eventKey="badges" title="Badges">
                         {/* Badges */}
-                        <Badges userPlatformInfo={platforms}></Badges>
+                        <Badges platformInfo={platformInfo}></Badges>
                     </Tab>
                     <Tab eventKey="stats" title="Stats">
                         {/* Stats */}
-                        <Stats userPlatformInfo={platforms}></Stats>
+                        <Stats platformInfo={platformInfo} platforms={platforms}></Stats>
                     </Tab>
             </Tabs>
         </div>
     )
 }
 
-const Progress=({userPlatformInfo})=>{
+const Progress=({platforms, platformInfo})=>{
     // console.log("Called Progress");
-    if(userPlatformInfo.length===0){
+
+    // console.log("platforms");
+    // console.log(platforms[0]);
+    // console.log("platformInfo");
+    // console.log(platformInfo[0]);
+   
+    if(platformInfo.length===0){
         return (
             <div className="userPlatformInfoPadding">
                 <h2>No progress to display at this time.</h2>
@@ -96,17 +121,29 @@ const Progress=({userPlatformInfo})=>{
         )
     } else {
         return (
-            <div>
-    
-    
+            <div className="userPlatformInfoPadding">
+                {platformInfo.map((pI)=>{
+                    return(
+                        <div className="userPlatformInfoPadding">
+                            <h2>{pI.platformName}</h2>
+                            <div>
+                                <ProgressBar animated now={50}/>
+                            </div>
+                        </div>
+                    );
+                })}                
             </div>
         )
     }
 }
 
-const Badges=({userPlatformInfo})=>{
+const Badges=({platformInfo})=>{
     // console.log("Called Badges");
-    if(userPlatformInfo.length===0){
+
+    console.log("platformInfo");
+    console.log(platformInfo);
+
+    if(platformInfo.length===0){
         return (
             <div className="userPlatformInfoPadding">
                 <h1>No badges to display at this time.</h1>
@@ -114,17 +151,23 @@ const Badges=({userPlatformInfo})=>{
         )
     } else {
         return (
-            <div >
-    
-    
+            <div className="userPlatformInfoPadding">
+                {platformInfo.map((pI)=>{
+                    return(
+                        <div className="userPlatformInfoPadding">
+                            <h2>{pI.platformName}</h2>
+                            <text>No badges to display at this time.</text>
+                        </div>
+                    );
+                })}                
             </div>
         )
     }
 }
 
-const Stats=({userPlatformInfo})=>{
+const Stats=({platforms, platformInfo})=>{
     // console.log("Called Stats");
-    if(userPlatformInfo.length===0){
+    if(platformInfo.length===0){
         return (
             <div className="userPlatformInfoPadding">
                 <h1>No stats to display at this time.</h1>
@@ -132,13 +175,55 @@ const Stats=({userPlatformInfo})=>{
         )
     } else {
         return (
-            <div>
-    
-    
+            <div className="userPlatformInfoPadding">
+                {platformInfo.map((pI)=>{
+                    return(
+                        <div className="userPlatformInfoPadding">
+                            <h2>{pI.platformName}</h2>
+                            <text>No stats to display at this time.</text>
+                        </div>
+                    );
+                })}                
             </div>
         )
     }
 }
+
+// const getPlatformInfo = (platforms) =>{
+//     let toReturn = [];
+//     console.log("PLATFORMS");
+//     console.log(platforms);
+//     // console.log(toReturn);
+//     let i=0;
+//     let url_path = "" ;
+    
+//     for(i;i<platforms.length;i++){
+//         url_path = platforms[i].platformId;
+//         console.log(platforms[i].platformId);
+//         axios_instance({
+//             method: 'get',
+//             url: "platform/"+url_path
+//         }).then(function(response){
+//     //         console.log("Helper Debug");
+//     //         console.log(i);
+//     //         console.log(platforms[i].platformId);
+//     //         // console.log("The response data is ");
+//     //         // console.log(response.data);
+//     //         var platformName = response.data.platformName;
+//     //         // console.log(platformName);
+//     //         var totalModules = response.data.modules.length;
+//     //         var thePlatformId = platforms[i].platformId;
+//     //         // console.log(thePlatformId);
+//     //         toReturn.push({platformId:thePlatformId, platformName:platformName, totalModules:totalModules});
+//     //         // console.log(toReturn);
+//         }).catch(function(err){
+//             console.log(err);
+//         });
+//     }
+//     console.log("To Return ");
+//     console.log(toReturn)
+
+// }
 
 export default Profile;
 export {Badges, Stats, Progress};
