@@ -37,7 +37,7 @@ const Profile=()=>{
 
     useEffect(
         ()=>{
-            if(platforms == undefined || platforms == []){
+            if(platforms === undefined || platforms === []){
                 return;
             }
             let i=0;
