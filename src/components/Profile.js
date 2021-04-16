@@ -32,7 +32,7 @@ const Profile=()=>{
             }).catch(function(err){
                 console.log(err);
             });
-        },[skip,count]
+        },[skip,count] 
     );
 
     useEffect(
