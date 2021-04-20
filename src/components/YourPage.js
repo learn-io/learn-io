@@ -74,7 +74,7 @@ const YourPagesController = (props) =>{
 	if(props.isSignedIn){
 		return (
 		    <div className='appStyle'>
-		    	<div style={{display:'flex',justifyContent: 'space-between',paddingTop:'1rem'}}>
+		    	<div style={{display:'flex',justifyContent: 'space-between',padding:'2rem'}}>
 			    	<h1>Your Pages</h1>
 			    	<button className='deleteButton'><img src={plusIcon} height='50px' width='50px' alt="plus"/></button>
 		    	</div>

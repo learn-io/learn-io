@@ -47,63 +47,67 @@ const Setting=()=>{
 	)
 
 	return (
-		<div className='settingStyle'>
-			<h1>Settings</h1>
-			<Form onSubmit={(e)=>{e.preventDefault(); handleFormSubmit({email,dob,oldPass,newPass,mute})}}>
-		    <Form.Row>
-				<Form.Label column="lg" lg={3}>
-					Email
-				</Form.Label>
-				<Col>
-					<Form.Control size="lg" type="text" name="email" defaultValue={email} placeholder="Email" onChange={(e)=>{setEmail(e.target.value)}}/>
-				</Col>
-			</Form.Row>
-			
-			<Form.Row>
-				<Form.Label column="lg" lg={3}>
-					Date of Birth
-				</Form.Label>
-				<Col>
-					<Form.Control size="lg" type="date" defaultValue={dob} placeholder="MM-DD-YYYY" name="dateOfBirth" onChange={(e)=>{
-						// console.log(e.target.value);
-						e.preventDefault();
-						setDob(e.target.value);
-					}} id="newDOB"/>
-				</Col>
-			</Form.Row>
-			
-			<Form.Row>
-				<Form.Label column="lg" lg={3}>
-					Password Reset
-				</Form.Label>
-				<Col>
-					<Form.Control size="lg" type="password" placeholder="Old Password" name="oldPassword" onChange={(e)=>{setOldPass(e.target.value)}}/>
-				</Col>
-				<Col>
-					<Form.Control size="lg" type="password" placeholder="New Password" name="newPassword" onChange={(e)=>{setNewPass(e.target.value)}}/>
-				</Col>
-			</Form.Row>
-			
-			<Form.Row>
-				<Form.Label column="lg" lg={3}>
-					Toggle Mute
-				</Form.Label>
-				<input className='largeCheckbox' type="checkbox" checked={mute} onChange={(e)=>{
-					// e.preventDefault();
-					console.log(e.target.checked);
-					setMute(e.target.checked);
-					}} name="mute" id="checkbox"/>
-			</Form.Row>
-			
-			<Form.Row>
-				<Col>
-					<Button size="lg" varient="danger" onClick={()=> {window.location.reload();}}>Cancel Changes</Button>
-				</Col>
-				<Col>
-					<Button type="submit" size="lg" varient="primary">Submit Changes</Button>
-				</Col>
-			</Form.Row>
-			</Form>
+		<div className=''>
+			<div style={{display:'flex', justifyContent:"left", padding:"2rem"}}>
+				<h1>Settings</h1>
+			</div>
+			<div className="settingStyle">
+				<Form onSubmit={(e)=>{e.preventDefault(); handleFormSubmit({email,dob,oldPass,newPass,mute})}}>
+					<Form.Row>
+						<Form.Label column="lg" lg={3}>
+							Email
+						</Form.Label>
+						<Col>
+							<Form.Control size="lg" type="text" name="email" defaultValue={email} placeholder="Email" onChange={(e)=>{setEmail(e.target.value)}}/>
+						</Col>
+					</Form.Row>
+					
+					<Form.Row>
+						<Form.Label column="lg" lg={3}>
+							Date of Birth
+						</Form.Label>
+						<Col>
+							<Form.Control size="lg" type="date" defaultValue={dob} placeholder="MM-DD-YYYY" name="dateOfBirth" onChange={(e)=>{
+								// console.log(e.target.value);
+								e.preventDefault();
+								setDob(e.target.value);
+							}} id="newDOB"/>
+						</Col>
+					</Form.Row>
+				
+					<Form.Row>
+						<Form.Label column="lg" lg={3}>
+							Password Reset
+						</Form.Label>
+						<Col>
+							<Form.Control size="lg" type="password" placeholder="Old Password" name="oldPassword" onChange={(e)=>{setOldPass(e.target.value)}}/>
+						</Col>
+						<Col>
+							<Form.Control size="lg" type="password" placeholder="New Password" name="newPassword" onChange={(e)=>{setNewPass(e.target.value)}}/>
+						</Col>
+					</Form.Row>
+					
+					<Form.Row>
+						<Form.Label column="lg" lg={3}>
+							Toggle Mute
+						</Form.Label>
+						<input className='largeCheckbox' type="checkbox" checked={mute} onChange={(e)=>{
+							// e.preventDefault();
+							console.log(e.target.checked);
+							setMute(e.target.checked);
+							}} name="mute" id="checkbox"/>
+					</Form.Row>
+					
+					<Form.Row>
+						<Col>
+							<Button size="lg" varient="danger" onClick={()=> {window.location.reload();}}>Cancel Changes</Button>
+						</Col>
+						<Col>
+							<Button type="submit" size="lg" varient="primary">Submit Changes</Button>
+						</Col>
+					</Form.Row>
+				</Form>
+			</div>
 		</div>
 	);
 }
