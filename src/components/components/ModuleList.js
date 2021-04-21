@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import '../ComponentStyle.css';
 import Module from './Module';
 
@@ -10,18 +10,36 @@ const ModuleList=(props)=>{
 
     const canvasRef = useRef();
 
+    const [scaleX, setScaleX] = useState(1);
+    const [scaleY, setScaleY] = useState(1);
+
+    const width = 800;
+    const height = 1000;
+
+    useEffect( ()=> {
+        function resize()
+        {
+            setScaleY( window.innerHeight / height );
+            setScaleX( window.innerWidth / width );
+        };
+        window.addEventListener('resize', resize);
+        return () => { window.removeEventListener('resize', resize);}
+    });
 	useEffect(() => {
         let ctx = canvasRef.current.getContext('2d');
         if(!ctx)
             return;
-        ctx.canvas.width = window.innerWidth;
-        ctx.canvas.height = window.innerHeight;
+        ctx.canvas.width = width * scaleX;
+        ctx.canvas.height = height * scaleY;
+        ctx.scale(scaleX, scaleY);
+
         ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         for (let i = 0; i < props.modules.length; i++)
         {
             writeModule(props.modules[i], { fontSize: 10, color: 'black', textAlign: 'center' });
         }
-	}, [props.modules, window.innerWidth, window.innerHeight]);
+	}, [props.modules, scaleX, scaleY]
+    );
     /*
     
     "platformId": "607b74dc4165c90aa0dfdce5",
@@ -65,8 +83,8 @@ const ModuleList=(props)=>{
         if (!ctx)
             return;
         var rect = ctx.canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+        const x = e.clientX/scaleX - rect.left;
+        const y = e.clientY/scaleY - rect.top;
         let radius = 50;
         for (let i = 0; i < props.modules.length; i++)
         {
@@ -84,30 +102,6 @@ const ModuleList=(props)=>{
 		<canvas className='canvasStyle' ref={canvasRef} onClick={handleCanvasClick}/>
 	);
 
-/*
-
-
-    if(props.platform===""){
-        return null
-    }else{
-        return(
-            // loop for all modules
-            <div>
-                {
-                    modules.map((x,i) => {
-                        return (
-                            <Module
-                                key={i}
-                                module={modules[i]}
-                                index={i}
-                            />
-                        );
-                    })
-                }
-            </div>
-        );
-    }
-	*/
 }
 
 export default ModuleList;

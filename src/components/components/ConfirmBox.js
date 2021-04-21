@@ -6,6 +6,8 @@ import editIcon from '../images/edit.png';
 import saveIcon from '../images/save.png';
 import axios_instance from '../axios_instance.js';
 import ModuleView from './ModuleView.js'
+import {useHistory} from 'react-router-dom';
+
 
 const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 	const [header,setHeader]=useState('');
@@ -13,6 +15,9 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
     const [description,setDescription]=useState('');
     const [changeD,setChangeD]=useState(false);
     const [play,setPlay]=useState(false);
+
+	const history = useHistory();
+
     useEffect(
         ()=>{
         	if(header===undefined||header===''){
@@ -125,9 +130,8 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 	if(selectPlatform===''){
 		return null
 	}else if(play===true){
-		return(
-			<ModuleView setPlay={setPlay} selectPlatform={selectPlatform}/>
-		);
+		history.push('/play/'+selectPlatform._id);
+		return null;
 	}else{
 		return (
 			<section id="overlay">

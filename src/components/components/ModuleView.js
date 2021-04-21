@@ -1,21 +1,23 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect,useState} from 'react';
+import {useParams} from 'react-router-dom';
 import '../ComponentStyle.css';
 import ModuleList from './ModuleList.js'
 import axios_instance from '../axios_instance.js';
 
 const ModuleView=(props)=>{
 	const [platform,setPlatform]=useState("");
+    let { id } = useParams();
 	useEffect(
         ()=>{
         	axios_instance({
 		        method: 'get',
-		        url: "platform/"+props.selectPlatform._id
+		        url: "platform/"+id
 		    }).then(function(response){
 		    	setPlatform(response.data)
 		    }).catch(function(err){
 		        console.log(err);
 		    });
-        },[props.selectPlatform]
+        },[id]
     );
 
 	let modules=[{
@@ -91,15 +93,10 @@ const ModuleView=(props)=>{
     }];
 
 	return(
-		<div className='overlayStyle'>
-			<div className='moduleView'>
-				<div className='clearfix'>
-					<button className='closeButton' onClick={()=>{props.setPlay(false)}}>X</button>
-				</div>
-				<h2>{props.selectPlatform.platformName}</h2>
+            <>
+				<h2>{id}</h2>
 				<ModuleList platform={platform} modules={modules}/>
-			</div>
-		</div>
+            </>
 	);
 }
 
