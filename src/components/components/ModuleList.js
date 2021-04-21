@@ -9,13 +9,9 @@ const ModuleList=(props)=>{
     // console.log(modules);
 
     const canvasRef = useRef();
-	let ctx = null;
 
 	useEffect(() => {
-        ctx = canvasRef.current.getContext('2d');
-	}, []);
-	
-	useEffect(() => {
+        let ctx = canvasRef.current.getContext('2d');
         if(!ctx)
             return;
         ctx.canvas.width = window.innerWidth;
@@ -41,6 +37,7 @@ const ModuleList=(props)=>{
 	*/
     // write a text
 	const writeModule = (module, style = {}) => {
+        let ctx = canvasRef.current.getContext('2d');
         if (!ctx)
             return;
         const { moduleName, x, y, /*radius, isLocked*/} = module;
@@ -64,6 +61,9 @@ const ModuleList=(props)=>{
 
     const handleCanvasClick=(e)=>
     {
+        let ctx = canvasRef.current.getContext('2d');
+        if (!ctx)
+            return;
         var rect = ctx.canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
