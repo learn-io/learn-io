@@ -44,12 +44,23 @@
 
 /*home button style*/
 .homeButton{
-	margin: 16px 10px 10px 30px;
+	margin: 12px 10px 10px 0px;
 	background-color: transparent;
 	border:none;
 	width: 400px;
 	font-size: 30px;
-	color: white;
+	color:#2C40AB;
+	font-family: 'SEGA LOGO FONT';
+}
+
+/* Next / Previous button style */
+.paginationButtons{
+	margin: 12px 10px 10px 0px;
+	background-color: transparent;
+	border:none;
+	width: 400px;
+	font-size: 30px;
+	color:white;
 	font-family: 'SEGA LOGO FONT';
 }
 
@@ -170,9 +181,12 @@ input.largeCheckbox{
 	color:white;
 }
 
+.badgeContainer{
+	width:100%;
+}
+
 .boundaryBox{
 	width:75%,
-	
 }
 
 /*Profile Form*/
@@ -265,7 +279,7 @@ input.largeCheckbox{
 	position:fixed;
 	top:50%;
 	left:50%;
-	height: 70%;
+	height: 60%;
 	width: 50%;
 	border-radius: .5rem;
 	transform: translate(-50%,-50%);
@@ -282,11 +296,17 @@ input.largeCheckbox{
 	padding-bottom:.5rem;
 	border-style:solid;
 	border-width:1px;
-	border-color:#000;
-	background-color:transparent;
+	
 	font-size:1rem;
 	cursor: pointer;
 	margin:.5rem;
+}
+.playButton:hover{
+	background-color:transparent;
+	border-color:#007bff;
+	color: #FFFFFF;
+	background-color:#065db9;
+	border-width:3px;
 }
 /*select image*/
 .selectImage{

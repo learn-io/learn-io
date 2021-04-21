@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import {Button} from 'react-bootstrap';
 import '../ComponentStyle.css';
 import uploadIcon from '../images/upload.png';
 import editIcon from '../images/edit.png';
@@ -136,7 +137,7 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 						{titlehdr}
 						{centerpart}
 						<div className='clearfix'>
-							<button onClick={()=>{setPlay(true)}} className='playButton'>Play</button>
+							<Button onClick={()=>{setPlay(true)}} className='playButton'>Play</Button>
 						</div>
 					</div>
 				</div>
