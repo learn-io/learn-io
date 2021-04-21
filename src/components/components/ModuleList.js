@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import '../ComponentStyle.css';
 import Module from './Module';
 
@@ -7,77 +7,86 @@ const ModuleList=(props)=>{
     // console.log(props.platform);
     // let modules=props.platform.modules;
     // console.log(modules);
-	let modules=[{
-        "platformId": "607b74dc4165c90aa0dfdce5",
-        "moduleName": "Obscure Berries",
-        "moduleDescription": "This is a berry test!!",
-        "lockedby": [],
-        "unlocks": [],
-        "x": 0,
-        "y": 0,
-        "height": 130,
-        "width": 130
-    }, {
-        "platformId": "607b74dc4165c90aa0dfdce5",
-        "moduleName": "What are Common Berries?",
-        "moduleDescription": "Guess what is a berry test!!",
-        "lockedby": [0],
-        "unlocks": [2],
-        "x": 0,
-        "y": 0,
-        "height": 130,
-        "width": 130
-    }, {
-        "platformId": "607b74dc4165c90aa0dfdce5",
-        "moduleName": "What are Botany Berries?",
-        "moduleDescription": "berry berry!!",
-        "lockedby": [1],
-        "unlocks": [3],
-        "x": 0,
-        "y": 0,
-        "height": 130,
-        "width": 130
-    }, {
-        "platformId": "607b74dc4165c90aa0dfdce5",
-        "moduleName": "Bananas?",
-        "moduleDescription": "Does bananas belong to berry?!",
-        "lockedby": [2],
-        "unlocks": [4],
-        "x": 0,
-        "y": 0,
-        "height": 130,
-        "width": 130
-    }, {
-        "platformId": "607b74dc4165c90aa0dfdce5",
-        "moduleName": "Watermelon!",
-        "moduleDescription": "How about watermelon",
-        "lockedby": [3],
-        "unlocks": [5],
-        "x": 0,
-        "y": 0,
-        "height": 130,
-        "width": 130
-    }, {
-        "platformId": "607b74dc4165c90aa0dfdce5",
-        "moduleName": "Lemons?",
-        "moduleDescription": "Is it a berry?",
-        "lockedby": [4],
-        "unlocks": [6],
-        "x": 0,
-        "y": 0,
-        "height": 300,
-        "width": 300
-    }, {
-        "platformId": "607b74dc4165c90aa0dfdce5",
-        "moduleName": "Pumpkins!?",
-        "moduleDescription": "How about halloween pumpkins!!",
-        "lockedby": [5],
-        "unlocks": [],
-        "x": 0,
-        "y": 0,
-        "height": 130,
-        "width": 130
-    }];
+
+    const canvasRef = useRef();
+	let ctx = null;
+
+	useEffect(() => {
+        ctx = canvasRef.current.getContext('2d');
+	}, []);
+	
+	useEffect(() => {
+        if(!ctx)
+            return;
+        ctx.canvas.width = window.innerWidth;
+        ctx.canvas.height = window.innerHeight;
+        ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        for (let i = 0; i < props.modules.length; i++)
+        {
+            writeModule(props.modules[i], { fontSize: 10, color: 'black', textAlign: 'center' });
+        }
+	}, [props.modules, window.innerWidth, window.innerHeight]);
+    /*
+    
+    "platformId": "607b74dc4165c90aa0dfdce5",
+    "moduleName": "Pumpkins!?",
+    "moduleDescription": "How about halloween pumpkins!!",
+    "lockedby": [5],
+    "unlocks": [],
+    "x": 77,
+    "y": 100,
+    "height": 130,
+    "width": 130
+
+	*/
+    // write a text
+	const writeModule = (module, style = {}) => {
+        if (!ctx)
+            return;
+        const { moduleName, x, y, /*radius, isLocked*/} = module;
+        let isLocked = false;
+        let radius = 50;
+		const { fontSize = 15, fontFamily = 'Arial', color = 'black', textAlign = 'left', textBaseline = 'top' } = style;
+	
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, 2 * Math.PI);
+		ctx.fillStyle = 'lightblue';
+        ctx.fill();
+
+        ctx.beginPath();
+		ctx.font = fontSize + 'px ' + fontFamily;
+		ctx.textAlign = textAlign;
+		ctx.textBaseline = textBaseline;
+		ctx.fillStyle = color;
+		ctx.fillText(moduleName, x, y);
+		ctx.stroke();
+	}
+
+    const handleCanvasClick=(e)=>
+    {
+        var rect = ctx.canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        let radius = 50;
+        for (let i = 0; i < props.modules.length; i++)
+        {
+            let distance = Math.pow(x - props.modules[i].x, 2) + Math.pow(y - props.modules[i].y, 2)
+            console.log("Checked " + props.modules[i].moduleName + " at distance " + distance);
+            if (  distance < Math.pow(radius,2) )
+            {
+                alert("Clicked " + props.modules[i].moduleName + " at distance " + distance);
+                return;
+            }
+        }
+    }
+
+	return(
+		<canvas className='canvasStyle' ref={canvasRef} onClick={handleCanvasClick}/>
+	);
+
+/*
+
+
     if(props.platform===""){
         return null
     }else{
@@ -98,7 +107,7 @@ const ModuleList=(props)=>{
             </div>
         );
     }
-	
+	*/
 }
 
 export default ModuleList;

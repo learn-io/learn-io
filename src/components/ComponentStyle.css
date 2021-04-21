@@ -352,3 +352,12 @@ input.largeCheckbox{
 	border-width:.25rem;
 	cursor: pointer;
 }
+
+/*module style*/
+.canvasStyle{
+	background-color:#8ab1e9;
+	display:absolute;
+	margin:.5rem;
+	border-width:.25rem;
+	cursor: pointer;
+}
