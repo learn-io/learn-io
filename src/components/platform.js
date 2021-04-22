@@ -1,7 +1,7 @@
 import React from 'react';
 import './ComponentStyle.css';
 
-import axios_instance from './axios_instance';
+// import axios_instance from './axios_instance';
 import ModuleView from './components/ModuleView.js'
 
 const Switch = require("react-router-dom").Switch;
