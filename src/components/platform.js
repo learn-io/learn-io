@@ -11,13 +11,13 @@ const PlatformController=()=>{
 
     return (
         <Switch>
-            <Route path="/platform/:platformId">
+            <Route path="/play/platform/:platformId">
                 <ModuleView/>
             </Route>
-            <Route path="/:platform/:module">
+            <Route path="/play/:platform/:module">
                 <ModuleView/>
             </Route>
-            <Route path="/:platform/:module/:page">
+            <Route path="/play/:platform/:module/:page">
                 <ModuleView/>
             </Route>
             <Route path="/">
