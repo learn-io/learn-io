@@ -5,6 +5,9 @@ import unlockIcon from '../images/unlock.png';
 
 const ModuleList=(props)=>{
 
+    const imgLock = useRef(new Image())
+    const imgUnlock = useRef(new Image())
+
     const canvasRef = useRef();
 
     const [scaleX, setScaleX] = useState(1);
@@ -14,15 +17,26 @@ const ModuleList=(props)=>{
     const width = 800;
     const height = 1000;
 
+    const widthPercent = .9;
+    const heightPercent = .9
+
     useEffect( ()=> {
         function resize()
         {
-            setScaleY( window.innerHeight / height );
-            setScaleX( window.innerWidth / width );
+            setScaleY( (widthPercent * window.innerHeight) / height );
+            setScaleX( (heightPercent * window.innerWidth) / width );
         };
         window.addEventListener('resize', resize);
+        
+        imgLock.current.onload = resize;
+        imgUnlock.current.onload = resize;
+
+        imgLock.current.src = lockIcon;
+        imgUnlock.current.src = unlockIcon;
+        
         return () => { window.removeEventListener('resize', resize);}
-    });
+    },[]);
+
 	useEffect(() => {
         let ctx = canvasRef.current.getContext('2d');
         if(!ctx)
@@ -59,7 +73,7 @@ const ModuleList=(props)=>{
             writeModule(props.modules[i], lockStatus, { fontSize: 10, color: 'black', textAlign: 'center' });
             lockStatus=false;
         }
-	}, [props.modules, scaleX, scaleY,unlockList]
+	}, [props.modules, scaleX, scaleY, unlockList]
     );
     /*
     
@@ -104,11 +118,11 @@ const ModuleList=(props)=>{
 		ctx.fillText(moduleName, x, y);
 		ctx.stroke();
 
-        const image=new Image();
+        let image;
         if(isLocked){
-            image.src=lockIcon;
+            image=imgLock.current;
         }else{
-            image.src=unlockIcon;
+            image=imgUnlock.current;
         }
         ctx.drawImage(image, x-15, y+15,30,30);
 
