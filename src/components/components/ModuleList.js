@@ -21,7 +21,7 @@ const ModuleList=(props)=>{
     const height = 1000;
 
     const widthPercent = .9;
-    const heightPercent = .9
+    const heightPercent = .9;
 
     useEffect( ()=> {
         function resize()
@@ -32,8 +32,8 @@ const ModuleList=(props)=>{
         window.addEventListener('resize', resize);
         resize();
 
-        imgLock.current.onload = ()=>{setRedraw(!redraw)};
-        imgUnlock.current.onload = ()=>{setRedraw(!redraw)};
+        imgLock.current.onload = ()=>{setRedraw(r => !r)};
+        imgUnlock.current.onload = ()=>{setRedraw(r => !r)};
 
         imgLock.current.src = lockIcon;
         imgUnlock.current.src = unlockIcon;
@@ -149,8 +149,8 @@ const ModuleList=(props)=>{
         if (!ctx)
             return;
         var rect = ctx.canvas.getBoundingClientRect();
-        const x = e.clientX/scaleX - rect.left;
-        const y = e.clientY/scaleY - rect.top;
+        const x = (e.clientX - rect.left)/scaleX;
+        const y = (e.clientY - rect.top)/scaleY;
         let radius = 50;
         for (let i = 0; i < props.modules.length; i++)
         {
