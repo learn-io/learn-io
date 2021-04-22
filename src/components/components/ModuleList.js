@@ -31,20 +31,35 @@ const ModuleList=(props)=>{
         ctx.canvas.height = height * scaleY;
         ctx.scale(scaleX, scaleY);
         let lockStatus=false;
+        // need to fix because if user is logged, we must check the user completion.
+        for(let i = 0; i < props.modules.length; i++){
+            // if without lockedby value, set it unlock
+            if(props.modules[i].lockedby.length===0){
+                unlockList.push(i);
+            }
+        }
         ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         for (let i = 0; i < props.modules.length; i++)
         {
-            for(let j=0;j<props.modules[i].lockedby.length;j++){
-                let isInclude=unlockList.includes(props.modules[i].lockedby[j]);
-                if(!isInclude){
-                    lockStatus=true;
-                    break;
-                }
+            drawline(props.modules[i]);
+        }
+        for (let i = 0; i < props.modules.length; i++)
+        {
+            // for(let j=0;j<props.modules[i].lockedby.length;j++){
+            //     let isInclude=unlockList.includes(props.modules[i].lockedby[j]);
+            //     if(!isInclude){
+            //         lockStatus=true;
+            //         break;
+            //     }
+            // }
+            let isInclude=unlockList.includes(i)
+            if(!isInclude){
+                lockStatus=true;
             }
             writeModule(props.modules[i], lockStatus, { fontSize: 10, color: 'black', textAlign: 'center' });
             lockStatus=false;
         }
-	}, [props.modules, scaleX, scaleY]
+	}, [props.modules, scaleX, scaleY,unlockList]
     );
     /*
     
@@ -61,6 +76,7 @@ const ModuleList=(props)=>{
 	*/
     // write a text
 	const writeModule = (module, lockStatus,style = {}) => {
+        // console.log(props.modules);
         let ctx = canvasRef.current.getContext('2d');
         if (!ctx)
             return;
@@ -95,8 +111,20 @@ const ModuleList=(props)=>{
             image.src=unlockIcon;
         }
         ctx.drawImage(image, x-15, y+15,30,30);
+
 	}
 
+    const drawline=(module)=>{
+        let ctx = canvasRef.current.getContext('2d');
+        if (!ctx)
+            return;
+        for(let i=0;i<module.unlocks.length;i++){
+            ctx.beginPath();
+            ctx.moveTo(module.x , module.y);
+            ctx.lineTo(props.modules[module.unlocks[i]].x, props.modules[module.unlocks[i]].y);
+            ctx.stroke();
+        }
+    }
     const handleCanvasClick=(e)=>
     {
         let ctx = canvasRef.current.getContext('2d');
