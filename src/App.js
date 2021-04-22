@@ -10,7 +10,7 @@ import HomeController from "./components/home";
 import LogoutController from "./components/logout";
 import YourPagesController from "./components/YourPage";
 import AdminController from "./components/home"; 
-import PlatformController from "./components/home"; 
+import PlatformController from "./components/platform"; 
 import SettingsController from "./components/Setting";
 import ProfileController from "./components/Profile";
 

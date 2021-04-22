@@ -130,7 +130,7 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 	if(selectPlatform===''){
 		return null
 	}else if(play===true){
-		history.push('/play/'+selectPlatform._id);
+		history.push('/platform/'+selectPlatform._id);
 		return null;
 	}else{
 		return (
