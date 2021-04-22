@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
 import '../ComponentStyle.css';
-import Module from './Module';
 
 const ModuleList=(props)=>{
 	// console.log(props.selectPlatform);

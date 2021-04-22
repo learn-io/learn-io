@@ -5,8 +5,7 @@ import uploadIcon from '../images/upload.png';
 import editIcon from '../images/edit.png';
 import saveIcon from '../images/save.png';
 import axios_instance from '../axios_instance.js';
-import ModuleView from './ModuleView.js'
-import {useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 
 const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
@@ -14,9 +13,6 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
     const [changeHeader,setChangeHeader]=useState(false);
     const [description,setDescription]=useState('');
     const [changeD,setChangeD]=useState(false);
-    const [play,setPlay]=useState(false);
-
-	const history = useHistory();
 
     useEffect(
         ()=>{
@@ -129,9 +125,6 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 	}
 	if(selectPlatform===''){
 		return null
-	}else if(play===true){
-		history.push('/play/'+selectPlatform._id);
-		return null;
 	}else{
 		return (
 			<section id="overlay">
@@ -141,7 +134,7 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 						{titlehdr}
 						{centerpart}
 						<div className='clearfix'>
-							<Button onClick={()=>{setPlay(true)}} className='playButton'>Play</Button>
+							<Button className='playButton'><Link style={{color:'white'}} to={'/platform/'+selectPlatform._id}> Play</Link></Button>
 						</div>
 					</div>
 				</div>
