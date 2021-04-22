@@ -361,3 +361,7 @@ input.largeCheckbox{
 	border-width:.25rem;
 	cursor: pointer;
 }
+
+.adminItem{
+	display:inline-block
+}

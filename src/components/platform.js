@@ -6,6 +6,7 @@ import ModuleView from './components/ModuleView.js'
 
 const Switch = require("react-router-dom").Switch;
 const Route = require("react-router-dom").Route;
+const Redirect = require("react-router-dom").Redirect;
 
 const PlatformController=()=>{
     return (
@@ -19,6 +20,9 @@ const PlatformController=()=>{
             <Route path="/:platform">
                 <ModuleView/>
             </Route>
+            <Route path="/">
+				<Redirect to="/home" />
+			</Route>
         </Switch>
     );
 };
