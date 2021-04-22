@@ -5,20 +5,24 @@ import ModuleView from './components/ModuleView.js'
 
 const Switch = require("react-router-dom").Switch;
 const Route = require("react-router-dom").Route;
+const Redirect = require("react-router-dom").Redirect;
 
 const PlatformController=()=>{
 
     return (
         <Switch>
-            <Route path="/platform/:platformId">
+            <Route path="/play/platform/:platformId">
                 <ModuleView/>
             </Route>
-            <Route path="/:platform/:module">
+            <Route path="/play/:platform/:module">
                 <ModuleView/>
             </Route>
-            <Route path="/:platform/:module/:page">
+            <Route path="/play/:platform/:module/:page">
                 <ModuleView/>
             </Route>
+            <Route path="/">
+				<Redirect to="/home" />
+			</Route>
         </Switch>
     );
 };

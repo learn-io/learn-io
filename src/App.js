@@ -9,7 +9,7 @@ import MenuController from "./components/Menus";
 import HomeController from "./components/home";
 import LogoutController from "./components/logout";
 import YourPagesController from "./components/YourPage";
-import AdminController from "./components/home"; 
+import AdminController from "./components/admin"; 
 import PlatformController from "./components/platform"; 
 import SettingsController from "./components/Setting";
 import ProfileController from "./components/Profile";
@@ -92,8 +92,8 @@ function App(){
 				<AdminController isSignedIn={isSignedIn} isAdmin={isAdmin}/>
 			</Route>
 
-			<Route path="/platform">
-				<PlatformController isSignedIn={isSignedIn}/>
+			<Route path="/play">
+				<PlatformController isSignedIn={isSignedIn} username={username}/>
 			</Route>
 
 			<Route path="/settings">
@@ -104,9 +104,10 @@ function App(){
 				<ProfileController isSignedIn={isSignedIn}/>
 			</Route>
 			
-			<Route exact path="/">
+			<Route path="/">
 				<Redirect to="/home" />
 			</Route>
+
 		</Switch>
 	</div>
 	)
