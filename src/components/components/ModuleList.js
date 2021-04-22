@@ -12,6 +12,9 @@ const ModuleList=(props)=>{
 
     const [scaleX, setScaleX] = useState(1);
     const [scaleY, setScaleY] = useState(1);
+
+    const [redraw, setRedraw] = useState(false);
+    
     const [unlockList]=useState([0]);
 
     const width = 800;
@@ -27,9 +30,10 @@ const ModuleList=(props)=>{
             setScaleX( (heightPercent * window.innerWidth) / width );
         };
         window.addEventListener('resize', resize);
-        
-        imgLock.current.onload = resize;
-        imgUnlock.current.onload = resize;
+        resize();
+
+        imgLock.current.onload = ()=>{setRedraw(!redraw)};
+        imgUnlock.current.onload = ()=>{setRedraw(!redraw)};
 
         imgLock.current.src = lockIcon;
         imgUnlock.current.src = unlockIcon;
@@ -73,7 +77,7 @@ const ModuleList=(props)=>{
             writeModule(props.modules[i], lockStatus, { fontSize: 10, color: 'black', textAlign: 'center' });
             lockStatus=false;
         }
-	}, [props.modules, scaleX, scaleY, unlockList]
+	}, [props.modules, scaleX, scaleY, unlockList, redraw]
     );
     /*
     
