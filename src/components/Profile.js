@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import {Tabs, Tab, Form, Col, Dropdown, ProgressBar} from 'react-bootstrap';
 
 import axios_instance from './axios_instance.js';
+import { Redirect, useParams, useHistory } from 'react-router';
 
 import './ComponentStyle.css';
 
@@ -9,6 +10,31 @@ import badge0 from './images/25.png';
 import badge1 from './images/50.png';
 import badge2 from './images/75.png';
 import badge3 from './images/100.png';
+
+const Switch = require("react-router-dom").Switch;
+const Route = require("react-router-dom").Route;
+
+const ProfileController = ({isSignedIn, username}) =>
+{
+    if (!isSignedIn)
+    {
+        return (
+            <Redirect to="/home"/>
+        )
+    }
+    return (
+    <Switch>
+        <Route path="/profile/:username">
+            <Profile/>
+        </Route>
+        
+        <Route path="/profile">
+            <Redirect to={"/profile/"+username} />
+        </Route>
+
+    </Switch>
+    );
+}
 
 const Profile=()=>{
     const[key, setKey] = useState('progress');
@@ -18,17 +44,20 @@ const Profile=()=>{
     // const [platformInfo,setplatformInfo] = useState([]);
     const [allInfo, setAllInfo] = useState([]);
 
+    let { username } = useParams();
+    const history = useHistory();
     useEffect(
         ()=>{
             axios_instance({
                 method: 'get',
-                url: "profile/stats/"+skip+"/"+count
+                url: "profile/stats/"+username+"/"+skip+"/"+count
             }).then(function(response){
                 // console.log("The response data is ");
                 // console.log(response.data.resp);
                 setPlatforms(response.data.resp);
                 // console.log(platforms);
             }).catch(function(err){
+                history.push("/home");
                 console.log(err);
             });
         },[skip,count] 
@@ -259,5 +288,5 @@ const Stats=({allInfo})=>{
     }
 }
 
-export default Profile;
+export default ProfileController;
 export {Badges, Stats, Progress};
