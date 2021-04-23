@@ -7,13 +7,17 @@ import saveIcon from '../images/save.png';
 import axios_instance from '../axios_instance.js';
 // import {Link} from 'react-router-dom';
 
+var fs = require("fs");
+const FormData = require('form-data');
 
 const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,setSave,save})=>{
 	const [header,setHeader]=useState('');
     const [changeHeader,setChangeHeader]=useState(false);
     const [description,setDescription]=useState('');
     const [changeD,setChangeD]=useState(false);
-    const [image,setImage]=useState('');
+    
+    const [imageData,setImageData]=useState('');
+    const [imageHash, setImageHash] = useState('');
     const hiddenFileInput = React.useRef(null);
     
     console.log("platform")
@@ -32,11 +36,26 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
         	if(description===undefined||description===''){
         		setDescription(selectedModule.moduleDescription);
         	}
-            if(image===undefined||image===''){
-                setImage(selectedModule.image)
+            if(imageHash===undefined||imageHash===''){
+                setImageHash(selectedModule.image)
             }
-        },[header,changeHeader,description,changeD,selectedModule,image]
+        },[header,changeHeader,description,changeD,selectedModule,imageHash]
     );
+
+    useEffect(
+        ()=>{      
+            if(imageHash===undefined||imageHash==='')     {
+                return;
+            }
+            axios_instance({
+                method: 'get',
+                url: "media/"+imageHash,
+            }).then((res)=>{
+                setImageData(res.data.data);
+            })
+        },[imageHash]
+    )
+
     const onSaveModuleInfo=(platform)=>{
     	axios_instance({
             method: 'post',
@@ -46,7 +65,7 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
                 oldModuleName:selectedModule.moduleName,
                 newModuleName:header,
                 moduleDescription:description,
-                image:image,
+                image:imageHash,
                 lockedby:selectedModule.lockedby,
                 unlocks:selectedModule.unlocks
             }
@@ -61,12 +80,44 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
     };
     const onUploadImage=(event)=>{
     	console.log('upload');
+        console.log("FILE")
+        console.log(event.target.files[0]);
         if (event.target.files && event.target.files[0]) {
-			let reader = new FileReader();
-			reader.onload = (e) => {
-				setImage(e.target.result);
-			};
-			reader.readAsDataURL(event.target.files[0]);
+            let imageStream = event.target.files[0];//fs.createReadStream(event.target.files[0], "utf8");
+            let imageExtension = "."+event.target.files[0].name.split('.')[1];
+                
+            let form = new FormData();
+            form.append('data', imageStream);
+            form.append('extension', imageExtension);
+            
+            axios_instance({
+                method: 'post',
+                url: "media/",
+                data: form
+            }).then((res)=>{
+                setImageHash(res.data.hash);
+            }).catch((e)=>{
+
+            })
+
+
+            // imageStream.on('open',function(){
+            //     let imageExtension = "."+event.target.files[0].name.split('.')[1];
+                
+            //     let form = new FormData();
+            //     form.append('data', imageStream);
+            //     form.append('extension', imageExtension);
+                
+            //     axios_instance({
+            //         method: 'post',
+            //         url: "media/",
+            //         data: form
+            //     }).then((res)=>{
+            //         setImageHash(res.data.hash);
+            //     }).catch((e)=>{
+
+            //     })
+            // })
 		}
     }
 
@@ -98,7 +149,8 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
 		setDescription('');
 		setChangeHeader(false);
 		setChangeD(false);
-        setImage('');
+        setImageData('');
+        setImageHash('');
 	}
 
 	let closehdr;
@@ -109,14 +161,14 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
 	if(username!==platform.owner){
 		closehdr=<button className='closeButton' onClick={()=>{onCloseModule('')}}>X</button>
 		titlehdr=<h2>{header}</h2>
-        if(image===''){
+        if(imageData===''){
 			centerpart=<div style={{justifyContent:'center',display:'flex'}}>
  						<img alt='moduleImage' src={`https://robohash.org/${selectedModule.moduleName}?200x200`}/>
  						<p className='paragraph'>{description}</p>
 	 				</div>
 		}else{
 			centerpart=<div style={{justifyContent:'center',display:'flex'}}>
- 						<img alt='moduleImage' src={image} height={200} width={200}/>
+ 						<img alt='moduleImage' src={imageData} height={200} width={200}/>
  						<p className='paragraph'>{description}</p>
 	 				</div>
 		}
@@ -154,10 +206,10 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
  					{hdrButton}
 				</div>
         let showImg;
-		if(image===''){
+		if(imageData===''){
 			showImg=<img alt='platformImage' src={`https://robohash.org/${selectedModule.moduleName}?200x200`}/>
 		}else{
-			showImg=<img alt='platformImage' src={image} height={200} width={200}/>
+			showImg=<img alt='platformImage' src={imageData} height={200} width={200}/>
 		}
 		centerpart=<>	<div style={{justifyContent:'space-between',display:'flex'}}>
 							<button className='deleteButton' onClick={handleClick}><img src={uploadIcon} height='50px' width='50px' alt="upload"/></button>
