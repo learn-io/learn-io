@@ -6,7 +6,7 @@ const Platform =({name,platform,setSelectPlatform})=>{
 	if(platform.image===''){
 		showImg=<img alt='platformImage' src={`https://robohash.org/${name}?200x200`}/>
 	}else{
-		showImg=<img alt='platformImage' src={platform.image} height={200} width={200}/>
+		showImg=<img alt='platformImage' src={platform.image} height={300} width={300}/>
 	}
 	
 	return(
