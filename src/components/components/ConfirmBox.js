@@ -115,7 +115,7 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 		let hdr;
 		let hdrButton;
 		if(changeHeader){
-			hdr=<input style={{width:'50%'}} type="text" id="header" name="header"/>
+			hdr=<input defaultValue={header} style={{width:'50%'}} type="text" id="header" name="header"/>
 			hdrButton=<button className='deleteButton' onClick={()=>{onEditHeader(document.getElementById("header").value)}}><img src={editIcon} height='50px' width='50px' alt="edit"/></button>
 		}
 		else{
@@ -125,7 +125,7 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 		let desc;
 		let descButton;
 		if(changeD){
-			desc=<input style={{width:'40%'}} type="text" id="desc" name="desc"/>
+			desc=<input defaultValue={description} style={{width:'40%'}} type="text" id="desc" name="desc"/>
 			descButton=<button className='deleteButton' onClick={()=>{onEditDescription(document.getElementById("desc").value)}}><img src={editIcon} height='50px' width='50px' alt="edit"/></button>
 		}
 		else{
