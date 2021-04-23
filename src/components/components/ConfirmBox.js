@@ -49,8 +49,13 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 		hiddenFileInput.current.click();
 	  };
     const onUploadImage=(event)=>{
-		const file=event.target.files[0];
-		setImage(file);
+		if (event.target.files && event.target.files[0]) {
+			let reader = new FileReader();
+			reader.onload = (e) => {
+				setImage(e.target.result);
+			};
+			reader.readAsDataURL(event.target.files[0]);
+		}
     }
 
     const onEditHeader=(value)=>{
