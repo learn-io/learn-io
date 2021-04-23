@@ -102,7 +102,7 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 	 				</div>
 		}else{
 			centerpart=<div style={{justifyContent:'center',display:'flex'}}>
- 						<img alt='platformImage' src={image} height={200} width={200}/>
+ 						<img alt='platformImage' src={image} height={300} width={300}/>
  						<p className='paragraph'>{description}</p>
 	 				</div>
 		}
@@ -140,7 +140,7 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 		if(image===''){
 			showImg=<img alt='platformImage' src={`https://robohash.org/${selectPlatform.platformName}?200x200`}/>
 		}else{
-			showImg=<img alt='platformImage' src={image} height={200} width={200}/>
+			showImg=<img alt='platformImage' src={image} height={300} width={300}/>
 		}
 		centerpart=<>	<div style={{justifyContent:'space-between',display:'flex'}}>
 							<button className='deleteButton' onClick={handleClick}><img src={uploadIcon} height='50px' width='50px' alt="upload"/></button>
