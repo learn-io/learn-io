@@ -13,7 +13,8 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
     const [changeHeader,setChangeHeader]=useState(false);
     const [description,setDescription]=useState('');
     const [changeD,setChangeD]=useState(false);
-
+	const [image,setImage]=useState('');
+	const hiddenFileInput = React.useRef(null);
     useEffect(
         ()=>{
         	if(header===undefined||header===''){
@@ -22,7 +23,10 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
         	if(description===undefined||description===''){
         		setDescription(selectPlatform.description);
         	}
-        },[header,changeHeader,description,changeD,selectPlatform]
+			if(image===undefined||image===''){
+        		setImage(selectPlatform.image);
+        	}
+        },[header,changeHeader,description,changeD,selectPlatform,image]
     );
     const onSavePlatformInfo=(platform)=>{
     	axios_instance({
@@ -31,7 +35,7 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
             data: {
                 _id: selectPlatform._id,
                 platformName:header,
-                image:"",
+                image:image,
                 description:description
             }
         })
@@ -40,8 +44,13 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 	    })
 	    .catch(err=>console.log(err));
     }
-    const onUploadImage=()=>{
-    	console.log('upload');
+
+	const handleClick = event => {
+		hiddenFileInput.current.click();
+	  };
+    const onUploadImage=(event)=>{
+		const file=event.target.files[0];
+		setImage(file);
     }
 
     const onEditHeader=(value)=>{
@@ -72,6 +81,7 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 		setDescription('');
 		setChangeHeader(false);
 		setChangeD(false);
+		setImage('');
 	}
 
 	let closehdr;
@@ -80,10 +90,18 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 	if(username!==selectPlatform.owner){
 		closehdr=<button className='closeButton' onClick={()=>{onClosePlatform('')}}>X</button>
 		titlehdr=<h2>{header}</h2>
-		centerpart=<div style={{justifyContent:'center',display:'flex'}}>
+		if(image===''){
+			centerpart=<div style={{justifyContent:'center',display:'flex'}}>
  						<img alt='platformImage' src={`https://robohash.org/${selectPlatform.platformName}?200x200`}/>
  						<p className='paragraph'>{description}</p>
 	 				</div>
+		}else{
+			centerpart=<div style={{justifyContent:'center',display:'flex'}}>
+ 						<img alt='platformImage' src={image} height={200} width={200}/>
+ 						<p className='paragraph'>{description}</p>
+	 				</div>
+		}
+		
 	}else{
 		closehdr=<div style={{justifyContent:'space-between',display:'flex'}}>
 					<button className='deleteButton' onClick={()=>{onSavePlatformInfo(selectPlatform)}}><img src={saveIcon} height='50px' width='50px' alt="save"/></button>
@@ -113,12 +131,19 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 	 				{hdr}
  					{hdrButton}
 				</div>
+		let showImg;
+		if(image===''){
+			showImg=<img alt='platformImage' src={`https://robohash.org/${selectPlatform.platformName}?200x200`}/>
+		}else{
+			showImg=<img alt='platformImage' src={image} height={200} width={200}/>
+		}
 		centerpart=<>	<div style={{justifyContent:'space-between',display:'flex'}}>
-							<button className='deleteButton' onClick={()=>{onUploadImage()}}><img src={uploadIcon} height='50px' width='50px' alt="upload"/></button>
+							<button className='deleteButton' onClick={handleClick}><img src={uploadIcon} height='50px' width='50px' alt="upload"/></button>
+							<input type="file" ref={hiddenFileInput} style={{ display: "none" }} onChange={onUploadImage} />
 							{descButton}
 						</div>
 						<div style={{justifyContent:'center',display:'flex'}}>
-							<img alt='platformImage' src={`https://robohash.org/${selectPlatform.platformName}?200x200`}/>
+							{showImg}
 							{desc}
 						</div>
 					</>
