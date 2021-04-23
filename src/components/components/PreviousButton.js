@@ -4,9 +4,9 @@ import '../ComponentStyle.css';
 const PreviousButton=(props)=>{
 	let but;
 	if(props.skip===0){
-		but=<button disabled style={{color:'grey'}} className='homeButton'>Previous</button>
+		but=<button disabled style={{color:'grey'}} className='paginationButtons'>Previous</button>
 	}else{
-		but=<button className='homeButton' onClick={()=>{props.setSkip(props.skip-props.limit)}}>Previous</button>
+		but=<button className='paginationButtons' onClick={()=>{props.setSkip(props.skip-props.limit)}}>Previous</button>
 	}
 	return but;
 }
