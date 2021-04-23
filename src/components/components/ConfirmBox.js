@@ -164,7 +164,7 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 						{titlehdr}
 						{centerpart}
 						<div className='clearfix'>
-							<Button className='playButton'><Link style={{color:'white'}} to={'/play/platform/'+selectPlatform._id}> Play</Link></Button>
+							<Link className='playButton' to={'/play/platform/'+selectPlatform._id}> Play</Link>
 						</div>
 					</div>
 				</div>
