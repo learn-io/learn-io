@@ -16,7 +16,7 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
     const [imageData,setImageData]=useState('');
     const [imageHash, setImageHash] = useState('');
     const hiddenFileInput = React.useRef(null);
-    
+
     console.log("platform")
     console.log(platform)
 
@@ -25,19 +25,22 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
 
     useEffect(
         ()=>{
-        	if(header===undefined||header===''){
-                // console.log("Selected Module ");
-                // console.log(selectedModule);
-        		setHeader(selectedModule.moduleName);
-        	}
-        	if(description===undefined||description===''){
-        		setDescription(selectedModule.moduleDescription);
-        	}
-            if(imageHash===undefined||imageHash===''){
-                setImageHash(selectedModule.image)
-            }
-        },[header,changeHeader,description,changeD,selectedModule,imageHash]
-    );
+			if(selectedModule === '' || selectedModule === undefined)
+				return;
+
+			setHeader(selectedModule.moduleName);
+			setDescription(selectedModule.moduleDescription);
+
+			if (selectedModule.image === '' ||  selectedModule.image === undefined)
+			{
+				setImageData(`https://robohash.org/${selectedModule.moduleName}?200x200`);
+			}
+			else
+			{
+				setImageHash(selectedModule.image);
+			}
+        },[selectedModule]   
+		);
 
     useEffect(
         ()=>{      
@@ -48,7 +51,7 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
                 method: 'get',
                 url: "media/"+encodeURIComponent(imageHash),
             }).then((res)=>{
-                setImageData("data:" + res.data.extension + ";base64,"+Buffer.from(res.data.data, 'utf8').toString('base64'));
+                setImageData(res.data.data);
             }).catch((err)=>{
 				console.log(err);
 				console.log(imageHash);
@@ -87,40 +90,27 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
             let imageFile = event.target.files[0];
             let imageExtension = event.target.files[0].type;
                 
-            let form = new FormData();
-            form.append('file', imageFile);
-            form.append('extension', imageExtension);
-            axios_instance({
-                method: 'post',
-                url: "media/",
-                data: form,
-				headers: {
-					'Content-Type': 'multipart/form-data'
-				  }
-            }).then((res)=>{
-                setImageHash(res.data.hash);
-            }).catch((e)=>{
-
-            })
-
-
-            // imageStream.on('open',function(){
-            //     let imageExtension = "."+event.target.files[0].name.split('.')[1];
-                
-            //     let form = new FormData();
-            //     form.append('data', imageStream);
-            //     form.append('extension', imageExtension);
-                
-            //     axios_instance({
-            //         method: 'post',
-            //         url: "media/",
-            //         data: form
-            //     }).then((res)=>{
-            //         setImageHash(res.data.hash);
-            //     }).catch((e)=>{
-
-            //     })
-            // })
+			let reader = new FileReader();
+			reader.onload = (e) => {
+				let oldData = ImageData;
+				setImageData(e.target.result);
+				let form = new FormData();
+				form.append('file', e.target.result);
+				form.append('extension', imageExtension);
+				axios_instance({
+					method: 'post',
+					url: "media/",
+					data: form,
+					headers: {
+						'Content-Type': `multipart/form-data; boundary=${form._boundary}`,
+					},
+				}).then((res)=>{
+					setImageHash(res.data.hash);
+				}).catch((e)=>{
+					setImageData(oldData);
+				})
+			};
+			reader.readAsDataURL(imageFile);
 		}
     }
 
@@ -164,17 +154,10 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
 	if(username!==platform.owner){
 		closehdr=<button className='closeButton' onClick={()=>{onCloseModule('')}}>X</button>
 		titlehdr=<h2>{header}</h2>
-        if(imageData===''){
-			centerpart=<div style={{justifyContent:'center',display:'flex'}}>
- 						<img alt='moduleImage' src={`https://robohash.org/${selectedModule.moduleName}?200x200`}/>
- 						<p className='paragraph'>{description}</p>
-	 				</div>
-		}else{
-			centerpart=<div style={{justifyContent:'center',display:'flex'}}>
- 						<img alt='moduleImage' src={imageData} height={200} width={200}/>
- 						<p className='paragraph'>{description}</p>
-	 				</div>
-		}
+		centerpart=<div style={{justifyContent:'center',display:'flex'}}>
+					<img alt='moduleImage' src={imageData} height={200} width={200}/>
+					<p className='paragraph'>{description}</p>
+				</div>
 		// centerpart=<div style={{justifyContent:'center',display:'flex'}}>
  		// 				<img alt='platformImage' src={`https://robohash.org/${selectedModule.platformName}?200x200`}/>
  		// 				<p className='paragraph'>{description}</p>
@@ -208,12 +191,7 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
 	 				{hdr}
  					{hdrButton}
 				</div>
-        let showImg;
-		if(imageData===''){
-			showImg=<img alt='platformImage' src={`https://robohash.org/${selectedModule.moduleName}?200x200`}/>
-		}else{
-			showImg=<img alt='platformImage' src={imageData} height={200} width={200}/>
-		}
+        let showImg =<img alt='platformImage' src={imageData} height={200} width={200}/>
 		centerpart=<>	<div style={{justifyContent:'space-between',display:'flex'}}>
 							<button className='deleteButton' onClick={handleClick}><img src={uploadIcon} height='50px' width='50px' alt="upload"/></button>
 							<input type="file" ref={hiddenFileInput} style={{ display: "none" }} onChange={onUploadImage} />
@@ -223,18 +201,9 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
 							{showImg}
 							{desc}
 						</div>
-					</>    
-		// centerpart=<>	<div style={{justifyContent:'space-between',display:'flex'}}>
-		// 					<button className='deleteButton' onClick={()=>{onUploadImage()}}><img src={uploadIcon} height='50px' width='50px' alt="upload"/></button>
-		// 					{descButton}
-		// 				</div>
-		// 				<div style={{justifyContent:'center',display:'flex'}}>
-		// 					<img alt='platformImage' src={`https://robohash.org/${selectedModule.platformName}?200x200`}/>
-		// 					{desc}
-		// 				</div>
-		// 			</>
+					</>   
 	}
-	if(selectedModule===''){
+	if(selectedModule==='' || imageData === ''){
 		return null
 	}else{
 		return (
