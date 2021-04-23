@@ -132,7 +132,7 @@ const ModuleList=(props)=>{
         const { moduleName, x, y, /*radius, isLocked*/} = module;
         let isLocked = lockStatus;
         let radius = 50;
-		const { fontSize = 15, fontFamily = 'Arial', color = 'black', textAlign = 'left', textBaseline = 'top' } = style;
+		const { fontSize = 15, fontFamily = 'Arial', color = 'black', textAlign = 'left', textBaseline = 'middle' } = style;
 
         // make outline
         ctx.beginPath();
@@ -145,13 +145,41 @@ const ModuleList=(props)=>{
 		ctx.fillStyle = 'lightblue';
         ctx.fill();
 
-        ctx.beginPath();
-		ctx.font = fontSize + 'px ' + fontFamily;
-		ctx.textAlign = textAlign;
-		ctx.textBaseline = textBaseline;
-		ctx.fillStyle = color;
-		ctx.fillText(moduleName, x, y);
-		ctx.stroke();
+        let words = moduleName.split(" ");
+        let lines = [];
+        let currentLine = words[0];
+
+        for(let i=1;i<words.length; i++){
+            let word = words[i];
+            let width = ctx.measureText(currentLine + " " + word).width;
+            if (width < (radius*2)) {
+                currentLine += " " + word;
+            } else {
+                lines.push(currentLine);
+                currentLine = word;
+            }
+        }
+        lines.push(currentLine);
+
+        if(lines.length>=2){
+            for(let j=0;j<lines.length;j++){
+                ctx.beginPath();
+                ctx.font = fontSize + 'px ' + fontFamily;
+                ctx.textAlign = textAlign;
+                ctx.textBaseline = textBaseline;
+                ctx.fillStyle = color;
+                ctx.fillText(lines[j], x, y+((j-1)*15));
+                ctx.stroke();
+            }
+        } else {
+            ctx.beginPath();
+            ctx.font = fontSize + 'px ' + fontFamily;
+            ctx.textAlign = textAlign;
+            ctx.textBaseline = textBaseline;
+            ctx.fillStyle = color;
+            ctx.fillText(moduleName, x, y);
+            ctx.stroke();
+        }
 
         let image;
         if(isLocked){
