@@ -47,7 +47,7 @@ function App(){
                 url: "signin/whoami"
             }).then(function(response){
 				console.log(response.data);
-                setIsSignedIn(response.data[0] !== null);
+                setIsSignedIn(response.data[0] !== undefined && response.data[0] !== null);
 				setUsername(response.data[0]);
                 setIsAdmin(response.data[1]);
 				setIsSplash(false);
@@ -101,7 +101,7 @@ function App(){
 			</Route>
 
 			<Route path="/profile">
-				<ProfileController isSignedIn={isSignedIn}/>
+				<ProfileController isSignedIn={isSignedIn} username={username}/>
 			</Route>
 			
 			<Route path="/">

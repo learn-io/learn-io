@@ -15,7 +15,7 @@ const ModuleList=(props)=>{
 
     const [redraw, setRedraw] = useState(false);
     
-    const [unlockList]=useState([0]);
+    const [unlockList]=useState([]);
 
     const width = 800;
     const height = 1000;
