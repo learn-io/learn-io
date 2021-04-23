@@ -155,13 +155,15 @@ const ModuleList=(props)=>{
         for (let i = 0; i < props.modules.length; i++)
         {
             let distance = Math.pow(x - props.modules[i].x, 2) + Math.pow(y - props.modules[i].y, 2)
-            console.log("Checked " + props.modules[i].moduleName + " at distance " + distance);
+            // console.log("Checked " + props.modules[i].moduleName + " at distance " + distance);
             if (  distance < Math.pow(radius,2) )
             {
                 // if is locked
                 if(unlockList.includes(i)){
-                    alert("Clicked " + props.modules[i].moduleName + " at distance " + distance);
+                    props.setSelectedModule(props.modules[i]);
+                    // alert("Clicked " + props.modules[i].moduleName + " at distance " + distance);
                 }else{
+                    props.setSelectedModule(props.modules[i]);
                     alert("Clicked " + props.modules[i].moduleName + ", but the module is locked");
                 }
                 

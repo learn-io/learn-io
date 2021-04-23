@@ -7,18 +7,18 @@ const Switch = require("react-router-dom").Switch;
 const Route = require("react-router-dom").Route;
 const Redirect = require("react-router-dom").Redirect;
 
-const PlatformController=()=>{
+const PlatformController=({username})=>{
 
     return (
         <Switch>
             <Route path="/play/platform/:platformId">
-                <ModuleView/>
+                <ModuleView username={username}/>
             </Route>
             <Route path="/play/:platform/:module">
-                <ModuleView/>
+                <ModuleView username={username}/>
             </Route>
             <Route path="/play/:platform/:module/:page">
-                <ModuleView/>
+                <ModuleView username={username}/>
             </Route>
             <Route path="/">
 				<Redirect to="/home" />
