@@ -7,9 +7,6 @@ import saveIcon from '../images/save.png';
 import axios_instance from '../axios_instance.js';
 // import {Link} from 'react-router-dom';
 
-var fs = require("fs");
-const FormData = require('form-data');
-
 const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,setSave,save})=>{
 	const [header,setHeader]=useState('');
     const [changeHeader,setChangeHeader]=useState(false);
@@ -49,10 +46,14 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
             }
             axios_instance({
                 method: 'get',
-                url: "media/"+imageHash,
+                url: "media/"+encodeURIComponent(imageHash),
             }).then((res)=>{
-                setImageData(res.data.data);
-            })
+                setImageData("data:" + res.data.extension + ";base64,"+Buffer.from(res.data.data, 'utf8').toString('base64'));
+            }).catch((err)=>{
+				console.log(err);
+				console.log(imageHash);
+				console.log(encodeURIComponent(imageHash));
+			});
         },[imageHash]
     )
 
@@ -83,17 +84,19 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
         console.log("FILE")
         console.log(event.target.files[0]);
         if (event.target.files && event.target.files[0]) {
-            let imageStream = event.target.files[0];//fs.createReadStream(event.target.files[0], "utf8");
-            let imageExtension = "."+event.target.files[0].name.split('.')[1];
+            let imageFile = event.target.files[0];
+            let imageExtension = event.target.files[0].type;
                 
             let form = new FormData();
-            form.append('data', imageStream);
+            form.append('file', imageFile);
             form.append('extension', imageExtension);
-            
             axios_instance({
                 method: 'post',
                 url: "media/",
-                data: form
+                data: form,
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				  }
             }).then((res)=>{
                 setImageHash(res.data.hash);
             }).catch((e)=>{
