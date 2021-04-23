@@ -49,10 +49,41 @@ const ModuleList=(props)=>{
         ctx.canvas.height = height * scaleY;
         ctx.scale(scaleX, scaleY);
         let lockStatus=false;
-        // need to fix because if user is logged, we must check the user completion.
+        // if there is user platform information
+        let userCompleteId=[];      // use to handle how many modules that user complete
+        if(props.userPlatformInfo){
+            // check user completion
+            for(let i=0;i<props.userPlatformInfo.completeId.length;i++){
+                if(!userCompleteId.includes(props.userPlatformInfo.completeId[i].module)){
+                    userCompleteId.push(props.userPlatformInfo.completeId[i].module);
+                }
+            }
+        }
         for(let i = 0; i < props.modules.length; i++){
             // if without lockedby value, set it unlock
             if(props.modules[i].lockedby.length===0){
+                if(!unlockList.includes(i)){
+                    unlockList.push(i);
+                }
+            }else{
+                // check user whether meet unlock condition
+                let checkUnlock;
+                for(let j=0;j<props.modules[i].lockedby.length;j++){
+                    checkUnlock=userCompleteId.includes(props.modules[i].lockedby[j]);
+                    if(!checkUnlock){
+                        break;
+                    }
+                }
+                if(checkUnlock){
+                    if(!unlockList.includes(i)){
+                        unlockList.push(i);
+                    }
+                }
+            }
+        }
+        // add user complete modules id to unlock list
+        for(let i=0;i<userCompleteId.length;i++){
+            if(!unlockList.includes(userCompleteId[i])){
                 unlockList.push(i);
             }
         }
@@ -77,7 +108,7 @@ const ModuleList=(props)=>{
             writeModule(props.modules[i], lockStatus, { fontSize: 10, color: 'black', textAlign: 'center' });
             lockStatus=false;
         }
-	}, [props.modules, scaleX, scaleY, unlockList, redraw]
+	}, [props.modules, scaleX, scaleY, unlockList, redraw,props.userPlatformInfo]
     );
     /*
     

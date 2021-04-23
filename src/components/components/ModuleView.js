@@ -10,6 +10,7 @@ const ModuleView=({username})=>{
     let { platformId } = useParams();
 	const [selectedModule, setSelectedModule] = useState("");
 	const [save, setSave]= useState(0);
+	const [userPlatformInfo,setUserPlatformInfo]=useState("");
 	useEffect(
         ()=>{
         	axios_instance({
@@ -20,10 +21,30 @@ const ModuleView=({username})=>{
 		    }).catch(function(err){
 		        console.log(err);
 		    });
-        },[platformId, save]
+        },[platformId, save,username]
     );
 	
+	useEffect(
+        ()=>{
+			if(username!==null){
+				axios_instance({
+					method: 'post',
+					url: "profile/play",
+					data: {
+						username:username,
+						platformId: platformId,
+					}
+				})
+				.then((res)=>{
+					setUserPlatformInfo(res.data);
+				})
+				.catch(err=>console.log(err));
+			}
+        },[username,platformId]
+    );
+
 	// console.log("platform ModuleView");
+	// console.log(userPlatformInfo);
 	// console.log(platform);
     if(platform===''){
         return (<h2 style={{color:'white'}}>{platform.platformName}</h2>);
@@ -31,7 +52,7 @@ const ModuleView=({username})=>{
         return(
             <>
 				<h2 style={{color:'white'}}>{platform.platformName}</h2>
-				<ModuleList platform={platform} modules={platform.modules} setSelectedModule={setSelectedModule}/>
+				<ModuleList platform={platform} modules={platform.modules} setSelectedModule={setSelectedModule} userPlatformInfo={userPlatformInfo}/>
 				<ModuleConfirmBox username={username} platform={platform} selectedModule={selectedModule} setSelectedModule={setSelectedModule} save={save} setSave={setSave}/>
             </>
 	    );
