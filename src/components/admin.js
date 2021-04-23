@@ -250,7 +250,6 @@ const DeleteUserList = ({users, onDeleteUser}) =>
 			<tbody>	
 			{
 				users.map((x,i) => {
-					console.log(x);
 					return (
 						<UserLine key={i} user={x} onDeleteUser={onDeleteUser} setSelect={setSelect} />
 					);
@@ -263,15 +262,16 @@ const DeleteUserList = ({users, onDeleteUser}) =>
 	);
 }
 
-const UserLine = ({key, user, onDeleteUser, setSelect}) =>
+const UserLine = ({user, setSelect}) =>
 {
+	const history = useHistory();
 	return (
 	<tr>
 		<td>{user.username}</td>
 		<td>{user.email}</td>
 		<td>{user.dateOfBirth}</td>
 		<td>
-			<Button variant="primary" onClick={()=>{;}}> View </Button>
+			<Button variant="primary" onClick={()=>{history.push("/profile/"+user.username);}}> View </Button>
 			{' '}
 			<Button variant="danger" onClick={()=>{setSelect(user.username);}}> Delete </Button>
 		</td>
