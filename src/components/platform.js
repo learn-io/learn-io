@@ -2,6 +2,7 @@ import React from 'react';
 import './ComponentStyle.css';
 // import axios_instance from './axios_instance';
 import ModuleView from './components/ModuleView.js'
+import GamePlay from './components/GamePlay.js'
 
 const Switch = require("react-router-dom").Switch;
 const Route = require("react-router-dom").Route;
@@ -15,7 +16,7 @@ const PlatformController=({username})=>{
                 <ModuleView username={username}/>
             </Route>
             <Route path="/play/:platform/:module">
-                <ModuleView username={username}/>
+                <GamePlay username={username}/>
             </Route>
             <Route path="/play/:platform/:module/:page">
                 <ModuleView username={username}/>

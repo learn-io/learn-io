@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import {Button} from 'react-bootstrap';
 import '../ComponentStyle.css';
 import uploadIcon from '../images/upload.png';
 import editIcon from '../images/edit.png';
 import saveIcon from '../images/save.png';
 import axios_instance from '../axios_instance.js';
-// import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,setSave,save})=>{
 	const [header,setHeader]=useState('');
@@ -17,11 +16,11 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
     const [imageHash, setImageHash] = useState('');
     const hiddenFileInput = React.useRef(null);
 
-    console.log("platform")
-    console.log(platform)
+    // console.log("platform")
+    // console.log(platform)
 
-    console.log("selectedModule")
-    console.log(selectedModule)
+    // console.log("selectedModule")
+    // console.log(selectedModule)
 
     useEffect(
         ()=>{
@@ -213,9 +212,9 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
 						{closehdr}
 						{titlehdr}
 						{centerpart}
-						<div className='clearfix'>
+						<div style={{marginTop: '1%'}} className='clearfix'>
                             {/* <Link style={{color:'white'}} to={'/play/platform/'+selectedModule._id}> Play</Link> */}
-							<Button className='playButton' disabled> Play </Button> 
+							<Link className='playButton' to={'/play/'+selectedModule.platformId+'/'+selectedModule._id}> Play</Link>
 						</div>
 					</div>
 				</div>
