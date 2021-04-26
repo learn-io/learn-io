@@ -3,6 +3,7 @@ import {useParams} from 'react-router-dom';
 import '../ComponentStyle.css';
 import axios_instance from '../axios_instance.js';
 import Flashcard from './Flashcard.js';
+import ImageButton from './ImageButton.js';
 
 const GamePlay=({username})=>{
     let { platform,module } = useParams();
@@ -64,6 +65,8 @@ const GamePlay=({username})=>{
         }else{
             if(widget.widgetFlavor==='Flashcard'){
                 game=<Flashcard widget={widget} widgetIndex={widgetIndex} setWidgetIndex={setWidgetIndex}/>
+            }else if(widget.widgetFlavor==='ImageButton'){
+                game=<ImageButton widget={widget} widgetIndex={widgetIndex} setWidgetIndex={setWidgetIndex}/>
             }
         }
         
