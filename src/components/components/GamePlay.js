@@ -55,7 +55,7 @@ const GamePlay=({username})=>{
         },[pageIndex,widgetIndex]   
 	);
     
-    if(page.length===0){
+    if(page.length===0||pageIndex<0||widgetIndex<0){
         return(<h2 style={{color:'white'}}>{plat.platformName}</h2>);
     }else{
         let game;
@@ -67,11 +67,11 @@ const GamePlay=({username})=>{
             }
         }
         
-        return(<>
+        return(<div>
             <h2 style={{color:'white'}}>{plat.platformName}</h2>
-            <h3 style={{color:'white'}}>{mod.moduleName} : {page[0].name}</h3>
+            <h3 style={{color:'white'}}>{mod.moduleName} : {page[pageIndex].name}</h3>
             {game}
-        </>);
+        </div>);
     }
 }
 

@@ -369,3 +369,31 @@ input.largeCheckbox{
 .adminItem{
 	display:inline-block
 }
+
+/* For flashcard */
+.flashcard{
+	background-color:#9EEBCF;
+	/* text-align:center; */
+	border-radius: .5rem;
+	/* padding:7rem; */
+	height:500px;
+	width: 600px;
+	display:inline-block;
+	margin:.5rem;
+	box-shadow:4px 4px 8px 0 rgba(0,0,0,.2);
+	border-width:.25rem;
+}
+.bottomButton{
+	background-color:transparent;
+	border-style:none;
+	cursor: pointer;
+	/* justify-content: flex-start; */
+	/* align-content: flex-start; */
+	display: absolute;
+	bottom: 0;
+}
+.textBox{
+	height:400px;
+	width: 500px;
+	padding-top: 30%;
+}
