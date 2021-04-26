@@ -19,13 +19,13 @@ const ImageButton=({widget,widgetIndex,setWidgetIndex})=>{
 			});
         },[widget]   
 	);
-    let imagebutton=<div className='flashcard'/>;
+    let imagebutton;
     if(!imageData){
         imagebutton=<div className='flashcard'/>;
     }else{
         imagebutton=<div className='flashcard'>
                         <div style={{paddingTop:'10%'}}>
-                            <img alt='image' src={imageData} height={300} width={300}/>;
+                            <img alt='' src={imageData} height={300} width={300}/>;
                         </div>
                         <Dropdown style={{paddingTop:'5%'}}>
                             <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
