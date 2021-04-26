@@ -6,6 +6,7 @@ import Flashcard from './Flashcard.js';
 import ImageButton from './ImageButton.js';
 import MultipleChoice from './MultipleChoice.js';
 import ImageQuestion from './ImageQuestion.js';
+import SoundQuestion from './SoundQuestion.js';
 
 const GamePlay=({username})=>{
     let { platform,module } = useParams();
@@ -73,6 +74,8 @@ const GamePlay=({username})=>{
                 game=<MultipleChoice widget={widget} widgetIndex={widgetIndex} setWidgetIndex={setWidgetIndex}/>
             }else if(widget.widgetFlavor==='Image'){
                 game=<ImageQuestion widget={widget} widgetIndex={widgetIndex} setWidgetIndex={setWidgetIndex}/>
+            }else if(widget.widgetFlavor==='Sound'){
+                game=<SoundQuestion widget={widget} widgetIndex={widgetIndex} setWidgetIndex={setWidgetIndex}/>
             }
             
         }

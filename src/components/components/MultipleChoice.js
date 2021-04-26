@@ -17,7 +17,7 @@ const MultipleChoice=({widget,widgetIndex,setWidgetIndex})=>{
     }else{
         let opt=options.map((x,i) => {
             return (
-                <label className="container" >{options[i].option}
+                <label className="container" key={i}>{options[i].option}
                     <div>
                         <input type="checkbox"/>
                         <span className="checkmark"/>
