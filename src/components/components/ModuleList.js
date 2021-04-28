@@ -108,7 +108,7 @@ const ModuleList=(props)=>{
             writeModule(props.modules[i], lockStatus, { fontSize: 10, color: 'black', textAlign: 'center' });
             lockStatus=false;
         }
-	}, [props.modules, scaleX, scaleY, unlockList, redraw,props.userPlatformInfo]
+	}, [props.modules, scaleX, scaleY, unlockList, redraw, props.userPlatformInfo]
     );
     /*
     

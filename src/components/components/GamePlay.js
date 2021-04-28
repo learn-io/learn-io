@@ -8,7 +8,7 @@ import MultipleChoice from './MultipleChoice.js';
 import ImageQuestion from './ImageQuestion.js';
 import SoundQuestion from './SoundQuestion.js';
 
-const GamePlay=({username})=>{
+const GamePlay=({username, isSignedIn, isEdit})=>{
     let { platform,module } = useParams();
     const [plat,setPlat]=useState('');
     const [mod,setMod]=useState('');

@@ -4,8 +4,9 @@ import '../ComponentStyle.css';
 import ModuleList from './ModuleList.js'
 import axios_instance from '../axios_instance.js';
 import ModuleConfirmBox from './ModuleConfirmBox.js';
+import getUserPlatformInfo from './PlatformHelper.js';
 
-const ModuleView=({username})=>{
+const ModuleView=({username, isSignedIn, isEdit})=>{
 	const [platform,setPlatform]=useState("");
     let { platformId } = useParams();
 	const [selectedModule, setSelectedModule] = useState("");
@@ -26,20 +27,13 @@ const ModuleView=({username})=>{
 	
 	useEffect(
         ()=>{
-			if(username!==null){
-				axios_instance({
-					method: 'post',
-					url: "profile/play",
-					data: {
-						username:username,
-						platformId: platformId,
-					}
-				})
-				.then((res)=>{
-					setUserPlatformInfo(res.data);
-				})
-				.catch(err=>console.log(err));
-			}
+			if (!platform)
+				return;
+			getUserPlatformInfo(username, isSignedIn, platformId)
+			.then((res)=>{
+				setUserPlatformInfo(res.data);
+			})
+			.catch(err=>console.log(err));
         },[username,platformId]
     );
 
