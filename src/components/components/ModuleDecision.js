@@ -32,10 +32,6 @@ const ModuleDecision=({username, isSignedIn, isEdit})=>{
 				let pages = values[1].data;
 				let cur_platform = values[2].data;
 
-				console.log(info);
-				console.log(pages);
-				console.log(cur_platform);
-
 				let good = true;
 				for(let i = 0; i < cur_platform.modules.length; i++){
 					let cur_module = cur_platform.modules[i];
@@ -64,6 +60,7 @@ const ModuleDecision=({username, isSignedIn, isEdit})=>{
 				{
 					alert("You've entered a locked Module!");
 					history.goBack();
+					return;
 				}
 				
 				let choice = -1;
