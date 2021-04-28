@@ -2,15 +2,17 @@ import React , { useEffect, useState } from 'react';
 import axios_instance from '../axios_instance.js';
 import '../ComponentStyle.css';
 
+const loading = "https://i.gifer.com/4V0b.gif";
+
 const Platform =({name,platform,setSelectPlatform})=>{
-	const [imageData,setImageData]=useState('');
+	const [imageData,setImageData]=useState(loading);
 	useEffect(
         ()=>{
+			setImageData(loading);
 			if(platform===''||platform===undefined)
 				return;
-
 			if(platform.image===undefined||platform.image===''){
-        		setImageData(`https://robohash.org/${platform.platformName}?200x200`);
+        		setImageData(`https://robohash.org/${platform.platformName}?300x300`);
         	}else{
 				axios_instance({
 					method: 'get',
