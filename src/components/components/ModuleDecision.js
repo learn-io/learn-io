@@ -20,10 +20,47 @@ const ModuleDecision=({username, isSignedIn, isEdit})=>{
 					url: "page/" + platform + "/" + module,
 				})
 			);
+			calls.push(
+				axios_instance({
+					method: 'get',
+					url: "platform/" + platform,
+				})
+			);
 			Promise.all(calls).then((values)=>
 			{
 				let info = values[0].data;
 				let pages = values[1].data;
+				let platform = values[2].data;
+
+				let good = true;
+				for(let i = 0; i < platform.modules.length; i++){
+					let cur_module = platform.modules[i];
+					if (!(cur_module._id === module))
+						continue;
+					// if without lockedby value, set it unlock
+					if(cur_module.lockedby.length===0){
+						break;
+					}else{
+						// check user whether meet unlock condition
+						let checkUnlock;
+						for(let j=0;j<cur_module.lockedby.length;j++){
+							checkUnlock = info.completeId.includes(cur_module.lockedby[j]);
+							if(!checkUnlock){
+								good = false;
+								break;
+							}
+						}
+						if(!good){
+							break;
+						}
+					}
+				}
+
+				if (!good)
+				{
+					alert("You've entered a locked Module!");
+					history.goBack();
+				}
 				
 				let choice = -1;
 				let count = 1;
@@ -53,17 +90,17 @@ const ModuleDecision=({username, isSignedIn, isEdit})=>{
 				if(choice === -1)
 				{
 					alert("Module Done!");
-					history.push("/play/platform/"+platform);
+					history.goBack();
 				}
 				else
 				{
-					//history.push("/play/"+platform+"/"+module+"/"+pages[choice]._id)
-					history.push("/play/"+platform+"/"+module+"/"+ encodeURIComponent(pages[choice].pageName))
+					//history.replace("/play/"+platform+"/"+module+"/"+pages[choice]._id)
+					history.replace("/play/"+platform+"/"+module+"/"+ encodeURIComponent(pages[choice].pageName))
 				}
 			})
 			.catch(err=>{
 				console.log(err);
-				history.push("/play/platform/"+platform);
+				history.goBack();
 			});
         },[username, platform, module, isSignedIn]
     );
