@@ -11,7 +11,7 @@ const MultipleChoice=({widget,widgetIndex,setWidgetIndex})=>{
             setOptions(widget.options);
         },[widget]   
 	);
-    let multipleChoice=<div className='flashcard'/>;
+    let multipleChoice;
     if(options.length===0){
         multipleChoice=<div className='flashcard'/>;
     }else{
