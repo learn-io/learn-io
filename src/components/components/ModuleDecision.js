@@ -95,8 +95,8 @@ const ModuleDecision=({username, isSignedIn, isEdit})=>{
 				}
 				else
 				{
-					//history.replace("/play/"+platform+"/"+module+"/"+pages[choice]._id)
-					history.replace("/play/"+platform+"/"+module+"/"+ encodeURIComponent(pages[choice].name))
+					history.replace("/play/"+platform+"/"+module+"/"+pages[choice]._id)
+					//history.replace("/play/"+platform+"/"+module+"/"+ encodeURIComponent(pages[choice].name))
 				}
 			})
 			.catch(err=>{

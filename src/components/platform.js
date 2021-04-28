@@ -16,11 +16,11 @@ const PlatformController=({username, isSignedIn})=>{
             <Route path="/play/platform/:platformId">
                 <ModuleView username={username} isSignedIn={isSignedIn} isEdit={false}/>
             </Route>
-            <Route path="/play/:platform/:module">
-                <ModuleDecision username={username} isSignedIn={isSignedIn} isEdit={false}/>
-            </Route>
             <Route path="/play/:platform/:module/:page">
                 <GamePlay username={username} isSignedIn={isSignedIn} isEdit={false}/>
+            </Route>
+            <Route path="/play/:platform/:module">
+                <ModuleDecision username={username} isSignedIn={isSignedIn} isEdit={false}/>
             </Route>
             <Route path="/">
 				<Redirect to="/home" />
