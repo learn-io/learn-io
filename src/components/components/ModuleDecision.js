@@ -30,11 +30,15 @@ const ModuleDecision=({username, isSignedIn, isEdit})=>{
 			{
 				let info = values[0].data;
 				let pages = values[1].data;
-				let platform = values[2].data;
+				let cur_platform = values[2].data;
+
+				console.log(info);
+				console.log(pages);
+				console.log(cur_platform);
 
 				let good = true;
-				for(let i = 0; i < platform.modules.length; i++){
-					let cur_module = platform.modules[i];
+				for(let i = 0; i < cur_platform.modules.length; i++){
+					let cur_module = cur_platform.modules[i];
 					if (!(cur_module._id === module))
 						continue;
 					// if without lockedby value, set it unlock
@@ -72,7 +76,7 @@ const ModuleDecision=({username, isSignedIn, isEdit})=>{
 					if (info.completeId.includes(item._id))
 						return;
 
-					if (item.rank === pages[choice].rank)
+					if (choice === -1 || item.rank === pages[choice].rank)
 					{
 						//let's use a streaming algorithm to decide which to pick
 						if (1.0/count >= Math.random())
@@ -95,7 +99,7 @@ const ModuleDecision=({username, isSignedIn, isEdit})=>{
 				else
 				{
 					//history.replace("/play/"+platform+"/"+module+"/"+pages[choice]._id)
-					history.replace("/play/"+platform+"/"+module+"/"+ encodeURIComponent(pages[choice].pageName))
+					history.replace("/play/"+platform+"/"+module+"/"+ encodeURIComponent(pages[choice].name))
 				}
 			})
 			.catch(err=>{
