@@ -34,10 +34,10 @@ function getUserPlatformInfo(username, isSignedIn, platform){
 	else
 	{
 		return (new Promise((resolve, reject) => {
-			resolve({
+			resolve({data: {
 					completeId:[],
 					ownPlatform:false
-				})
+				}})
 		}));
 	}
 }
