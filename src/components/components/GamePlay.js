@@ -7,6 +7,7 @@ import ImageButton from './ImageButton.js';
 import MultipleChoice from './MultipleChoice.js';
 import ImageQuestion from './ImageQuestion.js';
 import SoundQuestion from './SoundQuestion.js';
+import Matching from './Matching.js';
 
 const GamePlay=({username})=>{
     let { platform,module } = useParams();
@@ -76,6 +77,8 @@ const GamePlay=({username})=>{
                 game=<ImageQuestion widget={widget} widgetIndex={widgetIndex} setWidgetIndex={setWidgetIndex}/>
             }else if(widget.widgetFlavor==='Sound'){
                 game=<SoundQuestion widget={widget} widgetIndex={widgetIndex} setWidgetIndex={setWidgetIndex}/>
+            }else if(widget.widgetFlavor==='Matching'){
+                game=<Matching widget={widget} widgetIndex={widgetIndex} setWidgetIndex={setWidgetIndex}/>
             }
             
         }
