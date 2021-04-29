@@ -1,6 +1,5 @@
-import React, { useEffect,useState} from 'react';
+import React, {useState} from 'react';
 import '../../ComponentStyle.css';
-import {Button} from 'react-bootstrap';
 import leftIcon from '../../images/left.png';
 import rightIcon from '../../images/right.png';
 import turnIcon from '../../images/turn.png';
