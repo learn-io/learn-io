@@ -1,10 +1,10 @@
 // import React, { useEffect,useState} from 'react';
 import React from 'react';
-import '../ComponentStyle.css';
+import '../../ComponentStyle.css';
 import {Button} from 'react-bootstrap';
-import PlayButton from './PlayButton.js';
+import PlayButton from '../PlayButton.js';
 // import axios_instance from '../axios_instance.js';
-import testSound from '../images/testsound.mp3';
+import testSound from '../../images/testsound.mp3';
 
 
 const SoundQuestion=({widget,widgetIndex,setWidgetIndex})=>{

@@ -1,4 +1,4 @@
-import '../ComponentStyle.css';
+import '../../ComponentStyle.css';
 import React from 'react';
 import Flashcard from './Flashcard.js';
 import ImageButton from './ImageButton.js';

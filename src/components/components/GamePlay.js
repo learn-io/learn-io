@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom';
 import '../ComponentStyle.css';
 import '../GridStyle.css';
 import axios_instance from '../axios_instance.js';
-import Widget from './Widget.js';
+import Widget from './widgets/Widget.js';
 
 import RGL, { WidthProvider } from "react-grid-layout";
 

@@ -1,7 +1,7 @@
 import React, { useEffect,useState} from 'react';
-import '../ComponentStyle.css';
+import '../../ComponentStyle.css';
 import {Button,Dropdown} from 'react-bootstrap';
-import axios_instance from '../axios_instance.js';
+import axios_instance from '../../axios_instance.js';
 
 const ImageButton=({widget,widgetIndex,setWidgetIndex})=>{
     const [imageData,setImageData]=useState('');

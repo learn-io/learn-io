@@ -1,5 +1,5 @@
 import React, { useRef,useEffect,useState} from 'react';
-import '../ComponentStyle.css';
+import '../../ComponentStyle.css';
 import {Button} from 'react-bootstrap';
 
 const Matching=({widget,widgetIndex,setWidgetIndex})=>{
