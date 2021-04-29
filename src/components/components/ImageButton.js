@@ -5,6 +5,7 @@ import axios_instance from '../axios_instance.js';
 
 const ImageButton=({widget,widgetIndex,setWidgetIndex})=>{
     const [imageData,setImageData]=useState('');
+    const [answer,setAnswer]=useState('');
     useEffect(
         ()=>{
             if(widget===undefined||widget==='')
@@ -19,6 +20,10 @@ const ImageButton=({widget,widgetIndex,setWidgetIndex})=>{
 			});
         },[widget]   
 	);
+
+    const changeResult=(value)=>{
+        setAnswer(value);
+    }
     let imagebutton;
     if(!imageData){
         imagebutton=<div className='flashcard'/>;
@@ -29,12 +34,12 @@ const ImageButton=({widget,widgetIndex,setWidgetIndex})=>{
                         </div>
                         <Dropdown style={{paddingTop:'5%'}}>
                             <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
-                                What??
+                                current answer : {answer}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item>What??</Dropdown.Item>
-                                <Dropdown.Item>Berry!</Dropdown.Item>
-                                <Dropdown.Item>Not A Berry!</Dropdown.Item>
+                                <Dropdown.Item onClick={()=>{changeResult("What??")}}>What??</Dropdown.Item>
+                                <Dropdown.Item onClick={()=>{changeResult("Berry!")}}>Berry!</Dropdown.Item>
+                                <Dropdown.Item onClick={()=>{changeResult("Not A Berry!")}}>Not A Berry!</Dropdown.Item>
                                 {/* <Dropdown.Item onClick={()=>{onChangeLimit(20)}}>20</Dropdown.Item> */}
                             </Dropdown.Menu>
                         </Dropdown>
