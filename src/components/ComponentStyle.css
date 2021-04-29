@@ -399,22 +399,7 @@ input.largeCheckbox{
 	padding-top: 2%;
 	display: center; */
 }
-.leftButton{
-	background-color:transparent;
-	border-style:none;
-	cursor: pointer;
-	position:absolute;
-	left:5%;
-	top: 50%;
-}
-.rightButton{
-	background-color:transparent;
-	border-style:none;
-	cursor: pointer;
-	position:absolute;
-	top: 50%;
-	right:5%;
-}
+
 /* The container */
 .container {
 	display: block;

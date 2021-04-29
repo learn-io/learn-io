@@ -9,7 +9,7 @@ import RGL, { WidthProvider } from "react-grid-layout";
 
 const ReactGridLayout = WidthProvider(RGL);
 
-const GamePlay=({username, isSignedIn, isEdit})=>{
+const GamePlay=({username, isSignedIn, isEdit, setAction})=>{
     let { platform,module,page } = useParams();
     const [layout, setLayout] = useState();
     const [curPage, setCurPage] = useState();
@@ -48,7 +48,6 @@ const GamePlay=({username, isSignedIn, isEdit})=>{
        //id, name, x, y, height, width, internals
 
         //build layout
-    console.log(layout);
     return(
     <div className="page">
         <h2 style={{color:'white'}}>platformName</h2>
@@ -65,7 +64,7 @@ const GamePlay=({username, isSignedIn, isEdit})=>{
             curPage.widgets.map((val,key) => {
                 return (
                     <div key={''+key} className="widget">
-                        <Widget internals={val.internals}/>
+                        <Widget internals={val.internals} setAction={setAction}/>
                     </div>
                 );
             })
