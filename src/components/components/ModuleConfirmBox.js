@@ -4,9 +4,9 @@ import uploadIcon from '../images/upload.png';
 import editIcon from '../images/edit.png';
 import saveIcon from '../images/save.png';
 import axios_instance from '../axios_instance.js';
-import {Link} from 'react-router-dom';
+import {Button} from 'react-bootstrap';
 
-const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,setSave,save})=>{
+const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,setSave,save,setModuleName,setModuleId})=>{
 	const [header,setHeader]=useState('');
     const [changeHeader,setChangeHeader]=useState(false);
     const [description,setDescription]=useState('');
@@ -214,7 +214,7 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
 						{centerpart}
 						<div style={{marginTop: '1%'}} className='clearfix'>
                             {/* <Link style={{color:'white'}} to={'/play/platform/'+selectedModule._id}> Play</Link> */}
-							<Link className='playButton' to={'/play/'+selectedModule.platformId+'/'+selectedModule._id}> Play</Link>
+							<Button className='playButton' onClick={()=>{setModuleName(selectedModule.moduleName); setModuleId(selectedModule._id)}}> Play</Button>
 						</div>
 					</div>
 				</div>

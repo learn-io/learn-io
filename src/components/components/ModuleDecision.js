@@ -4,26 +4,24 @@ import '../ComponentStyle.css';
 import axios_instance from '../axios_instance.js';
 import getUserPlatformInfo from './PlatformHelper.js';
 
-const ModuleDecision=({username, isSignedIn, isEdit})=>{
-    let { platform, module } = useParams();
+const ModuleDecision=({username, isSignedIn, isEdit, platformName, setModuleId, moduleName, platformId, moduleId,
+	setPageName, setPageId})=>{
 	const history = useHistory();
 
 	useEffect(
         ()=>{
-			if (!platform|| !module)
-				return;
 			let calls = [];
-			calls.push(getUserPlatformInfo(username, isSignedIn, platform));
+			calls.push(getUserPlatformInfo(username, isSignedIn, platformId));
 			calls.push(
 				axios_instance({
 					method: 'get',
-					url: "page/" + platform + "/" + module,
+					url: "page/" + platformId + "/" + moduleId,
 				})
 			);
 			calls.push(
 				axios_instance({
 					method: 'get',
-					url: "platform/" + platform,
+					url: "platform/" + platformId,
 				})
 			);
 			Promise.all(calls).then((values)=>
@@ -35,7 +33,7 @@ const ModuleDecision=({username, isSignedIn, isEdit})=>{
 				let good = true;
 				for(let i = 0; i < cur_platform.modules.length; i++){
 					let cur_module = cur_platform.modules[i];
-					if (!(cur_module._id === module))
+					if (!(cur_module._id === moduleId))
 						continue;
 					// if without lockedby value, set it unlock
 					if(cur_module.lockedby.length===0){
@@ -59,7 +57,7 @@ const ModuleDecision=({username, isSignedIn, isEdit})=>{
 				if (!good)
 				{
 					alert("You've entered a locked Module!");
-					history.goBack();
+					setModuleId("");
 					return;
 				}
 				
@@ -91,19 +89,19 @@ const ModuleDecision=({username, isSignedIn, isEdit})=>{
 				if(choice === -1)
 				{
 					alert("Module Done!");
-					history.goBack();
+					setModuleId("");
 				}
 				else
-				{
-					history.replace("/play/"+platform+"/"+module+"/"+pages[choice]._id)
-					//history.replace("/play/"+platform+"/"+module+"/"+ encodeURIComponent(pages[choice].name))
+				{;
+					setPageName(pages[choice].pageName)
+					setPageId(pages[choice]._id)
 				}
 			})
 			.catch(err=>{
 				console.log(err);
-				history.goBack();
+				setModuleId("");
 			});
-        },[username, platform, module, isSignedIn]
+        },[username, platformId, moduleId, isSignedIn]
     );
 
 	return(
