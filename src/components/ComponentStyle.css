@@ -389,15 +389,36 @@ input.largeCheckbox{
 	cursor: pointer;
 	/* justify-content: flex-start; */
 	/* align-content: flex-start; */
-	display: absolute;
-	bottom: 0;
+	position:absolute;
+	top: 70%;
+	transform: translate(-40%);
 }
 .textBox{
-	height:400px;
-	width: 500px;
-	padding-top: 30%;
+	position:absolute;
+	left: 50%;
+	top: 50%;
+    transform: translate(-50%, -50%);
+	/* height:50%;
+	width: 50%;
+	padding-top: 2%;
+	display: center; */
 }
-
+.leftButton{
+	background-color:transparent;
+	border-style:none;
+	cursor: pointer;
+	position:absolute;
+	left:5%;
+	top: 50%;
+}
+.rightButton{
+	background-color:transparent;
+	border-style:none;
+	cursor: pointer;
+	position:absolute;
+	top: 50%;
+	right:5%;
+}
 /* The container */
 .container {
 	display: block;
