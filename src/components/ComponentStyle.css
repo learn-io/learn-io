@@ -476,3 +476,29 @@ input.largeCheckbox{
 	top: 50%;
 	transform: translate(-50%, -50%);
 }
+
+.cavasButton{
+	position:absolute;
+	left:50%;
+	bottom: 5%;
+	color:#fff;
+	background-color:#065db9 ;
+	font-size:1rem;
+	font-weight: bold;
+	transform: translate(-50%, -50%);
+}
+
+.cavasButton:hover{
+	background-color:transparent;
+	border-color:#007bff;
+	color: #FFFFFF;
+	background-color:#065db9;
+	border-width:3px;
+}
+.imageButton{
+	height:100%;
+	width:100%;
+	background-color:transparent;
+	border-style:none;
+	cursor: pointer;
+}

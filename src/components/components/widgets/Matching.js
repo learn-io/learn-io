@@ -2,20 +2,23 @@ import React, { useRef,useEffect,useState} from 'react';
 import '../../ComponentStyle.css';
 import {Button} from 'react-bootstrap';
 
-const Matching=({widget,widgetIndex,setWidgetIndex})=>{
+const Matching=({internals,setAction})=>{
     const [options,setOptions]=useState([]);
     const canvasRef = useRef();
     const [selectLeft,setSelectLeft]=useState(-1);
     const [selectRight,setSelectRight]=useState(-1);
     const [leftIndex]=useState([]);
     const [rightIndex]=useState([]);
+    const [leftSide,setLeftSide]=useState([]);
+    const [rightSide,setRightSide]=useState([]);
     const [update,setUpdate]=useState(0);
+    const [result,setResult]=useState(-1);
     useEffect(
         ()=>{
-            if(widget===''||widget===undefined)
+            if(internals===''||internals===undefined)
                 return;
-            setOptions(widget.options);
-        },[widget]   
+            setOptions(internals.options);
+        },[internals]   
 	);
     useEffect(
         ()=>{
@@ -24,19 +27,29 @@ const Matching=({widget,widgetIndex,setWidgetIndex})=>{
             let ctx = canvasRef.current.getContext('2d');
             if(!ctx)
                 return;
-            ctx.canvas.width = 500;
-            ctx.canvas.height = 400;
+            ctx.canvas.width = 300;
+            ctx.canvas.height = 200;
+            if(leftSide.length===0||rightSide.length===0){
+                for(let i=0;i<options.length;i++){
+                    leftSide.push(options[i].left);
+                    rightSide.push(options[i].right);
+                }
+                setLeftSide(leftSide.sort((a, b) => 0.5 - Math.random()));
+                setRightSide(rightSide.sort((a, b) => 0.5 - Math.random()));
+            }
             for(let i=0;i<options.length;i++){
-                writeModule(options[i],i, selectLeft,selectRight,leftIndex,rightIndex);
+                writeModule(options,leftSide,rightSide,i, selectLeft,selectRight,leftIndex,rightIndex);
             }
         },[options,selectLeft,selectRight,leftIndex,rightIndex]   
 	);
     
-    const writeModule = (options,i,selectLeft,selectRight,leftIndex,rightIndex) => {
+    const writeModule = (options,leftSide,rightSide,i,selectLeft,selectRight,leftIndex,rightIndex) => {
         let ctx = canvasRef.current.getContext('2d');
         if (!ctx)
             return;
-        const {left,right}=options;
+        // const {left,right}=options;
+        const left=leftSide[i];
+        const right=rightSide[i];
         // const { fontSize = 15, fontFamily = 'Arial', color = 'blue', textBaseline = 'middle' }=style ;
 
         // left text
@@ -46,14 +59,14 @@ const Matching=({widget,widgetIndex,setWidgetIndex})=>{
             ctx.textAlign = 'right';
             ctx.textBaseline = 'middle';
             ctx.fillStyle = 'grey';
-            ctx.fillText(left,150,50*(i+1));
+            ctx.fillText(left,80,30*(i+1));
         }else{
             ctx.beginPath();
             ctx.font = "15px Arial";
             ctx.textAlign = 'right';
             ctx.textBaseline = 'middle';
             ctx.fillStyle = 'black';
-            ctx.fillText(left,150,50*(i+1));
+            ctx.fillText(left,80,30*(i+1));
         }
         
 
@@ -64,14 +77,14 @@ const Matching=({widget,widgetIndex,setWidgetIndex})=>{
             ctx.textAlign = 'left';
             ctx.textBaseline = 'middle';
             ctx.fillStyle = 'grey';
-            ctx.fillText(right,350,50*(i+1));
+            ctx.fillText(right,220,30*(i+1));
         }else{
             ctx.beginPath();
             ctx.font = "15px Arial";
             ctx.textAlign = 'left';
             ctx.textBaseline = 'middle';
             ctx.fillStyle = 'black';
-            ctx.fillText(right,350,50*(i+1));
+            ctx.fillText(right,220,30*(i+1));
         }
         
 	}
@@ -91,13 +104,29 @@ const Matching=({widget,widgetIndex,setWidgetIndex})=>{
             }
             for(let i=0;i<size;i++){
                 ctx.beginPath();
-                ctx.moveTo(160 , 50*(leftIndex[i]+1));
-                ctx.lineTo(340, 50*(rightIndex[i]+1));
+                ctx.moveTo(100 , 30*(leftIndex[i]+1));
+                ctx.lineTo(200, 30*(rightIndex[i]+1));
                 ctx.stroke();
             }
         },[update,selectLeft,selectRight,leftIndex,rightIndex,options.length]   
 	);
-
+    const checkResult =()=>{
+        let result=options.length;
+        if(result!==leftIndex.length){
+            result=result-(result-leftIndex.length);
+        }
+        for(let i=0;i<leftIndex.length;i++){
+            for(let j=0;j<options.length;j++){
+                if(options[j].left===leftSide[leftIndex[i]]){
+                    if(options[j].right!==rightSide[rightIndex[i]]){
+                        result--;
+                    }
+                    break;
+                }
+            }
+        }
+        setResult(result);
+    }
     const handleCanvasClick=(e)=>
     {
         let ctx = canvasRef.current.getContext('2d');
@@ -106,19 +135,19 @@ const Matching=({widget,widgetIndex,setWidgetIndex})=>{
         var rect = ctx.canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        let radius = 50;
+        let radius = 30;
         for (let i = 0; i < options.length; i++)
         {
             let distance;
             // check left
-            if(x<250){
-                distance = Math.pow(x - 150, 2) + Math.pow(y - (50*(i+1)), 2);
+            if(x<150){
+                distance = Math.pow(x - 60, 2) + Math.pow(y - (30*(i+1)), 2);
             }else{
-                distance = Math.pow(x - 350, 2) + Math.pow(y - (50*(i+1)), 2);
+                distance = Math.pow(x - 220, 2) + Math.pow(y - (30*(i+1)), 2);
             }
             if (  distance < Math.pow(radius,2) )
             {
-                if(x<250){
+                if(x<150){
                     // check if already have this answer
                     if(!leftIndex.includes(i)){
                         if(selectLeft>=0){
@@ -165,16 +194,16 @@ const Matching=({widget,widgetIndex,setWidgetIndex})=>{
     let matching;
     if(options.length===0){
         matching=<div className='flashcard'/>;
+    }else if(result>=0){
+        matching=<div className='flashcard'>
+                    <p className='showResult'>{result} answer(s) correct!</p>
+                </div>
     }else{
-        matching=<div className='flashcard' style={{paddingTop:'1%'}}>
-                            <canvas style={{backgroundColor:'#9EEBCF'}} className='canvasStyle' ref={canvasRef} onClick={handleCanvasClick}/>
-                        </div>;
+        matching=<div className='flashcard'>
+                    <canvas style={{backgroundColor:'#9EEBCF'}} className='canvasStyle' ref={canvasRef} onClick={handleCanvasClick}/>
+                    <Button style={{display:'center'}} className='cavasButton'  onClick={()=>{checkResult()}}> {internals.buttonText}</Button> 
+                </div>;
     }
-    return <div >
-                {matching}
-                <div style={{marginTop: '1%'}} className='clearfix'>
-                    <Button style={{display:'center'}} className='playButton' onClick={()=>{setWidgetIndex(widgetIndex+1)}}> Next Page</Button> 
-				</div>
-            </div>
+    return (matching);
 }
 export default Matching;

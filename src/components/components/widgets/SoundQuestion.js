@@ -7,21 +7,21 @@ import PlayButton from '../PlayButton.js';
 import testSound from '../../images/testsound.mp3';
 
 
-const SoundQuestion=({widget,widgetIndex,setWidgetIndex})=>{
+const SoundQuestion=({internals})=>{
     // const [play,{ stop,isPlaying }] = useSound(testSound);
     // useEffect(
     //     ()=>{
-    //         if(widget===undefined||widget==='')
+    //         if(internals===undefined||internals==='')
     //             return;
     //         axios_instance({
     //             method: 'get',
-    //             url: "media/"+encodeURIComponent(widget.hash),
+    //             url: "media/"+encodeURIComponent(internals.hash),
     //         }).then((res)=>{
     //             setImageData(res.data.data);
     //         }).catch((err)=>{
 	// 			console.log(err);
 	// 		});
-    //     },[widget]   
+    //     },[internals]   
 	// );
     // useEffect(() => stop, [])
     // useEffect(() => {
@@ -36,19 +36,9 @@ const SoundQuestion=({widget,widgetIndex,setWidgetIndex})=>{
         soundquestion=<div className='flashcard'/>;
     }else{
         soundquestion=<div className='flashcard'>
-                        <div style={{paddingTop:'10%'}}>
-                            {/* <button className='deleteButton' onMouseEnter={play} onMouseLeave={stop()}><img src={soundIcon} height='50px' width='50px' alt=""/></button> */}
-                            {/* <button className='deleteButton' onClick={stop}><img src={stopIcon} height='50px' width='50px' alt=""/></button> */}
                             <PlayButton sound={testSound}/>
-                            <PlayButton sound={testSound}/>
-                        </div>
                     </div>;
     }
-    return <div >
-                {soundquestion}
-                <div style={{marginTop: '1%'}} className='clearfix'>
-                    <Button style={{display:'center'}} className='playButton' onClick={()=>{setWidgetIndex(widgetIndex+1)}}> Next Page</Button> 
-				</div>
-            </div>
+    return (soundquestion);
 }
 export default SoundQuestion;
