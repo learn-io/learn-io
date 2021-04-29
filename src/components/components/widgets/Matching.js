@@ -126,6 +126,11 @@ const Matching=({internals,setAction})=>{
             }
         }
         setResult(result);
+        if(result===options.length){
+            setAction(internals.rightAnswer);
+        }else{
+            setAction(internals.wrongAnswer);
+        }
     }
     const handleCanvasClick=(e)=>
     {

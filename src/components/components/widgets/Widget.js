@@ -2,7 +2,6 @@ import '../../ComponentStyle.css';
 import './widgets.css';
 import React from 'react';
 import Flashcard from './Flashcard.js';
-import ImageButton from './ImageButton.js';
 import MultipleChoice from './MultipleChoice.js';
 import ImageQuestion from './ImageQuestion.js';
 import SoundQuestion from './SoundQuestion.js';
@@ -24,9 +23,6 @@ const Widget = ({internals, setAction})=>{
         break;
         case "MultipleChoice":
             game=<MultipleChoice internals={internals} setAction={setAction}/>
-        break;
-        case "Image":
-            game=<ImageButton internals={internals}/>
         break;
         case "Sound":
             game=<SoundQuestion internals={internals}/>

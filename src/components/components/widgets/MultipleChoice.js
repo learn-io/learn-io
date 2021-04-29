@@ -34,6 +34,11 @@ const MultipleChoice=({internals,setAction})=>{
             }
         }
         setResult(result);
+        if(result===options.length){
+            setAction(internals.rightAnswer);
+        }else{
+            setAction(internals.wrongAnswer);
+        }
     }
     let multipleChoice;
     if(options.length===0){

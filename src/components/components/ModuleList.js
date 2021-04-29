@@ -51,14 +51,17 @@ const ModuleList=(props)=>{
         let lockStatus=false;
         // if there is user platform information
         let userCompleteId=[];      // use to handle how many modules that user complete
-        if(props.userPlatformInfo){
-            // check user completion
-            for(let i=0;i<props.userPlatformInfo.completeId.length;i++){
-                if(!userCompleteId.includes(props.userPlatformInfo.completeId[i].module)){
-                    userCompleteId.push(props.userPlatformInfo.completeId[i].module);
+        if(props.userPlatformInfo.completeId!==undefined){
+            if(props.userPlatformInfo.completeId.length!==0){
+                // check user completion
+                for(let i=0;i<props.userPlatformInfo.completeId.length;i++){
+                    if(!userCompleteId.includes(props.userPlatformInfo.completeId[i].module)){
+                        userCompleteId.push(props.userPlatformInfo.completeId[i].module);
+                    }
                 }
             }
         }
+        
         for(let i = 0; i < props.modules.length; i++){
             // if without lockedby value, set it unlock
             if(props.modules[i].lockedby.length===0){
