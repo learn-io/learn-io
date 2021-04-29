@@ -1,10 +1,8 @@
 import React, { useEffect,useState} from 'react';
-import {useParams} from 'react-router-dom';
 import '../ComponentStyle.css';
 import ModuleList from './ModuleList.js'
 import axios_instance from '../axios_instance.js';
 import ModuleConfirmBox from './ModuleConfirmBox.js';
-import getUserPlatformInfo from './PlatformHelper.js';
 
 const ModuleView=({username, isSignedIn, isEdit, userPlatformInfo, setUserPlatformInfo, platformId, platformName, setPlatformName, 
 	setModuleName, setModuleId})=>{
@@ -24,16 +22,6 @@ const ModuleView=({username, isSignedIn, isEdit, userPlatformInfo, setUserPlatfo
 		        console.log(err);
 		    });
         },[platformId, save,username]
-    );
-	
-	useEffect(
-        ()=>{
-			getUserPlatformInfo(username, isSignedIn, platformId)
-			.then((res)=>{
-				setUserPlatformInfo(res.data);
-			})
-			.catch(err=>console.log(err));
-        },[username, isSignedIn, platformId]
     );
 
 	// console.log("platform ModuleView");

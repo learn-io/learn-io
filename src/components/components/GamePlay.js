@@ -1,5 +1,4 @@
 import React, { useEffect,useState} from 'react';
-import {useParams, useHistory} from 'react-router-dom';
 import '../ComponentStyle.css';
 import '../GridStyle.css';
 import axios_instance from '../axios_instance.js';

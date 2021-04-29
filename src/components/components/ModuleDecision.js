@@ -1,12 +1,11 @@
 import React, { useEffect} from 'react';
-import {useParams, useHistory} from 'react-router-dom';
 import '../ComponentStyle.css';
 import axios_instance from '../axios_instance.js';
 import getUserPlatformInfo from './PlatformHelper.js';
 
-const ModuleDecision=({username, isSignedIn, isEdit, platformName, setModuleId, moduleName, platformId, moduleId,
-	setPageName, setPageId})=>{
-	const history = useHistory();
+const ModuleDecision=({username, isSignedIn, isEdit, platformName, 
+	setModuleId, moduleName, platformId, moduleId,
+	setPageName, setPageId, setPageEntry})=>{
 
 	useEffect(
         ()=>{
@@ -95,6 +94,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, platformName, setModuleId, 
 				{;
 					setPageName(pages[choice].pageName)
 					setPageId(pages[choice]._id)
+					setPageEntry(pages[choice]._id)
 				}
 			})
 			.catch(err=>{

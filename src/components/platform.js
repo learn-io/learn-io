@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {useParams, useHistory} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import './ComponentStyle.css';
 // import axios_instance from './axios_instance';
 import ModuleView from './components/ModuleView.js'
 import ModuleDecision from './components/ModuleDecision.js'
 import GamePlay from './components/GamePlay.js'
+
+import getUserPlatformInfo from './components/PlatformHelper.js';
 
 const PlatformController=({username, isSignedIn})=>{
 
@@ -17,13 +19,27 @@ const PlatformController=({username, isSignedIn})=>{
     let { platformId } = useParams();
     const [moduleId, setModuleId] = useState("");
     const [pageId, setPageId] = useState("");
+    const [pageEntry, setPageEntry] = useState("");
 
-	const [userPlatformInfo, setUserPlatformInfo]=useState({});
+	const [userPlatformInfo, setUserPlatformInfo]=useState(
+    {
+        completeId:[],
+        ownPlatform:false
+    });
 
-    const history = useHistory();
+	useEffect(
+        ()=>{
+			getUserPlatformInfo(username, isSignedIn, platformId)
+			.then((res)=>{
+                console.log(res.data);
+				setUserPlatformInfo(res.data);
+			})
+			.catch(err=>console.log(err));
+        },[username, isSignedIn, platformId]
+    );
+
     useEffect(
         ()=>{
-			console.log(action);
             if (action.actionType === undefined || action.actionType===null)
                 return;
             if (action.actionType === "P")
@@ -32,7 +48,11 @@ const PlatformController=({username, isSignedIn})=>{
             }
             else if (action.actionType === "S")
             {
+                let newUPinfo = { ... userPlatformInfo };
 
+                console.log(newUPinfo);
+                
+                setUserPlatformInfo(newUPinfo);
             }
             else
             {
@@ -48,7 +68,7 @@ const PlatformController=({username, isSignedIn})=>{
         return (
             <ModuleView username={username} isSignedIn={isSignedIn} isEdit={false} 
             platformId={platformId}
-            userPlatformInfo={userPlatformInfo} setUserPlatformInfo={setUserPlatformInfo}
+            userPlatformInfo={userPlatformInfo}
             platformName={platformName} setPlatformName = {setPlatformName}
             setModuleName={setModuleName} setModuleId={setModuleId}/>
         );
@@ -60,7 +80,8 @@ const PlatformController=({username, isSignedIn})=>{
                 userPlatformInfo={userPlatformInfo} setModuleId={setModuleId}
                 platformName={platformName} moduleName = {moduleName}
                 platformId={platformId} moduleId = {moduleId}
-                setPageName={setPageName} setPageId={setPageId}/>
+                setPageName={setPageName} setPageId={setPageId}
+                setPageEntry={setPageEntry}/>
         );
     }
     else
