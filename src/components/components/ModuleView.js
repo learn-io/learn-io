@@ -4,10 +4,9 @@ import ModuleList from './ModuleList.js'
 import axios_instance from '../axios_instance.js';
 import ModuleConfirmBox from './ModuleConfirmBox.js';
 
-const ModuleView=({username, isSignedIn, isEdit, userPlatformInfo, setUserPlatformInfo, platformId, platformName, setPlatformName, 
+const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlatformInfo, setUserPlatformInfo, platformId, platformName, setPlatformName, 
 	setModuleName, setModuleId})=>{
 
-	const [platform,setPlatform]=useState();
 	const [selectedModule, setSelectedModule] = useState("");
 	const [save, setSave]= useState(0);
 	useEffect(
@@ -27,7 +26,7 @@ const ModuleView=({username, isSignedIn, isEdit, userPlatformInfo, setUserPlatfo
 	// console.log("platform ModuleView");
 	// console.log(userPlatformInfo);
 	// console.log(platform);
-    if(platform===undefined){
+    if(platform===undefined || platform.modules===undefined){
         return (<h2 style={{color:'white'}}>{platformName}</h2>);
     }else{
         return(
