@@ -1,6 +1,6 @@
 import axios_instance from '../axios_instance.js';
 
-function getUserPlatformInfo(username, isSignedIn, platform){
+function getUserPlatformInfo(isSignedIn, platform){
 	if (isSignedIn)
 	{
 		return (
@@ -8,26 +8,8 @@ function getUserPlatformInfo(username, isSignedIn, platform){
 				method: 'post',
 				url: "profile/play",
 				data: {
-					username:username,
 					platformId:platform,
 				}
-			}).catch( () => {
-				return axios_instance({
-					method: 'post',
-					url: "profile/stats",
-					data: {
-						platformId:platform,
-					}
-				}).then( () => {
-					return axios_instance({
-						method: 'post',
-						url: "profile/play",
-						data: {
-							username:username,
-							platformId:platform,
-						}
-					});
-				})
 			})
 		);
 	}
@@ -36,7 +18,10 @@ function getUserPlatformInfo(username, isSignedIn, platform){
 		return (new Promise((resolve, reject) => {
 			resolve({data: {
 					completeId:[],
-					ownPlatform:false
+					ownPlatform:false,
+					score: 0,
+					modulesCompleted: 0,
+					badges: [false, false, false, false],
 				}})
 		}));
 	}
