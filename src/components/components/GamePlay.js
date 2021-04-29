@@ -30,7 +30,7 @@ const GamePlay=({username, isSignedIn, isEdit})=>{
         if (curPage === undefined)
             return;
         setLayout(curPage.widgets.map((val,key) => {
-            return {i: ''+key, x: key, y: key, w: 1 /*val.width*/, h: 1/*val.height*//*, static: isEdit*/}
+            return {i: ''+key, x: key, y: key, w: 1 /*val.width*/, h: 1/*val.height*/, static: !isEdit}
         }));
     }, [curPage] 
     );
