@@ -20,13 +20,13 @@ const Widget = ({internals, setAction})=>{
             game=<Flashcard internals={internals}/>
         break;
         case "ImageButton":
-            game=<ImageButton internals={internals} setAction={setAction}/>
+            game=<ImageQuestion internals={internals} setAction={setAction}/>
         break;
         case "MultipleChoice":
             game=<MultipleChoice internals={internals} setAction={setAction}/>
         break;
         case "Image":
-            game=<ImageQuestion internals={internals}/>
+            game=<ImageButton internals={internals}/>
         break;
         case "Sound":
             game=<SoundQuestion internals={internals}/>

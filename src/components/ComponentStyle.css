@@ -495,3 +495,10 @@ input.largeCheckbox{
 	background-color:#065db9;
 	border-width:3px;
 }
+.imageButton{
+	height:100%;
+	width:100%;
+	background-color:transparent;
+	border-style:none;
+	cursor: pointer;
+}

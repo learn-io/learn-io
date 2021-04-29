@@ -112,7 +112,7 @@ const Matching=({internals,setAction})=>{
 	);
     const checkResult =()=>{
         let result=options.length;
-        if(result!=leftIndex.length){
+        if(result!==leftIndex.length){
             result=result-(result-leftIndex.length);
         }
         for(let i=0;i<leftIndex.length;i++){
