@@ -370,6 +370,15 @@ input.largeCheckbox{
 	display:inline-block
 }
 
+/* For flashcard */
+.flashcard{
+	background-color:#9EEBCF;
+	/* border-radius: .5rem; */
+	height:100%;
+	width: 100%;
+	box-shadow:4px 4px 8px 0 rgba(0,0,0,.2);
+	border-width:.25rem;
+}
 .bottomButton{
 	background-color:transparent;
 	border-style:none;
@@ -399,7 +408,7 @@ input.largeCheckbox{
 	padding-left: 35px;
 	margin-bottom: 12px;
 	cursor: pointer;
-	font-size: 22px;
+	font-size: 15px;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
@@ -417,7 +426,7 @@ input.largeCheckbox{
 
 /* Create a custom checkbox */
 .checkmark {
-	margin-left: 30%;
+	margin-left: 5%;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -459,4 +468,11 @@ input.largeCheckbox{
 	-webkit-transform: rotate(45deg);
 	-ms-transform: rotate(45deg);
 	transform: rotate(45deg);
+}
+
+.showResult{
+	position:absolute;
+	left:50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }
