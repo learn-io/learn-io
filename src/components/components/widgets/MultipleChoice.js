@@ -1,7 +1,7 @@
 import React, { useEffect,useState} from 'react';
 import '../../ComponentStyle.css';
 import {Button} from 'react-bootstrap';
-const MultipleChoice=({internals})=>{
+const MultipleChoice=({internals,setAction})=>{
     const [options,setOptions]=useState([]);
     const [answer,setAnswer]=useState([]);
     const [result,setResult]=useState(-1);
