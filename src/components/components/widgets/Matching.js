@@ -141,9 +141,9 @@ const Matching=({internals,setAction})=>{
             let distance;
             // check left
             if(x<150){
-                distance = Math.pow(x - 100, 2) + Math.pow(y - (30*(i+1)), 2);
+                distance = Math.pow(x - 60, 2) + Math.pow(y - (30*(i+1)), 2);
             }else{
-                distance = Math.pow(x - 200, 2) + Math.pow(y - (30*(i+1)), 2);
+                distance = Math.pow(x - 220, 2) + Math.pow(y - (30*(i+1)), 2);
             }
             if (  distance < Math.pow(radius,2) )
             {
