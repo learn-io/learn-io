@@ -121,10 +121,12 @@ width: 30px;
 
 .grid{
 background-color: orange;
+
 }
 
 .page{
 background-color: gray;
 margin: auto;
 max-width:80%;
+min-width: 1000px;
 }

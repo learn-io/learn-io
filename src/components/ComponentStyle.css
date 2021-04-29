@@ -373,13 +373,9 @@ input.largeCheckbox{
 /* For flashcard */
 .flashcard{
 	background-color:#9EEBCF;
-	/* text-align:center; */
 	border-radius: .5rem;
-	/* padding:7rem; */
 	height:100%;
 	width: 100%;
-	/* display:inline-block; */
-	/* margin:.5rem; */
 	box-shadow:4px 4px 8px 0 rgba(0,0,0,.2);
 	border-width:.25rem;
 }

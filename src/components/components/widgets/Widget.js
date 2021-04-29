@@ -9,7 +9,7 @@ import Matching from './Matching.js';
 
 
 const Widget = ({internals})=>{
-  /*  let game;
+    let game;
     switch(internals.widgetFlavor)
     {
         case "Flashcard":
@@ -33,11 +33,9 @@ const Widget = ({internals})=>{
         default:
             game=<div>No Widget!</div>
     } 
-    */
+    
     return(
-        <div>
-        hello
-        </div>
+        game
         );
 };
 
