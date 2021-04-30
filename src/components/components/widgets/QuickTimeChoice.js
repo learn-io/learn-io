@@ -1,40 +1,67 @@
 import React, { useEffect,useState} from 'react';
 import '../../ComponentStyle.css';
-import {Button} from 'react-bootstrap';
+import {Button, Container, Row, Col} from 'react-bootstrap';
 import leftIcon from '../../images/left.png';
 import rightIcon from '../../images/right.png';
 import turnIcon from '../../images/turn.png';
 
 
-const QuickTime=({internals})=>
+const QuickTime=({internals, setAction})=>
 {
-    const [index,setIndex]=useState(0);
-    const [front,setFront]=useState(true);
+    const [started, setStarted] = useState(false);
 
+    const [left, setLeft] = useState(<div/>);
+    const [right, setRight] = useState(<div/>);
+    const [top, setTop] = useState(<div/>);
+    const [bottom, setBottom] = useState(<div/>);
 
-    const onChangeIndex=(delta)=>{
-		setIndex(i => ( (i+delta)%internals.text.length + internals.text.length)%internals.text.length);
-        setFront(true);
-	}
-    return (
+    const start = () => 
+    {
+        setStarted(true);
+        let arr = internals.options.sort( () => .5 - Math.random() );
+        setTop(arr[0]);
+        setLeft(arr[1]);
+        setRight(arr[2]);
+        setBottom(arr[3]);
+    }
+
+    useEffect( () =>
+    {
+        if (!started)
+            return;
+        let timer = setTimeout(() => setAction(internals.timeout), internals.timeout.seconds * 1000);
+        return ()=>{clearTimeout(timer)}
+    }, [started]
+    );
+
+    if (!started)
+    {
+        return (
         <div className="flashcard">
-            <div style={{justifyContent:'space-between',display:'flex'}}>
-                <button className='leftButton' onClick={()=>{onChangeIndex(-1)}}>
-                    <img src={leftIcon} height='30px' width='30px' alt="left"/>
-                </button>
-                <p className='textBox'>{front? internals.text[index].front : internals.text[index].back}</p>
-                <button className='rightButton' onClick={()=>{onChangeIndex(1)}}>
-                    <img src={rightIcon} height='30px' width='30px' alt="right"/>
-                </button>
-                
-            </div>
-            <div style={{marginTop: '1%'}} className='clearfix'>
-                <button style={{paddingBottom:'10%'}} className='bottomButton' onClick={()=>{setFront(r=>!r)}}>
-                    <img src={turnIcon} height='50px' width='50px' alt="turn"/>
-                </button>
-            </div>
-        </div>
-    )    
-
+            <Button onClick={()=>{start()}}>Start!</Button>
+        </div>)
+    }
+    else
+    {
+    return (<div className="flashcard">
+        <Container>
+            <Row>
+                <Col></Col>
+                <Col><Button onClick={()=>{setAction(top)}}>{top.text}</Button></Col>
+                <Col></Col>
+            </Row>
+            <Row>
+                <Col><Button onClick={()=>{setAction(left)}}>{left.text}</Button></Col>
+                <Col></Col>
+                <Col><Button onClick={()=>{setAction(right)}}>{right.text}</Button></Col>
+            </Row>
+            <Row>
+                <Col></Col>
+                <Col><Button onClick={()=>{setAction(bottom)}}>{bottom.text}</Button></Col>
+                <Col></Col>
+            </Row>
+        </Container>
+    </div>)
+    }
 }
 export default QuickTime;

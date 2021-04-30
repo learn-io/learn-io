@@ -16,30 +16,11 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 					url: "page/" + platformId + "/" + moduleId,
 				})
 			);
-			calls.push(
-				axios_instance({
-					method: 'get',
-					url: "platform/" + platformId,
-				})
-			);
 			Promise.all(calls).then((values)=>
 			{
 				let info = userPlatformInfo
 				let pages = values[0].data;
-				let cur_platform = values[1].data;
 
-				//let's make sure we're supposed to be here
-				let cur_module = cur_platform.modules.find(e=>e._id === moduleId);
-				let lock_reason = cur_module.lockedby.find(locker=> 
-					info.completeId.find(e => e.moduleId === locker && e.completed === false)
-					);
-				if (lock_reason)
-				{
-					alert("You've entered a locked Module!");
-					setModuleId("");
-					return;
-				}
-				
 				//now we select a page
 				let choice = -1;
 				let count = 1;
