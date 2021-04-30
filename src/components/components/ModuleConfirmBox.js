@@ -6,7 +6,7 @@ import saveIcon from '../images/save.png';
 import axios_instance from '../axios_instance.js';
 import {Button} from 'react-bootstrap';
 
-const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,setSave,save,setModuleName,setModuleId})=>{
+const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,setSave,save,setModuleName,setModuleId,selectedDisable})=>{
 	const [header,setHeader]=useState('');
     const [changeHeader,setChangeHeader]=useState(false);
     const [description,setDescription]=useState('');
@@ -205,6 +205,12 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
 	if(selectedModule==='' || imageData === ''){
 		return null
 	}else{
+		let bt;
+		if(selectedDisable){
+			bt=<Button className='disableButton' disabled> Play</Button>;
+		}else{
+			bt=<Button className='playButton' onClick={()=>{setModuleName(selectedModule.moduleName); setModuleId(selectedModule._id)}}> Play</Button>;
+		}
 		return (
 			<section id="overlay">
 				<div className='overlayStyle'>
@@ -214,7 +220,7 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
 						{centerpart}
 						<div style={{marginTop: '1%'}} className='clearfix'>
                             {/* <Link style={{color:'white'}} to={'/play/platform/'+selectedModule._id}> Play</Link> */}
-							<Button className='playButton' onClick={()=>{setModuleName(selectedModule.moduleName); setModuleId(selectedModule._id)}}> Play</Button>
+							{bt}
 						</div>
 					</div>
 				</div>

@@ -502,3 +502,19 @@ input.largeCheckbox{
 	border-style:none;
 	cursor: pointer;
 }
+
+.disableButton{
+	font-weight: bold;
+	padding-left:2rem;
+	padding-right:2rem;
+	padding-top:.5rem;
+	padding-bottom:.5rem;
+	border-style:solid;
+	border-width:0px;
+	color:#fff;
+	border-radius: 0.5rem;
+	background-color:#065db9 ;
+	font-size:1rem;
+	cursor: pointer;
+	margin:.5rem;
+}
