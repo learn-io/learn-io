@@ -55,8 +55,8 @@ const ModuleList=(props)=>{
             if(props.userPlatformInfo.completeId.length!==0){
                 // check user completion
                 for(let i=0;i<props.userPlatformInfo.completeId.length;i++){
-                    if(!userCompleteId.includes(props.userPlatformInfo.completeId[i].module)){
-                        userCompleteId.push(props.userPlatformInfo.completeId[i].module);
+                    if(!userCompleteId.includes(props.userPlatformInfo.completeId[i])){
+                        userCompleteId.push(props.userPlatformInfo.completeId[i]);
                     }
                 }
             }
@@ -65,8 +65,8 @@ const ModuleList=(props)=>{
         for(let i = 0; i < props.modules.length; i++){
             // if without lockedby value, set it unlock
             if(props.modules[i].lockedby.length===0){
-                if(!unlockList.includes(i)){
-                    unlockList.push(i);
+                if(!unlockList.includes(props.modules[i]._id)){
+                    unlockList.push(props.modules[i]._id);
                 }
             }else{
                 // check user whether meet unlock condition
@@ -78,8 +78,9 @@ const ModuleList=(props)=>{
                     }
                 }
                 if(checkUnlock){
-                    if(!unlockList.includes(i)){
-                        unlockList.push(i);
+                    console.log(props.modules[i]._id);
+                    if(!unlockList.includes(props.modules[i]._id)){
+                        unlockList.push(props.modules[i]._id);
                     }
                 }
             }
@@ -87,7 +88,7 @@ const ModuleList=(props)=>{
         // add user complete modules id to unlock list
         for(let i=0;i<userCompleteId.length;i++){
             if(!unlockList.includes(userCompleteId[i])){
-                unlockList.push(i);
+                unlockList.push(userCompleteId[i]);
             }
         }
         ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
@@ -104,7 +105,7 @@ const ModuleList=(props)=>{
             //         break;
             //     }
             // }
-            let isInclude=unlockList.includes(i)
+            let isInclude=unlockList.includes(props.modules[i]._id);
             if(!isInclude){
                 lockStatus=true;
             }
@@ -201,7 +202,11 @@ const ModuleList=(props)=>{
         for(let i=0;i<module.unlocks.length;i++){
             ctx.beginPath();
             ctx.moveTo(module.x , module.y);
-            ctx.lineTo(props.modules[module.unlocks[i]].x, props.modules[module.unlocks[i]].y);
+            for(let j=0;j<props.modules.length;j++){
+                if(module.unlocks[i]===props.modules[j]._id){
+                    ctx.lineTo(props.modules[j].x, props.modules[j].y);
+                }
+            }
             ctx.stroke();
         }
     }
