@@ -8,7 +8,7 @@ import SoundQuestion from './SoundQuestion.js';
 import Matching from './Matching.js';
 
 import Snacksnake from './Snacksnake.js';
-
+import ImageBox from './ImageBox.js';
 import QuickTime from './QuickTimeChoice.js';
 import TextButton from './TextButton.js';
 
@@ -31,6 +31,9 @@ const Widget = ({internals, setAction})=>{
         break;
         case "Matching":
             game=<Matching internals={internals} setAction={setAction}/>
+        break;
+        case "ImageBox":
+            game=<ImageBox internals={internals}/>
         break;
         case "QuickTimeChoice":
             game=<QuickTime internals={internals} setAction={setAction}/>
