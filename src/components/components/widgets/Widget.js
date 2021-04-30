@@ -6,7 +6,7 @@ import MultipleChoice from './MultipleChoice.js';
 import ImageQuestion from './ImageQuestion.js';
 import SoundQuestion from './SoundQuestion.js';
 import Matching from './Matching.js';
-
+import TextBox from './TextBox.js';
 import Snacksnake from './Snacksnake.js';
 import ImageBox from './ImageBox.js';
 import QuickTime from './QuickTimeChoice.js';
@@ -37,6 +37,9 @@ const Widget = ({internals, setAction})=>{
         break;
         case "QuickTimeChoice":
             game=<QuickTime internals={internals} setAction={setAction}/>
+        break;
+        case "TextBox":
+            game=<TextBox internals={internals}/>
         break;
         case "TextButton":
             game=<TextButton internals={internals} setAction={setAction}/>

@@ -1,6 +1,5 @@
 import React, { useEffect,useState} from 'react';
 import '../../ComponentStyle.css';
-import {Button,Dropdown} from 'react-bootstrap';
 import axios_instance from '../../axios_instance.js';
 
 const ImageBox=({internals})=>{
