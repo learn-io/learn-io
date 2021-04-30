@@ -168,7 +168,7 @@ const Matching=({internals,setAction})=>{
                 
             }else if(x>200){
                 //right side
-                if(y<(30*(i+1)+10)){
+                if(y<=(30*(i+1)+10)){
                     if(!rightIndex.includes(i)){
                         if(selectRight>=0){
                             alert("Checked Left again, reselect!! " + rightSide[i]);
