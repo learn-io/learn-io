@@ -26,7 +26,9 @@ const SoundQuestion=({internals})=>{
         soundquestion=<div className='flashcard'/>;
     }else{
         soundquestion=<div className='flashcard'>
+                        <div className='widgetText'>
                             <PlayButton sound={soundData}/>
+                        </div>
                     </div>;
     }
     return (soundquestion);
