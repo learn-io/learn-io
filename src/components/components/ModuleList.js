@@ -55,8 +55,8 @@ const ModuleList=(props)=>{
             if(props.userPlatformInfo.completeId.length!==0){
                 // check user completion
                 for(let i=0;i<props.userPlatformInfo.completeId.length;i++){
-                    if(!userCompleteId.includes(props.userPlatformInfo.completeId[i])){
-                        userCompleteId.push(props.userPlatformInfo.completeId[i]);
+                    if(!userCompleteId.includes(props.userPlatformInfo.completeId[i].moduleId)){
+                        userCompleteId.push(props.userPlatformInfo.completeId[i].moduleId);
                     }
                 }
             }
@@ -111,6 +111,7 @@ const ModuleList=(props)=>{
             writeModule(props.modules[i], lockStatus, { fontSize: 10, color: 'black', textAlign: 'center' });
             lockStatus=false;
         }
+        // console.log(unlockList);
 	}, [props.modules, scaleX, scaleY, unlockList, redraw, props.userPlatformInfo]
     );
     /*
