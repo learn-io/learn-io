@@ -294,7 +294,7 @@ const Snacksnake=({internals, setAction})=>{
         }, [delay]);
     }
     
-    useInterval(moveSnake,100);
+    useInterval(moveSnake,200);
 
     return  <div className="snacksnake">
                 <div className="btn-toolbar" style={{justifyContent:'space-between'}}>
