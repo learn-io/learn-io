@@ -20,11 +20,11 @@ const ImageBox=({internals})=>{
 	);
     let ImageBox;
     if(!imageData){
-        ImageBox=<div className='flashcard'/>;
+        ImageBox=<div className='flashcard'/>
     }else{
         ImageBox=<div className='flashcard'>
-                        <img alt='' src={imageData} height='100%' width='100%' />;
-                    </div>;
+                        <img alt='' src={imageData} height='100%' width='100%' />
+                    </div>
     }
     return (ImageBox)
 }
