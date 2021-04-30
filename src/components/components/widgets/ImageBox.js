@@ -26,6 +26,6 @@ const ImageBox=({internals})=>{
                         <img alt='' src={imageData} height='100%' width='100%' />;
                     </div>;
     }
-    return (ImageBox);
+    return (ImageBox)
 }
 export default ImageBox;
