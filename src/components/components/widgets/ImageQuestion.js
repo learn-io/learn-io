@@ -20,7 +20,7 @@ const ImageQuestion=({internals,setAction})=>{
         },[internals]   
 	);
     const checkResult=()=>{
-        setAction(internals.click.actionType);
+        setAction(internals.click);
     }
     let imagequestion;
     if(!imageData){
