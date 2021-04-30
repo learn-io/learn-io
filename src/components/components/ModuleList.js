@@ -15,7 +15,7 @@ const ModuleList=(props)=>{
 
     const [redraw, setRedraw] = useState(false);
     
-    const [unlockList]=useState([]);
+    const [unlockList, setUnlockList]=useState([]);
 
     const width = 800;
     const height = 1000;
@@ -40,6 +40,54 @@ const ModuleList=(props)=>{
         
         return () => { window.removeEventListener('resize', resize);}
     },[]);
+    /*
+//let's make sure we're supposed to be here
+let cur_module = cur_platform.modules.find(e=>e._id === moduleId);
+let lock_reason = cur_module.lockedby.find(locker=> 
+    info.completeId.find(e => e.moduleId === locker && e.completed === false)
+    );
+if (lock_reason)
+{
+    alert("You've entered a locked Module!");
+    setModuleId("");
+    return;
+}*/
+    useEffect( ()=> {
+        let unlock = [];
+         // if there is user platform information
+         let userCompleteId=[];      // use to handle how many modules that user complete
+         if(props.userPlatformInfo){
+             // check user completion
+             for(let i=0;i<props.userPlatformInfo.completeId.length;i++){
+                userCompleteId.push(props.userPlatformInfo.completeId[i].moduleId);
+             }
+         }
+         for(let i = 0; i < props.modules.length; i++){
+             // if without lockedby value, set it unlock
+             if(props.modules[i].lockedby.length===0){
+                unlock.push(i);
+             }else{
+                 // check user whether meet unlock condition
+                 let checkUnlock;
+                 for(let j=0;j<props.modules[i].lockedby.length;j++){
+                     checkUnlock=userCompleteId.includes(props.modules[i].lockedby[j]);
+                     if(!checkUnlock){
+                         break;
+                     }
+                 }
+                 if(checkUnlock){
+                    unlock.push(i);
+                 }
+             }
+         }
+/*         // add user complete modules id to unlock list
+         for(let i=0;i<userCompleteId.length;i++){
+             if(!unlock.includes(userCompleteId[i])){
+                unlock.push(userCompleteId[i]);
+             }
+         }*/
+         setUnlockList(unlock);
+    },[props.userPlatformInfo]);
 
 	useEffect(() => {
         let ctx = canvasRef.current.getContext('2d');
@@ -49,44 +97,7 @@ const ModuleList=(props)=>{
         ctx.canvas.height = height * scaleY;
         ctx.scale(scaleX, scaleY);
         let lockStatus=false;
-        // if there is user platform information
-        let userCompleteId=[];      // use to handle how many modules that user complete
-        if(props.userPlatformInfo){
-            // check user completion
-            for(let i=0;i<props.userPlatformInfo.completeId.length;i++){
-                if(!userCompleteId.includes(props.userPlatformInfo.completeId[i].module)){
-                    userCompleteId.push(props.userPlatformInfo.completeId[i].module);
-                }
-            }
-        }
-        for(let i = 0; i < props.modules.length; i++){
-            // if without lockedby value, set it unlock
-            if(props.modules[i].lockedby.length===0){
-                if(!unlockList.includes(i)){
-                    unlockList.push(i);
-                }
-            }else{
-                // check user whether meet unlock condition
-                let checkUnlock;
-                for(let j=0;j<props.modules[i].lockedby.length;j++){
-                    checkUnlock=userCompleteId.includes(props.modules[i].lockedby[j]);
-                    if(!checkUnlock){
-                        break;
-                    }
-                }
-                if(checkUnlock){
-                    if(!unlockList.includes(i)){
-                        unlockList.push(i);
-                    }
-                }
-            }
-        }
-        // add user complete modules id to unlock list
-        for(let i=0;i<userCompleteId.length;i++){
-            if(!unlockList.includes(userCompleteId[i])){
-                unlockList.push(i);
-            }
-        }
+       
         ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
         for (let i = 0; i < props.modules.length; i++)
         {
@@ -108,7 +119,7 @@ const ModuleList=(props)=>{
             writeModule(props.modules[i], lockStatus, { fontSize: 10, color: 'black', textAlign: 'center' });
             lockStatus=false;
         }
-	}, [props.modules, scaleX, scaleY, unlockList, redraw, props.userPlatformInfo]
+	}, [props.modules, scaleX, scaleY, unlockList, redraw]
     );
     /*
     
@@ -198,7 +209,8 @@ const ModuleList=(props)=>{
         for(let i=0;i<module.unlocks.length;i++){
             ctx.beginPath();
             ctx.moveTo(module.x , module.y);
-            ctx.lineTo(props.modules[module.unlocks[i]].x, props.modules[module.unlocks[i]].y);
+            let mod = props.modules.find(e => e._id === module.unlocks[i]);
+            ctx.lineTo(mod.x, mod.y);
             ctx.stroke();
         }
     }

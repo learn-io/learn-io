@@ -3,14 +3,13 @@ import '../ComponentStyle.css';
 import axios_instance from '../axios_instance.js';
 import getUserPlatformInfo from './PlatformHelper.js';
 
-const ModuleDecision=({username, isSignedIn, isEdit, platformName, 
+const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformName, 
 	setModuleId, moduleName, platformId, moduleId,
 	setPageName, setPageId, setPageEntry})=>{
 
 	useEffect(
         ()=>{
 			let calls = [];
-			calls.push(getUserPlatformInfo(username, isSignedIn, platformId));
 			calls.push(
 				axios_instance({
 					method: 'get',
@@ -25,49 +24,35 @@ const ModuleDecision=({username, isSignedIn, isEdit, platformName,
 			);
 			Promise.all(calls).then((values)=>
 			{
-				let info = values[0].data;
-				let pages = values[1].data;
-				let cur_platform = values[2].data;
+				let info = userPlatformInfo
+				let pages = values[0].data;
+				let cur_platform = values[1].data;
 
-				let good = true;
-				for(let i = 0; i < cur_platform.modules.length; i++){
-					let cur_module = cur_platform.modules[i];
-					if (!(cur_module._id === moduleId))
-						continue;
-					// if without lockedby value, set it unlock
-					if(cur_module.lockedby.length===0){
-						break;
-					}else{
-						// check user whether meet unlock condition
-						let checkUnlock;
-						for(let j=0;j<cur_module.lockedby.length;j++){
-							checkUnlock = info.completeId.includes(cur_module.lockedby[j]);
-							if(!checkUnlock){
-								good = false;
-								break;
-							}
-						}
-						if(!good){
-							break;
-						}
-					}
-				}
-
-				if (!good)
+				//let's make sure we're supposed to be here
+				let cur_module = cur_platform.modules.find(e=>e._id === moduleId);
+				let lock_reason = cur_module.lockedby.find(locker=> 
+					info.completeId.find(e => e.moduleId === locker && e.completed === false)
+					);
+				if (lock_reason)
 				{
 					alert("You've entered a locked Module!");
 					setModuleId("");
 					return;
 				}
 				
+				//now we select a page
 				let choice = -1;
 				let count = 1;
+				let module_record = info.completeId.find(e => e.moduleId === moduleId);
+				let entrypoints = module_record? module_record.entryPoints : undefined;
 				pages.forEach( (item, index)=> 
 				{
-
+					//console.log(item);
+					//only entry points can be server
 					if (item.entry === false)
 						return;
-					if (info.completeId.includes(item._id))
+					//and only if we haven't completed them
+					if (entrypoints && entrypoints.find(e => e.score > 0 && e.pageId === item._id))
 						return;
 
 					if (choice === -1 || item.rank === pages[choice].rank)

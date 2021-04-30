@@ -31,6 +31,7 @@ const PlatformController=({username, isSignedIn})=>{
 
 	useEffect(
         ()=>{
+            console.log(platformId);
 			getUserPlatformInfo(isSignedIn, platformId)
 			.then((res)=>{
                 console.log(res.data);
@@ -40,19 +41,18 @@ const PlatformController=({username, isSignedIn})=>{
         },[username, isSignedIn, platformId]
     );
 
-    function setAction(action)
+    const setAction = (action) =>
     {
-        if (action.actionType === undefined || action.actionType===null 
-            || !(platform.platformId === platformId))
+        if (action.actionType === undefined || action.actionType===null)
             return;
-        if (action.actionType === "P")
+        if (action.actionType == "P")
         {
             setPageId(action.target);
         }
-        else if (action.actionType === "S")
+        else if (action.actionType == "S")
         {
             //by changing the object, we allow for rerenders
-            let newUPinfo = { ... userPlatformInfo };
+            let newUPinfo = { ...userPlatformInfo };
 
             //now let's find this module's progress
             let element = newUPinfo.completeId.find(e => e.moduleId === moduleId);
@@ -98,8 +98,8 @@ const PlatformController=({username, isSignedIn})=>{
             }
             //now housekeep modulesCompleted
 
-            let cur_module = platform.modules.find(e => e.moduleId === moduleId);
-            if (element.moduleScore >= cur_module.completionScore)
+            let cur_module = platform.modules.find(e => e._id === moduleId);
+            if (element.completed === false && element.moduleScore >= cur_module.completionScore)
             {
                 element.completed = true;
                 newUPinfo.modulesCompleted += 1;
@@ -111,6 +111,7 @@ const PlatformController=({username, isSignedIn})=>{
                 //TODO: save
             }
             setUserPlatformInfo(newUPinfo);
+            setPageId("");
         }
         else
         {
@@ -118,6 +119,7 @@ const PlatformController=({username, isSignedIn})=>{
             alert("Invalid Action Type");
         }
     };
+
     if (moduleId === "")
     {
         return (
