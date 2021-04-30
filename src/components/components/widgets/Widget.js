@@ -7,6 +7,8 @@ import ImageQuestion from './ImageQuestion.js';
 import SoundQuestion from './SoundQuestion.js';
 import Matching from './Matching.js';
 
+import Snacksnake from './Snacksnake.js';
+
 import QuickTime from './QuickTimeChoice.js';
 import TextButton from './TextButton.js';
 
@@ -35,6 +37,9 @@ const Widget = ({internals, setAction})=>{
         break;
         case "TextButton":
             game=<TextButton internals={internals} setAction={setAction}/>
+        break;
+        case "Snacksnake":
+            game=<Snacksnake internals={internals} setAction={setAction}/>
         break;
         default:
             game=<div>No Widget!</div>
