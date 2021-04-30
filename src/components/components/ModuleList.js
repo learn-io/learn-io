@@ -78,7 +78,6 @@ const ModuleList=(props)=>{
                     }
                 }
                 if(checkUnlock){
-                    console.log(props.modules[i]._id);
                     if(!unlockList.includes(props.modules[i]._id)){
                         unlockList.push(props.modules[i]._id);
                     }
@@ -226,7 +225,7 @@ const ModuleList=(props)=>{
             if (  distance < Math.pow(radius,2) )
             {
                 // if is locked
-                if(unlockList.includes(i)){
+                if(unlockList.includes(props.modules[i]._id)){
                     props.setSelectedModule(props.modules[i]);
                     // alert("Clicked " + props.modules[i].moduleName + " at distance " + distance);
                 }else{
