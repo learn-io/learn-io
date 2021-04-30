@@ -228,11 +228,11 @@ const ModuleList=(props)=>{
                 if(unlockList.includes(props.modules[i]._id)){
                     props.setSelectedModule(props.modules[i]);
                     // alert("Clicked " + props.modules[i].moduleName + " at distance " + distance);
-                }else{
-                    props.setSelectedModule(props.modules[i]);
-                    alert("Clicked " + props.modules[i].moduleName + ", but the module is locked");
                 }
-                
+                // else{
+                //     props.setSelectedModule(props.modules[i]);
+                //     alert("Clicked " + props.modules[i].moduleName + ", but the module is locked");
+                // }
                 return;
             }
         }
