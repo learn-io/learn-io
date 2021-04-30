@@ -159,7 +159,7 @@ exports[`Profile Controller Logged Out 1`] = `
 
 exports[`Progress Empty 1`] = `
 <div
-  className="userPlatformInfoPadding"
+  className="userPlatformInfoPadding container"
 >
   <h2>
     No progress to display at this time.
@@ -169,7 +169,7 @@ exports[`Progress Empty 1`] = `
 
 exports[`Stats Empty 1`] = `
 <div
-  className="userPlatformInfoPadding"
+  className="userPlatformInfoPadding container"
 >
   <h1>
     No stats to display at this time.

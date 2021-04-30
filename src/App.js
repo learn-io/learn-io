@@ -92,7 +92,7 @@ function App(){
 				<AdminController isSignedIn={isSignedIn} isAdmin={isAdmin}/>
 			</Route>
 
-			<Route path="/play">
+			<Route path="/play/platform/:platformId">
 				<PlatformController isSignedIn={isSignedIn} username={username}/>
 			</Route>
 

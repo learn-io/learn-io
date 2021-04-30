@@ -51,19 +51,22 @@ const ModuleList=(props)=>{
         let lockStatus=false;
         // if there is user platform information
         let userCompleteId=[];      // use to handle how many modules that user complete
-        if(props.userPlatformInfo){
-            // check user completion
-            for(let i=0;i<props.userPlatformInfo.completeId.length;i++){
-                if(!userCompleteId.includes(props.userPlatformInfo.completeId[i].module)){
-                    userCompleteId.push(props.userPlatformInfo.completeId[i].module);
+        if(props.userPlatformInfo.completeId!==undefined){
+            if(props.userPlatformInfo.completeId.length!==0){
+                // check user completion
+                for(let i=0;i<props.userPlatformInfo.completeId.length;i++){
+                    if(!userCompleteId.includes(props.userPlatformInfo.completeId[i].moduleId)){
+                        userCompleteId.push(props.userPlatformInfo.completeId[i].moduleId);
+                    }
                 }
             }
         }
+        
         for(let i = 0; i < props.modules.length; i++){
             // if without lockedby value, set it unlock
             if(props.modules[i].lockedby.length===0){
-                if(!unlockList.includes(i)){
-                    unlockList.push(i);
+                if(!unlockList.includes(props.modules[i]._id)){
+                    unlockList.push(props.modules[i]._id);
                 }
             }else{
                 // check user whether meet unlock condition
@@ -75,8 +78,8 @@ const ModuleList=(props)=>{
                     }
                 }
                 if(checkUnlock){
-                    if(!unlockList.includes(i)){
-                        unlockList.push(i);
+                    if(!unlockList.includes(props.modules[i]._id)){
+                        unlockList.push(props.modules[i]._id);
                     }
                 }
             }
@@ -84,7 +87,7 @@ const ModuleList=(props)=>{
         // add user complete modules id to unlock list
         for(let i=0;i<userCompleteId.length;i++){
             if(!unlockList.includes(userCompleteId[i])){
-                unlockList.push(i);
+                unlockList.push(userCompleteId[i]);
             }
         }
         ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
@@ -101,14 +104,15 @@ const ModuleList=(props)=>{
             //         break;
             //     }
             // }
-            let isInclude=unlockList.includes(i)
+            let isInclude=unlockList.includes(props.modules[i]._id);
             if(!isInclude){
                 lockStatus=true;
             }
             writeModule(props.modules[i], lockStatus, { fontSize: 10, color: 'black', textAlign: 'center' });
             lockStatus=false;
         }
-	}, [props.modules, scaleX, scaleY, unlockList, redraw,props.userPlatformInfo]
+        // console.log(unlockList);
+	}, [props.modules, scaleX, scaleY, unlockList, redraw, props.userPlatformInfo]
     );
     /*
     
@@ -198,7 +202,11 @@ const ModuleList=(props)=>{
         for(let i=0;i<module.unlocks.length;i++){
             ctx.beginPath();
             ctx.moveTo(module.x , module.y);
-            ctx.lineTo(props.modules[module.unlocks[i]].x, props.modules[module.unlocks[i]].y);
+            for(let j=0;j<props.modules.length;j++){
+                if(module.unlocks[i]===props.modules[j]._id){
+                    ctx.lineTo(props.modules[j].x, props.modules[j].y);
+                }
+            }
             ctx.stroke();
         }
     }
@@ -218,14 +226,14 @@ const ModuleList=(props)=>{
             if (  distance < Math.pow(radius,2) )
             {
                 // if is locked
-                if(unlockList.includes(i)){
+                if(unlockList.includes(props.modules[i]._id)){
                     props.setSelectedModule(props.modules[i]);
+                    props.setSelectedDisable(false);
                     // alert("Clicked " + props.modules[i].moduleName + " at distance " + distance);
                 }else{
                     props.setSelectedModule(props.modules[i]);
-                    alert("Clicked " + props.modules[i].moduleName + ", but the module is locked");
+                    props.setSelectedDisable(true);
                 }
-                
                 return;
             }
         }

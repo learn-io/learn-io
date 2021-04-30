@@ -60,7 +60,7 @@ const Profile=()=>{
                 history.push("/home");
                 console.log(err);
             });
-        },[skip,count] 
+        },[skip,count,history,username] 
     );
 
     useEffect(
