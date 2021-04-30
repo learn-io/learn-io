@@ -113,15 +113,9 @@ bottom: 0;
 transform: rotate(45deg);
 }
 
-.widget{
-background-color: red;
-height: 30px;
-width: 30px;
-}
-
 .grid{
 background-color: orange;
-
+min-height: 1000px;
 }
 
 .page{

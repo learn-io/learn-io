@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import './ComponentStyle.css';
-// import axios_instance from './axios_instance';
+import axios_instance from './axios_instance';
 import ModuleView from './components/ModuleView.js'
 import ModuleDecision from './components/ModuleDecision.js'
 import GamePlay from './components/GamePlay.js'
@@ -108,7 +108,11 @@ const PlatformController=({username, isSignedIn})=>{
             console.log(newUPinfo);
             if (isSignedIn)
             {
-                //TODO: save
+                axios_instance({
+                    method: 'post',
+                    url: "profile/update",
+                    data: newUPinfo
+                }).catch(err=>console.log(err));
             }
             setUserPlatformInfo(newUPinfo);
             setPageId("");
