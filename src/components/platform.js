@@ -45,11 +45,11 @@ const PlatformController=({username, isSignedIn})=>{
     {
         if (action.actionType === undefined || action.actionType===null)
             return;
-        if (action.actionType == "P")
+        if (action.actionType === "P")
         {
             setPageId(action.target);
         }
-        else if (action.actionType == "S")
+        else if (action.actionType === "S")
         {
             //by changing the object, we allow for rerenders
             let newUPinfo = { ...userPlatformInfo };

@@ -40,7 +40,7 @@ const Matching=({internals,setAction})=>{
             for(let i=0;i<options.length;i++){
                 writeModule(options,leftSide,rightSide,i, selectLeft,selectRight,leftIndex,rightIndex);
             }
-        },[options,selectLeft,selectRight,leftIndex,rightIndex]   
+        },[options,selectLeft,selectRight,leftIndex,rightIndex, leftSide, rightSide]   
 	);
     
     const writeModule = (options,leftSide,rightSide,i,selectLeft,selectRight,leftIndex,rightIndex) => {

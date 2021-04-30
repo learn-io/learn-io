@@ -21,7 +21,7 @@ const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlat
 		    }).catch(function(err){
 		        console.log(err);
 		    });
-        },[platformId, save,username]
+        },[platformId, save,username,setPlatform,setPlatformName]
     );
 
 	// console.log("platform ModuleView");

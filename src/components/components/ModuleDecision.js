@@ -1,7 +1,6 @@
 import React, { useEffect} from 'react';
 import '../ComponentStyle.css';
 import axios_instance from '../axios_instance.js';
-import getUserPlatformInfo from './PlatformHelper.js';
 
 const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformName, 
 	setModuleId, moduleName, platformId, moduleId,
@@ -67,7 +66,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 				console.log(err);
 				setModuleId("");
 			});
-        },[username, platformId, moduleId, isSignedIn]
+        },[username, platformId, moduleId, isSignedIn, setModuleId, setPageEntry, setPageId, setPageName, userPlatformInfo]
     );
 
 	return(

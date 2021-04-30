@@ -1,9 +1,6 @@
 import React, { useEffect,useState} from 'react';
 import '../../ComponentStyle.css';
 import {Button, Container, Row, Col} from 'react-bootstrap';
-import leftIcon from '../../images/left.png';
-import rightIcon from '../../images/right.png';
-import turnIcon from '../../images/turn.png';
 
 
 const QuickTime=({internals, setAction})=>
@@ -31,7 +28,7 @@ const QuickTime=({internals, setAction})=>
             return;
         let timer = setTimeout(() => setAction(internals.timeout), internals.timeout.seconds * 1000);
         return ()=>{clearTimeout(timer)}
-    }, [started]
+    }, [started,internals.timeout,setAction]
     );
 
     if (!started)

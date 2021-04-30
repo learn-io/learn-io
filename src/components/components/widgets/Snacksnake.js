@@ -8,7 +8,7 @@ const Snacksnake=({internals, setAction})=>{
     const canvasRef = useRef();
 
     const[options,setOptions] = useState([]);
-    const[rightAnswer,setRightAnswer] = useState([]);
+    //const[rightAnswer,setRightAnswer] = useState([]);
 
     const[imageDataRight, setImageDataRight] = useState([]);
     const[imageDataWrong, setImageDataWrong] = useState([]);
@@ -36,7 +36,7 @@ const Snacksnake=({internals, setAction})=>{
             console.log("internals");
             console.log(internals);
             setOptions(internals.options);
-            setRightAnswer(internals.rightAnswer);
+            //setRightAnswer(internals.rightAnswer);
         },[internals]   
 	);
 

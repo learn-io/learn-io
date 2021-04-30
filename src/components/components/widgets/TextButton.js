@@ -1,9 +1,6 @@
-import React, { useEffect,useState} from 'react';
+import React from 'react';
 import '../../ComponentStyle.css';
 import {Button} from 'react-bootstrap';
-import leftIcon from '../../images/left.png';
-import rightIcon from '../../images/right.png';
-import turnIcon from '../../images/turn.png';
 
 
 const TextButton=({internals, setAction})=>

@@ -26,7 +26,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
                 setPageName(res.data.pageName)
             })
             .catch(err=>console.log(err));
-        },[platformId,moduleId,pageId]   
+        },[platformId,moduleId,pageId, setPageName]   
 	);
 
     useEffect( () => {
@@ -35,7 +35,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
         setLayout(curPage.widgets.map((val,key) => {
             return {i: ''+key, x: val.x, y: val.y, w: val.width, h: val.height, static: !isEdit}
         }));
-    }, [curPage] 
+    }, [curPage, isEdit] 
     );
 
     if (curPage === undefined)
