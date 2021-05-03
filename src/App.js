@@ -13,6 +13,7 @@ import AdminController from "./components/admin";
 import PlatformController from "./components/platform"; 
 import SettingsController from "./components/Setting";
 import ProfileController from "./components/Profile";
+import CreateController from "./components/create";
 
 /*
 import PlatformList from './components/PlatformList';
@@ -98,6 +99,10 @@ function App(){
 
 			<Route path="/settings">
 				<SettingsController isSignedIn={isSignedIn}/>
+			</Route>
+
+			<Route path="/create">
+				<CreateController isSignedIn={isSignedIn}/>
 			</Route>
 
 			<Route path="/profile">

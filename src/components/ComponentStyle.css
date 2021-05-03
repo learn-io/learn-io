@@ -525,3 +525,17 @@ input.largeCheckbox{
 	top: 50%;
 	transform: translate(-50%, -50%);
 }
+
+.create{
+    display: block;
+    position: relative;
+    justify-content: center;
+    font-size: 15px;
+    -webkit-user-select: none;
+    user-select: none;
+}
+.leftbar{
+    background-color: gray;
+    margin: auto;
+    max-width:10%;
+}
