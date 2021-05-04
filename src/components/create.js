@@ -270,7 +270,7 @@ const CreateController = ({isSignedIn}) =>
     let imageBut=<div draggable onDragStart={(e)=>{onDragStart(e,"ImageButton")}} style={{backgroundColor:'#96CCFF',borderRadius: '.3rem',marginTop: '10%',width:'70%',height:'100px', marginLeft:'10%'}}>
                     <p>Image Button</p>
                 </div>
-    let soundBut=<div draggable onDragStart={(e)=>{onDragStart(e,"Sound")}} style={{backgroundColor:'#96CCFF',borderRadius: '.3rem',marginTop: '10%', width:'70%', marginLeft:'10%'}}>
+    let soundBut=<div draggable onDragStart={(e)=>{onDragStart(e,"Sound")}} style={{backgroundColor:'transparent',borderRadius: '.3rem',marginTop: '10%', width:'70%', marginLeft:'10%'}}>
                     <img src={soundIcon} height='40px' width='40px' alt="sound"/> Add Sound
                 </div>
     let flash=<div draggable onDragStart={(e)=>{onDragStart(e,"Flashcard")}} style={{backgroundColor:'transparent',borderRadius: '.3rem',marginTop: '10%', width:'70%', marginLeft:'10%'}}>
