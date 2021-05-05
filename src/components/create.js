@@ -243,7 +243,7 @@ const CreateController = ({isSignedIn}) =>
     
     let rightbarTop=<RighttopBar onDragStart={onDragStart}/>
     
-    let rightbarBottom=<RightbottomBar selectedWidget={selectedWidget} curPage={curPage}/>
+    let rightbarBottom=<RightbottomBar selectedWidget={selectedWidget} curPage={curPage} add={add} setAdd={setAdd}/>
     let rightbar=<div style={{height: '82%',backgroundColor:"#9EEBCF"}}>
                     {rightbarTop}
                     {rightbarBottom}
@@ -259,6 +259,7 @@ const CreateController = ({isSignedIn}) =>
                     {leftbarTop}
                     {leftbarBottom}
                 </div>
+    // console.log(curPage);
     return(
         <div className="create">
             <Row>

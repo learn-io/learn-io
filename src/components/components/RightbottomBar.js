@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {Table} from 'react-bootstrap';
 import axios_instance from '../axios_instance.js';
 
-const RightbottomBar = ({selectedWidget,curPage}) =>{
+const RightbottomBar = ({selectedWidget,curPage,add,setAdd}) =>{
     const hiddenFileInput = React.useRef(null);
 
     const handleClick = (event) => {
@@ -11,45 +11,53 @@ const RightbottomBar = ({selectedWidget,curPage}) =>{
 
     //need to fix
     const onUploadImage=(event)=>{
-        console.log("upload");
-        // if (event.target.files && event.target.files[0]) {
-        //     let imageFile = event.target.files[0];
-        //     let imageExtension = event.target.files[0].type;
+        // console.log("upload");
+        if (event.target.files && event.target.files[0]) {
+            let imageFile = event.target.files[0];
+            let imageExtension = event.target.files[0].type;
                 
-		// 	let reader = new FileReader();
-		// 	reader.onload = (e) => {
-		// 		let oldData = ImageData;
-		// 		setImageData(e.target.result);
-		// 		let form = new FormData();
-		// 		form.append('file', e.target.result);
-		// 		form.append('extension', imageExtension);
-		// 		axios_instance({
-		// 			method: 'post',
-		// 			url: "media/",
-		// 			data: form,
-		// 			headers: {
-		// 				'Content-Type': `multipart/form-data; boundary=${form._boundary}`,
-		// 			},
-		// 		}).then((res)=>{
-		// 			setImageHash(res.data.hash);
-		// 		}).catch((e)=>{
-		// 			setImageData(oldData);
-		// 		})
-		// 	};
-		// 	reader.readAsDataURL(imageFile);
-		// }
+			let reader = new FileReader();
+			reader.onload = (e) => {
+				let form = new FormData();
+				form.append('file', e.target.result);
+				form.append('extension', imageExtension);
+				axios_instance({
+					method: 'post',
+					url: "media/",
+					data: form,
+					headers: {
+						'Content-Type': `multipart/form-data; boundary=${form._boundary}`,
+					},
+				}).then((res)=>{
+					// setImageHash(res.data.hash);
+                    for(let i=0;i<curPage.length;i++){
+                        if(curPage[i]===selectedWidget){
+                            curPage[i].internals.hash=res.data.hash;
+                            break;
+                        }
+                    }
+                    setAdd(add+1);
+				}).catch((e)=>{
+					console.log(e);
+				})
+			};
+			reader.readAsDataURL(imageFile);
+		}
     }
-    let textforButton;
-    if(selectedWidget==="Sound"){
-        textforButton="Upload Sound";
-    }else{
-        textforButton="Upload Image";
+    const onChangeText=(event)=>{
+        console.log(curPage);
+        for(let i=0;i<curPage.length;i++){
+            if(curPage[i]===selectedWidget){
+                curPage[i].internals.text=event.target.value;
+                break;
+            }
+        }
+        // console.log(curPage);
+        setAdd(add+1);
+        // console.log(event.target.value);
     }
-    let uploadButton=<div>
-                        <button style={{backgroundColor:'#96CCFF',borderRadius: '.5rem',marginTop: '10%'}} onClick={handleClick}>{textforButton}</button>
-                        <input type="file" ref={hiddenFileInput} style={{ display: "none" }} onChange={onUploadImage} />
-                    </div>
-    let textInput=<div>Input Text:<input style={{width:'90%'}} type="text" id="textinput" name="textinput"/></div>
+    
+    // let textInput=<div>Input Text:<input style={{width:'90%'}} type="text" id="textinput" name="textinput" onChange={onChangeText}/></div>
     let texbuttonInfo=<div style={{paddingTop:'5%'}}>
                             <Table striped bordered hover>
                                 <thead>
@@ -246,44 +254,40 @@ const RightbottomBar = ({selectedWidget,curPage}) =>{
     let game;
     if(selectedWidget==="")
         return <div></div>;
-    switch(selectedWidget.internals.widgetFlavor)
-    {
-        case "Flashcard":
-            game=flashcardInfo;
-        break;
-        case "ImageButton":
-            game=<div>
-                    {uploadButton}
-                    {texbuttonInfo}
+    if(selectedWidget.internals.widgetFlavor==="Sound"||selectedWidget.internals.widgetFlavor==="ImageBox"){
+        let textforButton;
+        if(selectedWidget.internals.widgetFlavor==="Sound"){
+            textforButton="Upload Sound";
+        }else{
+            textforButton="Upload Image";
+        }
+        game=<div>
+                <button style={{backgroundColor:'#96CCFF',borderRadius: '.5rem',marginTop: '10%'}} onClick={handleClick}>{textforButton}</button>
+                <input type="file" ref={hiddenFileInput} style={{ display: "none" }} onChange={onUploadImage} />
+            </div>
+    }else if(selectedWidget.internals.widgetFlavor==="TextBox"){
+        game=<div>Input Text:<input defaultValue={selectedWidget.internals.text} style={{width:'90%'}} type="text" id="textinput" name="textinput" onChange={onChangeText}/></div>;
+    }else if(selectedWidget.internals.widgetFlavor==="Flashcard"){
+        game=flashcardInfo;
+    }else if(selectedWidget.internals.widgetFlavor==="ImageButton"){
+        game=<div>
+                <div>
+                    <button style={{backgroundColor:'#96CCFF',borderRadius: '.5rem',marginTop: '10%'}} onClick={handleClick}>Upload Image</button>
+                    <input type="file" ref={hiddenFileInput} style={{ display: "none" }} onChange={onUploadImage} />
                 </div>
-        break;
-        case "MultipleChoice":
-            game=multipleChoiceInfo;
-        break;
-        case "Sound":
-            game=uploadButton;
-        break;
-        case "Matching":
-            game=matchingInfo;
-        break;
-        case "ImageBox":
-            game=uploadButton;
-        break;
-        case "QuickTimeChoice":
-            game=quickChoiceInfo;
-        break;
-        case "TextBox":
-            game=textInput;
-        break;
-        case "TextButton":
-            game=texbuttonInfo;
-        break;
-        case "Snacksnake":
-            game=snackInfo;
-        break;
-        default:
-            game=<div></div>
-    } 
+                {texbuttonInfo}
+            </div>
+    }else if(selectedWidget.internals.widgetFlavor==="MultipleChoice"){
+        game=multipleChoiceInfo;
+    }else if(selectedWidget.internals.widgetFlavor==="Matching"){
+        game=matchingInfo;
+    }else if(selectedWidget.internals.widgetFlavor==="QuickTimeChoice"){
+        game=quickChoiceInfo;
+    }else if(selectedWidget.internals.widgetFlavor==="TextButton"){
+        game=texbuttonInfo;
+    }else if(selectedWidget.internals.widgetFlavor==="Snacksnake"){
+        game=snackInfo;
+    }
     return (
         <div style={{overflowY:'scroll', border: '1px solid black', height: '50%'}}>
             {game}
