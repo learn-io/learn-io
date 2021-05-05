@@ -39,12 +39,18 @@ const RightbottomBar = ({selectedWidget}) =>{
 		// 	reader.readAsDataURL(imageFile);
 		// }
     }
-    let uploadButon=<div>
-                        <button style={{backgroundColor:'#96CCFF',borderRadius: '.5rem',marginTop: '10%'}} onClick={handleClick}>Upload Image</button>
+    let textforButton;
+    if(selectedWidget==="Sound"){
+        textforButton="Upload Sound";
+    }else{
+        textforButton="Upload Image";
+    }
+    let uploadButton=<div>
+                        <button style={{backgroundColor:'#96CCFF',borderRadius: '.5rem',marginTop: '10%'}} onClick={handleClick}>{textforButton}</button>
                         <input type="file" ref={hiddenFileInput} style={{ display: "none" }} onChange={onUploadImage} />
                     </div>
-    let textInput=<div>Input Text:<input style={{width:'100%'}} type="text" id="textinput" name="textinput"/></div>
-    let texbuttonInfo=<div>
+    let textInput=<div>Input Text:<input style={{width:'90%'}} type="text" id="textinput" name="textinput"/></div>
+    let texbuttonInfo=<div style={{paddingTop:'5%'}}>
                             <Table striped bordered hover>
                                 <thead>
                                     <tr>
@@ -237,17 +243,51 @@ const RightbottomBar = ({selectedWidget}) =>{
                                     </tbody>
                                 </Table>
                         </div>
+    let game;
+    switch(selectedWidget)
+    {
+        case "Flashcard":
+            game=flashcardInfo;
+        break;
+        case "ImageButton":
+            game=<div>
+                    {uploadButton}
+                    {texbuttonInfo}
+                </div>
+        break;
+        case "MultipleChoice":
+            game=multipleChoiceInfo;
+        break;
+        case "Sound":
+            game=uploadButton;
+        break;
+        case "Matching":
+            game=matchingInfo;
+        break;
+        case "ImageBox":
+            game=uploadButton;
+        break;
+        case "QuickTimeChoice":
+            game=quickChoiceInfo;
+        break;
+        case "TextBox":
+            game=textInput;
+        break;
+        case "TextButton":
+            game=texbuttonInfo;
+            // let inside=widgets[8];
+            // game={name:"Text Button",x:(event.clientX/100),y:(event.clientY/100),height:1,width:1,internals:{inside}}
+        break;
+        case "Snacksnake":
+            game=snackInfo;
+        break;
+        default:
+            game=<div></div>
+    } 
     return (
         <div style={{overflowY:'scroll', border: '1px solid black', height: '50%'}}>
-                        {uploadButon}
-                        {/* {texbuttonInfo}
-                        {flashcardInfo}
-                        {textInput}
-                        {snackInfo}
-                        {multipleChoiceInfo}
-                        {quickChoiceInfo}
-                        {matchingInfo} */}
-                    </div>
+            {game}
+        </div>
     );
 }
 
