@@ -244,7 +244,9 @@ const RightbottomBar = ({selectedWidget}) =>{
                                 </Table>
                         </div>
     let game;
-    switch(selectedWidget)
+    if(selectedWidget==="")
+        return <div></div>;
+    switch(selectedWidget.internals.widgetFlavor)
     {
         case "Flashcard":
             game=flashcardInfo;
@@ -275,8 +277,6 @@ const RightbottomBar = ({selectedWidget}) =>{
         break;
         case "TextButton":
             game=texbuttonInfo;
-            // let inside=widgets[8];
-            // game={name:"Text Button",x:(event.clientX/100),y:(event.clientY/100),height:1,width:1,internals:{inside}}
         break;
         case "Snacksnake":
             game=snackInfo;

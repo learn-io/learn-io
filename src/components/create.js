@@ -17,7 +17,7 @@ const ReactGridLayout = WidthProvider(RGL);
 const CreateController = ({isSignedIn}) =>
 {
     const [layout, setLayout] = useState( []);
-    const [curPage] = useState([]);
+    const [curPage,setCurPage] = useState([]);
     const [add,setAdd]= useState(0);
     const [selectedWidget,setSelectedWidget]= useState("");
     // const hiddenFileInput = React.useRef(null);
@@ -58,9 +58,13 @@ const CreateController = ({isSignedIn}) =>
     // let textBut=<button>
     //                 Text Button
     //             </button>
-
+    const selectWidget=(key)=>{
+        // console.log(curPage[key]);
+        setSelectedWidget(curPage[key]);
+        // console.log(1);
+    }
     const onDragStart=(event,text)=> {
-        console.log(text);
+        // console.log(text);
         event.dataTransfer.setData("Text", text);
     }
     const onDragOver=(event)=>{
@@ -72,8 +76,8 @@ const CreateController = ({isSignedIn}) =>
         let data = event.dataTransfer.getData("Text");
         let game={
             name: "widget name",
-            x: (event.clientX/100),
-            y: (event.clientY/100),
+            x: (event.clientX/320),
+            y: (event.clientY/320),
             height: 1,
             width: 1,
             internals: {}
@@ -209,7 +213,10 @@ const CreateController = ({isSignedIn}) =>
         // console.log(event.clientY);
     }
     const deleteSelectedWidget=()=>{
-        console.log("delete");
+        let filter = curPage.filter(item => item !== selectedWidget)
+        setCurPage(filter);
+        setSelectedWidget("")
+        setAdd(add+1);
     }
     const savePage=()=>{
         console.log("save");
@@ -252,7 +259,7 @@ const CreateController = ({isSignedIn}) =>
                 { 
                     curPage.map((val,key) => {
                         return (
-                            <div key={''+key} className="widget">
+                            <div key={''+key} className="widget" onClick={()=>{selectWidget(key)}}>
                                 <Widget internals={val.internals}/>
                             </div>
                         );
