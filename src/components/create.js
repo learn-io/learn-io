@@ -199,6 +199,8 @@ const CreateController = ({isSignedIn}) =>
                         target:""
                     }
                 }
+                game.height=4;
+                game.width=6;
             break;
             default:
                 game=<div>No Widget!</div>

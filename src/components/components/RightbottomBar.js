@@ -2,7 +2,7 @@ import React from 'react';
 import {Table} from 'react-bootstrap';
 import axios_instance from '../axios_instance.js';
 
-const RightbottomBar = ({selectedWidget}) =>{
+const RightbottomBar = ({selectedWidget,curPage}) =>{
     const hiddenFileInput = React.useRef(null);
 
     const handleClick = (event) => {
