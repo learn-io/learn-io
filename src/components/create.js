@@ -222,11 +222,26 @@ const CreateController = ({isSignedIn}) =>
         console.log("save");
         console.log(curPage);
         console.log(layout);
+        // axios_instance({
+        //     method: 'post',
+        //     url: "page/update",
+        //     data: {
+        //         platformId:"",
+        //         moduleId:"",
+        //         pageId: "",
+        //         pageName:"",
+        //         widgets:curPage
+        //     }
+        // })
+        // .then((res)=>{
+        // 	console.log(res);
+	    // })
+	    // .catch(err=>console.log(err));
     }
     
     let rightbarTop=<RighttopBar onDragStart={onDragStart}/>
     
-    let rightbarBottom=<RightbottomBar selectedWidget={selectedWidget}/>
+    let rightbarBottom=<RightbottomBar selectedWidget={selectedWidget} curPage={curPage}/>
     let rightbar=<div style={{height: '82%',backgroundColor:"#9EEBCF"}}>
                     {rightbarTop}
                     {rightbarBottom}
