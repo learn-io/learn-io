@@ -40,7 +40,7 @@ const CreateController = ({isSignedIn}) =>
         setLayout(curPage.map((val,key) => {
             return {i: ''+key, x: val.x, y: val.y, w: val.width, h: val.height, static: false}
         }));
-    }, [add] 
+    }, [add,curPage] 
     );
     // const [selected,setSelected]= useState('');  // use to handle which widget is selected
     // const [widgets, setWidgets] = useState('');
@@ -217,8 +217,8 @@ const CreateController = ({isSignedIn}) =>
     const deleteSelectedWidget=()=>{
         let filter = curPage.filter(item => item !== selectedWidget)
         setCurPage(filter);
-        setSelectedWidget("")
-        setAdd(add+1);
+        setSelectedWidget("");
+        // setAdd(add+1);
     }
     const savePage=()=>{
         console.log("save");
