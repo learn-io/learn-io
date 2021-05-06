@@ -26,6 +26,8 @@ const CreateController = ({platformName, moduleName, pageName, currentPage,platf
         ()=>{
             // console.log(currentPage.widgets);
 			// setCurPage(currentPage.widgets);
+            if(currentPage===''||currentPage===undefined)
+                return;
             for(let i=0;i<currentPage.widgets.length;i++){
                 curPage.push(currentPage.widgets[i]);
             }
