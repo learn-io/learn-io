@@ -21,8 +21,16 @@ const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlat
 		    }).catch(function(err){
 		        console.log(err);
 		    });
-        },[platformId, save,username,setPlatform,setPlatformName]
+        },[platformId, save, username, setPlatform, setPlatformName]
     );
+
+	const moveModuleTo = (moduleId, x, y) => 
+	{
+		console.log("Moving " + moduleId + " to (" + x + ", " + y + ")");
+		platform.modules[moduleId].x = x;
+		platform.modules[moduleId].y = y;
+		return;
+	}
 
 	// console.log("platform ModuleView");
 	// console.log(userPlatformInfo);
@@ -33,7 +41,7 @@ const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlat
         return(
             <>
 				<h2 style={{color:'white'}}>{platformName}</h2>
-				<ModuleList platform={platform} modules={platform.modules} setSelectedModule={setSelectedModule} userPlatformInfo={userPlatformInfo} setSelectedDisable={setSelectedDisable}/>
+				<ModuleList isEdit={isEdit} moveModuleTo={moveModuleTo} modules={platform.modules} setSelectedModule={setSelectedModule} userPlatformInfo={userPlatformInfo} setSelectedDisable={setSelectedDisable}/>
 				<ModuleConfirmBox username={username} platform={platform} selectedModule={selectedModule} setSelectedModule={setSelectedModule} 
 				save={save} setSave={setSave} setModuleName={setModuleName} setModuleId={setModuleId} selectedDisable={selectedDisable}/>
             </>
