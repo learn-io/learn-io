@@ -59,7 +59,7 @@ const LeftBarAccordion = ({platform, modules, pages, setPageId, setModuleId}) =>
             {platform.platformName}
             </Button>
         if (!platform.modules)
-            return {platformButton}
+            return platformButton;
         return  <>
             {platformButton}
             <br/>
