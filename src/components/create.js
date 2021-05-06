@@ -81,7 +81,7 @@ const CreateController = ({isSignedIn}) =>
         let game={
             name: "widget name",
             x: ((event.clientX-rect.left)/(rect.width/8)),
-            y: ( (event.clientY-rect.top)/(rect.height/6)),
+            y: ( (event.clientY-rect.top)/160),
             height: 1,
             width: 1,
             internals: {}
@@ -228,7 +228,7 @@ const CreateController = ({isSignedIn}) =>
             curPage[i].w=layout[i].w;
         }
         console.log(curPage);
-        console.log(layout);
+        // console.log(layout);
         // axios_instance({
         //     method: 'post',
         //     url: "page/update",

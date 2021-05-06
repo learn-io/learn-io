@@ -44,7 +44,7 @@ const EditMatching = ({selectedWidget,curPage,add,setAdd})=>{
                 break;
             }
         }
-        console.log(curPage);
+        // console.log(curPage);
         setAdd(add+1);
     }
 

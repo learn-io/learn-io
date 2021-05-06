@@ -6,6 +6,7 @@ import EditMatching from './editwidgets/EditMatching.js';
 import EditMultipleChoice from './editwidgets/EditMultipleChoice.js';
 import EditQuickTimeChoice from './editwidgets/EditQuickTimeChoice.js';
 import EditTextButton from './editwidgets/EditTextButton.js';
+import EditSnackSnake from './editwidgets/EditSnackSnake.js';
 
 const RightbottomBar = ({selectedWidget,curPage,add,setAdd}) =>{
     const hiddenFileInput = React.useRef(null);
@@ -79,44 +80,6 @@ const RightbottomBar = ({selectedWidget,curPage,add,setAdd}) =>{
         }
     }
     // let textInput=<div>Input Text:<input style={{width:'90%'}} type="text" id="textinput" name="textinput" onChange={onChangeText}/></div>
-    let snackInfo=<div>
-                        <Table striped bordered hover>
-                            <thead>
-                                <tr>
-                                <th>Correct Text</th>
-                                <th>Page(P) or Score(S)</th>
-                                <th>Target</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                <td><input style={{width:'100%'}} type="text" id="buttontext" name="buttontext"/></td>
-                                <td><input style={{width:'100%'}} type="text" id="pors" name="pors"/></td>
-                                <td><input style={{width:'100%'}} type="text" id="target" name="target"/></td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                        <Table striped bordered hover>
-                            <thead>
-                                <tr>
-                                <th>Correct Option</th>
-                                <th>Wrong Opstion</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                <td><input style={{width:'100%'}} type="text" id="correctText" name="correctText"/></td>
-                                <td><input style={{width:'100%'}} type="text" id="wrongText" name="wrongText"/></td>
-                                </tr>
-                            </tbody>
-                            <tbody>
-                                <tr>
-                                <td><input style={{width:'100%'}} type="text" id="correctText" name="correctText"/></td>
-                                <td><input style={{width:'100%'}} type="text" id="wrongText" name="wrongText"/></td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                    </div>
     let game;
     if(selectedWidget==="")
         return <div></div>;
@@ -167,7 +130,7 @@ const RightbottomBar = ({selectedWidget,curPage,add,setAdd}) =>{
     }else if(selectedWidget.internals.widgetFlavor==="TextButton"){
         game=<EditTextButton selectedWidget={selectedWidget} curPage={curPage} add={add} setAdd={setAdd}/>
     }else if(selectedWidget.internals.widgetFlavor==="Snacksnake"){
-        game=snackInfo;
+        game=<EditSnackSnake selectedWidget={selectedWidget} curPage={curPage} add={add} setAdd={setAdd}/>
     }
     return (
         <div style={{overflowY:'scroll', border: '1px solid black', height: '50%'}}>
