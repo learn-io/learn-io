@@ -115,12 +115,11 @@ transform: rotate(45deg);
 
 .grid{
 background-color: orange;
-min-height: 1000px;
+min-height: 500px;
 }
 
 .page{
 background-color: gray;
 margin: auto;
-max-width:80%;
-min-width: 1000px;
+max-width:70%;
 }

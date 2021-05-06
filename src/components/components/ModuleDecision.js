@@ -85,23 +85,9 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
         },[username, platformId, moduleId, isSignedIn, setModuleId, setPageEntry, setPageId, setPageName, userPlatformInfo]
     );
 	if(isEdit){
-		let leftbarTop=<div style={{overflowY:'scroll', border: '1px solid black', height: '80%'}}>
-                        <button className='deleteButton' onClick={()=>{}}><img src={saveIcon} height='40px' width='40px' alt="save"/></button>
-                    </div>
-		let leftbarBottom=<div style={{height: '20%'}}>
-								<button style={{paddingTop:'25%'}} onClick={()=>{}} className='deleteButton'><img src={deleteIcon} height='80px' width='80px' alt="delete"/></button>
-							</div>
-		// 
-		let leftbar=<div style={{height: '82%',backgroundColor:"#9EEBCF"}}>
-						{leftbarTop}
-						{leftbarBottom}
-					</div>
 		return (	
 			<div className="platformContainer">
-				<div className="leftbar">
-					{/* Left Bar */}
-					{leftbar}
-				</div>
+				<div className="leftbar"/>
 
 				<div className="content">
 					<ReactGridLayout
@@ -125,9 +111,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 					</ReactGridLayout>
 				</div>
 
-				<div className="rightbar">
-				{/* Right Bar */}
-				</div>
+				<div className="rightbar"/>
 			</div>
 		);
 
