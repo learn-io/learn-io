@@ -247,12 +247,13 @@ const CreateController = ({isSignedIn}) =>
     }
     const onLayoutChanged=(newLayout)=>{
         setLayout(newLayout);
-        for(let i=0;i<layout.length;i++){
-            curPage[i].x=layout[i].x;
-            curPage[i].y=layout[i].y;
-            curPage[i].h=layout[i].h;
-            curPage[i].w=layout[i].w;
+        for(let i=0;i<newLayout.length;i++){
+            curPage[i].x=newLayout[i].x;
+            curPage[i].y=newLayout[i].y;
+            curPage[i].h=newLayout[i].h;
+            curPage[i].w=newLayout[i].w;
         }
+        // setAdd(add+1);
     }
     
     let rightbarTop=<RighttopBar onDragStart={onDragStart}/>

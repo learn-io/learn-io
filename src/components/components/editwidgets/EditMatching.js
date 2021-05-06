@@ -47,7 +47,15 @@ const EditMatching = ({selectedWidget,curPage,add,setAdd})=>{
         // console.log(curPage);
         setAdd(add+1);
     }
-
+    const onChangeButtonText=(event)=>{
+        for(let i=0;i<curPage.length;i++){
+            if(curPage[i]===selectedWidget){
+                curPage[i].internals.buttonText=event.target.value;
+                break;
+            }
+        }
+        setAdd(add+1);
+    }
     let textArray=[]
         for(let i=0;i<4;i++){
             let ob={"left":"","right":""}
@@ -105,6 +113,7 @@ const EditMatching = ({selectedWidget,curPage,add,setAdd})=>{
                             </tr>
                         </tbody>
                     </Table>
+                    <div>Input Button Text:<input defaultValue={selectedWidget.internals.buttonText} style={{width:'90%'}} type="text" id="textinput" name="textinput" onChange={onChangeButtonText}/></div>
             </div>
     return (game);
 }
