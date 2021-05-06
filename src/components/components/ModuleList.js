@@ -3,7 +3,7 @@ import '../ComponentStyle.css';
 import lockIcon from '../images/lock.png';
 import unlockIcon from '../images/unlock.png';
 
-const ModuleList=(props)=>{
+const ModuleList=({isEdit, moveModuleTo, userPlatformInfo, modules, setSelectedModule, setSelectedDisable})=>{
 
     const imgLock = useRef(new Image())
     const imgUnlock = useRef(new Image())
@@ -17,11 +17,18 @@ const ModuleList=(props)=>{
     
     const [unlockList]=useState([]);
 
+    const [editSelected, setEditSelected] = useState(-1);
+    const [editXOFF, setEditXOFF] = useState(0);
+    const [editYOFF, setEditYOFF] = useState(0);
+
     const width = 1920;
     const height = 1080;
 
-    const widthPercent = 1;
-    const heightPercent = 1;
+    //set this to match CSS for accurate clicks
+    const widthPercent = .7;
+    const heightPercent = .7;
+
+    const radius = 75;
 
     useEffect( ()=> {
         function resize()
@@ -51,35 +58,35 @@ const ModuleList=(props)=>{
         let lockStatus=false;
         // if there is user platform information
         let userCompleteId=[];      // use to handle how many modules that user complete
-        if(props.userPlatformInfo.completeId!==undefined){
-            if(props.userPlatformInfo.completeId.length!==0){
+        if(userPlatformInfo.completeId!==undefined){
+            if(userPlatformInfo.completeId.length!==0){
                 // check user completion
-                for(let i=0;i<props.userPlatformInfo.completeId.length;i++){
-                    if(!userCompleteId.includes(props.userPlatformInfo.completeId[i].moduleId)){
-                        userCompleteId.push(props.userPlatformInfo.completeId[i].moduleId);
+                for(let i=0;i<userPlatformInfo.completeId.length;i++){
+                    if(!userCompleteId.includes(userPlatformInfo.completeId[i].moduleId)){
+                        userCompleteId.push(userPlatformInfo.completeId[i].moduleId);
                     }
                 }
             }
         }
         
-        for(let i = 0; i < props.modules.length; i++){
+        for(let i = 0; i < modules.length; i++){
             // if without lockedby value, set it unlock
-            if(props.modules[i].lockedby.length===0){
-                if(!unlockList.includes(props.modules[i]._id)){
-                    unlockList.push(props.modules[i]._id);
+            if(modules[i].lockedby.length===0){
+                if(!unlockList.includes(modules[i]._id)){
+                    unlockList.push(modules[i]._id);
                 }
             }else{
                 // check user whether meet unlock condition
                 let checkUnlock;
-                for(let j=0;j<props.modules[i].lockedby.length;j++){
-                    checkUnlock=userCompleteId.includes(props.modules[i].lockedby[j]);
+                for(let j=0;j<modules[i].lockedby.length;j++){
+                    checkUnlock=userCompleteId.includes(modules[i].lockedby[j]);
                     if(!checkUnlock){
                         break;
                     }
                 }
                 if(checkUnlock){
-                    if(!unlockList.includes(props.modules[i]._id)){
-                        unlockList.push(props.modules[i]._id);
+                    if(!unlockList.includes(modules[i]._id)){
+                        unlockList.push(modules[i]._id);
                     }
                 }
             }
@@ -91,11 +98,11 @@ const ModuleList=(props)=>{
             }
         }
         ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        for (let i = 0; i < props.modules.length; i++)
+        for (let i = 0; i < modules.length; i++)
         {
-            drawline(props.modules[i]);
+            drawline(modules[i]);
         }
-        for (let i = 0; i < props.modules.length; i++)
+        for (let i = 0; i < modules.length; i++)
         {
             // for(let j=0;j<props.modules[i].lockedby.length;j++){
             //     let isInclude=unlockList.includes(props.modules[i].lockedby[j]);
@@ -104,15 +111,15 @@ const ModuleList=(props)=>{
             //         break;
             //     }
             // }
-            let isInclude=unlockList.includes(props.modules[i]._id);
+            let isInclude=unlockList.includes(modules[i]._id);
             if(!isInclude){
                 lockStatus=true;
             }
-            writeModule(props.modules[i], lockStatus, { fontSize: 10, color: 'black', textAlign: 'center' });
+            writeModule(modules[i], lockStatus, { fontSize: 10, color: 'black', textAlign: 'center' });
             lockStatus=false;
         }
         // console.log(unlockList);
-	}, [props.modules, scaleX, scaleY, unlockList, redraw, props.userPlatformInfo]
+	}, [modules, scaleX, scaleY, unlockList, redraw, userPlatformInfo]
     );
     /*
     
@@ -135,7 +142,7 @@ const ModuleList=(props)=>{
             return;
         const { moduleName, x, y, /*radius, isLocked*/} = module;
         let isLocked = lockStatus;
-        let radius = 50;
+        
 		const { fontSize = 15, fontFamily = 'Arial', color = 'black', textAlign = 'left', textBaseline = 'middle' } = style;
 
         // make outline
@@ -202,14 +209,28 @@ const ModuleList=(props)=>{
         for(let i=0;i<module.unlocks.length;i++){
             ctx.beginPath();
             ctx.moveTo(module.x , module.y);
-            for(let j=0;j<props.modules.length;j++){
-                if(module.unlocks[i]===props.modules[j]._id){
-                    ctx.lineTo(props.modules[j].x, props.modules[j].y);
+            for(let j=0;j<modules.length;j++){
+                if(module.unlocks[i]===modules[j]._id){
+                    ctx.lineTo(modules[j].x, modules[j].y);
                 }
             }
             ctx.stroke();
         }
     }
+    const getModuleId = (x, y) =>
+    {
+        for (let i = 0; i < modules.length; i++)
+        {
+            let distance = Math.pow(x - modules[i].x, 2) + Math.pow(y - modules[i].y, 2)
+            // console.log("Checked " + props.modules[i].moduleName + " at distance " + distance);
+            if (  distance < Math.pow(radius,2) )
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     const handleCanvasClick=(e)=>
     {
         let ctx = canvasRef.current.getContext('2d');
@@ -218,31 +239,92 @@ const ModuleList=(props)=>{
         var rect = ctx.canvas.getBoundingClientRect();
         const x = (e.clientX - rect.left)/scaleX;
         const y = (e.clientY - rect.top)/scaleY;
-        let radius = 50;
-        for (let i = 0; i < props.modules.length; i++)
-        {
-            let distance = Math.pow(x - props.modules[i].x, 2) + Math.pow(y - props.modules[i].y, 2)
-            // console.log("Checked " + props.modules[i].moduleName + " at distance " + distance);
-            if (  distance < Math.pow(radius,2) )
-            {
-                // if is unlocked
-                if(unlockList.includes(props.modules[i]._id)){
-                    props.setSelectedModule(props.modules[i]);
-                    props.setSelectedDisable(false);
-                    // alert("Clicked " + props.modules[i].moduleName + " at distance " + distance);
-                }else{
-                    props.setSelectedModule(props.modules[i]);
-                    props.setSelectedDisable(true);
-                }
-                return;
-            }
+        
+        if (isEdit)
+            return;
+
+        let id = getModuleId(x, y);
+        if (id === -1)
+            return;
+        
+        // if is unlocked
+        if(unlockList.includes(modules[id]._id)){
+            setSelectedModule(modules[id]);
+            setSelectedDisable(false);
+            // alert("Clicked " + props.modules[i].moduleName + " at distance " + distance);
+        }else{
+            setSelectedModule(modules[id]);
+            setSelectedDisable(true);
         }
+    }
+
+    const handleMouseMove=(e)=>
+    {
+        let ctx = canvasRef.current.getContext('2d');
+        if (!ctx)
+            return;
+        if (editSelected === -1)
+            return;
+        var rect = ctx.canvas.getBoundingClientRect();
+        const x = (e.clientX - rect.left)/scaleX;
+        const y = (e.clientY - rect.top)/scaleY;
+
+        let toX = x-editXOFF;
+        let toY = y-editYOFF;
+
+        if (toX < radius)
+            toX = radius;
+        if (toY < radius)
+            toY = radius;
+        if (toX > width-radius)
+            toX = width-radius;
+        if (toY > height-radius)
+            toY = height-radius;
+
+        moveModuleTo(editSelected, toX, toY);
+        setRedraw(r => !r);
+    }
+
+    const handleMouseDown = (e) =>
+    {
+        let ctx = canvasRef.current.getContext('2d');
+        if (!ctx)
+            return;
+        var rect = ctx.canvas.getBoundingClientRect();
+        const x = (e.clientX - rect.left)/scaleX;
+        const y = (e.clientY - rect.top)/scaleY;
+        
+        if (!isEdit)
+            return;
+        let id = getModuleId(x, y);
+        if (id == -1)
+            return;
+        setEditXOFF(x - modules[id].x);
+        setEditYOFF(y - modules[id].y);
+        setEditSelected(id);
+    }
+
+    const handleMouseUp = (e) =>
+    {
+        let ctx = canvasRef.current.getContext('2d');
+        if (!ctx)
+            return;
+        var rect = ctx.canvas.getBoundingClientRect();
+        const x = (e.clientX - rect.left)/scaleX;
+        const y = (e.clientY - rect.top)/scaleY;
+        
+        if (!isEdit)
+            return;
+
+        setEditSelected(-1);
     }
 
 	return(
         <div className="platformContainer">
             <div className="leftbar"/>
-            <canvas className='canvasStyle content' ref={canvasRef} onClick={handleCanvasClick}/>
+            <canvas className='canvasStyle content' ref={canvasRef} 
+            onClick={handleCanvasClick} onMouseMove={handleMouseMove}
+            onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}/>
             <div className="rightbar"/>
         </div>
     );
