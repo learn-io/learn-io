@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import './GridStyle.css';
-import './ComponentStyle.css';
+import '../GridStyle.css';
+import '../ComponentStyle.css';
 import {Row, Col} from 'react-bootstrap';
 import RGL, { WidthProvider } from "react-grid-layout";
-import deleteIcon from './images/delete.png';
-import saveIcon from './images/save.png';
-import Widget from './components/widgets/Widget';
-import RighttopBar from './components/RighttopBar';
-import RightbottomBar from './components/RightbottomBar';
-import axios_instance from './axios_instance.js';
+import deleteIcon from '../images/delete.png';
+import saveIcon from '../images/save.png';
+import Widget from './widgets/Widget';
+import RighttopBar from './RighttopBar';
+import RightbottomBar from './RightbottomBar';
+import axios_instance from '../axios_instance.js';
 // import flashcard from './components/widgets/Flashcard';
 // import TextButton from './components/widgets/TextButton';
 
 const ReactGridLayout = WidthProvider(RGL);
 
-const CreateController = ({isSignedIn}) =>
+const CreateController = ({platformName, moduleName, pageName, currentPage,platformId, moduleId, pageId}) =>
 {
     const [layout, setLayout] = useState( []);
     const [curPage,setCurPage] = useState([]);
@@ -22,18 +22,16 @@ const CreateController = ({isSignedIn}) =>
     const [selectedWidget,setSelectedWidget]= useState("");
     // const hiddenFileInput = React.useRef(null);
     // const [widgets,setWidgets]= useState([]);
-    // useEffect(
-    //     ()=>{
-	// 		axios_instance({
-    //             method: 'get',
-    //             url: "widgets/"
-    //         }).then(function(response){
-    //             setWidgets(response.data);
-    //         }).catch(function(err){
-    //             console.log(err);
-    //         });
-    //     },[isSignedIn]
-    // );
+    useEffect(
+        ()=>{
+            // console.log(currentPage.widgets);
+			// setCurPage(currentPage.widgets);
+            for(let i=0;i<currentPage.widgets.length;i++){
+                curPage.push(currentPage.widgets[i]);
+            }
+            // console.log(currentPage);
+        },[currentPage]
+    );
     useEffect( () => {
         if (curPage === undefined)
             return;
@@ -227,23 +225,23 @@ const CreateController = ({isSignedIn}) =>
             curPage[i].h=layout[i].h;
             curPage[i].w=layout[i].w;
         }
-        console.log(curPage);
+        // console.log(curPage);
         // console.log(layout);
-        // axios_instance({
-        //     method: 'post',
-        //     url: "page/update",
-        //     data: {
-        //         platformId:"",
-        //         moduleId:"",
-        //         pageId: "",
-        //         pageName:"",
-        //         widgets:curPage
-        //     }
-        // })
-        // .then((res)=>{
-        // 	console.log(res);
-	    // })
-	    // .catch(err=>console.log(err));
+        axios_instance({
+            method: 'post',
+            url: "page/update",
+            data: {
+                platformId:platformId,
+                moduleId:moduleId,
+                pageId: pageId,
+                pageName:pageName,
+                widgets:curPage
+            }
+        })
+        .then((res)=>{
+        	console.log(res);
+	    })
+	    .catch(err=>console.log(err));
     }
     const onLayoutChanged=(newLayout)=>{
         setLayout(newLayout);
@@ -276,36 +274,40 @@ const CreateController = ({isSignedIn}) =>
                 </div>
     // console.log(curPage);
     return(
-        <div className="create">
-            <Row>
-                <Col>{leftbar}</Col>
-                <Col xs={9}>
-                    <div id="reactgrid" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}}>
-                        <ReactGridLayout 
-                        className="grid" 
-                        compactType={null}
-                        layout={layout}
-                        onLayoutChange={(newLayout)=>{onLayoutChanged(newLayout)}}
-                        cols={8}
-                        >
-                        {/* <div key={''+'key'} className="widget">
-                            {textBox}
-                        </div> */}
-                        { 
-                            curPage.map((val,key) => {
-                                return (
-                                    <div key={''+key} className="widget" onClick={()=>{selectWidget(key)}}>
-                                        <Widget internals={val.internals}/>
-                                    </div>
-                                );
-                            })
-                        }
-                        </ReactGridLayout>
-                    </div>
-                </Col>
-                <Col >{rightbar}</Col>
-            </Row>
-        </div>
+        <>
+            <h2 style={{color:'white'}}>{platformName}</h2>
+            <h3 style={{color:'white'}}>{moduleName} : {pageName}</h3>
+            <div className="create">
+                <Row>
+                    <Col>{leftbar}</Col>
+                    <Col xs={9}>
+                        <div id="reactgrid" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}}>
+                            <ReactGridLayout 
+                            className="grid" 
+                            compactType={null}
+                            layout={layout}
+                            onLayoutChange={(newLayout)=>{onLayoutChanged(newLayout)}}
+                            cols={8}
+                            >
+                            {/* <div key={''+'key'} className="widget">
+                                {textBox}
+                            </div> */}
+                            { 
+                                curPage.map((val,key) => {
+                                    return (
+                                        <div key={''+key} className="widget" onClick={()=>{selectWidget(key)}}>
+                                            <Widget internals={val.internals}/>
+                                        </div>
+                                    );
+                                })
+                            }
+                            </ReactGridLayout>
+                        </div>
+                    </Col>
+                    <Col >{rightbar}</Col>
+                </Row>
+            </div>
+        </>
         );
 }
 

@@ -136,7 +136,7 @@ const PlatformController=({username, isSignedIn})=>{
     else if (pageId === "")
     {
         return (
-            <ModuleDecision username={username} isSignedIn={isSignedIn} isEdit={true} 
+            <ModuleDecision username={username} isSignedIn={isSignedIn} isEdit={false} 
                 userPlatformInfo={userPlatformInfo} setModuleId={setModuleId}
                 platformName={platformName} moduleName = {moduleName}
                 platformId={platformId} moduleId = {moduleId}

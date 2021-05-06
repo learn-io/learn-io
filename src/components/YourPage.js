@@ -78,7 +78,7 @@ const YourPagesController = (props) =>{
 		    	<div style={{display:'flex',justifyContent: 'space-between',padding:'2rem'}}>
 			    	<h1>Your Pages</h1>
 			    	{/* <button className='deleteButton' onClick={()=>{console.log(1)}}><img src={plusIcon} height='50px' width='50px' alt="plus"/></button> */}
-					<Link className='deleteButton' to={'/create'}> <img src={plusIcon} height='50px' width='50px' alt="plus"/></Link>
+					<Link className='deleteButton' to={''}> <img src={plusIcon} height='50px' width='50px' alt="plus"/></Link>
 		    	</div>
 		        <SearchBox onSearchPlatform={onSearchPlatform} />
 		        <Dropdown>
