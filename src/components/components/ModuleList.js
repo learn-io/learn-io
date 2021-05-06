@@ -17,11 +17,11 @@ const ModuleList=(props)=>{
     
     const [unlockList]=useState([]);
 
-    const width = 800;
-    const height = 1000;
+    const width = 1920;
+    const height = 1080;
 
-    const widthPercent = .9;
-    const heightPercent = .9;
+    const widthPercent = 1;
+    const heightPercent = 1;
 
     useEffect( ()=> {
         function resize()
@@ -225,7 +225,7 @@ const ModuleList=(props)=>{
             // console.log("Checked " + props.modules[i].moduleName + " at distance " + distance);
             if (  distance < Math.pow(radius,2) )
             {
-                // if is locked
+                // if is unlocked
                 if(unlockList.includes(props.modules[i]._id)){
                     props.setSelectedModule(props.modules[i]);
                     props.setSelectedDisable(false);
@@ -240,8 +240,12 @@ const ModuleList=(props)=>{
     }
 
 	return(
-		<canvas className='canvasStyle' ref={canvasRef} onClick={handleCanvasClick}/>
-	);
+        <div className="platformContainer">
+            <div className="leftbar"/>
+            <canvas className='canvasStyle content' ref={canvasRef} onClick={handleCanvasClick}/>
+            <div className="rightbar"/>
+        </div>
+    );
 
 }
 

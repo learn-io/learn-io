@@ -123,11 +123,10 @@ const PlatformController=({username, isSignedIn})=>{
             alert("Invalid Action Type");
         }
     };
-
     if (moduleId === "")
     {
         return (
-            <ModuleView username={username} isSignedIn={isSignedIn} isEdit={false} 
+            <ModuleView username={username} isSignedIn={isSignedIn} isEdit={true} 
             platformId={platformId} platform={platform} setPlatform={setPlatform}
             userPlatformInfo={userPlatformInfo}
             platformName={platformName} setPlatformName = {setPlatformName}
@@ -154,6 +153,7 @@ const PlatformController=({username, isSignedIn})=>{
             platformId={platformId} moduleId={moduleId} pageId={pageId} />
         );
     }
+
 };
 
 
