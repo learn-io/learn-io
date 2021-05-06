@@ -361,6 +361,16 @@ input.largeCheckbox{
 	display:inline-block
 }
 
+/* page card style */
+.page{
+	background-color:#9EEBCF;
+	/* border-radius: .5rem; */
+	height:100%;
+	width: 100%;
+	box-shadow:4px 4px 8px 0 rgba(0,0,0,.2);
+	border-width:.25rem;
+}
+
 /* For flashcard */
 .flashcard{
 	background-color:#9EEBCF;
@@ -533,7 +543,8 @@ input.largeCheckbox{
 }
 
 .content{
-	max-width: 70%;
+	width: 70%;
+	float:left;
 }
 
 .leftbar{

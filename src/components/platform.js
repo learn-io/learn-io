@@ -126,7 +126,7 @@ const PlatformController=({username, isSignedIn})=>{
     if (moduleId === "")
     {
         return (
-            <ModuleView username={username} isSignedIn={isSignedIn} isEdit={true} 
+            <ModuleView username={username} isSignedIn={isSignedIn} isEdit={false} 
             platformId={platformId} platform={platform} setPlatform={setPlatform}
             userPlatformInfo={userPlatformInfo}
             platformName={platformName} setPlatformName = {setPlatformName}
@@ -136,7 +136,7 @@ const PlatformController=({username, isSignedIn})=>{
     else if (pageId === "")
     {
         return (
-            <ModuleDecision username={username} isSignedIn={isSignedIn} isEdit={false} 
+            <ModuleDecision username={username} isSignedIn={isSignedIn} isEdit={true} 
                 userPlatformInfo={userPlatformInfo} setModuleId={setModuleId}
                 platformName={platformName} moduleName = {moduleName}
                 platformId={platformId} moduleId = {moduleId}
