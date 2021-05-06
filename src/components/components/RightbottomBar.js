@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {Table} from 'react-bootstrap';
 import axios_instance from '../axios_instance.js';
 import EditFlashcard from './editwidgets/EditFlashcard.js';
