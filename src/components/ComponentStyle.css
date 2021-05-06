@@ -565,4 +565,19 @@ input.largeCheckbox{
 .platformContainer{
 	width: 100%;
 	height: 100%;
+	min-height: 1000px;
+}
+
+.LeftAccordian{
+	overflow-y:scroll;
+	border: 1px solid black;
+	height: 75%;
+}
+
+.LeftDelete{
+	height: 20%;
+}
+
+.moduleTreeButton{
+	width:100%;
 }

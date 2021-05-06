@@ -85,7 +85,7 @@ const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlat
         return(
             <>
 				<h2 style={{color:'white'}}>{platformName}</h2>
-				<ModuleList toggleConnection = {toggleConnection} isEdit={isEdit} moveModuleTo={moveModuleTo} modules={platform.modules} setSelectedModule={setSelectedModule} userPlatformInfo={userPlatformInfo} setSelectedDisable={setSelectedDisable}/>
+				<ModuleList platform={platform} toggleConnection = {toggleConnection} isEdit={isEdit} moveModuleTo={moveModuleTo} modules={platform.modules} setSelectedModule={setSelectedModule} userPlatformInfo={userPlatformInfo} setSelectedDisable={setSelectedDisable}/>
 				<ModuleConfirmBox username={username} platform={platform} selectedModule={selectedModule} setSelectedModule={setSelectedModule} 
 				save={save} setSave={setSave} setModuleName={setModuleName} setModuleId={setModuleId} selectedDisable={selectedDisable}/>
             </>

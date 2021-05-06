@@ -11,10 +11,9 @@ const ReactGridLayout = WidthProvider(RGL);
 
 const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformName, 
 	setModuleId, moduleName, platformId, moduleId,
-	setPageName, setPageId, setPageEntry})=>{
+	setPageName, setPageId, setPageEntry, pages, setPages})=>{
 
 	const [layout, setLayout] = useState([]);
-	const [pages, setPages] = useState([]);
 
 	useEffect(
         ()=>{
