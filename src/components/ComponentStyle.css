@@ -577,3 +577,7 @@ input.largeCheckbox{
 .LeftDelete{
 	height: 20%;
 }
+
+.moduleTreeButton{
+	width:100%;
+}

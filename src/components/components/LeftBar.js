@@ -19,7 +19,7 @@ const LeftBarAccordion = ({platform, modules, pages, setPageId, setModuleId}) =>
     const getPageAccordion = (page, index) =>
     {
         console.log(page);
-        return <Button onClick={()=>setPageId(page._id)}>{page.pageName}</Button>
+        return <Button className="moduleTreeButton" variant="info" onClick={()=>setPageId(page._id)}>{page.pageName}</Button>
     }
 
     const getModuleAccordion = (module, index) => 
@@ -49,18 +49,27 @@ const LeftBarAccordion = ({platform, modules, pages, setPageId, setModuleId}) =>
         }
         else
         {
-            return <Button onClick={()=>{setModuleId(module._id); setPageId("");}}>{module.moduleName}</Button>
+            return <Button className="moduleTreeButton" variant="info" onClick={()=>{setModuleId(module._id); setPageId("");}}>{module.moduleName}</Button>
         }
     }
 
     const getPlatformAccordion = (platform) =>
     {
-        if (!platform || !platform.modules)
-        return <div>No Platfomrm</div>
-        return  platform.modules.map( (module, i) =>
+        let platformButton = <Button className="moduleTreeButton" variant="primary" onClick={()=>{setModuleId(""); setPageId("");}}>
+            {platform.platformName}
+            </Button>
+        if (!platform.modules)
+            return {platformButton}
+        return  <>
+            {platformButton}
+            <br/>
+            {
+            platform.modules.map( (module, i) =>
             {
                 return getModuleAccordion(module, i);
             })
+            }
+            </>
     }
     console.log("info:");
     console.log(pages);
