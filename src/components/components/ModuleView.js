@@ -32,6 +32,50 @@ const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlat
 		return;
 	}
 
+	const hasConnection = (sourceIndex, endIndex) =>
+	{
+		let index1 = platform.modules[sourceIndex].unlocks.indexOf(platform.modules[endIndex]._id)
+		let index2 = platform.modules[endIndex].lockedby.indexOf(platform.modules[sourceIndex]._id)
+		return index1 !== -1 || index2 !== -1;
+	}
+
+	const toggleConnection = (sourceIndex, endIndex) =>
+	{
+		//console.log("complete " + sourceIndex + " before " + endIndex);
+		if (sourceIndex === -1 || endIndex === -1)
+			return;
+
+		let sourceMod = platform.modules[sourceIndex];
+		let endMod = platform.modules[endIndex];
+		if (hasConnection(sourceIndex, endIndex))
+		{
+
+		}
+		else if (hasConnection(endIndex, sourceIndex))
+		{
+			endMod = platform.modules[sourceIndex];
+			sourceMod = platform.modules[endIndex];
+		}
+		else
+		{
+			sourceMod.unlocks.push(endMod._id);
+			endMod.lockedby.push(sourceMod._id);
+			return;
+		}
+		
+		let index = sourceMod.unlocks.indexOf(endMod._id);
+		if (index !== -1)
+		{
+			sourceMod.unlocks.splice(index, 1);
+		}
+		index = endMod.lockedby.indexOf(sourceMod._id);
+		if (index !== -1)
+		{
+			endMod.lockedby.splice(index, 1);
+		}
+		return;
+	}
+
 	// console.log("platform ModuleView");
 	// console.log(userPlatformInfo);
 	// console.log(platform);
@@ -41,7 +85,7 @@ const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlat
         return(
             <>
 				<h2 style={{color:'white'}}>{platformName}</h2>
-				<ModuleList isEdit={isEdit} moveModuleTo={moveModuleTo} modules={platform.modules} setSelectedModule={setSelectedModule} userPlatformInfo={userPlatformInfo} setSelectedDisable={setSelectedDisable}/>
+				<ModuleList toggleConnection = {toggleConnection} isEdit={isEdit} moveModuleTo={moveModuleTo} modules={platform.modules} setSelectedModule={setSelectedModule} userPlatformInfo={userPlatformInfo} setSelectedDisable={setSelectedDisable}/>
 				<ModuleConfirmBox username={username} platform={platform} selectedModule={selectedModule} setSelectedModule={setSelectedModule} 
 				save={save} setSave={setSave} setModuleName={setModuleName} setModuleId={setModuleId} selectedDisable={selectedDisable}/>
             </>

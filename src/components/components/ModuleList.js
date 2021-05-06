@@ -3,7 +3,7 @@ import '../ComponentStyle.css';
 import lockIcon from '../images/lock.png';
 import unlockIcon from '../images/unlock.png';
 
-const ModuleList=({isEdit, moveModuleTo, userPlatformInfo, modules, setSelectedModule, setSelectedDisable})=>{
+const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, modules, setSelectedModule, setSelectedDisable})=>{
 
     const imgLock = useRef(new Image())
     const imgUnlock = useRef(new Image())
@@ -18,8 +18,13 @@ const ModuleList=({isEdit, moveModuleTo, userPlatformInfo, modules, setSelectedM
     const [unlockList]=useState([]);
 
     const [editSelected, setEditSelected] = useState(-1);
+
+    const [editMode, setEditMode] = useState(1); //-1 => enter, 0 => drag, 1=> connect
+
     const [editXOFF, setEditXOFF] = useState(0);
     const [editYOFF, setEditYOFF] = useState(0);
+
+    const [connectLine, setConnectLine] = useState({})
 
     const width = 1920;
     const height = 1080;
@@ -68,6 +73,8 @@ const ModuleList=({isEdit, moveModuleTo, userPlatformInfo, modules, setSelectedM
                 }
             }
         }
+
+        unlockList.splice(0, unlockList.length);
         
         for(let i = 0; i < modules.length; i++){
             // if without lockedby value, set it unlock
@@ -115,11 +122,18 @@ const ModuleList=({isEdit, moveModuleTo, userPlatformInfo, modules, setSelectedM
             if(!isInclude){
                 lockStatus=true;
             }
-            writeModule(modules[i], lockStatus, { fontSize: 10, color: 'black', textAlign: 'center' });
+            writeModule(modules[i], lockStatus, { fontSize: 20, color: 'black', textAlign: 'center' });
             lockStatus=false;
         }
+        if (editSelected !== -1 && editMode === 1 && connectLine)
+        {
+            ctx.beginPath();
+            ctx.moveTo(connectLine.sX, connectLine.sY);
+            ctx.lineTo(connectLine.eX, connectLine.eY);
+            ctx.stroke();
+        }
         // console.log(unlockList);
-	}, [modules, scaleX, scaleY, unlockList, redraw, userPlatformInfo]
+	}, [editMode, modules, scaleX, scaleY, unlockList, redraw, userPlatformInfo, connectLine, editSelected]
     );
     /*
     
@@ -143,7 +157,7 @@ const ModuleList=({isEdit, moveModuleTo, userPlatformInfo, modules, setSelectedM
         const { moduleName, x, y, /*radius, isLocked*/} = module;
         let isLocked = lockStatus;
         
-		const { fontSize = 15, fontFamily = 'Arial', color = 'black', textAlign = 'left', textBaseline = 'middle' } = style;
+		const { fontSize = 30, fontFamily = 'Arial', color = 'black', textAlign = 'left', textBaseline = 'middle'} = style;
 
         // make outline
         ctx.beginPath();
@@ -160,10 +174,15 @@ const ModuleList=({isEdit, moveModuleTo, userPlatformInfo, modules, setSelectedM
         let lines = [];
         let currentLine = words[0];
 
+        ctx.font = "bold " + fontSize + 'px ' + fontFamily;
+        ctx.textAlign = textAlign;
+        ctx.textBaseline = textBaseline;
+        ctx.fillStyle = color;
+
         for(let i=1;i<words.length; i++){
             let word = words[i];
             let width = ctx.measureText(currentLine + " " + word).width;
-            if (width < (radius*2)) {
+            if (width < (radius*2 - 10)) {
                 currentLine += " " + word;
             } else {
                 lines.push(currentLine);
@@ -174,22 +193,10 @@ const ModuleList=({isEdit, moveModuleTo, userPlatformInfo, modules, setSelectedM
 
         if(lines.length>=2){
             for(let j=0;j<lines.length;j++){
-                ctx.beginPath();
-                ctx.font = fontSize + 'px ' + fontFamily;
-                ctx.textAlign = textAlign;
-                ctx.textBaseline = textBaseline;
-                ctx.fillStyle = color;
-                ctx.fillText(lines[j], x, y+((j-1)*15));
-                ctx.stroke();
+                ctx.fillText(lines[j], x, y+((j-1)*fontSize));
             }
         } else {
-            ctx.beginPath();
-            ctx.font = fontSize + 'px ' + fontFamily;
-            ctx.textAlign = textAlign;
-            ctx.textBaseline = textBaseline;
-            ctx.fillStyle = color;
             ctx.fillText(moduleName, x, y);
-            ctx.stroke();
         }
 
         let image;
@@ -198,7 +205,7 @@ const ModuleList=({isEdit, moveModuleTo, userPlatformInfo, modules, setSelectedM
         }else{
             image=imgUnlock.current;
         }
-        ctx.drawImage(image, x-15, y+15,30,30);
+        ctx.drawImage(image, x-25, y + radius - 50,50,50);
 
 	}
 
@@ -240,7 +247,8 @@ const ModuleList=({isEdit, moveModuleTo, userPlatformInfo, modules, setSelectedM
         const x = (e.clientX - rect.left)/scaleX;
         const y = (e.clientY - rect.top)/scaleY;
         
-        if (isEdit)
+        
+        if (isEdit && !(editMode === -1)) //enter mode only when editing
             return;
 
         let id = getModuleId(x, y);
@@ -263,26 +271,36 @@ const ModuleList=({isEdit, moveModuleTo, userPlatformInfo, modules, setSelectedM
         let ctx = canvasRef.current.getContext('2d');
         if (!ctx)
             return;
-        if (editSelected === -1)
+        if (!isEdit || editSelected === -1 || !(editMode === 0 || editMode === 1)) //drag or connect
             return;
         var rect = ctx.canvas.getBoundingClientRect();
         const x = (e.clientX - rect.left)/scaleX;
         const y = (e.clientY - rect.top)/scaleY;
 
-        let toX = x-editXOFF;
-        let toY = y-editYOFF;
+        if (editMode === 0)
+        {
+            let toX = x-editXOFF;
+            let toY = y-editYOFF;
 
-        if (toX < radius)
-            toX = radius;
-        if (toY < radius)
-            toY = radius;
-        if (toX > width-radius)
-            toX = width-radius;
-        if (toY > height-radius)
-            toY = height-radius;
+            if (toX < radius)
+                toX = radius;
+            if (toY < radius)
+                toY = radius;
+            if (toX > width-radius)
+                toX = width-radius;
+            if (toY > height-radius)
+                toY = height-radius;
 
-        moveModuleTo(editSelected, toX, toY);
-        setRedraw(r => !r);
+            moveModuleTo(editSelected, toX, toY);
+            setRedraw(r => !r);
+        }
+        else if (editMode === 1)
+        {
+            setConnectLine({sX:editXOFF, sY:editYOFF, eX:x, eY:y})
+        }
+        else
+            return;
+        
     }
 
     const handleMouseDown = (e) =>
@@ -294,13 +312,24 @@ const ModuleList=({isEdit, moveModuleTo, userPlatformInfo, modules, setSelectedM
         const x = (e.clientX - rect.left)/scaleX;
         const y = (e.clientY - rect.top)/scaleY;
         
-        if (!isEdit)
+        if (!isEdit || editMode === -1)
             return;
         let id = getModuleId(x, y);
-        if (id == -1)
+        if (id === -1)
             return;
-        setEditXOFF(x - modules[id].x);
-        setEditYOFF(y - modules[id].y);
+
+        if (editMode === 0) //drag
+        {
+            setEditXOFF(x - modules[id].x);
+            setEditYOFF(y - modules[id].y);
+        }
+        else if (editMode === 1) //connect
+        {
+            setEditXOFF(x);
+            setEditYOFF(y);
+        }
+        else
+            return;
         setEditSelected(id);
     }
 
@@ -309,13 +338,33 @@ const ModuleList=({isEdit, moveModuleTo, userPlatformInfo, modules, setSelectedM
         let ctx = canvasRef.current.getContext('2d');
         if (!ctx)
             return;
-        var rect = ctx.canvas.getBoundingClientRect();
-        const x = (e.clientX - rect.left)/scaleX;
-        const y = (e.clientY - rect.top)/scaleY;
-        
-        if (!isEdit)
+
+        if (!isEdit || editMode === -1)
             return;
 
+        if (editMode === 1)
+        {
+            var rect = ctx.canvas.getBoundingClientRect();
+            const x = (e.clientX - rect.left)/scaleX;
+            const y = (e.clientY - rect.top)/scaleY;
+            let id = getModuleId(x, y);
+            if (id === -1)
+            {
+                setEditSelected(-1);
+                setConnectLine({})
+                return;
+            }
+            let sourceId = getModuleId(editXOFF, editYOFF);
+            if (sourceId === -1 || id === sourceId)
+            {
+                setEditSelected(-1);
+                setConnectLine({})
+                return;
+            }            
+            toggleConnection(sourceId, id);
+            setRedraw(r => !r);
+        }
+        setConnectLine({})
         setEditSelected(-1);
     }
 

@@ -42,7 +42,6 @@ const CreateController = ({isSignedIn}) =>
         }));
     }, [add,curPage] 
     );
-    // const [selected,setSelected]= useState('');  // use to handle which widget is selected
     // const [widgets, setWidgets] = useState('');
     
     // console.log(widgets);
@@ -55,9 +54,6 @@ const CreateController = ({isSignedIn}) =>
     //         }
     //     },[selected]
     // );
-    // let textBut=<button>
-    //                 Text Button
-    //             </button>
     const selectWidget=(key)=>{
         // console.log(curPage[key]);
         setSelectedWidget(curPage[key]);
@@ -67,25 +63,29 @@ const CreateController = ({isSignedIn}) =>
         // console.log(text);
         event.dataTransfer.setData("Text", text);
     }
+    // const onWidgetDragStart=(event,text)=> {
+    //     // console.log(text);
+    //     console.log(1);
+    //     // event.dataTransfer.setData("Text", text);
+    // }
     const onDragOver=(event)=>{
         event.preventDefault();
     }
+    // const onChangePosition=(event)=>{
+    //     console.log("change");
+    // }
     const onDrop=(event)=>{
-        // add widget into curPage
         event.preventDefault();
         let data = event.dataTransfer.getData("Text");
+        let rect=document.getElementById("reactgrid").getBoundingClientRect();
         let game={
             name: "widget name",
-            x: (event.clientX/320),
-            y: (event.clientY/320),
+            x: ((event.clientX-rect.left)/(rect.width/8)),
+            y: ( (event.clientY-rect.top)/(rect.height/6)),
             height: 1,
             width: 1,
             internals: {}
         };
-        // remember to fix x and y
-        console.log(event.clientX);
-        console.log(event.clientY);
-        // console.log(widgets);
         switch(data)
         {
             case "Flashcard":
@@ -264,26 +264,28 @@ const CreateController = ({isSignedIn}) =>
         <div className="create">
             <Row>
                 <Col>{leftbar}</Col>
-                <Col xs={9} onDragOver={(e)=>{onDragOver(e)}}
-                onDrop={(e)=>{onDrop(e)}} ><ReactGridLayout 
-                className="grid" 
-                compactType={null}
-                layout={layout}
-                cols={8}
-                >
-                {/* <div key={''+'key'} className="widget">
-                    {textBox}
-                </div> */}
-                { 
-                    curPage.map((val,key) => {
-                        return (
-                            <div key={''+key} className="widget" onClick={()=>{selectWidget(key)}}>
-                                <Widget internals={val.internals}/>
-                            </div>
-                        );
-                    })
-                }
-                </ReactGridLayout>
+                <Col xs={9}>
+                    <div id="reactgrid" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}}>
+                        <ReactGridLayout 
+                        className="grid" 
+                        compactType={null}
+                        layout={layout}
+                        cols={8}
+                        >
+                        {/* <div key={''+'key'} className="widget">
+                            {textBox}
+                        </div> */}
+                        { 
+                            curPage.map((val,key) => {
+                                return (
+                                    <div key={''+key} className="widget" onClick={()=>{selectWidget(key)}}>
+                                        <Widget internals={val.internals}/>
+                                    </div>
+                                );
+                            })
+                        }
+                        </ReactGridLayout>
+                    </div>
                 </Col>
                 <Col >{rightbar}</Col>
             </Row>
