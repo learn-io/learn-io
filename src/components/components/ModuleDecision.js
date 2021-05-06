@@ -1,10 +1,20 @@
-import React, { useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
 import '../ComponentStyle.css';
 import axios_instance from '../axios_instance.js';
+import {Row, Col} from 'react-bootstrap';
+import deleteIcon from '../images/delete.png';
+import saveIcon from '../images/save.png';
+import RGL, { WidthProvider } from "react-grid-layout";
+import Page from './Page.js';
+
+const ReactGridLayout = WidthProvider(RGL);
 
 const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformName, 
 	setModuleId, moduleName, platformId, moduleId,
 	setPageName, setPageId, setPageEntry})=>{
+
+	const [layout, setLayout] = useState([]);
+	const [pages, setPages] = useState([]);
 
 	useEffect(
         ()=>{
@@ -19,47 +29,53 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 			{
 				let info = userPlatformInfo
 				let pages = values[0].data;
+				console.log("pages")
+				console.log(pages)
 
-				//now we select a page
-				let choice = -1;
-				let count = 1;
-				let module_record = info.completeId.find(e => e.moduleId === moduleId);
-				let entrypoints = module_record? module_record.entryPoints : undefined;
-				pages.forEach( (item, index)=> 
-				{
-					//console.log(item);
-					//only entry points can be server
-					if (item.entry === false)
-						return;
-					//and only if we haven't completed them
-					if (entrypoints && entrypoints.find(e => e.score > 0 && e.pageId === item._id))
-						return;
-
-					if (choice === -1 || item.rank === pages[choice].rank)
+				if(isEdit){
+					setPages(pages);
+				} else {
+					//now we select a page
+					let choice = -1;
+					let count = 1;
+					let module_record = info.completeId.find(e => e.moduleId === moduleId);
+					let entrypoints = module_record? module_record.entryPoints : undefined;
+					pages.forEach( (item, index)=> 
 					{
-						//let's use a streaming algorithm to decide which to pick
-						if (1.0/count >= Math.random())
+						//console.log(item);
+						//only entry points can be server
+						if (item.entry === false)
+							return;
+						//and only if we haven't completed them
+						if (entrypoints && entrypoints.find(e => e.score > 0 && e.pageId === item._id))
+							return;
+
+						if (choice === -1 || item.rank === pages[choice].rank)
 						{
+							//let's use a streaming algorithm to decide which to pick
+							if (1.0/count >= Math.random())
+							{
+								choice = index;
+							}
+							count++;
+						}
+						else if (item.rank < pages[choice].rank)
+						{
+							count = 1;
 							choice = index;
 						}
-						count++;
-					}
-					else if (item.rank < pages[choice].rank)
+					} );
+					if(choice === -1)
 					{
-						count = 1;
-						choice = index;
+						alert("Module Done!");
+						setModuleId("");
 					}
-				} );
-				if(choice === -1)
-				{
-					alert("Module Done!");
-					setModuleId("");
-				}
-				else
-				{;
-					setPageName(pages[choice].pageName)
-					setPageId(pages[choice]._id)
-					setPageEntry(pages[choice]._id)
+					else
+					{;
+						setPageName(pages[choice].pageName)
+						setPageId(pages[choice]._id)
+						setPageEntry(pages[choice]._id)
+					}
 				}
 			})
 			.catch(err=>{
@@ -68,10 +84,58 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 			});
         },[username, platformId, moduleId, isSignedIn, setModuleId, setPageEntry, setPageId, setPageName, userPlatformInfo]
     );
+	if(isEdit){
+		let leftbarTop=<div style={{overflowY:'scroll', border: '1px solid black', height: '80%'}}>
+                        <button className='deleteButton' onClick={()=>{}}><img src={saveIcon} height='40px' width='40px' alt="save"/></button>
+                    </div>
+		let leftbarBottom=<div style={{height: '20%'}}>
+								<button style={{paddingTop:'25%'}} onClick={()=>{}} className='deleteButton'><img src={deleteIcon} height='80px' width='80px' alt="delete"/></button>
+							</div>
+		// 
+		let leftbar=<div style={{height: '82%',backgroundColor:"#9EEBCF"}}>
+						{leftbarTop}
+						{leftbarBottom}
+					</div>
+		return (	
+			<div className="platformContainer">
+				<div className="leftbar">
+					{/* Left Bar */}
+					{leftbar}
+				</div>
 
-	return(
-		<div className="">Routing...</div>
-	);
+				<div className="content">
+					<ReactGridLayout
+					className="grid" 
+					compactType={null} 
+					layout={layout} 
+					onLayoutChange={()=>{}} //FOR SAVING LAYOUT CHANGES
+					cols={8}
+					>
+					{
+						// pages.map((val, key) => {
+						// 	// console.log(val);
+						// 	return (
+						// 		<div key={''+key} className="page" onClick={()=>{ /*selectedPage(key) */}}>
+						// 			<Page pageInfo={val}/>
+						// 		</div>
+						// 	)
+						// })
+						
+					}
+					</ReactGridLayout>
+				</div>
+
+				<div className="rightbar">
+				{/* Right Bar */}
+				</div>
+			</div>
+		);
+
+	} else {
+		return(
+			<div className="">Routing...</div>
+		);
+	}
 }
 
 export default ModuleDecision;
