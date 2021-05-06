@@ -74,10 +74,14 @@ const CreateController = ({isSignedIn}) =>
         // add widget into curPage
         event.preventDefault();
         let data = event.dataTransfer.getData("Text");
+        let rect=document.getElementById("reactgrid").getBoundingClientRect();
+        // console.log(rect);
+        // console.log((event.clientX-rect.left)/(rect.width/8));
+        // console.log( (event.clientY-rect.top)/(rect.height/7));
         let game={
             name: "widget name",
-            x: (event.clientX/320),
-            y: (event.clientY/320),
+            x: ((event.clientX-rect.left)/(rect.width/8)),
+            y: ( (event.clientY-rect.top)/(rect.height/6)),
             height: 1,
             width: 1,
             internals: {}
@@ -265,7 +269,8 @@ const CreateController = ({isSignedIn}) =>
             <Row>
                 <Col>{leftbar}</Col>
                 <Col xs={9} onDragOver={(e)=>{onDragOver(e)}}
-                onDrop={(e)=>{onDrop(e)}} ><ReactGridLayout 
+                onDrop={(e)=>{onDrop(e)}} >
+                    <div id="reactgrid"><ReactGridLayout 
                 className="grid" 
                 compactType={null}
                 layout={layout}
@@ -283,7 +288,7 @@ const CreateController = ({isSignedIn}) =>
                         );
                     })
                 }
-                </ReactGridLayout>
+                </ReactGridLayout></div>
                 </Col>
                 <Col >{rightbar}</Col>
             </Row>
