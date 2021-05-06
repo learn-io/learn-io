@@ -221,7 +221,12 @@ const CreateController = ({isSignedIn}) =>
         // setAdd(add+1);
     }
     const savePage=()=>{
-        console.log("save");
+        for(let i=0;i<curPage.length;i++){
+            curPage[i].x=layout[i].x;
+            curPage[i].y=layout[i].y;
+            curPage[i].h=layout[i].h;
+            curPage[i].w=layout[i].w;
+        }
         console.log(curPage);
         console.log(layout);
         // axios_instance({
@@ -239,6 +244,15 @@ const CreateController = ({isSignedIn}) =>
         // 	console.log(res);
 	    // })
 	    // .catch(err=>console.log(err));
+    }
+    const onLayoutChanged=(newLayout)=>{
+        setLayout(newLayout);
+        for(let i=0;i<layout.length;i++){
+            curPage[i].x=layout[i].x;
+            curPage[i].y=layout[i].y;
+            curPage[i].h=layout[i].h;
+            curPage[i].w=layout[i].w;
+        }
     }
     
     let rightbarTop=<RighttopBar onDragStart={onDragStart}/>
@@ -270,6 +284,7 @@ const CreateController = ({isSignedIn}) =>
                         className="grid" 
                         compactType={null}
                         layout={layout}
+                        onLayoutChange={(newLayout)=>{onLayoutChanged(newLayout)}}
                         cols={8}
                         >
                         {/* <div key={''+'key'} className="widget">
