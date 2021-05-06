@@ -81,7 +81,7 @@ const CreateController = ({isSignedIn}) =>
         let game={
             name: "widget name",
             x: ((event.clientX-rect.left)/(rect.width/8)),
-            y: ( (event.clientY-rect.top)/(rect.height/6)),
+            y: ( (event.clientY-rect.top)/160),
             height: 1,
             width: 1,
             internals: {}
@@ -221,9 +221,14 @@ const CreateController = ({isSignedIn}) =>
         // setAdd(add+1);
     }
     const savePage=()=>{
-        console.log("save");
+        for(let i=0;i<curPage.length;i++){
+            curPage[i].x=layout[i].x;
+            curPage[i].y=layout[i].y;
+            curPage[i].h=layout[i].h;
+            curPage[i].w=layout[i].w;
+        }
         console.log(curPage);
-        console.log(layout);
+        // console.log(layout);
         // axios_instance({
         //     method: 'post',
         //     url: "page/update",
@@ -239,6 +244,16 @@ const CreateController = ({isSignedIn}) =>
         // 	console.log(res);
 	    // })
 	    // .catch(err=>console.log(err));
+    }
+    const onLayoutChanged=(newLayout)=>{
+        setLayout(newLayout);
+        for(let i=0;i<newLayout.length;i++){
+            curPage[i].x=newLayout[i].x;
+            curPage[i].y=newLayout[i].y;
+            curPage[i].h=newLayout[i].h;
+            curPage[i].w=newLayout[i].w;
+        }
+        // setAdd(add+1);
     }
     
     let rightbarTop=<RighttopBar onDragStart={onDragStart}/>
@@ -270,6 +285,7 @@ const CreateController = ({isSignedIn}) =>
                         className="grid" 
                         compactType={null}
                         layout={layout}
+                        onLayoutChange={(newLayout)=>{onLayoutChanged(newLayout)}}
                         cols={8}
                         >
                         {/* <div key={''+'key'} className="widget">
