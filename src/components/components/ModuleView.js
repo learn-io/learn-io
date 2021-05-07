@@ -5,7 +5,7 @@ import axios_instance from '../axios_instance.js';
 import ModuleConfirmBox from './ModuleConfirmBox.js';
 
 const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlatformInfo, setUserPlatformInfo, platformId, platformName, setPlatformName, 
-	setModuleName, setModuleId})=>{
+	setModuleName, setModuleId, dragging, setDragging})=>{
 
 	const [selectedModule, setSelectedModule] = useState("");
 	const [save, setSave]= useState(0);
@@ -85,7 +85,7 @@ const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlat
         return(
             <>
 				<h2 style={{color:'white'}}>{platformName}</h2>
-				<ModuleList platform={platform} toggleConnection = {toggleConnection} isEdit={isEdit} moveModuleTo={moveModuleTo} modules={platform.modules} setSelectedModule={setSelectedModule} userPlatformInfo={userPlatformInfo} setSelectedDisable={setSelectedDisable}/>
+				<ModuleList dragging={dragging} setDragging={setDragging} platform={platform} toggleConnection = {toggleConnection} isEdit={isEdit} moveModuleTo={moveModuleTo} modules={platform.modules} setSelectedModule={setSelectedModule} userPlatformInfo={userPlatformInfo} setSelectedDisable={setSelectedDisable}/>
 				<ModuleConfirmBox username={username} platform={platform} selectedModule={selectedModule} setSelectedModule={setSelectedModule} 
 				save={save} setSave={setSave} setModuleName={setModuleName} setModuleId={setModuleId} selectedDisable={selectedDisable}/>
             </>
