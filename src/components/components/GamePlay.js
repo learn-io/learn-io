@@ -1,7 +1,6 @@
 import React, { useEffect,useState} from 'react';
 import '../ComponentStyle.css';
 import '../GridStyle.css';
-import axios_instance from '../axios_instance.js';
 import Widget from './widgets/Widget.js';
 import CreateController from './create.js'
 
