@@ -6,6 +6,7 @@ import ModuleView from './components/ModuleView.js'
 import ModuleDecision from './components/ModuleDecision.js'
 import GamePlay from './components/GamePlay.js'
 import LeftBar from './components/LeftBar'
+import RightBar from './components/RightBar'
 
 import getUserPlatformInfo from './components/PlatformHelper.js';
 
@@ -43,7 +44,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         },[username, isSignedIn, platformId]
     );
 
-    useEffect(
+    useEffect( 
         ()=>{
             if(moduleId === "")
             {
@@ -183,6 +184,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             userPlatformInfo={userPlatformInfo}
             platformName={platformName} setPlatformName = {setPlatformName}
             setModuleName={setModuleName} setModuleId={setModuleId}/>
+            <RightBar selectType="Module"/>
         </div>
         );
     }

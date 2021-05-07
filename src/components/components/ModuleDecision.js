@@ -114,7 +114,6 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 	if(isEdit){
 		return (	
 			<div className="platformContainer">
-				<div className="leftbar"/>
 
 				<div id="pageGrid" className="content" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}} onClick={(e)=>{deselectPage(e)}}>  {/*deselectPage() */}
 					<ReactGridLayout
