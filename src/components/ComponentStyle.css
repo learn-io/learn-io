@@ -44,6 +44,10 @@
 	display: flex;
 }
 
+.controllerStyle{
+	height: 95vh;
+}
+
 /*home button style*/
 .homeButton{
 	margin: 12px 10px 10px 0px;
