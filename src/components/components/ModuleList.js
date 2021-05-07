@@ -277,7 +277,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
         var rect = ctx.canvas.getBoundingClientRect();
         const x = (e.clientX - rect.left) * scaleX;
         const y = (e.clientY - rect.top) * scaleY;
-
+        console.log(editSelected);
         if (editMode === 0)
         {
             let toX = x-editXOFF;
@@ -304,8 +304,19 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
         
     }
 
+    const onDragOver=(event)=>{
+        event.preventDefault();
+        handleMouseMove(event);
+    }
+
+	const onDrop=(event)=>{
+		event.preventDefault();
+		handleMouseUp(event);
+	}
+
     const handleMouseDown = (e) =>
     {
+        console.log("down");
         let ctx = canvasRef.current.getContext('2d');
         if (!ctx)
             return;
@@ -315,7 +326,6 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
         if (!isEdit || editMode === -1)
             return;
         let id = getModuleId(x, y);
-        console.log(id);
         if (id === -1)
             return;
 
@@ -336,6 +346,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
 
     const handleMouseUp = (e) =>
     {
+        console.log("Up");
         let ctx = canvasRef.current.getContext('2d');
         if (!ctx)
             return;
@@ -396,7 +407,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
 				entry:false
 			}
 		}).then((res)=>{
-            setEditSelected(res.data);
+            setEditSelected(modules.find(x=>{return x._id === res.data.moduleId}));
 			setRedraw(s=>s+1);
 		});
         
@@ -406,7 +417,8 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
 	return(   
             <canvas className='canvasStyle content' ref={canvasRef} 
             onClick={handleCanvasClick} onMouseMove={handleMouseMove}
-            onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}/>
+            onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}
+            onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}}/>
     );
 
 }
