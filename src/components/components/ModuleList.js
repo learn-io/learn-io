@@ -1,11 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import '../ComponentStyle.css';
+import axios_instance from '../axios_instance.js';
 import lockIcon from '../images/lock.png';
 import unlockIcon from '../images/unlock.png'
 
 const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, 
     modules, setSelectedModule, setSelectedDisable,
-    dragging, setDragging})=>{
+    dragging, setDragging, platformId, setSave, editMode, setEditMode})=>{
 
     const imgLock = useRef(new Image())
     const imgUnlock = useRef(new Image())
@@ -20,8 +21,6 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
     const [unlockList]=useState([]);
 
     const [editSelected, setEditSelected] = useState(-1);
-
-    const [editMode, setEditMode] = useState(-1); //-1 => enter, 0 => drag, 1=> connect
 
     const [editXOFF, setEditXOFF] = useState(0);
     const [editYOFF, setEditYOFF] = useState(0);
@@ -43,7 +42,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
             setScaleY((height / (window.innerWidth*.7 * (height/width))) );
             setScaleX((width / (window.innerWidth*.7)) ); 
         };
-        //window.addEventListener('resize', resize);
+        window.addEventListener('resize', resize);
         resize();
 
         imgLock.current.onload = ()=>{setRedraw(r => !r)};
@@ -52,7 +51,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
         imgLock.current.src = lockIcon;
         imgUnlock.current.src = unlockIcon;
         
-       //return () => { window.removeEventListener('resize', resize);}
+       return () => { window.removeEventListener('resize', resize);}
     },[]);
 
 	useEffect(() => {
@@ -230,9 +229,10 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
         for (let i = 0; i < modules.length; i++)
         {
             let distance = Math.pow(x - modules[i].x, 2) + Math.pow(y - modules[i].y, 2)
-            // console.log("Checked " + props.modules[i].moduleName + " at distance " + distance);
+             //console.log("Checked " + modules[i].moduleName + " at distance " + distance + " out of " + Math.pow(radius, 2));
             if (  distance < Math.pow(radius,2) )
             {
+                //console.log("Found " + i);
                 return i;
             }
         }
@@ -247,14 +247,14 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
         var rect = ctx.canvas.getBoundingClientRect();
         const x = (e.clientX - rect.left) * scaleX;
         const y = (e.clientY - rect.top) * scaleY;
-        
-        if (isEdit && !(editMode === -1)) //enter mode only when editing
-            return;
 
+        if (isEdit && editMode !== -1) //enter mode only when editing
+            return;
         let id = getModuleId(x, y);
+        //console.log(id);
         if (id === -1)
             return;
-        
+            //console.log(isEdit);
         // if is unlocked
         if(unlockList.includes(modules[id]._id)){
             setSelectedModule(modules[id]);
@@ -311,10 +311,10 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
         var rect = ctx.canvas.getBoundingClientRect();
         const x = (e.clientX - rect.left) * scaleX;
         const y = (e.clientY - rect.top) * scaleY;
-        
         if (!isEdit || editMode === -1)
             return;
         let id = getModuleId(x, y);
+        console.log(id);
         if (id === -1)
             return;
 
@@ -366,16 +366,39 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
         }
         setConnectLine({})
         setEditSelected(-1);
+        setSave(s=>s+1);
     }
 
     useEffect( ()=> {
+        if(dragging == false || isEdit === false)
+            return;
         setDragging(false);
         setEditMode(0);
         setEditXOFF(0);
         setEditYOFF(0);
-
-        //TODO: live save and get ID handle
-        //setEditSelected(id);
+        axios_instance({
+			method:'post',
+			url: "platform/newModule",
+			data:{
+				_id:platformId,
+				moduleName:"New Module",
+                moduleDescription:"A Freshly Created Module!",
+                lockedby: [],
+                unlocks: [],
+                x: 0,
+                y: 0,
+                height: 75,
+                width: 75,
+                completionScore: 10,
+				image:"",
+				rank:0,
+				entry:false
+			}
+		}).then((res)=>{
+            setEditSelected(res.data);
+			setSave(x=>x+1);
+		});
+        
     }, [dragging]
     );
 
