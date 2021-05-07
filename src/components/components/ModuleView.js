@@ -8,11 +8,10 @@ const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlat
 	setModuleName, setModuleId, dragging, setDragging, editMode, setEditMode})=>{
 
 	const [selectedModule, setSelectedModule] = useState("");
-	const [save, setSave]= useState(0);
+	const [redraw, setRedraw] = useState(false);
 	const [selectedDisable, setSelectedDisable] = useState("");
 	useEffect(
         ()=>{
-			//todo: savealls
         	axios_instance({
 		        method: 'get',
 		        url: "platform/"+platformId
@@ -23,7 +22,7 @@ const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlat
 		    }).catch(function(err){
 		        console.log(err);
 		    });
-        },[platformId, username, setPlatform, setPlatformName, save]
+        },[platformId, username, setPlatform, setPlatformName]
     );
 
 	const moveModuleTo = (moduleId, x, y) => 
@@ -88,13 +87,13 @@ const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlat
         return(
             <>
 				<h2 style={{color:'white'}}>{platformName}</h2>
-				<ModuleList dragging={dragging} setDragging={setDragging} platform={platform} 
+				<ModuleList setRedraw={setRedraw} redraw={redraw} dragging={dragging} setDragging={setDragging} platform={platform} 
 				toggleConnection = {toggleConnection} isEdit={isEdit} moveModuleTo={moveModuleTo} 
 				modules={platform.modules} setSelectedModule={setSelectedModule} userPlatformInfo={userPlatformInfo} 
-				setSelectedDisable={setSelectedDisable} platformId={platformId} setSave={setSave}
+				setSelectedDisable={setSelectedDisable} platformId={platformId}
 				editMode={editMode} setEditMode={setEditMode}/>
 				<ModuleConfirmBox username={username} platform={platform} selectedModule={selectedModule} setSelectedModule={setSelectedModule} 
-				save={save} setSave={setSave} setModuleName={setModuleName} setModuleId={setModuleId} selectedDisable={selectedDisable}/>
+				save={redraw} setSave={setRedraw} setModuleName={setModuleName} setModuleId={setModuleId} selectedDisable={selectedDisable}/>
             </>
 	    );
     }

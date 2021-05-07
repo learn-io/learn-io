@@ -188,17 +188,18 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     const saveAll=()=>{
         // {platform} {pages}
         let promises=[];
-        console.log("allPages")
-        console.log(allPages)
+        //console.log("allPages")
+        //console.log(allPages)
 
-        console.log("platform")
-        console.log(platform.modules)
+        //console.log("platform")
+        //console.log(platform)
 
         // return;
         
         for(var i=0;i<platform.modules.length;i++){
             let data = {
-                _id:platform.modules[i]._id,
+                _id:platformId,
+                moduleId:platform.modules[i]._id,
                 newModuleName:platform.modules[i].moduleName, 
                 moduleDescription:platform.modules[i].moduleDescription,
                 completionScore:platform.modules[i].completionScore,
@@ -249,7 +250,6 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             }
         }
         Promise.all(promises);
-        alert("Finished Saving");
     }
 
     if (moduleId === "")

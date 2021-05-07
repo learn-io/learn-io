@@ -6,7 +6,8 @@ import unlockIcon from '../images/unlock.png'
 
 const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, 
     modules, setSelectedModule, setSelectedDisable,
-    dragging, setDragging, platformId, setSave, editMode, setEditMode})=>{
+    dragging, setDragging, platformId, editMode, 
+    setEditMode, redraw, setRedraw})=>{
 
     const imgLock = useRef(new Image())
     const imgUnlock = useRef(new Image())
@@ -16,7 +17,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
     const [scaleX, setScaleX] = useState(1);
     const [scaleY, setScaleY] = useState(1);
 
-    const [redraw, setRedraw] = useState(false);
+    
     
     const [unlockList]=useState([]);
 
@@ -366,7 +367,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
         }
         setConnectLine({})
         setEditSelected(-1);
-        setSave(s=>s+1);
+        setRedraw(s=>s+1);
     }
 
     useEffect( ()=> {
@@ -396,7 +397,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
 			}
 		}).then((res)=>{
             setEditSelected(res.data);
-			setSave(x=>x+1);
+			setRedraw(s=>s+1);
 		});
         
     }, [dragging]
