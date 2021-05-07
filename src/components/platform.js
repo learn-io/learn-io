@@ -183,11 +183,78 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         event.dataTransfer.setData("Text", text);
     }
 
+    const saveAll=()=>{
+        // {platform} {pages}
+        let promises=[];
+        console.log("allPages")
+        console.log(allPages)
+
+        console.log("platform")
+        console.log(platform.modules)
+
+        // return;
+        
+        for(var i=0;i<platform.modules.length;i++){
+            let data = {
+                _id:platform.modules[i]._id,
+                newModuleName:platform.modules[i].moduleName, 
+                moduleDescription:platform.modules[i].moduleDescription,
+                completionScore:platform.modules[i].completionScore,
+                image:platform.modules[i].image,
+                lockedby:platform.modules[i].lockedby,
+                unlocks:platform.modules[i].unlocks,
+                x:platform.modules[i].x,
+                y:platform.modules[i].y,
+                height:platform.modules[i].height,
+                width:platform.modules[i].width
+            }
+
+            promises.push(axios_instance({
+                method:'post',
+                url:'/platform/update',
+                data:data
+            }));
+        }
+
+        // for (const moduleId in allPages){
+        //     for(var i=0;i<allPages[moduleId].length;i++){
+        //         console.log(allPages[moduleId][i])
+        //         // promises.push(axios_instance({
+        //         //     method:'post',
+        //         //     url:'/page/update',
+        //         //     data:allPages[moduleId][i]
+        //         // }));
+        //     }
+        // }
+
+        for (const moduleId in allPages){
+            for(var i=0;i<allPages[moduleId].length; i++){
+                let data = {
+                    platformId:allPages[moduleId][i].platformId,
+                    moduleId:allPages[moduleId][i].moduleId,
+                    pageId:allPages[moduleId][i]._id,
+                    pageName:allPages[moduleId][i].pageName,
+                    widgets:allPages[moduleId][i].widgets,
+                    rank:allPages[moduleId][i].rank,
+                    entry:allPages[moduleId][i].entry
+                }
+
+                promises.push(axios_instance({
+                    method:'post',
+                    url:'/page/update',
+                    data:data
+                }));
+            }
+        }
+        Promise.all(promises);
+        alert("Finished Saving");
+    }
+
     if (moduleId === "")
     {
         return (
         <div className="platformContainer">
-            <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>  
+            <LeftBar saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>  
             <ModuleView username={username} isSignedIn={isSignedIn} isEdit={false} 
             platformId={platformId} platform={platform} setPlatform={setPlatform}
             userPlatformInfo={userPlatformInfo}
@@ -204,14 +271,14 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         console.log(curPage);
         return (
             <div className="platformContainer">
-                <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
+                <LeftBar saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
                 <ModuleDecision username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
                     userPlatformInfo={userPlatformInfo} setModuleId={setModuleId}
                     platformName={platformName} moduleName = {moduleName}
                     platformId={platformId} moduleId = {moduleId}
                     setPageName={setPageName} setPageId={setPageId}
                     setPageEntry={setPageEntry}
-                    pages={pages}
+                    pages={pages} update={add}
                     setPageIndex={setPageIndex}/>
                 <RightBar selectType={"Page"} selected={pages[pageIndex]} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
             </div>
@@ -219,18 +286,18 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     }
     else
     {   
-        console.log("curPage")
-        console.log(curPage)
+        // console.log("curPage")
+        // console.log(curPage)
 
-        console.log("pages[pageIndex]")
-        console.log(pages[pageIndex])
+        // console.log("pages[pageIndex]")
+        // console.log(pages[pageIndex])
 
         // let thepage = allPages[moduleId].find(x => x._id === pageId);
         //                 setCurPage(thepage);
 
         return (
             <div className="platformContainer">
-                <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
+                <LeftBar saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
                 
                 <GamePlay username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
                 setAction={setAction} setPageName={setPageName}

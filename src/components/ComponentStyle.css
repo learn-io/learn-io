@@ -586,3 +586,8 @@ input.largeCheckbox{
 .moduleTreeButton{
 	width:100%;
 }
+
+.pageLayoutHelper{
+	padding-top:2vh;
+	justify-content:space-between;
+}

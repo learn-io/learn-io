@@ -13,13 +13,25 @@ const ReactGridLayout = WidthProvider(RGL);
 const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformName, 
 	setModuleId, moduleName, platformId, moduleId,
 	setPageName, setPageId, setPageEntry, pages,
-	setPageIndex})=>{
+	setPageIndex, update})=>{
 
-	const [layout, setLayout] = useState([]);
+	// const [layout, setLayout] = useState([]);
 	// const [pages, setPages] = useState([]);
-	const [selectedPage, setSelectedPage] = useState({});
+	// const [selectedPage, setSelectedPage] = useState({});
 	const [add,setAdd]= useState(0);
-	const [selectType, setSelectType] = useState("");
+	const [layout,setLayout] = useState();
+	// const [selectType, setSelectType] = useState("");
+	useEffect(
+		()=>{
+			setLayout(pages.map((val, key) => {
+				return (
+					<div key={''+key} className="page" onClick={()=>{ selectPage(key) }} > 
+						<Page pageInfo={val} name={''+key}/>
+					</div>
+				)
+			}))	
+		},[update,pages]
+	)
 
 	useEffect(
         ()=>{
@@ -67,7 +79,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 					setPageId(pages[choice]._id)
 					setPageEntry(pages[choice]._id)
 				}
-        },[pages, username, platformId, moduleId, isSignedIn, setModuleId, setPageEntry, setPageId, setPageName, userPlatformInfo]
+        },[pages, username, platformId, moduleId, isSignedIn, setModuleId, setPageEntry, setPageId, setPageName, userPlatformInfo, update]
     );
 
 	const selectPage = (key) =>{
@@ -144,7 +156,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 		return (	
 			// <div className="platformContainer">
 				//@TODO CHANGE CSS TO 100% with new class
-				<div id="pageGrid" className="content" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}} onClick={(e)=>{deselectPage(e)}}>  {/*deselectPage() */}
+				<div id="pageGrid" className="content pageLayoutHelper" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}} onClick={(e)=>{deselectPage(e)}}>  {/*deselectPage() */}
 					{/* <ReactGridLayout
 					className="grid" 
 					compactType={null} 
