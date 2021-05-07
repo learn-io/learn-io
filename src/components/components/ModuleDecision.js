@@ -1,14 +1,10 @@
 import React, { useState, useEffect} from 'react';
 import '../ComponentStyle.css';
-import {Row, Col} from 'react-bootstrap';
-import deleteIcon from '../images/delete.png';
-import saveIcon from '../images/save.png';
-import RGL, { WidthProvider } from "react-grid-layout";
+// import RGL, { WidthProvider } from "react-grid-layout";
 import Page from './Page.js';
-import RightBar from './RightBar.js';
 import axios_instance from '../axios_instance';
 
-const ReactGridLayout = WidthProvider(RGL);
+// const ReactGridLayout = WidthProvider(RGL);
 
 const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformName, 
 	setModuleId, moduleName, platformId, moduleId,
@@ -23,6 +19,8 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 	// const [selectType, setSelectType] = useState("");
 	useEffect(
 		()=>{
+			if(!isEdit)
+				return;
 			if(pages===undefined)
 				return;
 			console.log(pages);
@@ -34,56 +32,56 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 					// </div>
 				)
 			}))	
-		},[update,pages]
+		},[update,pages,isEdit]
 	)
 
 	useEffect(
         ()=>{
-				if(isEdit)
+			if(isEdit)
+				return;
+			let info = userPlatformInfo
+			//now we select a page
+			let choice = -1;
+			let count = 1;
+			let module_record = info.completeId.find(e => e.moduleId === moduleId);
+			let entrypoints = module_record? module_record.entryPoints : undefined;
+			pages.forEach( (item, index)=> 
+			{
+				//console.log(item);
+				//only entry points can be server
+				if (item.entry === false)
 					return;
-				let info = userPlatformInfo
-				//now we select a page
-				let choice = -1;
-				let count = 1;
-				let module_record = info.completeId.find(e => e.moduleId === moduleId);
-				let entrypoints = module_record? module_record.entryPoints : undefined;
-				pages.forEach( (item, index)=> 
-				{
-					//console.log(item);
-					//only entry points can be server
-					if (item.entry === false)
-						return;
-					//and only if we haven't completed them
-					if (entrypoints && entrypoints.find(e => e.score > 0 && e.pageId === item._id))
-						return;
+				//and only if we haven't completed them
+				if (entrypoints && entrypoints.find(e => e.score > 0 && e.pageId === item._id))
+					return;
 
-					if (choice === -1 || item.rank === pages[choice].rank)
+				if (choice === -1 || item.rank === pages[choice].rank)
+				{
+					//let's use a streaming algorithm to decide which to pick
+					if (1.0/count >= Math.random())
 					{
-						//let's use a streaming algorithm to decide which to pick
-						if (1.0/count >= Math.random())
-						{
-							choice = index;
-						}
-						count++;
-					}
-					else if (item.rank < pages[choice].rank)
-					{
-						count = 1;
 						choice = index;
 					}
-				} );
-				if(choice === -1)
+					count++;
+				}
+				else if (item.rank < pages[choice].rank)
 				{
-					alert("Module Done!");
-					setModuleId("");
+					count = 1;
+					choice = index;
 				}
-				else
-				{;
-					setPageName(pages[choice].pageName)
-					setPageId(pages[choice]._id)
-					setPageEntry(pages[choice]._id)
-				}
-        },[pages, username, platformId, moduleId, isSignedIn, setModuleId, setPageEntry, setPageId, setPageName, userPlatformInfo, update]
+			} );
+			if(choice === -1)
+			{
+				alert("Module Done!");
+				setModuleId("");
+			}
+			else
+			{;
+				setPageName(pages[choice].pageName)
+				setPageId(pages[choice]._id)
+				setPageEntry(pages[choice]._id)
+			}
+        },[pages, username, platformId, moduleId, isSignedIn, setModuleId, setPageEntry, setPageId, setPageName, userPlatformInfo, isEdit]
     );
 
 	const selectPage = (key) =>{
@@ -118,7 +116,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 
 	const onDrop=(event)=>{
 		event.preventDefault();
-		let data = event.dataTransfer.getData("Text");
+		// let data = event.dataTransfer.getData("Text");
 		// let newPage = {
 		// 	pageName:"New Page",
 		// 	entry: false,

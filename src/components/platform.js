@@ -230,7 +230,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         // }
 
         for (const moduleId in allPages){
-            for(var i=0;i<allPages[moduleId].length; i++){
+            for(i=0;i<allPages[moduleId].length; i++){
                 let data = {
                     platformId:allPages[moduleId][i].platformId,
                     moduleId:allPages[moduleId][i].moduleId,
