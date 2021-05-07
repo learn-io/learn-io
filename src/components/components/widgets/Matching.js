@@ -140,23 +140,15 @@ const Matching=({internals,setAction})=>{
         var rect = ctx.canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        let radius = 30;
+        // let radius = 30;
         for (let i = 0; i < options.length; i++)
         {
-            let distance;
-            // check left
-            if(x<150){
-                distance = Math.pow(x - 60, 2) + Math.pow(y - (30*(i+1)), 2);
-            }else{
-                distance = Math.pow(x - 220, 2) + Math.pow(y - (30*(i+1)), 2);
-            }
-            if (  distance < Math.pow(radius,2) )
-            {
-                if(x<150){
-                    // check if already have this answer
+            if(x<100){
+                // left side
+                if(y<=(30*(i+1)+10)){
                     if(!leftIndex.includes(i)){
                         if(selectLeft>=0){
-                            alert("Checked Left again, reselect!!" + options[i].left + " at distance " + distance);
+                            alert("Checked Left again, reselect!!" + leftSide[i]);
                             setSelectLeft(-1);
                         }else{
                             if(selectRight>=0){
@@ -171,11 +163,15 @@ const Matching=({internals,setAction})=>{
                             }
                         }
                     }
-                }else{
-                    // check if already have this answer
+                    return;
+                }
+                
+            }else if(x>200){
+                //right side
+                if(y<=(30*(i+1)+10)){
                     if(!rightIndex.includes(i)){
                         if(selectRight>=0){
-                            alert("Checked Left again, reselect!! " + options[i].right + " at distance " + distance);
+                            alert("Checked Left again, reselect!! " + rightSide[i]);
                             setSelectRight(-1);
                         }else{
                             if(selectLeft>=0){
@@ -190,10 +186,62 @@ const Matching=({internals,setAction})=>{
                             }
                         }
                     }
+                    return;
                 }
                 
-                return;
             }
+            
+            // let distance;
+            // // check left
+            // if(x<150){
+            //     distance = Math.pow(x - 60, 2) + Math.pow(y - (30*(i+1)), 2);
+            // }else{
+            //     distance = Math.pow(x - 220, 2) + Math.pow(y - (30*(i+1)), 2);
+            // }
+            // if (  distance < Math.pow(radius,2) )
+            // {
+            //     if(x<150){
+            //         // check if already have this answer
+            //         if(!leftIndex.includes(i)){
+            //             if(selectLeft>=0){
+            //                 alert("Checked Left again, reselect!!" + options[i].left + " at distance " + distance);
+            //                 setSelectLeft(-1);
+            //             }else{
+            //                 if(selectRight>=0){
+            //                     // add answer
+            //                     leftIndex.push(i);
+            //                     rightIndex.push(selectRight);
+            //                     setUpdate(update+1);
+            //                     setSelectLeft(-1);
+            //                     setSelectRight(-1);
+            //                 }else{
+            //                     setSelectLeft(i);
+            //                 }
+            //             }
+            //         }
+            //     }else{
+            //         // check if already have this answer
+            //         if(!rightIndex.includes(i)){
+            //             if(selectRight>=0){
+            //                 alert("Checked Left again, reselect!! " + options[i].right + " at distance " + distance);
+            //                 setSelectRight(-1);
+            //             }else{
+            //                 if(selectLeft>=0){
+            //                     // add answer
+            //                     leftIndex.push(selectLeft);
+            //                     rightIndex.push(i);
+            //                     setUpdate(update+1);
+            //                     setSelectLeft(-1);
+            //                     setSelectRight(-1);
+            //                 }else{
+            //                     setSelectRight(i);
+            //                 }
+            //             }
+            //         }
+            //     }
+                
+            //     return;
+            // }
         }
     }
     let matching;

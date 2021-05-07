@@ -10,6 +10,7 @@ import SearchBox from './components/SearchBox';
 import ConfirmBox from './components/ConfirmBox';
 import DeletePlatformList from './components/DeletePlatformList';
 import DeleteConfirmBox from './components/DeleteConfirmBox';
+import {Link} from 'react-router-dom';
 
 
 const YourPagesController = (props) =>{
@@ -76,7 +77,8 @@ const YourPagesController = (props) =>{
 		    <div className='appStyle'>
 		    	<div style={{display:'flex',justifyContent: 'space-between',padding:'2rem'}}>
 			    	<h1>Your Pages</h1>
-			    	<button className='deleteButton'><img src={plusIcon} height='50px' width='50px' alt="plus"/></button>
+			    	{/* <button className='deleteButton' onClick={()=>{console.log(1)}}><img src={plusIcon} height='50px' width='50px' alt="plus"/></button> */}
+					<Link className='deleteButton' to={''}> <img src={plusIcon} height='50px' width='50px' alt="plus"/></Link>
 		    	</div>
 		        <SearchBox onSearchPlatform={onSearchPlatform} />
 		        <Dropdown>

@@ -13,6 +13,7 @@ import AdminController from "./components/admin";
 import PlatformController from "./components/platform"; 
 import SettingsController from "./components/Setting";
 import ProfileController from "./components/Profile";
+// import CreateController from "./components/components/create";
 
 /*
 import PlatformList from './components/PlatformList';
@@ -74,41 +75,51 @@ function App(){
 	return (
 	<div className="appStyle">
 		<MenuController isSignedIn={isSignedIn} isAdmin={isAdmin} setIsPendingRefresh={setIsPendingRefresh}/>
-		<Switch>
+		<div className="controllerStyle">
+			<Switch>
 
-			<Route path="/logout">
-				<LogoutController isSignedIn={isSignedIn} isAdmin={isAdmin} setIsPendingRefresh={setIsPendingRefresh}/>
-			</Route>
+				<Route path="/logout">
+					<LogoutController isSignedIn={isSignedIn} isAdmin={isAdmin} setIsPendingRefresh={setIsPendingRefresh}/>
+				</Route>
 
-			<Route path="/home">
-				<HomeController isSignedIn={isSignedIn} username={username} />
-			</Route>
+				<Route path="/home">
+					<HomeController isSignedIn={isSignedIn} username={username} />
+				</Route>
 
-			<Route path="/yourplatforms">
-				<YourPagesController isSignedIn={isSignedIn} username={username}/>
-			</Route>
+				<Route path="/yourplatforms">
+					<YourPagesController isSignedIn={isSignedIn} username={username}/>
+				</Route>
 
-			<Route path="/admin">
-				<AdminController isSignedIn={isSignedIn} isAdmin={isAdmin}/>
-			</Route>
+				<Route path="/admin">
+					<AdminController isSignedIn={isSignedIn} isAdmin={isAdmin}/>
+				</Route>
 
-			<Route path="/play/platform/:platformId">
-				<PlatformController isSignedIn={isSignedIn} username={username}/>
-			</Route>
+				<Route path="/play/platform/:platformId">
+					<PlatformController isEdit={false} isSignedIn={isSignedIn} username={username}/>
+				</Route>
 
-			<Route path="/settings">
-				<SettingsController isSignedIn={isSignedIn}/>
-			</Route>
+				<Route path="/edit/platform/:platformId">
+					<PlatformController isEdit={true} isSignedIn={isSignedIn} username={username}/>
+				</Route>
 
-			<Route path="/profile">
-				<ProfileController isSignedIn={isSignedIn} username={username}/>
-			</Route>
-			
-			<Route path="/">
-				<Redirect to="/home" />
-			</Route>
+				<Route path="/settings">
+					<SettingsController isSignedIn={isSignedIn}/>
+				</Route>
 
-		</Switch>
+				{/* <Route path="/create">
+					<CreateController isSignedIn={isSignedIn}/>
+				</Route> */}
+
+				<Route path="/profile">
+					<ProfileController isSignedIn={isSignedIn} username={username}/>
+				</Route>
+				
+				<Route path="/">
+					<Redirect to="/home" />
+				</Route>
+
+			</Switch>
+		</div>
 	</div>
 	)
 }

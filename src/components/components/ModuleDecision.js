@@ -1,25 +1,47 @@
-import React, { useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
 import '../ComponentStyle.css';
-import axios_instance from '../axios_instance.js';
+import {Row, Col} from 'react-bootstrap';
+import deleteIcon from '../images/delete.png';
+import saveIcon from '../images/save.png';
+import RGL, { WidthProvider } from "react-grid-layout";
+import Page from './Page.js';
+import RightBar from './RightBar.js';
+import axios_instance from '../axios_instance';
+
+const ReactGridLayout = WidthProvider(RGL);
 
 const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformName, 
 	setModuleId, moduleName, platformId, moduleId,
-	setPageName, setPageId, setPageEntry})=>{
+	setPageName, setPageId, setPageEntry, pages,
+	setPageIndex, update})=>{
+
+	// const [layout, setLayout] = useState([]);
+	// const [pages, setPages] = useState([]);
+	// const [selectedPage, setSelectedPage] = useState({});
+	const [add,setAdd]= useState(0);
+	const [layout,setLayout] = useState();
+	// const [selectType, setSelectType] = useState("");
+	useEffect(
+		()=>{
+			if(pages===undefined)
+				return;
+			console.log(pages);
+			setLayout(pages.map((val, key) => {
+				return (
+					{i: ''+key, pageInfo:val}
+					// <div key={''+key} className="page" onClick={()=>{ selectPage(key) }} > 
+					// 	<Page pageInfo={val} name={''+key}/>
+					// </div>
+				)
+			}))	
+		},[update,pages]
+	)
 
 	useEffect(
         ()=>{
-			let calls = [];
-			calls.push(
-				axios_instance({
-					method: 'get',
-					url: "page/" + platformId + "/" + moduleId,
-				})
-			);
-			Promise.all(calls).then((values)=>
-			{
+				if(isEdit)
+					return;
 				let info = userPlatformInfo
-				let pages = values[0].data;
-
 				//now we select a page
 				let choice = -1;
 				let count = 1;
@@ -61,17 +83,121 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 					setPageId(pages[choice]._id)
 					setPageEntry(pages[choice]._id)
 				}
-			})
-			.catch(err=>{
-				console.log(err);
-				setModuleId("");
-			});
-        },[username, platformId, moduleId, isSignedIn, setModuleId, setPageEntry, setPageId, setPageName, userPlatformInfo]
+        },[pages, username, platformId, moduleId, isSignedIn, setModuleId, setPageEntry, setPageId, setPageName, userPlatformInfo, update]
     );
 
-	return(
-		<div className="">Routing...</div>
-	);
+	const selectPage = (key) =>{
+		console.log("key")
+		console.log(key)
+
+		console.log(pages[key]);
+		// setSelectType("Page");
+		// setSelectedPage(pages[key]);
+		setPageIndex(key);
+	}
+
+	const deselectPage = (e) => {
+		// console.log(e.target.className);
+		if(e.target.className === "react-grid-layout grid"){
+			console.log("deselectPage");
+			// setSelectType("");
+			// setSelectedPage({});
+			setPageIndex();
+		}
+
+	}
+
+	// const onDragStart=(event,text)=> {
+    //     // console.log(text);
+    //     event.dataTransfer.setData("Text", text);
+    // }
+
+	const onDragOver=(event)=>{
+        event.preventDefault();
+    }
+
+	const onDrop=(event)=>{
+		event.preventDefault();
+		let data = event.dataTransfer.getData("Text");
+		// let newPage = {
+		// 	pageName:"New Page",
+		// 	entry: false,
+		// 	moduleId:moduleId,
+		// 	platformId:platformId,
+		// 	rank:0,
+		// 	widgets:[]
+		// }
+		// pages.push(newPage);
+		// setAdd(add+1)
+		let newPageId;
+		axios_instance({
+			method:'post',
+			url: "page/",
+			data:{
+				platformId:platformId,
+				moduleId:moduleId,
+				pageName:"New Page",
+				widgets:[],
+				rank:0,
+				entry:false
+			}
+		}).then((res)=>{
+			newPageId = res.data.pageId;
+			//Not sure if we need to do this or if it will get 
+			//the pages again when we add a new one
+			axios_instance({
+				method:'get',
+				url: "page/"+platformId+"/"+moduleId+"/"+newPageId,
+			}).then((res)=>{
+				// console.log(res.data);
+				pages.push(res.data);
+				setAdd(add+1)
+			})
+		});
+	}
+
+	if(isEdit){
+		console.log(layout);
+		if(layout === undefined){
+			return <div>Loading...</div>
+		}
+		return (	
+			// <div className="platformContainer">
+				//@TODO CHANGE CSS TO 100% with new class
+				<div id="pageGrid" className="content pageLayoutHelper" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}} onClick={(e)=>{deselectPage(e)}}>  {/*deselectPage() */}
+					{/* <ReactGridLayout
+					className="grid" 
+					compactType={null} 
+					layout={layout} 
+					onLayoutChange={()=>{}} //FOR SAVING LAYOUT CHANGES
+					cols={8}
+					> */}
+					{
+						layout.map((val, key) => {
+							console.log(val);
+							console.log(key);
+							return (
+								<div key={''+key} className="page" onClick={()=>{ selectPage(key) }} > 
+									<Page pageInfo={val.pageInfo.pageName} name={''+key} />
+								</div>
+							)
+						})	
+					}
+					{/* </ReactGridLayout> */}
+				</div>
+				
+				// {/* <RightBar selectType={selectType} selected={selectedPage} setSelectedPage={setSelectedPage} onDragStart={onDragStart} add={add} setAdd={setAdd}/> */}
+				// {/* <div className="rightbar"> 
+					
+				// </div> */}
+			// </div>
+		);
+
+	} else {
+		return(
+			<div className="">Routing...</div>
+		);
+	}
 }
 
 export default ModuleDecision;

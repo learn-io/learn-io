@@ -128,6 +128,7 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 	let closehdr;
 	let titlehdr;
 	let centerpart;
+	let buttonpart;
 	if(username!==selectPlatform.owner){
 		closehdr=<button className='closeButton' onClick={()=>{onClosePlatform('')}}>X</button>
 		titlehdr=<h2>{header}</h2>
@@ -135,6 +136,9 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 					<img alt='platformImage' src={imageData} height={200} width={200}/>
 					<p className='paragraph'>{description}</p>
 				</div>
+		buttonpart=<div style={{marginTop: '1%'}} className='clearfix'>
+						<Link className='playButton' to={'/play/platform/'+selectPlatform._id}> Play</Link>
+					</div>
 	}else{
 		closehdr=<div style={{justifyContent:'space-between',display:'flex'}}>
 					<button className='deleteButton' onClick={()=>{onSavePlatformInfo(selectPlatform)}}><img src={saveIcon} height='50px' width='50px' alt="save"/></button>
@@ -177,6 +181,10 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 							{desc}
 						</div>
 					</>
+		buttonpart=<div style={{marginTop: '1%'}} className='clearfix'>
+						<Link className='playButton' to={'/edit/platform/'+selectPlatform._id}> Edit Platform</Link>
+						<Link className='playButton' to={'/play/platform/'+selectPlatform._id}> Play</Link>
+					</div>
 	}
 	if(selectPlatform===''){
 		return null
@@ -188,9 +196,7 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 						{closehdr}
 						{titlehdr}
 						{centerpart}
-						<div style={{marginTop: '1%'}} className='clearfix'>
-							<Link className='playButton' to={'/play/platform/'+selectPlatform._id}> Play</Link>
-						</div>
+						{buttonpart}
 					</div>
 				</div>
 			</section>

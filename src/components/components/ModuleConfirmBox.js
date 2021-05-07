@@ -60,24 +60,12 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
     )
 
     const onSaveModuleInfo=(platform)=>{
-    	axios_instance({
-            method: 'post',
-            url: "platform/update",
-            data: {
-                _id: selectedModule.platformId,
-                oldModuleName:selectedModule.moduleName,
-                newModuleName:header,
-                moduleDescription:description,
-                image:imageHash,
-                lockedby:selectedModule.lockedby,
-                unlocks:selectedModule.unlocks
-            }
-        })
-        .then((res)=>{
-        	setSave(save+1);
-	    })
-	    .catch(err=>console.log(err));
-    }
+		console.log(selectedModule);
+		selectedModule.moduleName = header;
+		selectedModule.description=description;
+		selectedModule.image=imageHash;
+		setSave(save+1);
+	}
     const handleClick = event => {
 		hiddenFileInput.current.click();
     };

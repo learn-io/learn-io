@@ -1,7 +1,8 @@
 /*style sheet for app*/
 .appStyle{
 	text-align:center;
-	width: 100%;
+	width: 100vw;
+	height: 100vh;
 }
 /*style sheet for splash screen*/
 .splashStyle{
