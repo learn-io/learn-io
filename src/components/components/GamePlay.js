@@ -207,7 +207,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
                         curPage.widgets.map((val,key) => {
                             return (
                                 <div key={''+key} className="widget" onClick={()=>{selectWidget(key)}}>
-                                    <Widget internals={val.internals}/>
+                                    <Widget internals={val.internals} setAction={setAction}/>
                                 </div>
                             );
                         })
