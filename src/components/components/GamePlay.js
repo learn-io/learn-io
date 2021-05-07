@@ -10,7 +10,8 @@ const ReactGridLayout = WidthProvider(RGL);
 
 const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
     platformName, moduleName, pageName, 
-    platformId, moduleId, pageId, curPage})=>{
+    platformId, moduleId, pageId, curPage,
+    setWidgetIndex})=>{
 
     const [layout, setLayout] = useState();
     const [selectedWidget,setSelectedWidget]= useState("");
@@ -176,6 +177,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
     const selectWidget=(key)=>{
         // console.log(curPage[key]);
         setSelectedWidget(curPage[key]);
+        setWidgetIndex(key);
         // console.log(1);
     }
     const onLayoutChanged=(newLayout)=>{

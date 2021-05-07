@@ -35,6 +35,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     const [curPage, setCurPage] = useState({});
 
     const [pageIndex, setPageIndex] = useState();
+    const [widgetIndex, setWidgetIndex] = useState();
 
     const [add,setAdd] = useState(0);
 
@@ -217,7 +218,16 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         );
     }
     else
-    {
+    {   
+        // console.log("curPage")
+        // console.log(curPage)
+
+        console.log("pages[pageIndex]")
+        console.log(pages[pageIndex])
+
+        // let thepage = allPages[moduleId].find(x => x._id === pageId);
+        //                 setCurPage(thepage);
+
         return (
             <div className="platformContainer">
                 <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
@@ -225,9 +235,10 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 <GamePlay username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
                 setAction={setAction} setPageName={setPageName}
                 platformName={platformName} moduleName={moduleName} pageName={pageName}
-                platformId={platformId} moduleId={moduleId} pageId={pageId} curPage={curPage}/>
+                platformId={platformId} moduleId={moduleId} pageId={pageId} curPage={curPage}
+                setWidgetIndex={setWidgetIndex}/>
 
-                <RightBar selectType={"Page"} curPage={pages} selected={pages[pageIndex]} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
+                <RightBar selectType={"Widget"} curPage={curPage} selected={curPage.widgets[widgetIndex]} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
             </div>
         );
     }
