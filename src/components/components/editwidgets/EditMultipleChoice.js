@@ -5,12 +5,12 @@ import './editStyle.css';
 const EditMultipleChoice = ({selectedWidget,curPage,add,setAdd})=>{
 
     const onChangeAnswer=(event,answer)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
                 if(answer==="Correct"){
-                    curPage[i].internals.rightAnswer.actionType=event.target.value;
+                    curPage.widgets[i].internals.rightAnswer.actionType=event.target.value;
                 }else{
-                    curPage[i].internals.wrongAnswer.actionType=event.target.value;
+                    curPage.widgets[i].internals.wrongAnswer.actionType=event.target.value;
                 }
                 break;
             }
@@ -18,12 +18,12 @@ const EditMultipleChoice = ({selectedWidget,curPage,add,setAdd})=>{
         // console.log(curPage);
     }
     const onChangeAnswerTarget=(event,answer)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
                 if(answer==="Correct"){
-                    curPage[i].internals.rightAnswer.target=event.target.value;
+                    curPage.widgets[i].internals.rightAnswer.target=event.target.value;
                 }else{
-                    curPage[i].internals.wrongAnswer.target=event.target.value;
+                    curPage.widgets[i].internals.wrongAnswer.target=event.target.value;
                 }
                 break;
             }
@@ -31,13 +31,13 @@ const EditMultipleChoice = ({selectedWidget,curPage,add,setAdd})=>{
     }
     const onChangeCheckBox=(index)=>{
         // console.log(index);
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
                 if(selectedWidget.internals.options[index].isCorrect){
-                    curPage[i].internals.options[index].isCorrect=false;
+                    curPage.widgets[i].internals.options[index].isCorrect=false;
                     selectedWidget.internals.options[index].isCorrect=false;
                 }else{
-                    curPage[i].internals.options[index].isCorrect=true;
+                    curPage.widgets[i].internals.options[index].isCorrect=true;
                     selectedWidget.internals.options[index].isCorrect=true;
                 }
                 break;
@@ -47,18 +47,18 @@ const EditMultipleChoice = ({selectedWidget,curPage,add,setAdd})=>{
         setAdd(add+1);
     }
     const onTextChange=(event, index)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
-                curPage[i].internals.options[index].option=event.target.value;
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
+                curPage.widgets[i].internals.options[index].option=event.target.value;
                 break;
             }
         }
         setAdd(add+1);
     }
     const onChangeButtonText=(event)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
-                curPage[i].internals.buttonText=event.target.value;
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
+                curPage.widgets[i].internals.buttonText=event.target.value;
                 break;
             }
         }

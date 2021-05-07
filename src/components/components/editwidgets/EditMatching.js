@@ -4,12 +4,12 @@ import './editStyle.css';
 
 const EditMatching = ({selectedWidget,curPage,add,setAdd})=>{
     const onChangeAnswer=(event,answer)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
                 if(answer==="Correct"){
-                    curPage[i].internals.rightAnswer.actionType=event.target.value;
+                    curPage.widgets[i].internals.rightAnswer.actionType=event.target.value;
                 }else{
-                    curPage[i].internals.wrongAnswer.actionType=event.target.value;
+                    curPage.widgets[i].internals.wrongAnswer.actionType=event.target.value;
                 }
                 break;
             }
@@ -17,12 +17,12 @@ const EditMatching = ({selectedWidget,curPage,add,setAdd})=>{
         // console.log(curPage);
     }
     const onChangeAnswerTarget=(event,answer)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
                 if(answer==="Correct"){
-                    curPage[i].internals.rightAnswer.target=event.target.value;
+                    curPage.widgets[i].internals.rightAnswer.target=event.target.value;
                 }else{
-                    curPage[i].internals.wrongAnswer.target=event.target.value;
+                    curPage.widgets[i].internals.wrongAnswer.target=event.target.value;
                 }
                 break;
             }
@@ -30,16 +30,16 @@ const EditMatching = ({selectedWidget,curPage,add,setAdd})=>{
     }
 
     const onChangeMatchText=(event,index,position)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
-                while(curPage[i].internals.options.length<=index){
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
+                while(curPage.widgets[i].internals.options.length<=index){
                     let ob={"left":"","right":""}
-                    curPage[i].internals.options.push(ob);
+                    curPage.widgets[i].internals.options.push(ob);
                 }
                 if(position==="left"){
-                    curPage[i].internals.options[index].left=event.target.value;
+                    curPage.widgets[i].internals.options[index].left=event.target.value;
                 }else{
-                    curPage[i].internals.options[index].right=event.target.value;
+                    curPage.widgets[i].internals.options[index].right=event.target.value;
                 }
                 break;
             }
@@ -48,9 +48,9 @@ const EditMatching = ({selectedWidget,curPage,add,setAdd})=>{
         setAdd(add+1);
     }
     const onChangeButtonText=(event)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
-                curPage[i].internals.buttonText=event.target.value;
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
+                curPage.widgets[i].internals.buttonText=event.target.value;
                 break;
             }
         }

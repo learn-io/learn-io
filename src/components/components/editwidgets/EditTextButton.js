@@ -5,9 +5,9 @@ import './editStyle.css';
 const EditTextButton = ({selectedWidget,curPage,add,setAdd})=>{
     const onChangeText=(event)=>{
         // console.log(curPage);
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
-                curPage[i].internals.text=event.target.value;
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
+                curPage.widgets[i].internals.text=event.target.value;
                 break;
             }
         }
@@ -17,17 +17,17 @@ const EditTextButton = ({selectedWidget,curPage,add,setAdd})=>{
     }
     
     const onChangePorS=(event)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
-                curPage[i].internals.click.actionType=event.target.value;
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
+                curPage.widgets[i].internals.click.actionType=event.target.value;
                 break;
             }
         }
     }
     const onChangeTarget=(event)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
-                curPage[i].internals.click.target=event.target.value;
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
+                curPage.widgets[i].internals.click.target=event.target.value;
                 break;
             }
         }

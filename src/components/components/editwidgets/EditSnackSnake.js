@@ -5,12 +5,12 @@ import './editStyle.css';
 const EditSnackSnake = ({selectedWidget,curPage,add,setAdd})=>{
 
     const onChangeAnswer=(event,answer)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
                 if(answer==="Correct"){
-                    curPage[i].internals.rightAnswer.actionType=event.target.value;
+                    curPage.widgets[i].internals.rightAnswer.actionType=event.target.value;
                 }else{
-                    curPage[i].internals.wrongAnswer.actionType=event.target.value;
+                    curPage.widgets[i].internals.wrongAnswer.actionType=event.target.value;
                 }
                 break;
             }
@@ -18,12 +18,12 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd})=>{
         // console.log(curPage);
     }
     const onChangeAnswerTarget=(event,answer)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
                 if(answer==="Correct"){
-                    curPage[i].internals.rightAnswer.target=event.target.value;
+                    curPage.widgets[i].internals.rightAnswer.target=event.target.value;
                 }else{
-                    curPage[i].internals.wrongAnswer.target=event.target.value;
+                    curPage.widgets[i].internals.wrongAnswer.target=event.target.value;
                 }
                 break;
             }
