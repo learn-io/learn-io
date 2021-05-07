@@ -10,18 +10,32 @@ import EditSnackSnake from './editwidgets/EditSnackSnake.js';
 
 const RightbottomBar = ({curPage, selectType, selected, add,setAdd}) =>{ //selectedWidget,curPage
     const hiddenFileInput = React.useRef(null);
-    if(selected === undefined){
+    if(selected === undefined && selectType !== "Module"){
         return (
             <div style={{overflowY:'scroll', border: '1px solid black', height: '50%'}}>
 
             </div>
         );
     }
-    console.log("selected")
-    console.log(selected);
     let selectedInfo = "";
     
     if(selectType === "Module"){
+        return (
+        <div>
+            <div>
+                <input type="radio" id="Edit" name="editmode" onChange={()=>{setAdd(-1)}} checked={add===-1} value="-1"/>
+                Edit Mode
+            </div>
+            <div>
+                <input type="radio" id="Drag" name="editmode" onChange={()=>{setAdd(0)}} checked={add===0} value="0"/>
+                Drag Mode
+            </div>
+            <div>
+                <input type="radio" id="Connect" name="editmode" onChange={()=>{setAdd(1)}} checked={add===1} value="1"/>
+                Connect Mode
+            </div>
+        </div>
+        )
 
     } else if (selectType === "Page"){
         const onChangeName=(event)=>{

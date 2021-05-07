@@ -40,6 +40,8 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     const [dragging, setDragging] = useState(false);
 
     const [add,setAdd] = useState(0);
+    const [editMode, setEditMode] = useState(-1); //-1 => enter, 0 => drag, 1=> connect
+
 
 	useEffect(
         ()=>{
@@ -188,13 +190,14 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         return (
         <div className="platformContainer">
             <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>  
-            <ModuleView username={username} isSignedIn={isSignedIn} isEdit={false} 
+            <ModuleView username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
             platformId={platformId} platform={platform} setPlatform={setPlatform}
             userPlatformInfo={userPlatformInfo}
             platformName={platformName} setPlatformName = {setPlatformName}
             setModuleName={setModuleName} setModuleId={setModuleId}
-            dragging={dragging} setDragging={setDragging}/>
-            <RightBar selectType="Module" onDragStart={()=>setDragging(true)}/>
+            dragging={dragging} setDragging={setDragging}
+            editMode={editMode} setEditMode={setEditMode}/>
+            <RightBar selectType="Module" onDragStart={()=>setDragging(true)} add={editMode} setAdd={setEditMode}/>
         </div>
         );
     }

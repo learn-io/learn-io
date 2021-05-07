@@ -3,8 +3,8 @@ import RightbottomBar from './RightbottomBar';
 
 const RightBar = ({selectType, curPage, selected, onDragStart, add, setAdd}) => {
 
-    console.log("selected")
-    console.log(selected);
+    //console.log("selected")
+    //console.log(selected);
 
     let select_widget;
     if(selectType === "Widget"){
