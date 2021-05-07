@@ -207,10 +207,10 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             <div className="platformContainer">
                 <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
                 
-                <GamePlay username={username} isSignedIn={isSignedIn} isEdit={false} 
+                <GamePlay username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
                 setAction={setAction} setPageName={setPageName}
                 platformName={platformName} moduleName={moduleName} pageName={pageName}
-                platformId={platformId} moduleId={moduleId} pageId={pageId} />
+                platformId={platformId} moduleId={moduleId} pageId={pageId} curPage={curPage}/>
             </div>
         );
     }
