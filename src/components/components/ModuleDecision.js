@@ -23,11 +23,15 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 	// const [selectType, setSelectType] = useState("");
 	useEffect(
 		()=>{
+			if(pages===undefined)
+				return;
+			console.log(pages);
 			setLayout(pages.map((val, key) => {
 				return (
-					<div key={''+key} className="page" onClick={()=>{ selectPage(key) }} > 
-						<Page pageInfo={val} name={''+key}/>
-					</div>
+					{i: ''+key, pageInfo:val}
+					// <div key={''+key} className="page" onClick={()=>{ selectPage(key) }} > 
+					// 	<Page pageInfo={val} name={''+key}/>
+					// </div>
 				)
 			}))	
 		},[update,pages]
@@ -153,6 +157,10 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 	}
 
 	if(isEdit){
+		console.log(layout);
+		if(layout === undefined){
+			return <div>Loading...</div>
+		}
 		return (	
 			// <div className="platformContainer">
 				//@TODO CHANGE CSS TO 100% with new class
@@ -165,13 +173,12 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 					cols={8}
 					> */}
 					{
-						pages.map((val, key) => {
-							// console.log(val);
-
-							//
+						layout.map((val, key) => {
+							console.log(val);
+							console.log(key);
 							return (
 								<div key={''+key} className="page" onClick={()=>{ selectPage(key) }} > 
-									<Page pageInfo={val} name={''+key}/>
+									<Page pageInfo={val.pageInfo.pageName} name={''+key} />
 								</div>
 							)
 						})	

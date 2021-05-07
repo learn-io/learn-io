@@ -8,7 +8,7 @@ import EditQuickTimeChoice from './editwidgets/EditQuickTimeChoice.js';
 import EditTextButton from './editwidgets/EditTextButton.js';
 import EditSnackSnake from './editwidgets/EditSnackSnake.js';
 
-const RightbottomBar = ({curPage, selectType, selected, add,setAdd}) =>{ //selectedWidget,curPage
+const RightbottomBar = ({curPage, selectType, selected, add,setAdd,pages}) =>{ //selectedWidget,curPage
     const hiddenFileInput = React.useRef(null);
     if(selected === undefined && selectType !== "Module"){
         return (
@@ -75,6 +75,7 @@ const RightbottomBar = ({curPage, selectType, selected, add,setAdd}) =>{ //selec
                 </div>
             );
         }
+        // console.log(pages);
         const handleClick = (event) => {
             hiddenFileInput.current.click();
         };
@@ -138,11 +139,23 @@ const RightbottomBar = ({curPage, selectType, selected, add,setAdd}) =>{ //selec
 
         const onChangeTarget=(event)=>{
             for(let i=0;i<curPage.widgets.length;i++){
+                let value="";
                 if(curPage.widgets[i]===selected){
-                    curPage.widgets[i].internals.click.target=event.target.value;
+                    if(curPage.widgets[i].internals.click.actionType==='P'){
+                        for(let j=0;j<pages.length;j++){
+                            if(pages[j].pageName===event.target.value){
+                                value=pages[j]._id;
+                                break;
+                            }
+                        }
+                    }else{
+                        value=event.target.value;
+                    }
+                    curPage.widgets[i].internals.click.target=value;
                     break;
                 }
             }
+            // console.log(curPage);
         }
         // let textInput=<div>Input Text:<input style={{width:'90%'}} type="text" id="textinput" name="textinput" onChange={onChangeText}/></div>
         let game;
@@ -165,6 +178,17 @@ const RightbottomBar = ({curPage, selectType, selected, add,setAdd}) =>{ //selec
         }else if(selected.internals.widgetFlavor==="Flashcard"){
             game=<EditFlashcard selectedWidget={selected} curPage={curPage} add={add} setAdd={setAdd}/>
         }else if(selected.internals.widgetFlavor==="ImageButton"){
+            let text="";
+            if(selected.internals.click.actionType==='P'){
+                for(let i=0;i<pages.length;i++){
+                    if(pages[i]._id===selected.internals.click.target){
+                        text=pages[i].pageName;
+                        break;
+                    }
+                }
+            }else{
+                text=selected.internals.click.target;
+            }
             game=<div>
                     <div>
                         <button style={{backgroundColor:'#96CCFF',borderRadius: '.5rem',marginTop: '10%'}} onClick={handleClick}>Upload Image</button>
@@ -181,22 +205,22 @@ const RightbottomBar = ({curPage, selectType, selected, add,setAdd}) =>{ //selec
                                     <tbody>
                                         <tr>
                                         <td><input defaultValue={selected.internals.click.actionType} style={{border:'none',backgroundColor:"transparent",width:'100%'}} onChange={(event)=>onChangePorS(event)} type="text" id="pors" name="pors"/></td>
-                                        <td><input defaultValue={selected.internals.click.target} style={{border:'none',backgroundColor:"transparent",width:'100%'}} onChange={(event)=>onChangeTarget(event)} type="text" id="target" name="target"/></td>
+                                        <td><input defaultValue={text} style={{border:'none',backgroundColor:"transparent",width:'100%'}} onChange={(event)=>onChangeTarget(event)} type="text" id="target" name="target"/></td>
                                         </tr>
                                     </tbody>
                                 </Table>
                             </div>
                 </div>
         }else if(selected.internals.widgetFlavor==="MultipleChoice"){
-            game=<EditMultipleChoice selectedWidget={selected} curPage={curPage} add={add} setAdd={setAdd}/>
+            game=<EditMultipleChoice selectedWidget={selected} curPage={curPage} add={add} setAdd={setAdd} pages={pages}/>
         }else if(selected.internals.widgetFlavor==="Matching"){
-            game=<EditMatching selectedWidget={selected} curPage={curPage} add={add} setAdd={setAdd}/>
+            game=<EditMatching selectedWidget={selected} curPage={curPage} add={add} setAdd={setAdd} pages={pages}/>
         }else if(selected.internals.widgetFlavor==="QuickTimeChoice"){
-            game=<EditQuickTimeChoice selectedWidget={selected} curPage={curPage} add={add} setAdd={setAdd}/>
+            game=<EditQuickTimeChoice selectedWidget={selected} curPage={curPage} add={add} setAdd={setAdd} pages={pages}/>
         }else if(selected.internals.widgetFlavor==="TextButton"){
-            game=<EditTextButton selectedWidget={selected} curPage={curPage} add={add} setAdd={setAdd}/>
+            game=<EditTextButton selectedWidget={selected} curPage={curPage} add={add} setAdd={setAdd} pages={pages}/>
         }else if(selected.internals.widgetFlavor==="Snacksnake"){
-            game=<EditSnackSnake selectedWidget={selected} curPage={curPage} add={add} setAdd={setAdd}/>
+            game=<EditSnackSnake selectedWidget={selected} curPage={curPage} add={add} setAdd={setAdd} pages={pages}/>
         }
         selectedInfo = game;
     } else {

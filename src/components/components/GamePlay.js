@@ -202,7 +202,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
         // setAdd(add+1);
     }
     if(isEdit){
-        console.log(layout);
+        // console.log(layout);
         return(
             <div className="content">
                 <h2 style={{color:'white'}}>{platformName}</h2>
