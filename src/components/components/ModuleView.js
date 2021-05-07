@@ -21,7 +21,7 @@ const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlat
 		    }).catch(function(err){
 		        console.log(err);
 		    });
-        },[platformId, save, username, setPlatform, setPlatformName]
+        },[platformId, username, setPlatform, setPlatformName]
     );
 
 	const moveModuleTo = (moduleId, x, y) => 

@@ -49,7 +49,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         },[username, isSignedIn, platformId]
     );
 
-    useEffect(
+    useEffect( 
         ()=>{
             if(moduleId === "")
             {
@@ -195,6 +195,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             userPlatformInfo={userPlatformInfo}
             platformName={platformName} setPlatformName = {setPlatformName}
             setModuleName={setModuleName} setModuleId={setModuleId}/>
+            <RightBar selectType="Module"/>
         </div>
         );
     }

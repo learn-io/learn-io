@@ -15,6 +15,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
 
     const [layout, setLayout] = useState();
     const [selectedWidget,setSelectedWidget]= useState("");
+    const [oldPage, setOldPage] = useState("");
 
     useEffect( () => {
         if (curPage === undefined)
@@ -22,7 +23,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
         setLayout(curPage.widgets.map((val,key) => {
             return {i: ''+key, x: val.x, y: val.y, w: val.width, h: val.height, static: !isEdit}
         }));
-        console.log(layout);
+        setOldPage(curPage)
     }, [curPage, isEdit] 
     );
 
@@ -182,13 +183,18 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
     }
     const onLayoutChanged=(newLayout)=>{
         console.log(1);
-        setLayout(newLayout);
+        
+        if (oldPage !== curPage)
+        {
+            return;
+        }
         for(let i=0;i<newLayout.length;i++){
             curPage.widgets[i].x=newLayout[i].x;
             curPage.widgets[i].y=newLayout[i].y;
-            curPage.widgets[i].h=newLayout[i].h;
-            curPage.widgets[i].w=newLayout[i].w;
+            curPage.widgets[i].height=newLayout[i].h;
+            curPage.widgets[i].width=newLayout[i].w;
         }
+        // setLayout(newLayout);
         // setAdd(add+1);
     }
     if(isEdit){
@@ -209,7 +215,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
                         curPage.widgets.map((val,key) => {
                             return (
                                 <div key={''+key} className="widget" onClick={()=>{selectWidget(key)}}>
-                                    <Widget internals={val.internals}/>
+                                    <Widget internals={val.internals} setAction={setAction}/>
                                 </div>
                             );
                         })

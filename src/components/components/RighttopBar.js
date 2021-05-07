@@ -7,8 +7,9 @@ import choiceIcon from '../images/choice.png';
 const RighttopBar = ({selectType, onDragStart}) =>{
     let rightTopContent = "";
     if(selectType === "Module"){
-        let moduleBox =   <div draggable onDragStart={(e)=>{onDragStart(e,"TextBox")}} style={{backgroundColor:'#96CCFF',borderRadius: '.3rem',marginTop: '10%',width:'80%',height:'50px', marginLeft:'10%'}}>
-                            <p>New Module</p>
+        let moduleBox =  <div draggable onDragStart={(e)=>{onDragStart(e)}} style={{backgroundColor:'#96CCFF',borderRadius: '50%',marginTop: '10%',width:'150px',height:'150px', marginLeft:'10%'}}>
+                            <br/><br/>
+                            <p style={{margin:"auto"}}>New Module</p>
                         </div>
         rightTopContent=moduleBox;
     } else if(selectType === "Page"){
