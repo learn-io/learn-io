@@ -248,15 +248,13 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
         const x = (e.clientX - rect.left) * scaleX;
         const y = (e.clientY - rect.top) * scaleY;
 
-        console.log(isEdit);
-        console.log(editMode);
         if (isEdit && editMode !== -1) //enter mode only when editing
             return;
         let id = getModuleId(x, y);
-        console.log(id);
+        //console.log(id);
         if (id === -1)
             return;
-            console.log(isEdit);
+            //console.log(isEdit);
         // if is unlocked
         if(unlockList.includes(modules[id]._id)){
             setSelectedModule(modules[id]);

@@ -257,7 +257,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         return (
         <div className="platformContainer">
             <LeftBar isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>  
-            <ModuleView username={username} isSignedIn={isSignedIn} isEdit={false} 
+            <ModuleView username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
             platformId={platformId} platform={platform} setPlatform={setPlatform}
             userPlatformInfo={userPlatformInfo}
             platformName={platformName} setPlatformName = {setPlatformName}
