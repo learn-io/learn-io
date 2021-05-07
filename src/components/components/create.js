@@ -78,14 +78,19 @@ const CreateController = ({platformName, moduleName, pageName, currentPage,platf
         event.preventDefault();
         let data = event.dataTransfer.getData("Text");
         let rect=document.getElementById("reactgrid").getBoundingClientRect();
+        console.log(((event.clientX-rect.left)/(rect.width/8)));
+        console.log(( (event.clientY-rect.top)/160));
+        let x=Math.floor(((event.clientX-rect.left)/(rect.width/8)));
+        let y=Math.floor((event.clientY-rect.top)/160);
         let game={
             name: "widget name",
-            x: ((event.clientX-rect.left)/(rect.width/8)),
-            y: ( (event.clientY-rect.top)/160),
+            x: x,
+            y: y,
             height: 1,
             width: 1,
             internals: {}
         };
+        console.log(game);
         switch(data)
         {
             case "Flashcard":
@@ -205,8 +210,9 @@ const CreateController = ({platformName, moduleName, pageName, currentPage,platf
             default:
                 game=<div>No Widget!</div>
         } 
-        // console.log(game);
+        console.log(game);
         curPage.push(game);
+        console.log(curPage);
         setAdd(add+1);
         // console.log(curPage);
         // console.log(curPage);
