@@ -34,6 +34,10 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     const [pages, setPages] = useState([]);
     const [curPage, setCurPage] = useState({});
 
+    const [pageIndex, setPageIndex] = useState();
+
+    const [add,setAdd] = useState(0);
+
 	useEffect(
         ()=>{
 			getUserPlatformInfo(isSignedIn, platformId)
@@ -174,6 +178,12 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             alert("Invalid Action Type");
         }
     };
+
+    const onDragStart=(event,text)=> {
+        // console.log(text);
+        event.dataTransfer.setData("Text", text);
+    }
+
     if (moduleId === "")
     {
         return (
@@ -190,6 +200,8 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     }
     else if (pageId === "")
     {
+        console.log("Curpage")
+        console.log(curPage);
         return (
             <div className="platformContainer">
                 <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
@@ -199,7 +211,9 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                     platformId={platformId} moduleId = {moduleId}
                     setPageName={setPageName} setPageId={setPageId}
                     setPageEntry={setPageEntry}
-                    pages={pages}/>
+                    pages={pages}
+                    setPageIndex={setPageIndex}/>
+                <RightBar selectType={"Page"} selected={pages[pageIndex]} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
             </div>
         );
     }
@@ -213,6 +227,8 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 setAction={setAction} setPageName={setPageName}
                 platformName={platformName} moduleName={moduleName} pageName={pageName}
                 platformId={platformId} moduleId={moduleId} pageId={pageId} curPage={curPage}/>
+
+                <RightBar selectType={"Page"} curPage={pages} selected={pages[pageIndex]} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
             </div>
         );
     }
