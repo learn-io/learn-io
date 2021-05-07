@@ -2,7 +2,7 @@ import React from 'react';
 import {Table} from 'react-bootstrap';
 import './editStyle.css';
 
-const EditQuickTimeChoice = ({selectedWidget,curPage,add,setAdd})=>{
+const EditQuickTimeChoice = ({selectedWidget,curPage,add,setAdd,pages})=>{
     const onChangeQuickTimeText=(event,index)=>{
         for(let i=0;i<curPage.widgets.length;i++){
             if(curPage.widgets[i]===selectedWidget){
@@ -25,8 +25,19 @@ const EditQuickTimeChoice = ({selectedWidget,curPage,add,setAdd})=>{
     }
     const onChangeQuickTimeTarget=(event,index)=>{
         for(let i=0;i<curPage.widgets.length;i++){
+            let value="";
             if(curPage.widgets[i]===selectedWidget){
-                curPage.widgets[i].internals.options[index].target=event.target.value;
+                if(curPage.widgets[i].internals.options[index].actionType==='P'){
+                    for(let j=0;j<pages.length;j++){
+                        if(pages[j].pageName===event.target.value){
+                            value=pages[j]._id;
+                            break;
+                        }
+                    }
+                }else{
+                    value=event.target.value;
+                }
+                curPage.widgets[i].internals.options[index].target=value;
                 break;
             }
         }
@@ -44,11 +55,37 @@ const EditQuickTimeChoice = ({selectedWidget,curPage,add,setAdd})=>{
     }
     const onChangeQuickTimeoutTarget=(event)=>{
         for(let i=0;i<curPage.widgets.length;i++){
+            let value="";
             if(curPage.widgets[i]===selectedWidget){
-                curPage.widgets[i].internals.timeout.target=event.target.value;
+                if(curPage.widgets[i].internals.timeout.actionType==='P'){
+                    for(let j=0;j<pages.length;j++){
+                        if(pages[j].pageName===event.target.value){
+                            value=pages[j]._id;
+                            break;
+                        }
+                    }
+                }else{
+                    value=event.target.value;
+                }
+                curPage.widgets[i].internals.timeout.target=value;
                 break;
             }
         }
+    }
+    let text=[];
+    for(let i=0;i<selectedWidget.internals.options.length;i++){
+        let value="";
+        if(selectedWidget.internals.options[i].actionType==='P'){
+            for(let j=0;j<pages.length;j++){
+                if(pages[j]._id===selectedWidget.internals.options[i].target){
+                    value=pages[i].pageName;
+                    break;
+                }
+            }
+        }else{
+            value=selectedWidget.internals.options[i].target;
+        }
+        text.push(value);
     }
     let game=<div>
             <Table striped bordered hover>
@@ -63,22 +100,22 @@ const EditQuickTimeChoice = ({selectedWidget,curPage,add,setAdd})=>{
                     <tr>
                     <td><input defaultValue={selectedWidget.internals.options[0].text} onChange={(event)=>{onChangeQuickTimeText(event,0)}} className='inputStyle' type="text" id="text1" name="text"/></td>
                     <td><input defaultValue={selectedWidget.internals.options[0].actionType} onChange={(event)=>{onChangeQuickTimePos(event,0)}} className='inputStyle' type="text" id="pors1" name="pors"/></td>
-                    <td><input defaultValue={selectedWidget.internals.options[0].target} onChange={(event)=>{onChangeQuickTimeTarget(event,0)}} className='inputStyle' type="text" id="target1" name="target"/></td>
+                    <td><input defaultValue={text[0]} onChange={(event)=>{onChangeQuickTimeTarget(event,0)}} className='inputStyle' type="text" id="target1" name="target"/></td>
                     </tr>
                     <tr>
                     <td><input defaultValue={selectedWidget.internals.options[1].text} onChange={(event)=>{onChangeQuickTimeText(event,1)}} className='inputStyle' type="text" id="text2" name="text"/></td>
                     <td><input defaultValue={selectedWidget.internals.options[1].actionType} onChange={(event)=>{onChangeQuickTimePos(event,1)}} className='inputStyle' type="text" id="pors2" name="pors"/></td>
-                    <td><input defaultValue={selectedWidget.internals.options[1].target} onChange={(event)=>{onChangeQuickTimeTarget(event,1)}} className='inputStyle' type="text" id="target2" name="target"/></td>
+                    <td><input defaultValue={text[1]} onChange={(event)=>{onChangeQuickTimeTarget(event,1)}} className='inputStyle' type="text" id="target2" name="target"/></td>
                     </tr>
                     <tr>
                     <td><input defaultValue={selectedWidget.internals.options[2].text} onChange={(event)=>{onChangeQuickTimeText(event,2)}} className='inputStyle' type="text" id="text3" name="text"/></td>
                     <td><input defaultValue={selectedWidget.internals.options[2].actionType} onChange={(event)=>{onChangeQuickTimePos(event,2)}} className='inputStyle' type="text" id="pors3" name="pors"/></td>
-                    <td><input defaultValue={selectedWidget.internals.options[2].target} onChange={(event)=>{onChangeQuickTimeTarget(event,2)}} className='inputStyle' type="text" id="target3" name="target"/></td>
+                    <td><input defaultValue={text[2]} onChange={(event)=>{onChangeQuickTimeTarget(event,2)}} className='inputStyle' type="text" id="target3" name="target"/></td>
                     </tr>
                     <tr>
                     <td><input defaultValue={selectedWidget.internals.options[3].text} onChange={(event)=>{onChangeQuickTimeText(event,3)}} className='inputStyle' type="text" id="text4" name="text"/></td>
                     <td><input defaultValue={selectedWidget.internals.options[3].actionType} onChange={(event)=>{onChangeQuickTimePos(event,3)}} className='inputStyle' type="text" id="pors4" name="pors"/></td>
-                    <td><input defaultValue={selectedWidget.internals.options[3].target} onChange={(event)=>{onChangeQuickTimeTarget(event,3)}} className='inputStyle' type="text" id="target4" name="target"/></td>
+                    <td><input defaultValue={text[3]} onChange={(event)=>{onChangeQuickTimeTarget(event,3)}} className='inputStyle' type="text" id="target4" name="target"/></td>
                     </tr>
                     <tr>
                     <td>Timeout</td>

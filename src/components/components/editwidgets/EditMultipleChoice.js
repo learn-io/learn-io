@@ -2,15 +2,17 @@ import React from 'react';
 import {Table} from 'react-bootstrap';
 import './editStyle.css';
 
-const EditMultipleChoice = ({selectedWidget,curPage,add,setAdd})=>{
+const EditMultipleChoice = ({selectedWidget,curPage,add,setAdd,pages})=>{
 
     const onChangeAnswer=(event,answer)=>{
         for(let i=0;i<curPage.widgets.length;i++){
             if(curPage.widgets[i]===selectedWidget){
                 if(answer==="Correct"){
                     curPage.widgets[i].internals.rightAnswer.actionType=event.target.value;
+                    selectedWidget.internals.rightAnswer.actionType=event.target.value;
                 }else{
                     curPage.widgets[i].internals.wrongAnswer.actionType=event.target.value;
+                    selectedWidget.internals.wrongAnswer.actionType=event.target.value;
                 }
                 break;
             }
@@ -20,14 +22,36 @@ const EditMultipleChoice = ({selectedWidget,curPage,add,setAdd})=>{
     const onChangeAnswerTarget=(event,answer)=>{
         for(let i=0;i<curPage.widgets.length;i++){
             if(curPage.widgets[i]===selectedWidget){
+                let value="";
                 if(answer==="Correct"){
-                    curPage.widgets[i].internals.rightAnswer.target=event.target.value;
+                    if(selectedWidget.internals.rightAnswer.actionType==='P'){
+                        for(let j=0;j<pages.length;j++){
+                            if(pages[j].pageName===event.target.value){
+                                value=pages[j]._id;
+                                break;
+                            }
+                        }
+                    }else{
+                        value=event.target.value;
+                    }
+                    curPage.widgets[i].internals.rightAnswer.target=value;
                 }else{
-                    curPage.widgets[i].internals.wrongAnswer.target=event.target.value;
+                    if(selectedWidget.internals.wrongAnswer.actionType==='P'){
+                        for(let j=0;j<pages.length;j++){
+                            if(pages[j].pageName===event.target.value){
+                                value=pages[j]._id;
+                                break;
+                            }
+                        }
+                    }else{
+                        value=event.target.value;
+                    }
+                    curPage.widgets[i].internals.wrongAnswer.target=value;
                 }
                 break;
             }
         }
+        // console.log(curPage);
     }
     const onChangeCheckBox=(index)=>{
         // console.log(index);
@@ -64,6 +88,28 @@ const EditMultipleChoice = ({selectedWidget,curPage,add,setAdd})=>{
         }
         setAdd(add+1);
     }
+    let correcttext="";
+    let wrongtext="";
+    if(selectedWidget.internals.rightAnswer.actionType==='P'){
+        for(let i=0;i<pages.length;i++){
+            if(pages[i]._id===selectedWidget.internals.rightAnswer.target){
+                correcttext=pages[i].pageName;
+                break;
+            }
+        }
+    }else{
+        correcttext=selectedWidget.internals.rightAnswer.target;
+    }
+    if(selectedWidget.internals.wrongAnswer.actionType==='P'){
+        for(let i=0;i<pages.length;i++){
+            if(pages[i]._id===selectedWidget.internals.wrongAnswer.target){
+                wrongtext=pages[i].pageName;
+                break;
+            }
+        }
+    }else{
+        wrongtext=selectedWidget.internals.wrongAnswer.target;
+    }
     let game=<div>
             <Table striped bordered hover>
                 <thead>
@@ -77,12 +123,12 @@ const EditMultipleChoice = ({selectedWidget,curPage,add,setAdd})=>{
                     <tr>
                     <td>Correct</td>
                     <td><input defaultValue={selectedWidget.internals.rightAnswer.actionType} className='inputStyle' onChange={(event)=>onChangeAnswer(event,"Correct")} type="text" id="correctpors" name="pors"/></td>
-                    <td><input defaultValue={selectedWidget.internals.rightAnswer.target} className='inputStyle' onChange={(event)=>onChangeAnswerTarget(event,"Correct")} type="text" id="correcttarget" name="target"/></td>
+                    <td><input defaultValue={correcttext} className='inputStyle' onChange={(event)=>onChangeAnswerTarget(event,"Correct")} type="text" id="correcttarget" name="target"/></td>
                     </tr>
                     <tr>
                     <td>Wrong</td>
                     <td><input defaultValue={selectedWidget.internals.wrongAnswer.actionType} className='inputStyle' onChange={(event)=>onChangeAnswer(event,"Wrong")} type="text" id="wrongpors" name="pors"/></td>
-                    <td><input defaultValue={selectedWidget.internals.wrongAnswer.target} className='inputStyle' onChange={(event)=>onChangeAnswerTarget(event,"Wrong")} type="text" id="wrongtarget" name="target"/></td>
+                    <td><input defaultValue={wrongtext} className='inputStyle' onChange={(event)=>onChangeAnswerTarget(event,"Wrong")} type="text" id="wrongtarget" name="target"/></td>
                     </tr>
                 </tbody>
             </Table>
