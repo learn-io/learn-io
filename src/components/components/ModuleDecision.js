@@ -11,7 +11,8 @@ const ReactGridLayout = WidthProvider(RGL);
 
 const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformName, 
 	setModuleId, moduleName, platformId, moduleId,
-	setPageName, setPageId, setPageEntry, pages})=>{
+	setPageName, setPageId, setPageEntry, pages,
+	setPageIndex})=>{
 
 	const [layout, setLayout] = useState([]);
 	// const [pages, setPages] = useState([]);
@@ -73,16 +74,18 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 		console.log(key)
 
 		console.log(pages[key]);
-		setSelectType("Page");
-		setSelectedPage(pages[key]);
+		// setSelectType("Page");
+		// setSelectedPage(pages[key]);
+		setPageIndex(key);
 	}
 
 	const deselectPage = (e) => {
 		// console.log(e.target.className);
 		if(e.target.className === "react-grid-layout grid"){
 			console.log("deselectPage");
-			setSelectType("");
-			setSelectedPage({});
+			// setSelectType("");
+			// setSelectedPage({});
+			setPageIndex();
 		}
 
 	}
@@ -113,8 +116,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 
 	if(isEdit){
 		return (	
-			<div className="platformContainer">
-				<div className="leftbar"/>
+			// <div className="platformContainer">
 
 				<div id="pageGrid" className="content" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}} onClick={(e)=>{deselectPage(e)}}>  {/*deselectPage() */}
 					<ReactGridLayout
@@ -139,11 +141,11 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 					</ReactGridLayout>
 				</div>
 				
-				<RightBar selectType={selectType} selected={selectedPage} setSelectedPage={setSelectedPage} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
-				{/* <div className="rightbar"> 
+				// {/* <RightBar selectType={selectType} selected={selectedPage} setSelectedPage={setSelectedPage} onDragStart={onDragStart} add={add} setAdd={setAdd}/> */}
+				// {/* <div className="rightbar"> 
 					
-				</div> */}
-			</div>
+				// </div> */}
+			// </div>
 		);
 
 	} else {
