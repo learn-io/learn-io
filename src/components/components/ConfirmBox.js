@@ -182,7 +182,7 @@ const ConfirmBox=({username,selectPlatform,setSelectPlatform,setSave,save})=>{
 						</div>
 					</>
 		buttonpart=<div style={{marginTop: '1%'}} className='clearfix'>
-						<Link className='playButton' to={'/setting/'}> Edit Platform</Link>
+						<Link className='playButton' to={'/edit/platform/'+selectPlatform._id}> Edit Platform</Link>
 						<Link className='playButton' to={'/play/platform/'+selectPlatform._id}> Play</Link>
 					</div>
 	}

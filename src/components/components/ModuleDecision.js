@@ -1,6 +1,5 @@
 import React, { useState, useEffect} from 'react';
 import '../ComponentStyle.css';
-import axios_instance from '../axios_instance.js';
 import {Row, Col} from 'react-bootstrap';
 import deleteIcon from '../images/delete.png';
 import saveIcon from '../images/save.png';
@@ -11,77 +10,57 @@ const ReactGridLayout = WidthProvider(RGL);
 
 const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformName, 
 	setModuleId, moduleName, platformId, moduleId,
-	setPageName, setPageId, setPageEntry, pages, setPages})=>{
+	setPageName, setPageId, setPageEntry, pages})=>{
 
 	const [layout, setLayout] = useState([]);
 
 	useEffect(
         ()=>{
-			let calls = [];
-			calls.push(
-				axios_instance({
-					method: 'get',
-					url: "page/" + platformId + "/" + moduleId,
-				})
-			);
-			Promise.all(calls).then((values)=>
-			{
+				if(isEdit)
+					return;
 				let info = userPlatformInfo
-				let pages = values[0].data;
-				console.log("pages")
-				console.log(pages)
+				//now we select a page
+				let choice = -1;
+				let count = 1;
+				let module_record = info.completeId.find(e => e.moduleId === moduleId);
+				let entrypoints = module_record? module_record.entryPoints : undefined;
+				pages.forEach( (item, index)=> 
+				{
+					//console.log(item);
+					//only entry points can be server
+					if (item.entry === false)
+						return;
+					//and only if we haven't completed them
+					if (entrypoints && entrypoints.find(e => e.score > 0 && e.pageId === item._id))
+						return;
 
-				if(isEdit){
-					setPages(pages);
-				} else {
-					//now we select a page
-					let choice = -1;
-					let count = 1;
-					let module_record = info.completeId.find(e => e.moduleId === moduleId);
-					let entrypoints = module_record? module_record.entryPoints : undefined;
-					pages.forEach( (item, index)=> 
+					if (choice === -1 || item.rank === pages[choice].rank)
 					{
-						//console.log(item);
-						//only entry points can be server
-						if (item.entry === false)
-							return;
-						//and only if we haven't completed them
-						if (entrypoints && entrypoints.find(e => e.score > 0 && e.pageId === item._id))
-							return;
-
-						if (choice === -1 || item.rank === pages[choice].rank)
+						//let's use a streaming algorithm to decide which to pick
+						if (1.0/count >= Math.random())
 						{
-							//let's use a streaming algorithm to decide which to pick
-							if (1.0/count >= Math.random())
-							{
-								choice = index;
-							}
-							count++;
-						}
-						else if (item.rank < pages[choice].rank)
-						{
-							count = 1;
 							choice = index;
 						}
-					} );
-					if(choice === -1)
+						count++;
+					}
+					else if (item.rank < pages[choice].rank)
 					{
-						alert("Module Done!");
-						setModuleId("");
+						count = 1;
+						choice = index;
 					}
-					else
-					{;
-						setPageName(pages[choice].pageName)
-						setPageId(pages[choice]._id)
-						setPageEntry(pages[choice]._id)
-					}
+				} );
+				if(choice === -1)
+				{
+					alert("Module Done!");
+					setModuleId("");
 				}
-			})
-			.catch(err=>{
-				console.log(err);
-				setModuleId("");
-			});
-        },[username, platformId, moduleId, isSignedIn, setModuleId, setPageEntry, setPageId, setPageName, userPlatformInfo]
+				else
+				{;
+					setPageName(pages[choice].pageName)
+					setPageId(pages[choice]._id)
+					setPageEntry(pages[choice]._id)
+				}
+        },[pages, username, platformId, moduleId, isSignedIn, setModuleId, setPageEntry, setPageId, setPageName, userPlatformInfo]
     );
 	if(isEdit){
 		return (	

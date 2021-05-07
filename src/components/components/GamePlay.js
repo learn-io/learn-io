@@ -11,24 +11,11 @@ const ReactGridLayout = WidthProvider(RGL);
 
 const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
     platformName, moduleName, pageName, 
-    platformId, moduleId, pageId})=>{
+    platformId, moduleId, pageId, curPage})=>{
 
     const [layout, setLayout] = useState();
-    const [curPage, setCurPage] = useState();
     
-    useEffect(
-        ()=>{
-			axios_instance({
-                method: 'get',
-                url: "page/"+platformId+"/"+moduleId+"/"+pageId
-            })
-            .then((res)=>{
-                setCurPage(res.data);
-                setPageName(res.data.pageName)
-            })
-            .catch(err=>console.log(err));
-        },[platformId,moduleId,pageId, setPageName]   
-	);
+
 
     useEffect( () => {
         if (curPage === undefined)
