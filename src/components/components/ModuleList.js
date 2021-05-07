@@ -3,7 +3,9 @@ import '../ComponentStyle.css';
 import lockIcon from '../images/lock.png';
 import unlockIcon from '../images/unlock.png'
 
-const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, modules, setSelectedModule, setSelectedDisable})=>{
+const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, 
+    modules, setSelectedModule, setSelectedDisable,
+    dragging, setDragging})=>{
 
     const imgLock = useRef(new Image())
     const imgUnlock = useRef(new Image())
@@ -25,6 +27,8 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, mod
     const [editYOFF, setEditYOFF] = useState(0);
 
     const [connectLine, setConnectLine] = useState({})
+
+    
 
     const width = 1920;
     const height = 1080;
@@ -363,6 +367,17 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, mod
         setConnectLine({})
         setEditSelected(-1);
     }
+
+    useEffect( ()=> {
+        setDragging(false);
+        setEditMode(0);
+        setEditXOFF(0);
+        setEditYOFF(0);
+
+        //TODO: live save and get ID handle
+        //setEditSelected(id);
+    }, [dragging]
+    );
 
 	return(   
             <canvas className='canvasStyle content' ref={canvasRef} 
