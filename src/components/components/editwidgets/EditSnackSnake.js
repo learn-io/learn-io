@@ -2,7 +2,7 @@ import React from 'react';
 import {Table} from 'react-bootstrap';
 import './editStyle.css';
 
-const EditSnackSnake = ({selectedWidget,curPage,add,setAdd})=>{
+const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
 
     const onChangeAnswer=(event,answer)=>{
         for(let i=0;i<curPage.widgets.length;i++){

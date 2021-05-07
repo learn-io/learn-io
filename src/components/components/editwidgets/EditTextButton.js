@@ -2,7 +2,7 @@ import React from 'react';
 import {Table} from 'react-bootstrap';
 import './editStyle.css';
 
-const EditTextButton = ({selectedWidget,curPage,add,setAdd})=>{
+const EditTextButton = ({selectedWidget,curPage,add,setAdd,pages})=>{
     const onChangeText=(event)=>{
         // console.log(curPage);
         for(let i=0;i<curPage.widgets.length;i++){
@@ -26,11 +26,34 @@ const EditTextButton = ({selectedWidget,curPage,add,setAdd})=>{
     }
     const onChangeTarget=(event)=>{
         for(let i=0;i<curPage.widgets.length;i++){
+            let value="";
             if(curPage.widgets[i]===selectedWidget){
-                curPage.widgets[i].internals.click.target=event.target.value;
+                if(curPage.widgets[i].internals.click.actionType==='P'){
+                    for(let j=0;j<pages.length;j++){
+                        if(pages[j].pageName===event.target.value){
+                            value=pages[j]._id;
+                            break;
+                        }
+                    }
+                }else{
+                    value=event.target.value;
+                }
+                curPage.widgets[i].internals.click.target=value;
                 break;
             }
         }
+        // console.log(curPage);
+    }
+    let text="";
+    if(selectedWidget.internals.click.actionType==='P'){
+        for(let i=0;i<pages.length;i++){
+            if(pages[i]._id===selectedWidget.internals.click.target){
+                text=pages[i].pageName;
+                break;
+            }
+        }
+    }else{
+        text=selectedWidget.internals.click.target;
     }
     let game=<div style={{paddingTop:'5%'}}>
                 <Table striped bordered hover>
@@ -45,7 +68,7 @@ const EditTextButton = ({selectedWidget,curPage,add,setAdd})=>{
                         <tr>
                         <td><input defaultValue={selectedWidget.internals.text} onChange={onChangeText} className='inputStyle' type="text" id="buttontext" name="buttontext"/></td>
                         <td><input defaultValue={selectedWidget.internals.click.actionType} onChange={onChangePorS} className='inputStyle' type="text" id="pors" name="pors"/></td>
-                        <td><input defaultValue={selectedWidget.internals.click.target} onChange={onChangeTarget} className='inputStyle' type="text" id="target" name="target"/></td>
+                        <td><input defaultValue={text} onChange={onChangeTarget} className='inputStyle' type="text" id="target" name="target"/></td>
                         </tr>
                     </tbody>
                 </Table>

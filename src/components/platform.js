@@ -227,7 +227,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
 
         // let thepage = allPages[moduleId].find(x => x._id === pageId);
         //                 setCurPage(thepage);
-
+        // console.log(pages);
         return (
             <div className="platformContainer">
                 <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
@@ -238,7 +238,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 platformId={platformId} moduleId={moduleId} pageId={pageId} curPage={curPage}
                 setWidgetIndex={setWidgetIndex} update={add}/>
 
-                <RightBar selectType={"Widget"} curPage={curPage} selected={widgetIndex} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
+                <RightBar selectType={"Widget"} curPage={curPage} selected={widgetIndex} onDragStart={onDragStart} add={add} setAdd={setAdd} pages={pages}/>
             </div>
         );
     }

@@ -1,7 +1,7 @@
 import RighttopBar from './RighttopBar';
 import RightbottomBar from './RightbottomBar';
 
-const RightBar = ({selectType, curPage, selected, onDragStart, add, setAdd}) => {
+const RightBar = ({selectType, curPage, selected, onDragStart, add, setAdd,pages}) => {
 
     console.log("selected")
     console.log(selected);
@@ -20,7 +20,7 @@ const RightBar = ({selectType, curPage, selected, onDragStart, add, setAdd}) => 
     }
 
     let rightBarTop = <RighttopBar selectType={selectType} onDragStart={onDragStart}/>
-    let rightBarBottom = <RightbottomBar curPage={curPage} selectType={selectType} selected={select_widget} add={add} setAdd={setAdd}/> // curPage={curPage}
+    let rightBarBottom = <RightbottomBar curPage={curPage} selectType={selectType} selected={select_widget} add={add} setAdd={setAdd} pages={pages}/> // curPage={curPage}
 
     return(
         <div className="rightbar">
