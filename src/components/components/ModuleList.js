@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import '../ComponentStyle.css';
 import lockIcon from '../images/lock.png';
-import unlockIcon from '../images/unlock.png';
+import unlockIcon from '../images/unlock.png'
 
 const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, modules, setSelectedModule, setSelectedDisable})=>{
 
@@ -19,7 +19,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, mod
 
     const [editSelected, setEditSelected] = useState(-1);
 
-    const [editMode, setEditMode] = useState(1); //-1 => enter, 0 => drag, 1=> connect
+    const [editMode, setEditMode] = useState(-1); //-1 => enter, 0 => drag, 1=> connect
 
     const [editXOFF, setEditXOFF] = useState(0);
     const [editYOFF, setEditYOFF] = useState(0);
@@ -29,19 +29,17 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, mod
     const width = 1920;
     const height = 1080;
 
-    //set this to match CSS for accurate clicks
-    const widthPercent = .7;
-    const heightPercent = .7;
-
     const radius = 75;
 
     useEffect( ()=> {
         function resize()
         {
-            setScaleY( (widthPercent * window.innerHeight) / height );
-            setScaleX( (heightPercent * window.innerWidth) / width );
+            //setScaleY( (widthPercent * window.innerHeight) / height );
+            //setScaleX( (heightPercent * window.innerWidth) / width );
+            setScaleY((height / (window.innerWidth*.7 * (height/width))) );
+            setScaleX((width / (window.innerWidth*.7)) ); 
         };
-        window.addEventListener('resize', resize);
+        //window.addEventListener('resize', resize);
         resize();
 
         imgLock.current.onload = ()=>{setRedraw(r => !r)};
@@ -50,16 +48,15 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, mod
         imgLock.current.src = lockIcon;
         imgUnlock.current.src = unlockIcon;
         
-        return () => { window.removeEventListener('resize', resize);}
+       //return () => { window.removeEventListener('resize', resize);}
     },[]);
 
 	useEffect(() => {
         let ctx = canvasRef.current.getContext('2d');
         if(!ctx)
             return;
-        ctx.canvas.width = width * scaleX;
-        ctx.canvas.height = height * scaleY;
-        ctx.scale(scaleX, scaleY);
+        ctx.canvas.width = width;
+        ctx.canvas.height = height;
         let lockStatus=false;
         // if there is user platform information
         let userCompleteId=[];      // use to handle how many modules that user complete
@@ -133,7 +130,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, mod
             ctx.stroke();
         }
         // console.log(unlockList);
-	}, [editMode, modules, scaleX, scaleY, unlockList, redraw, userPlatformInfo, connectLine, editSelected]
+	}, [editMode, modules, unlockList, redraw, userPlatformInfo, connectLine, editSelected]
     );
     /*
     
@@ -244,9 +241,8 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, mod
         if (!ctx)
             return;
         var rect = ctx.canvas.getBoundingClientRect();
-        const x = (e.clientX - rect.left)/scaleX;
-        const y = (e.clientY - rect.top)/scaleY;
-        
+        const x = (e.clientX - rect.left) * scaleX;
+        const y = (e.clientY - rect.top) * scaleY;
         
         if (isEdit && !(editMode === -1)) //enter mode only when editing
             return;
@@ -274,8 +270,8 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, mod
         if (!isEdit || editSelected === -1 || !(editMode === 0 || editMode === 1)) //drag or connect
             return;
         var rect = ctx.canvas.getBoundingClientRect();
-        const x = (e.clientX - rect.left)/scaleX;
-        const y = (e.clientY - rect.top)/scaleY;
+        const x = (e.clientX - rect.left) * scaleX;
+        const y = (e.clientY - rect.top) * scaleY;
 
         if (editMode === 0)
         {
@@ -309,8 +305,8 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, mod
         if (!ctx)
             return;
         var rect = ctx.canvas.getBoundingClientRect();
-        const x = (e.clientX - rect.left)/scaleX;
-        const y = (e.clientY - rect.top)/scaleY;
+        const x = (e.clientX - rect.left) * scaleX;
+        const y = (e.clientY - rect.top) * scaleY;
         
         if (!isEdit || editMode === -1)
             return;
@@ -345,8 +341,8 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, mod
         if (editMode === 1)
         {
             var rect = ctx.canvas.getBoundingClientRect();
-            const x = (e.clientX - rect.left)/scaleX;
-            const y = (e.clientY - rect.top)/scaleY;
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
             let id = getModuleId(x, y);
             if (id === -1)
             {
@@ -368,14 +364,10 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, mod
         setEditSelected(-1);
     }
 
-	return(
-        <div className="platformContainer">
-            <div className="leftbar"/>
+	return(   
             <canvas className='canvasStyle content' ref={canvasRef} 
             onClick={handleCanvasClick} onMouseMove={handleMouseMove}
             onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}/>
-            <div className="rightbar"/>
-        </div>
     );
 
 }

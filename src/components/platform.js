@@ -5,10 +5,11 @@ import axios_instance from './axios_instance';
 import ModuleView from './components/ModuleView.js'
 import ModuleDecision from './components/ModuleDecision.js'
 import GamePlay from './components/GamePlay.js'
+import LeftBar from './components/LeftBar'
 
 import getUserPlatformInfo from './components/PlatformHelper.js';
 
-const PlatformController=({username, isSignedIn})=>{
+const PlatformController=({username, isSignedIn, isEdit})=>{
 
     const [platformName, setPlatformName] = useState("");
     const [moduleName, setModuleName] = useState("");
@@ -28,22 +29,71 @@ const PlatformController=({username, isSignedIn})=>{
         badges: [false, false, false, false],
     });
     const [platform, setPlatform] = useState({})
+    const [allPages, setAllPages] = useState({});
+    const [pages, setPages] = useState([]);
+    const [curPage, setCurPage] = useState({});
 
 	useEffect(
         ()=>{
-            console.log(platformId);
 			getUserPlatformInfo(isSignedIn, platformId)
 			.then((res)=>{
-                console.log(res.data);
 				setUserPlatformInfo(res.data);
 			})
 			.catch(err=>console.log(err));
         },[username, isSignedIn, platformId]
     );
 
+    useEffect(
+        ()=>{
+            if(moduleId === "")
+            {
+                setCurPage({});
+                setPages([]);
+                return;
+            }
+            if (pageId === "")
+            {
+                setCurPage({});
+            }
+            if (allPages[moduleId])
+            {
+                setPages(allPages[moduleId]);
+                let thepage = allPages[moduleId].find(x => x._id === pageId);
+                setCurPage(thepage);
+            }
+            else
+            {
+                axios_instance({
+                    method: 'get',
+                    url: "page/" + platformId + "/" + moduleId,
+                }).then((res)=>
+                    {
+                        setPages(res.data);
+                        allPages[moduleId] = res.data;
+                        platform.modules.forEach( (x)=>{if (x._id === moduleId) setModuleName(x.moduleName);});
+                        let thepage = allPages[moduleId].find(x => x._id === pageId);
+                        setCurPage(thepage);
+                    }
+                )	
+            }
+        },[platformId,moduleId, pageId]   
+	);
+
+    useEffect(
+        ()=>{
+            if (moduleId === "")
+                setPages([]);
+            else
+            {
+                    
+            }
+        },[platformId, moduleId]
+    );
     const setAction = (action) =>
     {
         if (action.actionType === undefined || action.actionType===null)
+            return;
+        if (isEdit)
             return;
         if (action.actionType === "P")
         {
@@ -126,31 +176,42 @@ const PlatformController=({username, isSignedIn})=>{
     if (moduleId === "")
     {
         return (
+        <div className="platformContainer">
+            <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>  
             <ModuleView username={username} isSignedIn={isSignedIn} isEdit={false} 
             platformId={platformId} platform={platform} setPlatform={setPlatform}
             userPlatformInfo={userPlatformInfo}
             platformName={platformName} setPlatformName = {setPlatformName}
             setModuleName={setModuleName} setModuleId={setModuleId}/>
+        </div>
         );
     }
     else if (pageId === "")
     {
         return (
-            <ModuleDecision username={username} isSignedIn={isSignedIn} isEdit={true} 
-                userPlatformInfo={userPlatformInfo} setModuleId={setModuleId}
-                platformName={platformName} moduleName = {moduleName}
-                platformId={platformId} moduleId = {moduleId}
-                setPageName={setPageName} setPageId={setPageId}
-                setPageEntry={setPageEntry}/>
+            <div className="platformContainer">
+                <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
+                <ModuleDecision username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
+                    userPlatformInfo={userPlatformInfo} setModuleId={setModuleId}
+                    platformName={platformName} moduleName = {moduleName}
+                    platformId={platformId} moduleId = {moduleId}
+                    setPageName={setPageName} setPageId={setPageId}
+                    setPageEntry={setPageEntry}
+                    pages={pages}/>
+            </div>
         );
     }
     else
     {
         return (
-            <GamePlay username={username} isSignedIn={isSignedIn} isEdit={false} 
-            setAction={setAction} setPageName={setPageName}
-            platformName={platformName} moduleName={moduleName} pageName={pageName}
-            platformId={platformId} moduleId={moduleId} pageId={pageId} />
+            <div className="platformContainer">
+                <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
+                
+                <GamePlay username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
+                setAction={setAction} setPageName={setPageName}
+                platformName={platformName} moduleName={moduleName} pageName={pageName}
+                platformId={platformId} moduleId={moduleId} pageId={pageId} curPage={curPage}/>
+            </div>
         );
     }
 

@@ -6,6 +6,7 @@ import EditMatching from './editwidgets/EditMatching.js';
 import EditMultipleChoice from './editwidgets/EditMultipleChoice.js';
 import EditQuickTimeChoice from './editwidgets/EditQuickTimeChoice.js';
 import EditTextButton from './editwidgets/EditTextButton.js';
+import EditSnackSnake from './editwidgets/EditSnackSnake.js';
 
 const RightbottomBar = ({curPage, selectedWidget, selectType, selected, add,setAdd}) =>{ //selectedWidget,curPage
     let selectedInfo = "";
@@ -82,6 +83,7 @@ const RightbottomBar = ({curPage, selectedWidget, selectType, selected, add,setA
                 reader.readAsDataURL(imageFile);
             }
         }
+
         const onChangeText=(event)=>{
             // console.log(curPage);
             for(let i=0;i<curPage.length;i++){
@@ -103,6 +105,7 @@ const RightbottomBar = ({curPage, selectedWidget, selectType, selected, add,setA
                 }
             }
         }
+
         const onChangeTarget=(event)=>{
             for(let i=0;i<curPage.length;i++){
                 if(curPage[i]===selectedWidget){
@@ -112,44 +115,6 @@ const RightbottomBar = ({curPage, selectedWidget, selectType, selected, add,setA
             }
         }
         // let textInput=<div>Input Text:<input style={{width:'90%'}} type="text" id="textinput" name="textinput" onChange={onChangeText}/></div>
-        let snackInfo=<div>
-                            <Table striped bordered hover>
-                                <thead>
-                                    <tr>
-                                    <th>Correct Text</th>
-                                    <th>Page(P) or Score(S)</th>
-                                    <th>Target</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                    <td><input style={{width:'100%'}} type="text" id="buttontext" name="buttontext"/></td>
-                                    <td><input style={{width:'100%'}} type="text" id="pors" name="pors"/></td>
-                                    <td><input style={{width:'100%'}} type="text" id="target" name="target"/></td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                            <Table striped bordered hover>
-                                <thead>
-                                    <tr>
-                                    <th>Correct Option</th>
-                                    <th>Wrong Opstion</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                    <td><input style={{width:'100%'}} type="text" id="correctText" name="correctText"/></td>
-                                    <td><input style={{width:'100%'}} type="text" id="wrongText" name="wrongText"/></td>
-                                    </tr>
-                                </tbody>
-                                <tbody>
-                                    <tr>
-                                    <td><input style={{width:'100%'}} type="text" id="correctText" name="correctText"/></td>
-                                    <td><input style={{width:'100%'}} type="text" id="wrongText" name="wrongText"/></td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                        </div>
         let game;
         if(selectedWidget==="")
             return <div></div>;
@@ -160,47 +125,97 @@ const RightbottomBar = ({curPage, selectedWidget, selectType, selected, add,setA
             }else{
                 textforButton="Upload Image";
             }
-            game=<div>
-                    <button style={{backgroundColor:'#96CCFF',borderRadius: '.5rem',marginTop: '10%'}} onClick={handleClick}>{textforButton}</button>
-                    <input type="file" ref={hiddenFileInput} style={{ display: "none" }} onChange={onUploadImage} />
-                </div>
-        }else if(selectedWidget.internals.widgetFlavor==="TextBox"){
-            game=<div>Input Text:<input defaultValue={selectedWidget.internals.text} style={{width:'90%'}} type="text" id="textinput" name="textinput" onChange={onChangeText}/></div>;
-        }else if(selectedWidget.internals.widgetFlavor==="Flashcard"){
-            game=<EditFlashcard selectedWidget={selectedWidget} curPage={curPage} add={add} setAdd={setAdd}/>
-        }else if(selectedWidget.internals.widgetFlavor==="ImageButton"){
-            game=<div>
-                    <div>
-                        <button style={{backgroundColor:'#96CCFF',borderRadius: '.5rem',marginTop: '10%'}} onClick={handleClick}>Upload Image</button>
-                        <input type="file" ref={hiddenFileInput} style={{ display: "none" }} onChange={onUploadImage} />
-                    </div>
-                    <div style={{paddingTop:'5%'}}>
+            // let textInput=<div>Input Text:<input style={{width:'90%'}} type="text" id="textinput" name="textinput" onChange={onChangeText}/></div>
+            let snackInfo=<div>
                                 <Table striped bordered hover>
                                     <thead>
                                         <tr>
+                                        <th>Correct Text</th>
                                         <th>Page(P) or Score(S)</th>
                                         <th>Target</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                        <td><input defaultValue={selectedWidget.internals.click.actionType} style={{border:'none',backgroundColor:"transparent",width:'100%'}} onChange={(event)=>onChangePorS(event)} type="text" id="pors" name="pors"/></td>
-                                        <td><input defaultValue={selectedWidget.internals.click.target} style={{border:'none',backgroundColor:"transparent",width:'100%'}} onChange={(event)=>onChangeTarget(event)} type="text" id="target" name="target"/></td>
+                                        <td><input style={{width:'100%'}} type="text" id="buttontext" name="buttontext"/></td>
+                                        <td><input style={{width:'100%'}} type="text" id="pors" name="pors"/></td>
+                                        <td><input style={{width:'100%'}} type="text" id="target" name="target"/></td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                                <Table striped bordered hover>
+                                    <thead>
+                                        <tr>
+                                        <th>Correct Option</th>
+                                        <th>Wrong Opstion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                        <td><input style={{width:'100%'}} type="text" id="correctText" name="correctText"/></td>
+                                        <td><input style={{width:'100%'}} type="text" id="wrongText" name="wrongText"/></td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody>
+                                        <tr>
+                                        <td><input style={{width:'100%'}} type="text" id="correctText" name="correctText"/></td>
+                                        <td><input style={{width:'100%'}} type="text" id="wrongText" name="wrongText"/></td>
                                         </tr>
                                     </tbody>
                                 </Table>
                             </div>
-                </div>
-        }else if(selectedWidget.internals.widgetFlavor==="MultipleChoice"){
-            game=<EditMultipleChoice selectedWidget={selectedWidget} curPage={curPage} add={add} setAdd={setAdd}/>
-        }else if(selectedWidget.internals.widgetFlavor==="Matching"){
-            game=<EditMatching selectedWidget={selectedWidget} curPage={curPage} add={add} setAdd={setAdd}/>
-        }else if(selectedWidget.internals.widgetFlavor==="QuickTimeChoice"){
-            game=<EditQuickTimeChoice selectedWidget={selectedWidget} curPage={curPage} add={add} setAdd={setAdd}/>
-        }else if(selectedWidget.internals.widgetFlavor==="TextButton"){
-            game=<EditTextButton selectedWidget={selectedWidget} curPage={curPage} add={add} setAdd={setAdd}/>
-        }else if(selectedWidget.internals.widgetFlavor==="Snacksnake"){
-            game=snackInfo;
+            let game;
+            if(selectedWidget==="")
+                return <div></div>;
+            if(selectedWidget.internals.widgetFlavor==="Sound"||selectedWidget.internals.widgetFlavor==="ImageBox"){
+                let textforButton;
+                if(selectedWidget.internals.widgetFlavor==="Sound"){
+                    textforButton="Upload Sound";
+                }else{
+                    textforButton="Upload Image";
+                }
+                game=<div>
+                        <button style={{backgroundColor:'#96CCFF',borderRadius: '.5rem',marginTop: '10%'}} onClick={handleClick}>{textforButton}</button>
+                        <input type="file" ref={hiddenFileInput} style={{ display: "none" }} onChange={onUploadImage} />
+                    </div>
+            }else if(selectedWidget.internals.widgetFlavor==="TextBox"){
+                game=<div>Input Text:<input defaultValue={selectedWidget.internals.text} style={{width:'90%'}} type="text" id="textinput" name="textinput" onChange={onChangeText}/></div>;
+            }else if(selectedWidget.internals.widgetFlavor==="Flashcard"){
+                game=<EditFlashcard selectedWidget={selectedWidget} curPage={curPage} add={add} setAdd={setAdd}/>
+            }else if(selectedWidget.internals.widgetFlavor==="ImageButton"){
+                game=<div>
+                        <div>
+                            <button style={{backgroundColor:'#96CCFF',borderRadius: '.5rem',marginTop: '10%'}} onClick={handleClick}>Upload Image</button>
+                            <input type="file" ref={hiddenFileInput} style={{ display: "none" }} onChange={onUploadImage} />
+                        </div>
+                        <div style={{paddingTop:'5%'}}>
+                                    <Table striped bordered hover>
+                                        <thead>
+                                            <tr>
+                                            <th>Page(P) or Score(S)</th>
+                                            <th>Target</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                            <td><input defaultValue={selectedWidget.internals.click.actionType} style={{border:'none',backgroundColor:"transparent",width:'100%'}} onChange={(event)=>onChangePorS(event)} type="text" id="pors" name="pors"/></td>
+                                            <td><input defaultValue={selectedWidget.internals.click.target} style={{border:'none',backgroundColor:"transparent",width:'100%'}} onChange={(event)=>onChangeTarget(event)} type="text" id="target" name="target"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                                </div>
+                    </div>
+            }else if(selectedWidget.internals.widgetFlavor==="MultipleChoice"){
+                game=<EditMultipleChoice selectedWidget={selectedWidget} curPage={curPage} add={add} setAdd={setAdd}/>
+            }else if(selectedWidget.internals.widgetFlavor==="Matching"){
+                game=<EditMatching selectedWidget={selectedWidget} curPage={curPage} add={add} setAdd={setAdd}/>
+            }else if(selectedWidget.internals.widgetFlavor==="QuickTimeChoice"){
+                game=<EditQuickTimeChoice selectedWidget={selectedWidget} curPage={curPage} add={add} setAdd={setAdd}/>
+            }else if(selectedWidget.internals.widgetFlavor==="TextButton"){
+                game=<EditTextButton selectedWidget={selectedWidget} curPage={curPage} add={add} setAdd={setAdd}/>
+            }else if(selectedWidget.internals.widgetFlavor==="Snacksnake"){
+                game=snackInfo;
+            }
         }
         selectedInfo = game;
     } else {
