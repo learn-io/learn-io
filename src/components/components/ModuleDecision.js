@@ -6,6 +6,7 @@ import deleteIcon from '../images/delete.png';
 import saveIcon from '../images/save.png';
 import RGL, { WidthProvider } from "react-grid-layout";
 import Page from './Page.js';
+import RightBar from './RightBar.js';
 
 const ReactGridLayout = WidthProvider(RGL);
 
@@ -15,6 +16,9 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 
 	const [layout, setLayout] = useState([]);
 	const [pages, setPages] = useState([]);
+	const [selectedPage, setSelectedPage] = useState({});
+	const [add,setAdd]= useState(0);
+	const [selectType, setSelectType] = useState("");
 
 	useEffect(
         ()=>{
@@ -84,12 +88,56 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 			});
         },[username, platformId, moduleId, isSignedIn, setModuleId, setPageEntry, setPageId, setPageName, userPlatformInfo]
     );
+
+	const selectPage = (key) =>{
+		console.log("key")
+		console.log(key)
+
+		console.log(pages[key]);
+		setSelectType("Page");
+		setSelectedPage(pages[key]);
+	}
+
+	const deselectPage = (e) => {
+		// console.log(e.target.className);
+		if(e.target.className === "react-grid-layout grid"){
+			console.log("deselectPage");
+			setSelectType("");
+			setSelectedPage({});
+		}
+
+	}
+
+	const onDragStart=(event,text)=> {
+        // console.log(text);
+        event.dataTransfer.setData("Text", text);
+    }
+
+	const onDragOver=(event)=>{
+        event.preventDefault();
+    }
+
+	const onDrop=(event)=>{
+		event.preventDefault();
+		let data = event.dataTransfer.getData("Text");
+		let newPage = {
+			pageName:"New Page",
+			entry: false,
+			moduleId:moduleId,
+			platformId:platformId,
+			rank:0,
+			widgets:[]
+		}
+		pages.push(newPage);
+		setAdd(add+1)
+	}
+
 	if(isEdit){
 		return (	
 			<div className="platformContainer">
 				<div className="leftbar"/>
 
-				<div className="content">
+				<div id="pageGrid" className="content" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}} onClick={(e)=>{deselectPage(e)}}>  {/*deselectPage() */}
 					<ReactGridLayout
 					className="grid" 
 					compactType={null} 
@@ -98,20 +146,24 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 					cols={8}
 					>
 					{
-						// pages.map((val, key) => {
-						// 	// console.log(val);
-						// 	return (
-						// 		<div key={''+key} className="page" onClick={()=>{ /*selectedPage(key) */}}>
-						// 			<Page pageInfo={val}/>
-						// 		</div>
-						// 	)
-						// })
-						
+						pages.map((val, key) => {
+							// console.log(val);
+
+							//
+							return (
+								<div key={''+key} className="page" onClick={()=>{ selectPage(key) }}> 
+									<Page pageInfo={val} name={''+key}/>
+								</div>
+							)
+						})	
 					}
 					</ReactGridLayout>
 				</div>
-
-				<div className="rightbar"/>
+				
+				<RightBar selectType={selectType} selected={selectedPage} setSelectedPage={setSelectedPage} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
+				{/* <div className="rightbar"> 
+					
+				</div> */}
 			</div>
 		);
 

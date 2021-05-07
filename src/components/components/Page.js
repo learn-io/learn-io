@@ -3,8 +3,8 @@ import '../ComponentStyle.css';
 
 const Page = ({pageInfo}) => {
     
-    console.log("pageInfo")
-    console.log(pageInfo)
+    // console.log("pageInfo")
+    // console.log(pageInfo)
 
     const [entry,setEntry]=useState(false);
     const [pageName,setPageName]=useState("");
@@ -23,7 +23,7 @@ const Page = ({pageInfo}) => {
 
     return(
         <div className="page">
-            <h1>{pageName}</h1>
+            <h3>{pageName}</h3>
         </div>
     );
 };

@@ -544,6 +544,7 @@ input.largeCheckbox{
 
 .content{
 	width: 70%;
+	height: 100%;
 	float:left;
 }
 
