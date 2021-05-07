@@ -54,7 +54,7 @@ const RightbottomBar = ({curPage, selectType, selected, add,setAdd}) =>{ //selec
                     </label>
         selectedInfo=<div> {pageName} {entry} {rank} </div>;
     } else if (selectType === "Widget"){
-        if(curPage === undefined){
+        if(curPage._id === undefined){
             return (
                 <div style={{overflowY:'scroll', border: '1px solid black', height: '50%'}}>
     
