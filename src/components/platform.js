@@ -236,7 +236,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 setAction={setAction} setPageName={setPageName}
                 platformName={platformName} moduleName={moduleName} pageName={pageName}
                 platformId={platformId} moduleId={moduleId} pageId={pageId} curPage={curPage}
-                setWidgetIndex={setWidgetIndex}/>
+                setWidgetIndex={setWidgetIndex} update={add}/>
 
                 <RightBar selectType={"Widget"} curPage={curPage} selected={widgetIndex} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
             </div>

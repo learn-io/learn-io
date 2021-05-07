@@ -4,9 +4,9 @@ import './editStyle.css';
 
 const EditQuickTimeChoice = ({selectedWidget,curPage,add,setAdd})=>{
     const onChangeQuickTimeText=(event,index)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
-                curPage[i].internals.options[index].text=event.target.value;
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
+                curPage.widgets[i].internals.options[index].text=event.target.value;
                 break;
             }
         }
@@ -14,9 +14,9 @@ const EditQuickTimeChoice = ({selectedWidget,curPage,add,setAdd})=>{
         setAdd(add+1);
     }
     const onChangeQuickTimePos=(event,index)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
-                curPage[i].internals.options[index].actionType=event.target.value;
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
+                curPage.widgets[i].internals.options[index].actionType=event.target.value;
                 break;
             }
         }
@@ -24,9 +24,9 @@ const EditQuickTimeChoice = ({selectedWidget,curPage,add,setAdd})=>{
         // setAdd(add+1);
     }
     const onChangeQuickTimeTarget=(event,index)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
-                curPage[i].internals.options[index].target=event.target.value;
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
+                curPage.widgets[i].internals.options[index].target=event.target.value;
                 break;
             }
         }
@@ -34,18 +34,18 @@ const EditQuickTimeChoice = ({selectedWidget,curPage,add,setAdd})=>{
         // setAdd(add+1);
     }
     const onChangeQuickTimeout=(event)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
-                curPage[i].internals.timeout.actionType=event.target.value;
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
+                curPage.widgets[i].internals.timeout.actionType=event.target.value;
                 break;
             }
         }
         // console.log(curPage);
     }
     const onChangeQuickTimeoutTarget=(event)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
-                curPage[i].internals.timeout.target=event.target.value;
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
+                curPage.widgets[i].internals.timeout.target=event.target.value;
                 break;
             }
         }

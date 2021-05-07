@@ -4,16 +4,16 @@ import './editStyle.css';
 
 const EditFlashcard = ({selectedWidget,curPage,add,setAdd})=>{
     const onChangeFlashText=(event,index,position)=>{
-        for(let i=0;i<curPage.length;i++){
-            if(curPage[i]===selectedWidget){
-                while(curPage[i].internals.text.length<=index){
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
+                while(curPage.widgets[i].internals.text.length<=index){
                     let ob={"front":"","back":""}
-                    curPage[i].internals.text.push(ob);
+                    curPage.widgets[i].internals.text.push(ob);
                 }
                 if(position==="front"){
-                    curPage[i].internals.text[index].front=event.target.value;
+                    curPage.widgets[i].internals.text[index].front=event.target.value;
                 }else{
-                    curPage[i].internals.text[index].back=event.target.value;
+                    curPage.widgets[i].internals.text[index].back=event.target.value;
                 }
                 break;
             }
