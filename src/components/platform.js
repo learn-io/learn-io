@@ -228,7 +228,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 platformName={platformName} moduleName={moduleName} pageName={pageName}
                 platformId={platformId} moduleId={moduleId} pageId={pageId} curPage={curPage}/>
 
-                <RightBar selectType={"Page"} curPage={pages} selected={pages[pageIndex]} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
+                <RightBar selectType={"Widget"} curPage={pages} selected={pages[pageIndex]} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
             </div>
         );
     }
