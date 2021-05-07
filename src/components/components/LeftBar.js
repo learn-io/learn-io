@@ -18,8 +18,7 @@ const LeftBarAccordion = ({platform, modules, pages, setPageId, setModuleId}) =>
 {
     const getPageAccordion = (page, index) =>
     {
-        console.log(page);
-        return <Button className="moduleTreeButton" variant="info" onClick={()=>setPageId(page._id)}>{page.pageName}</Button>
+        return <Button key={index} className="moduleTreeButton" variant="info" onClick={()=>setPageId(page._id)}>{page.pageName}</Button>
     }
 
     const getModuleAccordion = (module, index) => 
@@ -27,13 +26,16 @@ const LeftBarAccordion = ({platform, modules, pages, setPageId, setModuleId}) =>
         if (pages[0] && module._id === pages[0].moduleId)
         {
             return (
-                <Accordion defaultActiveKey="0">
+                <Accordion key={index} defaultActiveKey="0">
                     <Card>
                         <Accordion.Toggle as = {Card.Header} eventKey="0">
                             {module.moduleName}
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey="0">
                             <Card.Body>
+                            <Button className="moduleTreeButton" variant="primary" onClick={()=>{setModuleId(module._id); setPageId("");}}>
+                                {module.moduleName}
+                            </Button>
                             {
                                 pages.map( (page, i) =>
                                 {
@@ -49,7 +51,7 @@ const LeftBarAccordion = ({platform, modules, pages, setPageId, setModuleId}) =>
         }
         else
         {
-            return <Button className="moduleTreeButton" variant="info" onClick={()=>{setModuleId(module._id); setPageId("");}}>{module.moduleName}</Button>
+            return <Button key={index} className="moduleTreeButton" variant="info" onClick={()=>{setModuleId(module._id); setPageId("");}}>{module.moduleName}</Button>
         }
     }
 
@@ -71,10 +73,6 @@ const LeftBarAccordion = ({platform, modules, pages, setPageId, setModuleId}) =>
             }
             </>
     }
-    console.log("info:");
-    console.log(pages);
-    console.log(modules);
-    console.log(platform);
     return getPlatformAccordion(platform);
         
 }

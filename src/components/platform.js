@@ -10,7 +10,7 @@ import LeftBar from './components/LeftBar';
 
 import getUserPlatformInfo from './components/PlatformHelper.js';
 
-const PlatformController=({username, isSignedIn})=>{
+const PlatformController=({username, isSignedIn, isEdit})=>{
 
     const [platformName, setPlatformName] = useState("");
     const [moduleName, setModuleName] = useState("");
@@ -30,16 +30,14 @@ const PlatformController=({username, isSignedIn})=>{
         badges: [false, false, false, false],
     });
     const [platform, setPlatform] = useState({})
+    const [allPages, setAllPages] = useState({});
     const [pages, setPages] = useState([]);
-
-    const [isEdit, setIsEdit] = useState(true);
+    const [curPage, setCurPage] = useState({});
 
 	useEffect(
         ()=>{
-            console.log(platformId);
 			getUserPlatformInfo(isSignedIn, platformId)
 			.then((res)=>{
-                console.log(res.data);
 				setUserPlatformInfo(res.data);
 			})
 			.catch(err=>console.log(err));
@@ -48,26 +46,55 @@ const PlatformController=({username, isSignedIn})=>{
 
     useEffect(
         ()=>{
+            if(moduleId === "")
+            {
+                setCurPage({});
+                setPages([]);
+                return;
+            }
+            if (pageId === "")
+            {
+                setCurPage({});
+            }
+            if (allPages[moduleId])
+            {
+                setPages(allPages[moduleId]);
+                let thepage = allPages[moduleId].find(x => x._id === pageId);
+                setCurPage(thepage);
+            }
+            else
+            {
+                axios_instance({
+                    method: 'get',
+                    url: "page/" + platformId + "/" + moduleId,
+                }).then((res)=>
+                    {
+                        setPages(res.data);
+                        allPages[moduleId] = res.data;
+                        platform.modules.forEach( (x)=>{if (x._id === moduleId) setModuleName(x.moduleName);});
+                        let thepage = allPages[moduleId].find(x => x._id === pageId);
+                        setCurPage(thepage);
+                    }
+                )	
+            }
+        },[platformId,moduleId, pageId]   
+	);
+
+    useEffect(
+        ()=>{
             if (moduleId === "")
                 setPages([]);
             else
             {
-                axios_instance({
-					method: 'get',
-					url: "page/" + platformId + "/" + moduleId,
-				}).then((res)=>
-                    {
-                        setPages(res.data);
-                        platform.modules.forEach( (x)=>{if (x._id === moduleId) setModuleName(x.moduleName);});
-                    }
-                )	
+                    
             }
-        },[moduleId]
+        },[platformId, moduleId]
     );
-
     const setAction = (action) =>
     {
         if (action.actionType === undefined || action.actionType===null)
+            return;
+        if (isEdit)
             return;
         if (action.actionType === "P")
         {
@@ -171,7 +198,7 @@ const PlatformController=({username, isSignedIn})=>{
                     platformId={platformId} moduleId = {moduleId}
                     setPageName={setPageName} setPageId={setPageId}
                     setPageEntry={setPageEntry}
-                    pages={pages} setPages={setPages}/>
+                    pages={pages}/>
             </div>
         );
     }

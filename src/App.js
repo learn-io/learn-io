@@ -94,7 +94,11 @@ function App(){
 			</Route>
 
 			<Route path="/play/platform/:platformId">
-				<PlatformController isSignedIn={isSignedIn} username={username}/>
+				<PlatformController isEdit={false} isSignedIn={isSignedIn} username={username}/>
+			</Route>
+
+			<Route path="/edit/platform/:platformId">
+				<PlatformController isEdit={true} isSignedIn={isSignedIn} username={username}/>
 			</Route>
 
 			<Route path="/settings">
