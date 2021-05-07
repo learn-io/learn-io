@@ -1,10 +1,15 @@
 import RighttopBar from './RighttopBar';
 import RightbottomBar from './RightbottomBar';
 
-const RightBar = ({selectType, curPage, selected, onDragStart, add, setAdd}) => {
+const RightBar = ({isEdit, selectType, curPage, selected, onDragStart, add, setAdd}) => {
 
     //console.log("selected")
     //console.log(selected);
+
+    if (!isEdit)
+    return(<div className="rightbaroff">
+
+    </div>)
 
     let select_widget;
     if(selectType === "Widget"){

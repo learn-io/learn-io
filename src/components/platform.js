@@ -189,7 +189,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     {
         return (
         <div className="platformContainer">
-            <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>  
+            <LeftBar isEdit={isEdit} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>  
             <ModuleView username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
             platformId={platformId} platform={platform} setPlatform={setPlatform}
             userPlatformInfo={userPlatformInfo}
@@ -197,7 +197,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             setModuleName={setModuleName} setModuleId={setModuleId}
             dragging={dragging} setDragging={setDragging}
             editMode={editMode} setEditMode={setEditMode}/>
-            <RightBar selectType="Module" onDragStart={()=>setDragging(true)} add={editMode} setAdd={setEditMode}/>
+            <RightBar isEdit={isEdit} selectType="Module" onDragStart={()=>setDragging(true)} add={editMode} setAdd={setEditMode}/>
         </div>
         );
     }
@@ -207,7 +207,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         console.log(curPage);
         return (
             <div className="platformContainer">
-                <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
+                <LeftBar isEdit={isEdit} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
                 <ModuleDecision username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
                     userPlatformInfo={userPlatformInfo} setModuleId={setModuleId}
                     platformName={platformName} moduleName = {moduleName}
@@ -216,7 +216,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                     setPageEntry={setPageEntry}
                     pages={pages}
                     setPageIndex={setPageIndex}/>
-                <RightBar selectType={"Page"} selected={pages[pageIndex]} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
+                <RightBar isEdit={isEdit} selectType={"Page"} selected={pages[pageIndex]} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
             </div>
         );
     }
@@ -233,7 +233,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
 
         return (
             <div className="platformContainer">
-                <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
+                <LeftBar isEdit={isEdit} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
                 
                 <GamePlay username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
                 setAction={setAction} setPageName={setPageName}
@@ -241,7 +241,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 platformId={platformId} moduleId={moduleId} pageId={pageId} curPage={curPage}
                 setWidgetIndex={setWidgetIndex} update={add}/>
 
-                <RightBar selectType={"Widget"} curPage={curPage} selected={widgetIndex} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
+                <RightBar isEdit={isEdit} selectType={"Widget"} curPage={curPage} selected={widgetIndex} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
             </div>
         );
     }

@@ -559,8 +559,23 @@ input.largeCheckbox{
 	height: 100%;
 	min-height: 50px;
 }
+
+.leftbaroff{
+    float: left;
+    width: 15%;
+	height: 100%;
+	min-height: 50px;
+}
+
 .rightbar{
     background-color: gray;
+    float: right;
+    width: 15%;
+	height: 100%;
+	min-height: 50px;
+}
+
+.rightbaroff{
     float: right;
     width: 15%;
 	height: 100%;

@@ -85,8 +85,13 @@ const LeftBarBigDelete = ({doDelete}) =>
     )
 }
 
-const LeftBar = ({doDelete, saveAll, platform, pages, setPageId, setModuleId}) =>
+const LeftBar = ({isEdit, doDelete, saveAll, platform, pages, setPageId, setModuleId}) =>
 {
+    if (!isEdit)
+    return(<div className="leftbaroff">
+
+    </div>)
+
     return (
     <div className="leftbar">
         <LeftBarHeader saveAll={saveAll}/>
