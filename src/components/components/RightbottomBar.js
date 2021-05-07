@@ -51,8 +51,8 @@ const RightbottomBar = ({curPage, selectType, selected, add,setAdd}) =>{ //selec
         let rank = <label>
                         Rank:
                         <input style={{width:'90%'}} type="number" id="rankInput" name="textinput" value={selected.rank} onChange={onChangeRank}/>
-                    </label>
-        selectedInfo=<div> {pageName} {entry} {rank} </div>;
+                    </label>;
+        selectedInfo=<div> {pageName} <br/> {rank} <br/> {entry} </div>;
     } else if (selectType === "Widget"){
         if(curPage._id === undefined){
             return (

@@ -6,6 +6,7 @@ import saveIcon from '../images/save.png';
 import RGL, { WidthProvider } from "react-grid-layout";
 import Page from './Page.js';
 import RightBar from './RightBar.js';
+import axios_instance from '../axios_instance';
 
 const ReactGridLayout = WidthProvider(RGL);
 
@@ -90,10 +91,10 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 
 	}
 
-	const onDragStart=(event,text)=> {
-        // console.log(text);
-        event.dataTransfer.setData("Text", text);
-    }
+	// const onDragStart=(event,text)=> {
+    //     // console.log(text);
+    //     event.dataTransfer.setData("Text", text);
+    // }
 
 	const onDragOver=(event)=>{
         event.preventDefault();
@@ -102,16 +103,41 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 	const onDrop=(event)=>{
 		event.preventDefault();
 		let data = event.dataTransfer.getData("Text");
-		let newPage = {
-			pageName:"New Page",
-			entry: false,
-			moduleId:moduleId,
-			platformId:platformId,
-			rank:0,
-			widgets:[]
-		}
-		pages.push(newPage);
-		setAdd(add+1)
+		// let newPage = {
+		// 	pageName:"New Page",
+		// 	entry: false,
+		// 	moduleId:moduleId,
+		// 	platformId:platformId,
+		// 	rank:0,
+		// 	widgets:[]
+		// }
+		// pages.push(newPage);
+		// setAdd(add+1)
+		let newPageId;
+		axios_instance({
+			method:'post',
+			url: "page/",
+			data:{
+				platformId:platformId,
+				moduleId:moduleId,
+				pageName:"New Page",
+				widgets:[],
+				rank:0,
+				entry:false
+			}
+		}).then((res)=>{
+			newPageId = res.data.pageId;
+			//Not sure if we need to do this or if it will get 
+			//the pages again when we add a new one
+			axios_instance({
+				method:'get',
+				url: "page/"+platformId+"/"+moduleId+"/"+newPageId,
+			}).then((res)=>{
+				// console.log(res.data);
+				pages.push(res.data);
+				setAdd(add+1)
+			})
+		});
 	}
 
 	if(isEdit){
