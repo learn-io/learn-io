@@ -178,7 +178,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 							console.log(key);
 							return (
 								<div key={''+key} className="page" onClick={()=>{ selectPage(key) }} > 
-									<Page pageInfo={val.pageInfo} name={''+key}/>
+									<Page pageInfo={val.pageInfo.pageName} name={''+key} />
 								</div>
 							)
 						})	
