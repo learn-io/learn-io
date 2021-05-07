@@ -6,8 +6,6 @@ import ModuleView from './components/ModuleView.js'
 import ModuleDecision from './components/ModuleDecision.js'
 import GamePlay from './components/GamePlay.js'
 
-import LeftBar from './components/LeftBar';
-
 import getUserPlatformInfo from './components/PlatformHelper.js';
 
 const PlatformController=({username, isSignedIn, isEdit})=>{
@@ -177,14 +175,11 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     if (moduleId === "")
     {
         return (
-            <div className="platformContainer">
-                <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
-                <ModuleView username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
-                platformId={platformId} platform={platform} setPlatform={setPlatform}
-                userPlatformInfo={userPlatformInfo}
-                platformName={platformName} setPlatformName = {setPlatformName}
-                setModuleName={setModuleName} setModuleId={setModuleId}/>
-            </div>
+            <ModuleView username={username} isSignedIn={isSignedIn} isEdit={false} 
+            platformId={platformId} platform={platform} setPlatform={setPlatform}
+            userPlatformInfo={userPlatformInfo}
+            platformName={platformName} setPlatformName = {setPlatformName}
+            setModuleName={setModuleName} setModuleId={setModuleId}/>
         );
     }
     else if (pageId === "")
@@ -206,8 +201,9 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     {
         return (
             <div className="platformContainer">
-            <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
-                <GamePlay username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
+                <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
+                
+                <GamePlay username={username} isSignedIn={isSignedIn} isEdit={false} 
                 setAction={setAction} setPageName={setPageName}
                 platformName={platformName} moduleName={moduleName} pageName={pageName}
                 platformId={platformId} moduleId={moduleId} pageId={pageId} />
