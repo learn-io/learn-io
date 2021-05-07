@@ -23,6 +23,8 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 	// const [selectType, setSelectType] = useState("");
 	useEffect(
 		()=>{
+			if(pages===undefined)
+				return;
 			console.log(pages);
 			setLayout(pages.map((val, key) => {
 				return (
@@ -156,6 +158,9 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 
 	if(isEdit){
 		console.log(layout);
+		if(layout === undefined){
+			return <div>Loading...</div>
+		}
 		return (	
 			// <div className="platformContainer">
 				//@TODO CHANGE CSS TO 100% with new class
