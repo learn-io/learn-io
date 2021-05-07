@@ -176,11 +176,14 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     if (moduleId === "")
     {
         return (
+        <div className="platformContainer">
+            <LeftBar platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>  
             <ModuleView username={username} isSignedIn={isSignedIn} isEdit={false} 
             platformId={platformId} platform={platform} setPlatform={setPlatform}
             userPlatformInfo={userPlatformInfo}
             platformName={platformName} setPlatformName = {setPlatformName}
             setModuleName={setModuleName} setModuleId={setModuleId}/>
+        </div>
         );
     }
     else if (pageId === "")
