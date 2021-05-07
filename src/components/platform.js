@@ -37,6 +37,8 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     const [pageIndex, setPageIndex] = useState();
     const [widgetIndex, setWidgetIndex] = useState();
 
+    const [dragging, setDragging] = useState(false);
+
     const [add,setAdd] = useState(0);
 
 	useEffect(
@@ -64,8 +66,11 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             if (allPages[moduleId])
             {
                 setPages(allPages[moduleId]);
-                let thepage = allPages[moduleId].find(x => x._id === pageId);
-                setCurPage(thepage);
+                if (pageId !== "")
+                {
+                    let thepage = allPages[moduleId].find(x => x._id === pageId);
+                    setCurPage(thepage);
+                }
             }
             else
             {
@@ -77,24 +82,17 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                         setPages(res.data);
                         allPages[moduleId] = res.data;
                         platform.modules.forEach( (x)=>{if (x._id === moduleId) setModuleName(x.moduleName);});
-                        let thepage = allPages[moduleId].find(x => x._id === pageId);
-                        setCurPage(thepage);
+                        if (pageId !== "")
+                        {
+                            let thepage = allPages[moduleId].find(x => x._id === pageId);
+                            setCurPage(thepage);
+                        }
                     }
                 )	
             }
         },[platformId,moduleId, pageId]   
 	);
 
-    useEffect(
-        ()=>{
-            if (moduleId === "")
-                setPages([]);
-            else
-            {
-                    
-            }
-        },[platformId, moduleId]
-    );
     const setAction = (action) =>
     {
         if (action.actionType === undefined || action.actionType===null)
@@ -194,8 +192,9 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             platformId={platformId} platform={platform} setPlatform={setPlatform}
             userPlatformInfo={userPlatformInfo}
             platformName={platformName} setPlatformName = {setPlatformName}
-            setModuleName={setModuleName} setModuleId={setModuleId}/>
-            <RightBar selectType="Module"/>
+            setModuleName={setModuleName} setModuleId={setModuleId}
+            dragging={dragging} setDragging={setDragging}/>
+            <RightBar selectType="Module" onDragStart={()=>setDragging(true)}/>
         </div>
         );
     }
@@ -220,8 +219,8 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     }
     else
     {   
-        // console.log("curPage")
-        // console.log(curPage)
+        console.log("curPage")
+        console.log(curPage)
 
         console.log("pages[pageIndex]")
         console.log(pages[pageIndex])

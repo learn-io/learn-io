@@ -20,7 +20,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
     const [newWidget,setNewWidget]=useState(false);
 
     useEffect( () => {
-        if (curPage === undefined)
+        if (curPage._id === undefined)
             return;
         setLayout(curPage.widgets.map((val,key) => {
             return {i: ''+key, x: val.x, y: val.y, w: val.width, h: val.height, static: !isEdit}
@@ -29,7 +29,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
     }, [curPage, isEdit,add] 
     );
 
-    if (curPage === undefined)
+    if (curPage._id === undefined)
         return <div/>;
         //build layout
     const onDragOver=(event)=>{
