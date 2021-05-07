@@ -5,6 +5,7 @@ import axios_instance from './axios_instance';
 import ModuleView from './components/ModuleView.js'
 import ModuleDecision from './components/ModuleDecision.js'
 import GamePlay from './components/GamePlay.js'
+import LeftBar from './components/LeftBar'
 
 import getUserPlatformInfo from './components/PlatformHelper.js';
 
