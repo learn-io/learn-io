@@ -143,28 +143,28 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 	if(isEdit){
 		return (	
 			// <div className="platformContainer">
-
+				//@TODO CHANGE CSS TO 100% with new class
 				<div id="pageGrid" className="content" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}} onClick={(e)=>{deselectPage(e)}}>  {/*deselectPage() */}
-					<ReactGridLayout
+					{/* <ReactGridLayout
 					className="grid" 
 					compactType={null} 
 					layout={layout} 
 					onLayoutChange={()=>{}} //FOR SAVING LAYOUT CHANGES
 					cols={8}
-					>
+					> */}
 					{
 						pages.map((val, key) => {
 							// console.log(val);
 
 							//
 							return (
-								<div key={''+key} className="page" onClick={()=>{ selectPage(key) }}> 
+								<div key={''+key} className="page" onClick={()=>{ selectPage(key) }} > 
 									<Page pageInfo={val} name={''+key}/>
 								</div>
 							)
 						})	
 					}
-					</ReactGridLayout>
+					{/* </ReactGridLayout> */}
 				</div>
 				
 				// {/* <RightBar selectType={selectType} selected={selectedPage} setSelectedPage={setSelectedPage} onDragStart={onDragStart} add={add} setAdd={setAdd}/> */}
