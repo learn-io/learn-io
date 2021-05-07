@@ -86,9 +86,9 @@ const RightbottomBar = ({curPage, selectType, selected, add,setAdd}) =>{ //selec
                         },
                     }).then((res)=>{
                         // setImageHash(res.data.hash);
-                        for(let i=0;i<curPage.length;i++){
-                            if(curPage[i]===selected){
-                                curPage[i].internals.hash=res.data.hash;
+                        for(let i=0;i<curPage.widgets.length;i++){
+                            if(curPage.widgets[i]===selected){
+                                curPage.widgets[i].internals.hash=res.data.hash;
                                 break;
                             }
                         }
@@ -103,30 +103,29 @@ const RightbottomBar = ({curPage, selectType, selected, add,setAdd}) =>{ //selec
 
         const onChangeText=(event)=>{
             // console.log(curPage);
-            for(let i=0;i<curPage.length;i++){
-                if(curPage[i]===selected){
-                    curPage[i].internals.text=event.target.value;
+            for(let i=0;i<curPage.widgets.length;i++){
+                if(curPage.widgets[i]===selected){
+                    curPage.widgets[i].internals.text=event.target.value;
                     break;
                 }
             }
-            // console.log(curPage);
             setAdd(add+1);
             // console.log(event.target.value);
         }
         
         const onChangePorS=(event)=>{
-            for(let i=0;i<curPage.length;i++){
-                if(curPage[i]===selected){
-                    curPage[i].internals.click.actionType=event.target.value;
+            for(let i=0;i<curPage.widgets.length;i++){
+                if(curPage.widgets[i]===selected){
+                    curPage.widgets[i].internals.click.actionType=event.target.value;
                     break;
                 }
             }
         }
 
         const onChangeTarget=(event)=>{
-            for(let i=0;i<curPage.length;i++){
-                if(curPage[i]===selected){
-                    curPage[i].internals.click.target=event.target.value;
+            for(let i=0;i<curPage.widgets.length;i++){
+                if(curPage.widgets[i]===selected){
+                    curPage.widgets[i].internals.click.target=event.target.value;
                     break;
                 }
             }
@@ -185,7 +184,6 @@ const RightbottomBar = ({curPage, selectType, selected, add,setAdd}) =>{ //selec
         }else if(selected.internals.widgetFlavor==="Snacksnake"){
             game=<EditSnackSnake selectedWidget={selected} curPage={curPage} add={add} setAdd={setAdd}/>
         }
-      
         selectedInfo = game;
     } else {
         return(

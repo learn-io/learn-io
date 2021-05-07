@@ -2,8 +2,6 @@ import React, { useEffect,useState} from 'react';
 import '../ComponentStyle.css';
 import '../GridStyle.css';
 import Widget from './widgets/Widget.js';
-import CreateController from './create.js'
-
 import RGL, { WidthProvider } from "react-grid-layout";
 
 const ReactGridLayout = WidthProvider(RGL);
@@ -11,10 +9,10 @@ const ReactGridLayout = WidthProvider(RGL);
 const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
     platformName, moduleName, pageName, 
     platformId, moduleId, pageId, curPage,
-    setWidgetIndex})=>{
+    setWidgetIndex, update})=>{
 
     const [layout, setLayout] = useState();
-    const [selectedWidget,setSelectedWidget]= useState("");
+    // const [selectedWidget,setSelectedWidget]= useState("");
     const [add,setAdd]= useState(0);
     const [oldPage, setOldPage] = useState("");
     const [newWidget,setNewWidget]=useState(false);
@@ -26,7 +24,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
             return {i: ''+key, x: val.x, y: val.y, w: val.width, h: val.height, static: !isEdit}
         }));
         setOldPage(curPage)
-    }, [curPage, isEdit,add] 
+    }, [curPage, isEdit,add,update] 
     );
 
     if (curPage._id === undefined)
@@ -181,7 +179,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
     }
     const selectWidget=(key)=>{
         // console.log(curPage[key]);
-        setSelectedWidget(curPage[key]);
+        // setSelectedWidget(curPage[key]);
         setWidgetIndex(key);
         // console.log(1);
     }
