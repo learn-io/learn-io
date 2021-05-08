@@ -12,6 +12,7 @@ import ImageBox from './ImageBox.js';
 import QuickTime from './QuickTimeChoice.js';
 import TextButton from './TextButton.js';
 import MatchingEdit from './MatchingEdit.js'
+import MultipleChoiceEdit from './MultipleChoiceEdit.js';
 
 
 const Widget = ({internals, setAction,isEdit})=>{
@@ -25,7 +26,11 @@ const Widget = ({internals, setAction,isEdit})=>{
             game=<ImageQuestion internals={internals} hash={internals.hash} setAction={setAction}/>
         break;
         case "MultipleChoice":
-            game=<MultipleChoice internals={internals} setAction={setAction}/>
+            if(isEdit){
+                game=<MultipleChoiceEdit internals={internals} setAction={setAction}/>
+            }else{
+                game=<MultipleChoice internals={internals} setAction={setAction}/>
+            }
         break;
         case "Sound":
             game=<SoundQuestion internals={internals} hash={internals.hash}/>
