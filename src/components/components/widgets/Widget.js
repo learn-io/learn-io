@@ -11,9 +11,10 @@ import Snacksnake from './Snacksnake.js';
 import ImageBox from './ImageBox.js';
 import QuickTime from './QuickTimeChoice.js';
 import TextButton from './TextButton.js';
+import MatchingEdit from './MatchingEdit.js'
 
 
-const Widget = ({internals, setAction})=>{
+const Widget = ({internals, setAction,isEdit})=>{
     let game;
     switch(internals.widgetFlavor)
     {
@@ -30,7 +31,12 @@ const Widget = ({internals, setAction})=>{
             game=<SoundQuestion internals={internals} hash={internals.hash}/>
         break;
         case "Matching":
-            game=<Matching internals={internals} setAction={setAction}/>
+            if(isEdit){
+                game=<MatchingEdit internals={internals} setAction={setAction}/>
+            }else{
+                game=<Matching internals={internals} setAction={setAction}/>
+            }
+            
         break;
         case "ImageBox":
             game=<ImageBox internals={internals} hash={internals.hash}/>
