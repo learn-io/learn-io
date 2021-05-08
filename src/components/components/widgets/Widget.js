@@ -21,19 +21,19 @@ const Widget = ({internals, setAction})=>{
             game=<Flashcard internals={internals}/>
         break;
         case "ImageButton":
-            game=<ImageQuestion internals={internals} setAction={setAction}/>
+            game=<ImageQuestion internals={internals} hash={internals.hash} setAction={setAction}/>
         break;
         case "MultipleChoice":
             game=<MultipleChoice internals={internals} setAction={setAction}/>
         break;
         case "Sound":
-            game=<SoundQuestion internals={internals}/>
+            game=<SoundQuestion internals={internals} hash={internals.hash}/>
         break;
         case "Matching":
             game=<Matching internals={internals} setAction={setAction}/>
         break;
         case "ImageBox":
-            game=<ImageBox internals={internals}/>
+            game=<ImageBox internals={internals} hash={internals.hash}/>
         break;
         case "QuickTimeChoice":
             game=<QuickTime internals={internals} setAction={setAction}/>
