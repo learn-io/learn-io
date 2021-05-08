@@ -10,7 +10,7 @@ const MultipleChoiceEdit=({internals})=>{
             return (
                 <label className="container" key={i} >{internals.options[i].option}
                     <div>
-                        <input type="checkbox" checked={internals.options[i].isCorrect}/>
+                        <input type="checkbox" checked={internals.options[i].isCorrect} readOnly/>
                         <span className="checkmark"/>
                     </div>
                 </label>
