@@ -23,7 +23,11 @@ const SoundQuestion=({internals,hash})=>{
 	);
     let soundquestion;
     if(!soundData){
-        soundquestion=<div className='flashcard'/>;
+        soundquestion=<div className='flashcard'>
+                        <div className='widgetText'>
+                            <PlayButton />
+                        </div>
+                    </div>
     }else{
         soundquestion=<div className='flashcard'>
                         <div className='widgetText'>
