@@ -3,6 +3,7 @@ import '../ComponentStyle.css';
 import uploadIcon from '../images/upload.png';
 import editIcon from '../images/edit.png';
 import saveIcon from '../images/save.png';
+import closeIcon from '../images/close.png';
 import axios_instance from '../axios_instance.js';
 import {Button} from 'react-bootstrap';
 
@@ -139,7 +140,7 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
     // console.log("platform")
     // console.log(platform);
 	if(username!==platform.owner){
-		closehdr=<button className='closeButton' onClick={()=>{onCloseModule('')}}>X</button>
+		closehdr=<button className='closeButton' onClick={()=>{onCloseModule('')}}><img src={closeIcon} height='40px' width='40px' alt="close"/></button>
 		titlehdr=<h2>{header}</h2>
 		centerpart=<div style={{justifyContent:'center',display:'flex'}}>
 					<img alt='moduleImage' src={imageData} height={200} width={200}/>
@@ -152,7 +153,7 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
 	}else{
 		closehdr=<div style={{justifyContent:'space-between',display:'flex'}}>
 					<button className='deleteButton' onClick={()=>{onSaveModuleInfo(selectedModule)}}><img src={saveIcon} height='50px' width='50px' alt="save"/></button>
-					<button className='closeButton' onClick={()=>{onCloseModule('')}}>X</button>
+					<button className='closeButton' onClick={()=>{onCloseModule('')}}><img src={closeIcon} height='50px' width='50px' alt="close"/></button>
 				</div>
 		let hdr;
 		let hdrButton;
