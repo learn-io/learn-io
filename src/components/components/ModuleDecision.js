@@ -162,7 +162,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 		return (	
 			// <div className="platformContainer">
 				//@TODO CHANGE CSS TO 100% with new class
-				<div id="pageGrid" className="content pageLayoutHelper" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}} onClick={(e)=>{deselectPage(e)}}>  {/*deselectPage() */}
+				<div id="pageGrid" style={{overflowY:'scroll', border: '1px solid black'}} className="content pageLayoutHelper" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}} onClick={(e)=>{deselectPage(e)}}>  {/*deselectPage() */}
 					{/* <ReactGridLayout
 					className="grid" 
 					compactType={null} 
@@ -175,7 +175,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 							console.log(val);
 							console.log(key);
 							return (
-								<div key={''+key} className="page" onClick={()=>{ selectPage(key) }} > 
+								<div key={''+key} className="page pageHelper" onClick={()=>{ selectPage(key) }} > 
 									<Page pageInfo={val.pageInfo.pageName} name={''+key} />
 								</div>
 							)
