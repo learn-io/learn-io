@@ -61,7 +61,7 @@ const LeftBarAccordion = ({platform, modules, pages, setPageId, setModuleId, len
         </Button>
     if (!modules || len === -1)
         return platformButton;
-    return  <>
+    return  <div className="LeftAccordian">
         {platformButton}
         <br/>
         {
@@ -70,7 +70,7 @@ const LeftBarAccordion = ({platform, modules, pages, setPageId, setModuleId, len
             return getModuleAccordion(module, i);
         })
         }
-        </>        
+        </div>        
 }
 const LeftBarBigDelete = ({doDelete}) =>
 {

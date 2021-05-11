@@ -179,12 +179,31 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             alert("Invalid Action Type");
         }
     };
-
     const onDragStart=(event,text)=> {
         // console.log(text);
         event.dataTransfer.setData("Text", text);
     }
-
+    const doDelete=(type)=>{
+        if(type==="Widget"){
+            console.log(curPage.widgets);
+            console.log(widgetIndex);
+            let items=curPage.widgets;
+            let filter = items.filter(item => item !== curPage.widgets[widgetIndex]);
+            // curPage.widgets=filter;
+            setWidgetIndex(null);
+            curPage.widgets=filter;
+            // console.log(filter);
+            // console.log(allPages);
+            // setAdd(add+1);
+            // console.log(filter);
+            console.log(curPage.widgets);
+            // setCurPage(filter);
+            // setWidgetIndex();
+            // console.log(widgetIndex);
+            // console.log(curPage.widgets[widgetIndex]);
+        }
+        // console.log(type);
+    }
     const saveAll=()=>{
         // {platform} {pages}
         let promises=[];
@@ -267,6 +286,14 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         //updatePlatform();
     }
 
+    const updatePage = () => 
+    {
+        let newdata = {...curPage}
+        let index = allPages[moduleId].findIndex(x => x._id === pageId);
+        allPages[moduleId][index] = newdata;
+        setCurPage(newdata);
+    }
+
     if (moduleId === "")
     {
         return (
@@ -294,7 +321,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                     platformId={platformId} moduleId = {moduleId}
                     setPageName={setPageName} setPageId={setPageId}
                     setPageEntry={setPageEntry} updatePages={updatePages}
-                    pages={pages} update={add}
+                    pages={pages} 
                     setPageIndex={setPageIndex}/>
                 <RightBar isEdit={isEdit} selectType={"Page"} selected={pages[pageIndex]} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
             </div>
@@ -313,13 +340,13 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         // console.log(pages);
         return (
             <div className="platformContainer">
-                <LeftBar len={platform.modules? platform.modules.length : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
+                <LeftBar doDelete={()=>{doDelete("Widget")}} len={platform.modules? platform.modules.length : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
                 
                 <GamePlay username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
                 setAction={setAction} setPageName={setPageName}
                 platformName={platformName} moduleName={moduleName} pageName={pageName}
                 platformId={platformId} moduleId={moduleId} pageId={pageId} curPage={curPage}
-                setWidgetIndex={setWidgetIndex} update={add}/>
+                setWidgetIndex={setWidgetIndex} updatePage={updatePage}/>
 
                 <RightBar isEdit={isEdit} selectType={"Widget"} curPage={curPage} selected={widgetIndex} onDragStart={onDragStart} add={add} setAdd={setAdd} pages={pages}/>
             </div>

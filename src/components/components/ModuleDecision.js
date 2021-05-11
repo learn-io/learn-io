@@ -9,16 +9,7 @@ import axios_instance from '../axios_instance';
 const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformName, 
 	setModuleId, moduleName, platformId, moduleId,
 	setPageName, setPageId, setPageEntry, pages,
-	setPageIndex, update, updatePages})=>{
-
-	useEffect(
-		()=>{
-			if(!isEdit)
-				return;
-			if(pages===undefined)
-				return;				
-		},[update,pages,isEdit]
-	)
+	setPageIndex, updatePages})=>{
 
 	useEffect(
         ()=>{

@@ -592,8 +592,9 @@ input.largeCheckbox{
 
 .LeftAccordian{
 	overflow-y:scroll;
+	overflow-x: hidden;
 	border: 1px solid black;
-	height: 75%;
+	max-height: 75vh;
 }
 
 .LeftDelete{
