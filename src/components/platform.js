@@ -199,6 +199,11 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             }));
             setWidgetIndex(null);
             //updatePage();
+        }else if(type==="Page"){
+            let filter = pages.filter(item => item !== pages[pageIndex])
+            setPages(filter);
+        }else if(type==="Module"){
+            console.log(type);
         }
         // console.log(type);
     }
@@ -299,7 +304,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     {
         return (
         <div className="platformContainer">
-            <LeftBar len={platform.modules? platform.modules.length : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>  
+            <LeftBar  doDelete={()=>{doDelete("Module")}} len={platform.modules? platform.modules.length : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>  
             <ModuleView username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
             platformId={platformId} platform={platform} setPlatform={setPlatform}
             userPlatformInfo={userPlatformInfo} updatePlatform={updatePlatform}
@@ -316,7 +321,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     {
         return (
             <div className="platformContainer">
-                <LeftBar len={platform.modules? platform.modules.length : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
+                <LeftBar doDelete={()=>{doDelete("Page")}} len={platform.modules? platform.modules.length : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
                 <ModuleDecision username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
                     userPlatformInfo={userPlatformInfo} setModuleId={setModuleId}
                     platformName={platformName} moduleName = {moduleName}
