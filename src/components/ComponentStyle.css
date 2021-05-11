@@ -162,6 +162,12 @@ input.largeCheckbox{
 .profileFormGroupLabel{
 	color:#fff;
 	font-size: large;
+	display:inline;
+}
+
+.profileControls{
+	display:block;
+	padding:20px;
 }
 
 .form-inline{

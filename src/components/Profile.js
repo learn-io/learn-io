@@ -112,23 +112,22 @@ const Profile=()=>{
             <div style={{display:'flex', justifyContent:"left", padding:"2rem"}}>
                 <h1>Profile</h1>
             </div>
-            <div className="container">
-                <Form.Group controlId="skipBy" >
+            <div className="" style={{display:'flex',justifyContent:"center"}}>
+                <Form.Group controlId="skipBy" className="profileControls">
                     <Form.Label className="profileFormGroupLabel">Skip By:</Form.Label>
-                    <Form.Control type="number" onBlur={(e)=>{e.preventDefault(); setSkip(e.target.value);}}></Form.Control>
+                    <Form.Control style={{width:'10vw',backgroundColor: '#cdecff'}} className="profileControls" defaultValue="0" type="number" onBlur={(e)=>{e.preventDefault(); setSkip(e.target.value);}}></Form.Control>
                 </Form.Group>
-                
-                <Form.Group controlId="countBy" >
+                <Form.Group controlId="countBy" className="profileControls">
                     <Form.Label className="profileFormGroupLabel">Platforms per page:</Form.Label>
                     <Dropdown>
-                        <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
+                        <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000', width:'10vw'}} variant="success" id="dropdown-basic">
                             {count}
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={(e)=>{e.preventDefault(); setCount(5)}}>5</Dropdown.Item>
-                            <Dropdown.Item onClick={(e)=>{e.preventDefault(); setCount(10)}}>10</Dropdown.Item>
-                            <Dropdown.Item onClick={(e)=>{e.preventDefault(); setCount(15)}}>15</Dropdown.Item>
-                            <Dropdown.Item onClick={(e)=>{e.preventDefault(); setCount(20)}}>20</Dropdown.Item>
+                            <Dropdown.Item style={{width:"10vw"}} onClick={(e)=>{e.preventDefault(); setCount(5)}}>5</Dropdown.Item>
+                            <Dropdown.Item style={{width:"10vw"}} onClick={(e)=>{e.preventDefault(); setCount(10)}}>10</Dropdown.Item>
+                            <Dropdown.Item style={{width:"10vw"}} onClick={(e)=>{e.preventDefault(); setCount(15)}}>15</Dropdown.Item>
+                            <Dropdown.Item style={{width:"10vw"}} onClick={(e)=>{e.preventDefault(); setCount(20)}}>20</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </Form.Group>
