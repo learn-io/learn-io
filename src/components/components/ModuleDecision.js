@@ -9,29 +9,14 @@ import axios_instance from '../axios_instance';
 const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformName, 
 	setModuleId, moduleName, platformId, moduleId,
 	setPageName, setPageId, setPageEntry, pages,
-	setPageIndex, update})=>{
+	setPageIndex, update, updatePages})=>{
 
-	// const [layout, setLayout] = useState([]);
-	// const [pages, setPages] = useState([]);
-	// const [selectedPage, setSelectedPage] = useState({});
-	const [add,setAdd]= useState(0);
-	const [layout,setLayout] = useState();
-	// const [selectType, setSelectType] = useState("");
 	useEffect(
 		()=>{
 			if(!isEdit)
 				return;
 			if(pages===undefined)
-				return;
-			console.log(pages);
-			setLayout(pages.map((val, key) => {
-				return (
-					{i: ''+key, pageInfo:val}
-					// <div key={''+key} className="page" onClick={()=>{ selectPage(key) }} > 
-					// 	<Page pageInfo={val} name={''+key}/>
-					// </div>
-				)
-			}))	
+				return;				
 		},[update,pages,isEdit]
 	)
 
@@ -149,29 +134,17 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 			}).then((res)=>{
 				// console.log(res.data);
 				pages.push(res.data);
-				setAdd(add+1)
+				updatePages();
 			})
 		});
 	}
 
 	if(isEdit){
-		console.log(layout);
-		if(layout === undefined){
-			return <div>Loading...</div>
-		}
-		return (	
-			// <div className="platformContainer">
+		return (
 				//@TODO CHANGE CSS TO 100% with new class
 				<div id="pageGrid" style={{overflowY:'scroll', border: '1px solid black'}} className="content pageLayoutHelper" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}} onClick={(e)=>{deselectPage(e)}}>  {/*deselectPage() */}
-					{/* <ReactGridLayout
-					className="grid" 
-					compactType={null} 
-					layout={layout} 
-					onLayoutChange={()=>{}} //FOR SAVING LAYOUT CHANGES
-					cols={8}
-					> */}
 					{
-						layout.map((val, key) => {
+						pages.map((val, key) => {
 							console.log(val);
 							console.log(key);
 							return (
@@ -181,16 +154,8 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 							)
 						})	
 					}
-					{/* </ReactGridLayout> */}
 				</div>
-				
-				// {/* <RightBar selectType={selectType} selected={selectedPage} setSelectedPage={setSelectedPage} onDragStart={onDragStart} add={add} setAdd={setAdd}/> */}
-				// {/* <div className="rightbar"> 
-					
-				// </div> */}
-			// </div>
 		);
-
 	} else {
 		return(
 			<div className="">Routing...</div>

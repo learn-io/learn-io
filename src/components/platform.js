@@ -257,6 +257,16 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         setPlatform(p=>({...p}));
     }
 
+    const updatePages = () =>
+    {
+        let newdata = [...pages];
+        console.log(pages);
+        console.log(newdata);
+        setPages(newdata);
+        allPages[moduleId] = newdata;
+        //updatePlatform();
+    }
+
     if (moduleId === "")
     {
         return (
@@ -275,8 +285,6 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     }
     else if (pageId === "")
     {
-        console.log("Curpage")
-        console.log(curPage);
         return (
             <div className="platformContainer">
                 <LeftBar len={platform.modules? platform.modules.length : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
@@ -285,7 +293,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                     platformName={platformName} moduleName = {moduleName}
                     platformId={platformId} moduleId = {moduleId}
                     setPageName={setPageName} setPageId={setPageId}
-                    setPageEntry={setPageEntry}
+                    setPageEntry={setPageEntry} updatePages={updatePages}
                     pages={pages} update={add}
                     setPageIndex={setPageIndex}/>
                 <RightBar isEdit={isEdit} selectType={"Page"} selected={pages[pageIndex]} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
