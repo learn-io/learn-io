@@ -15,6 +15,8 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
         ()=>{
 			if(isEdit)
 				return;
+			if (pages.loading)
+				return;
 			let info = userPlatformInfo
 			//now we select a page
 			let choice = -1;
@@ -129,7 +131,8 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 			})
 		});
 	}
-
+	if (pages.loading)
+				return <div className="">Loading...</div>;
 	if(isEdit){
 		return (
 				//@TODO CHANGE CSS TO 100% with new class

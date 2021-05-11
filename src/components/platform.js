@@ -32,7 +32,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     });
     const [platform, setPlatform] = useState({})
     const [allPages, setAllPages] = useState({});
-    const [pages, setPages] = useState([]);
+    const [pages, setPages] = useState({loading: true});
     const [curPage, setCurPage] = useState({});
 
     const [pageIndex, setPageIndex] = useState();
@@ -62,7 +62,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             if(moduleId === "")
             {
                 setCurPage({});
-                setPages([]);
+                setPages({loading: true});
                 return;
             }
             if (pageId === "")
@@ -87,7 +87,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                     {
                         setPages(res.data);
                         allPages[moduleId] = res.data;
-                        platform.modules.forEach( (x)=>{if (x._id === moduleId) setModuleName(x.moduleName);});
+                        platform.modules.forEach( (x)=>{if (x._id === moduleId) setModuleName(x.moduleName);}); 
                         if (pageId !== "")
                         {
                             let thepage = allPages[moduleId].find(x => x._id === pageId);
@@ -96,7 +96,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                     }
                 )	
             }
-        },[platformId,moduleId, pageId]   
+        },[platformId,moduleId, pageId, allPages, platform.modules]   
 	);
 
     const setAction = (action) =>
