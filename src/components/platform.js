@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {Modal} from 'react-bootstrap';
 import {useParams} from 'react-router-dom';
 import './ComponentStyle.css';
 import axios_instance from './axios_instance';
@@ -31,7 +32,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     });
     const [platform, setPlatform] = useState({})
     const [allPages, setAllPages] = useState({});
-    const [pages, setPages] = useState([]);
+    const [pages, setPages] = useState({loading: true});
     const [curPage, setCurPage] = useState({});
 
     const [pageIndex, setPageIndex] = useState();
@@ -42,8 +43,11 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     const [add,setAdd] = useState(0);
     const [editMode, setEditMode] = useState(-1); //-1 => enter, 0 => drag, 1=> connect
 
+    const [layout, setLayout] = useState();
 
-	useEffect(
+    const [saving, setSaving] = useState(false);
+
+    useEffect(
         ()=>{
 			getUserPlatformInfo(isSignedIn, platformId)
 			.then((res)=>{
@@ -58,7 +62,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             if(moduleId === "")
             {
                 setCurPage({});
-                setPages([]);
+                setPages({loading: true});
                 return;
             }
             if (pageId === "")
@@ -83,7 +87,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                     {
                         setPages(res.data);
                         allPages[moduleId] = res.data;
-                        platform.modules.forEach( (x)=>{if (x._id === moduleId) setModuleName(x.moduleName);});
+                        platform.modules.forEach( (x)=>{if (x._id === moduleId) setModuleName(x.moduleName);}); 
                         if (pageId !== "")
                         {
                             let thepage = allPages[moduleId].find(x => x._id === pageId);
@@ -92,7 +96,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                     }
                 )	
             }
-        },[platformId,moduleId, pageId]   
+        },[platformId,moduleId, pageId, allPages, platform.modules]   
 	);
 
     const setAction = (action) =>
@@ -186,35 +190,26 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     const doDelete=(type)=>{
         if(type==="Widget"){
             console.log(curPage.widgets);
+            console.log(layout);
             console.log(widgetIndex);
-            let items=curPage.widgets;
-            let filter = items.filter(item => item !== curPage.widgets[widgetIndex]);
-            // curPage.widgets=filter;
+
+            curPage.widgets.splice(widgetIndex, 1);
+            setLayout(curPage.widgets.map((val,key) => {
+                return {i: ''+key, x: val.x, y: val.y, w: val.width, h: val.height, static: !isEdit}
+            }));
             setWidgetIndex(null);
-            curPage.widgets=filter;
-            // console.log(filter);
-            // console.log(allPages);
-            // setAdd(add+1);
-            // console.log(filter);
-            console.log(curPage.widgets);
-            // setCurPage(filter);
-            // setWidgetIndex();
-            // console.log(widgetIndex);
-            // console.log(curPage.widgets[widgetIndex]);
+            //updatePage();
+        }else if(type==="Page"){
+            let filter = pages.filter(item => item !== pages[pageIndex])
+            setPages(filter);
+        }else if(type==="Module"){
+            console.log(type);
         }
         // console.log(type);
     }
     const saveAll=()=>{
-        // {platform} {pages}
         let promises=[];
-        //console.log("allPages")
-        //console.log(allPages)
-
-        //console.log("platform")
-        //console.log(platform)
-
-        // return;
-        
+        setSaving(true);
         for(var i=0;i<platform.modules.length;i++){
             let data = {
                 _id:platformId,
@@ -268,7 +263,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 }));
             }
         }
-        Promise.all(promises);
+        Promise.all(promises).then((resp) => {setSaving(false)});
     }
 
     const updatePlatform = () =>
@@ -294,11 +289,22 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         setCurPage(newdata);
     }
 
+    const saveAlert = <Modal show={saving}>
+        <Modal.Header>
+        Saving...
+        </Modal.Header>
+        <Modal.Body>
+        Please Wait
+        </Modal.Body>
+
+        </Modal>
+
+
     if (moduleId === "")
     {
         return (
         <div className="platformContainer">
-            <LeftBar len={platform.modules? platform.modules.length : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>  
+            <LeftBar  doDelete={()=>{doDelete("Module")}} len={platform.modules? platform.modules.length : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>  
             <ModuleView username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
             platformId={platformId} platform={platform} setPlatform={setPlatform}
             userPlatformInfo={userPlatformInfo} updatePlatform={updatePlatform}
@@ -307,6 +313,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             dragging={dragging} setDragging={setDragging}
             editMode={editMode} setEditMode={setEditMode}/>
             <RightBar isEdit={isEdit} selectType="Module" onDragStart={()=>setDragging(true)} add={editMode} setAdd={setEditMode}/>
+            {saveAlert}
         </div>
         );
     }
@@ -314,7 +321,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     {
         return (
             <div className="platformContainer">
-                <LeftBar len={platform.modules? platform.modules.length : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
+                <LeftBar doDelete={()=>{doDelete("Page")}} len={platform.modules? platform.modules.length : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
                 <ModuleDecision username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
                     userPlatformInfo={userPlatformInfo} setModuleId={setModuleId}
                     platformName={platformName} moduleName = {moduleName}
@@ -324,6 +331,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                     pages={pages} 
                     setPageIndex={setPageIndex}/>
                 <RightBar isEdit={isEdit} selectType={"Page"} selected={pages[pageIndex]} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
+                {saveAlert}
             </div>
         );
     }
@@ -346,9 +354,11 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 setAction={setAction} setPageName={setPageName}
                 platformName={platformName} moduleName={moduleName} pageName={pageName}
                 platformId={platformId} moduleId={moduleId} pageId={pageId} curPage={curPage}
-                setWidgetIndex={setWidgetIndex} updatePage={updatePage}/>
+                setWidgetIndex={setWidgetIndex} updatePage={updatePage}
+                layout={layout} setLayout={setLayout}/>
 
                 <RightBar isEdit={isEdit} selectType={"Widget"} curPage={curPage} selected={widgetIndex} onDragStart={onDragStart} add={add} setAdd={setAdd} pages={pages}/>
+                {saveAlert}
             </div>
         );
     }

@@ -92,7 +92,7 @@ const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlat
 				modules={platform.modules} setSelectedModule={setSelectedModule} userPlatformInfo={userPlatformInfo} 
 				setSelectedDisable={setSelectedDisable} platformId={platformId}
 				editMode={editMode} setEditMode={setEditMode}/>
-				<ModuleConfirmBox username={username} platform={platform} selectedModule={selectedModule} setSelectedModule={setSelectedModule} 
+				<ModuleConfirmBox isEdit={isEdit} username={username} platform={platform} selectedModule={selectedModule} setSelectedModule={setSelectedModule} 
 				updatePlatform={()=>{updatePlatform();setRedraw(r=>!r)}} setModuleName={setModuleName} setModuleId={setModuleId} selectedDisable={selectedDisable}/>
             </>
 	    );

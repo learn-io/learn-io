@@ -9,9 +9,9 @@ const ReactGridLayout = WidthProvider(RGL);
 const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
     platformName, moduleName, pageName, 
     platformId, moduleId, pageId, curPage,
-    setWidgetIndex, updatePage})=>{
+    setWidgetIndex, updatePage, layout, setLayout})=>{
 
-    const [layout, setLayout] = useState();
+    
     // const [selectedWidget,setSelectedWidget]= useState("");
     const [oldPage, setOldPage] = useState("");
     const [newWidget,setNewWidget]=useState(false);
@@ -210,7 +210,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
                 <h3 style={{color:'white'}}>{moduleName} : {pageName}</h3>
                 <div id="reactgrid" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}}>
                     <ReactGridLayout 
-                    className="grid" 
+                    className="grid noAnimate" 
                     compactType={null}
                     layout={layout}
                     onLayoutChange={(newLayout)=>{onLayoutChanged(newLayout)}}
