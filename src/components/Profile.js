@@ -215,7 +215,6 @@ const Badges=({allInfo})=>{
                                     // console.log(val)
                                     // console.log("index")
                                     // console.log(index)
-                                    var source = "badge"+index;
                                     if(val === "true"){
                                         return (
                                             <img key={''+index} height="250px" width="250px" src={localBadges[index]} alt="No badges to display at this time."></img>
