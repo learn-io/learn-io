@@ -252,7 +252,11 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         Promise.all(promises);
     }
 
-    console.log(platform.modules);
+    const updatePlatform = () =>
+    {
+        setPlatform(p=>({...p}));
+    }
+
     if (moduleId === "")
     {
         return (
@@ -260,7 +264,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             <LeftBar len={platform.modules? platform.modules.length : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>  
             <ModuleView username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
             platformId={platformId} platform={platform} setPlatform={setPlatform}
-            userPlatformInfo={userPlatformInfo}
+            userPlatformInfo={userPlatformInfo} updatePlatform={updatePlatform}
             platformName={platformName} setPlatformName = {setPlatformName}
             setModuleName={setModuleName} setModuleId={setModuleId}
             dragging={dragging} setDragging={setDragging}

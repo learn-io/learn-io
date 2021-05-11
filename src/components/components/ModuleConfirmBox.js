@@ -7,7 +7,7 @@ import closeIcon from '../images/close.png';
 import axios_instance from '../axios_instance.js';
 import {Button} from 'react-bootstrap';
 
-const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,setSave,save,setModuleName,setModuleId,selectedDisable})=>{
+const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,updatePlatform,setModuleName,setModuleId,selectedDisable})=>{
 	const [header,setHeader]=useState('');
     const [changeHeader,setChangeHeader]=useState(false);
     const [description,setDescription]=useState('');
@@ -60,12 +60,12 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
         },[imageHash]
     )
 
-    const onSaveModuleInfo=(platform)=>{
+    const onSaveModuleInfo=()=>{
 		console.log(selectedModule);
 		selectedModule.moduleName = header;
 		selectedModule.description=description;
 		selectedModule.image=imageHash;
-		setSave(save+1);
+		updatePlatform();
 	}
     const handleClick = event => {
 		hiddenFileInput.current.click();
@@ -152,7 +152,7 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,set
 	 	// 			</div>
 	}else{
 		closehdr=<div style={{justifyContent:'space-between',display:'flex'}}>
-					<button className='deleteButton' onClick={()=>{onSaveModuleInfo(selectedModule)}}><img src={saveIcon} height='50px' width='50px' alt="save"/></button>
+					<button className='deleteButton' onClick={()=>{onSaveModuleInfo()}}><img src={saveIcon} height='50px' width='50px' alt="save"/></button>
 					<button className='closeButton' onClick={()=>{onCloseModule('')}}><img src={closeIcon} height='50px' width='50px' alt="close"/></button>
 				</div>
 		let hdr;

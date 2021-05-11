@@ -5,7 +5,7 @@ import axios_instance from '../axios_instance.js';
 import ModuleConfirmBox from './ModuleConfirmBox.js';
 
 const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlatformInfo, setUserPlatformInfo, platformId, platformName, setPlatformName, 
-	setModuleName, setModuleId, dragging, setDragging, editMode, setEditMode})=>{
+	setModuleName, setModuleId, dragging, setDragging, editMode, setEditMode, updatePlatform})=>{
 
 	const [selectedModule, setSelectedModule] = useState("");
 	const [redraw, setRedraw] = useState(false);
@@ -87,13 +87,13 @@ const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlat
         return(
             <>
 				<h2 style={{color:'white'}}>{platformName}</h2>
-				<ModuleList setRedraw={setRedraw} redraw={redraw} dragging={dragging} setDragging={setDragging} setPlatform={setPlatform} 
+				<ModuleList setRedraw={setRedraw} redraw={redraw} dragging={dragging} setDragging={setDragging} updatePlatform={updatePlatform} 
 				toggleConnection = {toggleConnection} isEdit={isEdit} moveModuleTo={moveModuleTo} 
 				modules={platform.modules} setSelectedModule={setSelectedModule} userPlatformInfo={userPlatformInfo} 
 				setSelectedDisable={setSelectedDisable} platformId={platformId}
 				editMode={editMode} setEditMode={setEditMode}/>
 				<ModuleConfirmBox username={username} platform={platform} selectedModule={selectedModule} setSelectedModule={setSelectedModule} 
-				save={redraw} setSave={setRedraw} setModuleName={setModuleName} setModuleId={setModuleId} selectedDisable={selectedDisable}/>
+				updatePlatform={()=>{updatePlatform();setRedraw(r=>!r)}} setModuleName={setModuleName} setModuleId={setModuleId} selectedDisable={selectedDisable}/>
             </>
 	    );
     }
