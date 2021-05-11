@@ -252,7 +252,6 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         Promise.all(promises);
     }
 
-    console.log(platform.modules);
     if (moduleId === "")
     {
         return (
