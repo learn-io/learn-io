@@ -85,7 +85,7 @@ const YourPagesController = (props) =>{
 		        <SearchBox onSearchPlatform={onSearchPlatform} />
 		        <Dropdown>
 					<Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
-				    	Platfroms per page: {limit}
+				    	Platforms per page: {limit}
 					</Dropdown.Toggle>
 					<Dropdown.Menu>
 				    	<Dropdown.Item onClick={()=>{onChangeLimit(10)}}>10</Dropdown.Item>
