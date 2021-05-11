@@ -4,7 +4,7 @@ import axios_instance from '../axios_instance.js';
 import lockIcon from '../images/lock.png';
 import unlockIcon from '../images/unlock.png'
 
-const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, 
+const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, setPlatform, 
     modules, setSelectedModule, setSelectedDisable,
     dragging, setDragging, platformId, editMode, 
     setEditMode, redraw, setRedraw})=>{
@@ -331,9 +331,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
             height: 75,
             width: 75,
             completionScore: 10,
-            image:"",
-            rank:0,
-            entry:false
+            image:""
         }
         axios_instance({
 			method:'post',
@@ -341,7 +339,8 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
 			data: data
 		}).then((res)=>{
             data._id = res.data.moduleId;
-            modules.push(data)
+            modules.push(data);
+            setPlatform(p=>({...p}));
             setRedraw(r=>!r);
 		});
 	}
@@ -377,7 +376,6 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
 
     const handleMouseUp = (e) =>
     {
-        console.log("mouseup");
         let ctx = canvasRef.current.getContext('2d');
         if (!ctx)
             return;
