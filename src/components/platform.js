@@ -200,8 +200,21 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             setWidgetIndex(null);
             //updatePage();
         }else if(type==="Page"){
-            let filter = pages.filter(item => item !== pages[pageIndex])
-            setPages(filter);
+            // console.log(pages[pageIndex]._id);
+            // console.log(moduleId);
+            // console.log(platformId);
+            axios_instance({
+                method: 'post',
+                url: "page/delete",
+                data: {
+                    platformId:platformId,
+                    moduleId:moduleId,
+                    pageId:pages[pageIndex]._id
+                }
+            }).then((res)=>{
+                let filter = pages.filter(item => item !== pages[pageIndex])
+                setPages(filter);
+            }).catch(err=>console.log(err));
         }else if(type==="Module"){
             console.log(type);
         }
