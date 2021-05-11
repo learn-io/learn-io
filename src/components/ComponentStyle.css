@@ -369,10 +369,12 @@ input.largeCheckbox{
 .page{
 	background-color:#9EEBCF;
 	/* border-radius: .5rem; */
-	height:100%;
+	height:15%;
 	width: 100%;
 	box-shadow:4px 4px 8px 0 rgba(0,0,0,.2);
 	border-width:.25rem;
+	padding:20px;
+	margin-top:20px;
 }
 
 /* For flashcard */
@@ -605,4 +607,5 @@ input.largeCheckbox{
 .pageLayoutHelper{
 	padding-top:2vh;
 	justify-content:space-between;
+	height:100%;
 }
