@@ -142,14 +142,14 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 	if(isEdit){
 		return (
 				//@TODO CHANGE CSS TO 100% with new class
-				<div id="pageGrid" className="content pageLayoutHelper" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}} onClick={(e)=>{deselectPage(e)}}>
+				<div id="pageGrid" style={{overflowY:'scroll', border: '1px solid black'}} className="content pageLayoutHelper" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}} onClick={(e)=>{deselectPage(e)}}>  {/*deselectPage() */}
 					{
 						pages.map((val, key) => {
 							console.log(val);
 							console.log(key);
 							return (
-								<div key={key} className="page" onClick={()=>{ selectPage(key) }} > 
-									<Page pageInfo={val.pageName} name={key} />
+								<div key={''+key} className="page pageHelper" onClick={()=>{ selectPage(key) }} > 
+									<Page pageInfo={val.pageName} name={''+key} />
 								</div>
 							)
 						})	
