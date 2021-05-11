@@ -4,7 +4,7 @@ import axios_instance from '../axios_instance.js';
 import lockIcon from '../images/lock.png';
 import unlockIcon from '../images/unlock.png'
 
-const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, setPlatform, 
+const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, updatePlatform, 
     modules, setSelectedModule, setSelectedDisable,
     dragging, setDragging, platformId, editMode, 
     setEditMode, redraw, setRedraw})=>{
@@ -340,7 +340,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, set
 		}).then((res)=>{
             data._id = res.data.moduleId;
             modules.push(data);
-            setPlatform(p=>({...p}));
+            updatePlatform();
             setRedraw(r=>!r);
 		});
 	}
