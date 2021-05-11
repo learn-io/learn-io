@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {Modal} from 'react-bootstrap';
 import {useParams} from 'react-router-dom';
 import './ComponentStyle.css';
 import axios_instance from './axios_instance';
@@ -44,7 +45,9 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
 
     const [layout, setLayout] = useState();
 
-	useEffect(
+    const [saving, setSaving] = useState(false);
+
+    useEffect(
         ()=>{
 			getUserPlatformInfo(isSignedIn, platformId)
 			.then((res)=>{
@@ -200,16 +203,8 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         // console.log(type);
     }
     const saveAll=()=>{
-        // {platform} {pages}
         let promises=[];
-        //console.log("allPages")
-        //console.log(allPages)
-
-        //console.log("platform")
-        //console.log(platform)
-
-        // return;
-        
+        setSaving(true);
         for(var i=0;i<platform.modules.length;i++){
             let data = {
                 _id:platformId,
@@ -263,7 +258,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 }));
             }
         }
-        Promise.all(promises);
+        Promise.all(promises).then((resp) => {setSaving(false)});
     }
 
     const updatePlatform = () =>
@@ -289,6 +284,17 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         setCurPage(newdata);
     }
 
+    const saveAlert = <Modal show={saving}>
+        <Modal.Header>
+        Saving...
+        </Modal.Header>
+        <Modal.Body>
+        Please Wait
+        </Modal.Body>
+
+        </Modal>
+
+
     if (moduleId === "")
     {
         return (
@@ -302,6 +308,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             dragging={dragging} setDragging={setDragging}
             editMode={editMode} setEditMode={setEditMode}/>
             <RightBar isEdit={isEdit} selectType="Module" onDragStart={()=>setDragging(true)} add={editMode} setAdd={setEditMode}/>
+            {saveAlert}
         </div>
         );
     }
@@ -319,6 +326,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                     pages={pages} 
                     setPageIndex={setPageIndex}/>
                 <RightBar isEdit={isEdit} selectType={"Page"} selected={pages[pageIndex]} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
+                {saveAlert}
             </div>
         );
     }
@@ -345,6 +353,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 layout={layout} setLayout={setLayout}/>
 
                 <RightBar isEdit={isEdit} selectType={"Widget"} curPage={curPage} selected={widgetIndex} onDragStart={onDragStart} add={add} setAdd={setAdd} pages={pages}/>
+                {saveAlert}
             </div>
         );
     }
