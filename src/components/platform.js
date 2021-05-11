@@ -42,6 +42,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     const [add,setAdd] = useState(0);
     const [editMode, setEditMode] = useState(-1); //-1 => enter, 0 => drag, 1=> connect
 
+    const [layout, setLayout] = useState();
 
 	useEffect(
         ()=>{
@@ -186,21 +187,15 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     const doDelete=(type)=>{
         if(type==="Widget"){
             console.log(curPage.widgets);
+            console.log(layout);
             console.log(widgetIndex);
-            let items=curPage.widgets;
-            let filter = items.filter(item => item !== curPage.widgets[widgetIndex]);
-            // curPage.widgets=filter;
+
+            curPage.widgets.splice(widgetIndex, 1);
+            setLayout(curPage.widgets.map((val,key) => {
+                return {i: ''+key, x: val.x, y: val.y, w: val.width, h: val.height, static: !isEdit}
+            }));
             setWidgetIndex(null);
-            curPage.widgets=filter;
-            // console.log(filter);
-            // console.log(allPages);
-            // setAdd(add+1);
-            // console.log(filter);
-            console.log(curPage.widgets);
-            // setCurPage(filter);
-            // setWidgetIndex();
-            // console.log(widgetIndex);
-            // console.log(curPage.widgets[widgetIndex]);
+            //updatePage();
         }
         // console.log(type);
     }
@@ -346,7 +341,8 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 setAction={setAction} setPageName={setPageName}
                 platformName={platformName} moduleName={moduleName} pageName={pageName}
                 platformId={platformId} moduleId={moduleId} pageId={pageId} curPage={curPage}
-                setWidgetIndex={setWidgetIndex} updatePage={updatePage}/>
+                setWidgetIndex={setWidgetIndex} updatePage={updatePage}
+                layout={layout} setLayout={setLayout}/>
 
                 <RightBar isEdit={isEdit} selectType={"Widget"} curPage={curPage} selected={widgetIndex} onDragStart={onDragStart} add={add} setAdd={setAdd} pages={pages}/>
             </div>

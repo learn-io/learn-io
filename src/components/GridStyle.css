@@ -13,6 +13,11 @@ user-select: none;
 .react-grid-item.cssTransforms {
 transition-property: transform;
 }
+
+.noAnimate .react-grid-item.cssTransforms {
+transition-property: none;
+}
+
 .react-grid-item.resizing {
 z-index: 1;
 will-change: width, height;
