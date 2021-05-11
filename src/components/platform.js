@@ -252,11 +252,12 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         Promise.all(promises);
     }
 
+    console.log(platform.modules);
     if (moduleId === "")
     {
         return (
         <div className="platformContainer">
-            <LeftBar len={platform.modules? platform.modules.len : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>  
+            <LeftBar len={platform.modules? platform.modules.length : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>  
             <ModuleView username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
             platformId={platformId} platform={platform} setPlatform={setPlatform}
             userPlatformInfo={userPlatformInfo}
@@ -274,7 +275,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         console.log(curPage);
         return (
             <div className="platformContainer">
-                <LeftBar len={platform.modules? platform.modules.len : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
+                <LeftBar len={platform.modules? platform.modules.length : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
                 <ModuleDecision username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
                     userPlatformInfo={userPlatformInfo} setModuleId={setModuleId}
                     platformName={platformName} moduleName = {moduleName}
@@ -300,7 +301,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         // console.log(pages);
         return (
             <div className="platformContainer">
-                <LeftBar len={platform.modules? platform.modules.len : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
+                <LeftBar len={platform.modules? platform.modules.length : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
                 
                 <GamePlay username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
                 setAction={setAction} setPageName={setPageName}

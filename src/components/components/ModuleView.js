@@ -87,7 +87,7 @@ const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlat
         return(
             <>
 				<h2 style={{color:'white'}}>{platformName}</h2>
-				<ModuleList setRedraw={setRedraw} redraw={redraw} dragging={dragging} setDragging={setDragging} platform={platform} 
+				<ModuleList setRedraw={setRedraw} redraw={redraw} dragging={dragging} setDragging={setDragging} setPlatform={setPlatform} 
 				toggleConnection = {toggleConnection} isEdit={isEdit} moveModuleTo={moveModuleTo} 
 				modules={platform.modules} setSelectedModule={setSelectedModule} userPlatformInfo={userPlatformInfo} 
 				setSelectedDisable={setSelectedDisable} platformId={platformId}
