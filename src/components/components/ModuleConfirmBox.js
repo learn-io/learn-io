@@ -7,7 +7,7 @@ import closeIcon from '../images/close.png';
 import axios_instance from '../axios_instance.js';
 import {Button} from 'react-bootstrap';
 
-const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,updatePlatform,setModuleName,setModuleId,selectedDisable})=>{
+const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,updatePlatform,setModuleName,setModuleId,selectedDisable, isEdit})=>{
 	const [header,setHeader]=useState('');
     const [changeHeader,setChangeHeader]=useState(false);
     const [description,setDescription]=useState('');
@@ -195,7 +195,10 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,upd
 		return null
 	}else{
 		let bt;
-		if(selectedDisable){
+		if (isEdit){
+			bt=<Button className='playButton' onClick={()=>{setModuleName(selectedModule.moduleName); setModuleId(selectedModule._id)}}> Edit</Button>;
+		}
+		else if(selectedDisable){
 			bt=<Button className='disableButton' disabled> Play</Button>;
 		}else{
 			bt=<Button className='playButton' onClick={()=>{setModuleName(selectedModule.moduleName); setModuleId(selectedModule._id)}}> Play</Button>;
