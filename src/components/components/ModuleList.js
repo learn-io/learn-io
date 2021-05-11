@@ -306,17 +306,48 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
 
     const onDragOver=(event)=>{
         event.preventDefault();
-        handleMouseMove(event);
     }
 
 	const onDrop=(event)=>{
 		event.preventDefault();
-		handleMouseUp(event);
+        setDragging(false);
+        setEditMode(0);
+        setEditXOFF(0);
+        setEditYOFF(0);
+        let ctx = canvasRef.current.getContext('2d');
+        if (!ctx)
+            return;
+        var rect = ctx.canvas.getBoundingClientRect();
+        const x = (event.clientX - rect.left) * scaleX;
+        const y = (event.clientY - rect.top) * scaleY;
+        let data = {
+            _id:platformId,
+            moduleName:"New Module",
+            moduleDescription:"A Freshly Created Module!",
+            lockedby: [],
+            unlocks: [],
+            x: x,
+            y: y,
+            height: 75,
+            width: 75,
+            completionScore: 10,
+            image:"",
+            rank:0,
+            entry:false
+        }
+        axios_instance({
+			method:'post',
+			url: "platform/newModule",
+			data: data
+		}).then((res)=>{
+            data._id = res.data.moduleId;
+            modules.push(data)
+            setRedraw(r=>!r);
+		});
 	}
 
     const handleMouseDown = (e) =>
     {
-        console.log("down");
         let ctx = canvasRef.current.getContext('2d');
         if (!ctx)
             return;
@@ -346,7 +377,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
 
     const handleMouseUp = (e) =>
     {
-        console.log("Up");
+        console.log("mouseup");
         let ctx = canvasRef.current.getContext('2d');
         if (!ctx)
             return;
@@ -380,39 +411,6 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo,
         setEditSelected(-1);
         setRedraw(s=>s+1);
     }
-
-    useEffect( ()=> {
-        if(dragging == false || isEdit === false)
-            return;
-        setDragging(false);
-        setEditMode(0);
-        setEditXOFF(0);
-        setEditYOFF(0);
-        axios_instance({
-			method:'post',
-			url: "platform/newModule",
-			data:{
-				_id:platformId,
-				moduleName:"New Module",
-                moduleDescription:"A Freshly Created Module!",
-                lockedby: [],
-                unlocks: [],
-                x: 0,
-                y: 0,
-                height: 75,
-                width: 75,
-                completionScore: 10,
-				image:"",
-				rank:0,
-				entry:false
-			}
-		}).then((res)=>{
-            setEditSelected(modules.find(x=>{return x._id === res.data.moduleId}));
-			setRedraw(s=>s+1);
-		});
-        
-    }, [dragging]
-    );
 
 	return(   
             <canvas className='canvasStyle content' ref={canvasRef} 

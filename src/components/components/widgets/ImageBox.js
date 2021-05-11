@@ -2,7 +2,7 @@ import React, { useEffect,useState} from 'react';
 import '../../ComponentStyle.css';
 import axios_instance from '../../axios_instance.js';
 
-const ImageBox=({internals})=>{
+const ImageBox=({internals,hash})=>{
     const [imageData,setImageData]=useState('');
     useEffect(
         ()=>{
@@ -16,7 +16,7 @@ const ImageBox=({internals})=>{
             }).catch((err)=>{
 				console.log(err);
 			});
-        },[internals]   
+        },[internals,hash]   
 	);
     let ImageBox;
     if(!imageData){

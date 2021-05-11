@@ -3,7 +3,7 @@ import '../../ComponentStyle.css';
 // import {Button} from 'react-bootstrap';
 import axios_instance from '../../axios_instance.js';
 
-const ImageQuestion=({internals,setAction})=>{
+const ImageQuestion=({internals,hash,setAction})=>{
     const [imageData,setImageData]=useState('');
     useEffect(
         ()=>{
@@ -17,7 +17,7 @@ const ImageQuestion=({internals,setAction})=>{
             }).catch((err)=>{
 				console.log(err);
 			});
-        },[internals]   
+        },[internals,hash]   
 	);
     const checkResult=()=>{
         setAction(internals.click);
