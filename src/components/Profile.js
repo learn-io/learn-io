@@ -178,9 +178,13 @@ const Progress=({allInfo})=>{
                 {allInfo.map((pI)=>{
                     return(
                         <div key={pI.platformInfo.platformName} className="userPlatformInfoPadding">
-                            <h2 className="text-left ml-4">{pI.platformInfo.platformName}</h2>
-                            <div className="container">
-                                <ProgressBar animated label={`${Math.floor((pI.platforms.modulesCompleted/pI.platformInfo.modules.length)*100)}%`} now={pI.platforms.modulesCompleted} max={pI.platformInfo.modules.length}/>
+                            <div style={{display:'flex', justifyContent:'space-between'}}> 
+                                <h2 style={{float:'left', display:'inline'}}>{pI.platformInfo.platformName}</h2>
+                                <h2 style={{float:'right', display:'inline'}}>{`${Math.floor((pI.platforms.modulesCompleted/pI.platformInfo.modules.length)*100)}%`}</h2>
+                            </div>
+                            <br/>
+                            <div className="container" style={{padding:"10px"}}>
+                                <ProgressBar animated now={pI.platforms.modulesCompleted} max={pI.platformInfo.modules.length}/>
                             </div>
                         </div>
                     );
@@ -199,13 +203,22 @@ const Badges=({allInfo})=>{
     if(typeof allInfo==='undefined'){ //typeof allInfo==='undefined'
         return (
             <div className="userPlatformInfoPadding container">
-                <h1>No badges to display at this time.</h1>
+                <h1 style={{paddingTop:"10px"}}>No badges to display at this time.</h1>
             </div>
         )
     } else {
         return (
             <div className="container userPlatformInfoPaddingBottom">
                 {allInfo.map((pI)=>{
+                    let temp = pI.platforms.badges;
+                    if(!temp[0] && !temp[1] && !temp[2] && !temp[3]){
+                        return (
+                            <div key={pI.platformInfo.platformName} className="userPlatformInfoPadding">
+                                <h2 className="text-left ml-4">{pI.platformInfo.platformName}</h2>
+                                <p style={{padding:'20px'}}> No badges to display at this time. </p>
+                            </div>
+                        );
+                    }
                     return(
                         <div key={pI.platformInfo.platformName} className="userPlatformInfoPadding">
                             <h2 className="text-left ml-4">{pI.platformInfo.platformName}</h2>
@@ -215,7 +228,7 @@ const Badges=({allInfo})=>{
                                     // console.log(val)
                                     // console.log("index")
                                     // console.log(index)
-                                    if(val === "true"){
+                                    if(val === true){
                                         return (
                                             <img key={''+index} height="250px" width="250px" src={localBadges[index]} alt="No badges to display at this time."></img>
                                         );
