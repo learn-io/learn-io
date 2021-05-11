@@ -11,6 +11,8 @@ import badge1 from './images/50.png';
 import badge2 from './images/75.png';
 import badge3 from './images/100.png';
 
+const localBadges = [badge0,badge1,badge2,badge3];
+
 const Switch = require("react-router-dom").Switch;
 const Route = require("react-router-dom").Route;
 
@@ -178,7 +180,7 @@ const Progress=({allInfo})=>{
                         <div key={pI.platformInfo.platformName} className="userPlatformInfoPadding">
                             <h2 className="text-left ml-4">{pI.platformInfo.platformName}</h2>
                             <div className="container">
-                                <ProgressBar animated now={pI.platforms.modulesCompleted} max={pI.platformInfo.modules.length}/>
+                                <ProgressBar animated label={`${Math.floor((pI.platforms.modulesCompleted/pI.platformInfo.modules.length)*100)}%`} now={pI.platforms.modulesCompleted} max={pI.platformInfo.modules.length}/>
                             </div>
                         </div>
                     );
@@ -194,7 +196,7 @@ const Badges=({allInfo})=>{
     // console.log("allInfo");
     // console.log(allInfo);
 
-    if(false){ //typeof allInfo==='undefined'
+    if(typeof allInfo==='undefined'){ //typeof allInfo==='undefined'
         return (
             <div className="userPlatformInfoPadding container">
                 <h1>No badges to display at this time.</h1>
@@ -208,15 +210,24 @@ const Badges=({allInfo})=>{
                         <div key={pI.platformInfo.platformName} className="userPlatformInfoPadding">
                             <h2 className="text-left ml-4">{pI.platformInfo.platformName}</h2>
                             <div className="container badgeContainer">
-                                {/* {pI.platformInfo.modules.map((val, index)=>{
-                                    return (
-                                        <img height="250px" width="250px" src={"badge"+index} alt="No badges to display at this time."></img>
-                                    );
-                                })} */}
-                                <img height="250px" width="250px" src={badge0} alt="No badges to display at this time."></img>
+                                {pI.platforms.badges.map((val, index)=>{
+                                    // console.log("val")
+                                    // console.log(val)
+                                    // console.log("index")
+                                    // console.log(index)
+                                    if(val === "true"){
+                                        return (
+                                            <img key={''+index} height="250px" width="250px" src={localBadges[index]} alt="No badges to display at this time."></img>
+                                        );
+                                        
+                                    } else {
+                                        return <></>
+                                    }
+                                })}
+                                {/* <img height="250px" width="250px" src={badge0} alt="No badges to display at this time."></img>
                                 <img height="250px" width="250px" src={badge1} alt="No badges to display at this time."></img>
                                 <img height="250px" width="250px" src={badge2} alt="No badges to display at this time."></img>
-                                <img height="250px" width="250px" src={badge3} alt="No badges to display at this time."></img>
+                                <img height="250px" width="250px" src={badge3} alt="No badges to display at this time."></img> */}
                             </div>
                         </div>
                     );
