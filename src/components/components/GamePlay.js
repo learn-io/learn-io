@@ -20,6 +20,8 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
     useEffect( () => {
         if (curPage._id === undefined)
             return;
+        // console.log(curPage.widgets);
+        // setLayout("");
         setLayout(curPage.widgets.map((val,key) => {
             return {i: ''+key, x: val.x, y: val.y, w: val.width, h: val.height, static: !isEdit}
         }));
