@@ -149,7 +149,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 							console.log(key);
 							return (
 								<div key={''+key} className="page pageHelper" onClick={()=>{ selectPage(key) }} > 
-									<Page pageInfo={val.pageInfo.pageName} name={''+key} />
+									<Page pageInfo={val.pageName} name={''+key} />
 								</div>
 							)
 						})	
