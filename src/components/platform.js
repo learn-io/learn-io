@@ -186,6 +186,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     const doDelete=(type)=>{
         if(type==="Widget"){
             console.log(curPage.widgets);
+            console.log(widgetIndex);
             let items=curPage.widgets;
             let filter = items.filter(item => item !== curPage.widgets[widgetIndex]);
             // curPage.widgets=filter;
@@ -285,6 +286,14 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
         //updatePlatform();
     }
 
+    const updatePage = () => 
+    {
+        let newdata = {...curPage}
+        let index = allPages[moduleId].findIndex(x => x._id === pageId);
+        allPages[moduleId][index] = newdata;
+        setCurPage(newdata);
+    }
+
     if (moduleId === "")
     {
         return (
@@ -312,7 +321,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                     platformId={platformId} moduleId = {moduleId}
                     setPageName={setPageName} setPageId={setPageId}
                     setPageEntry={setPageEntry} updatePages={updatePages}
-                    pages={pages} update={add}
+                    pages={pages} 
                     setPageIndex={setPageIndex}/>
                 <RightBar isEdit={isEdit} selectType={"Page"} selected={pages[pageIndex]} onDragStart={onDragStart} add={add} setAdd={setAdd}/>
             </div>
@@ -337,7 +346,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 setAction={setAction} setPageName={setPageName}
                 platformName={platformName} moduleName={moduleName} pageName={pageName}
                 platformId={platformId} moduleId={moduleId} pageId={pageId} curPage={curPage}
-                setWidgetIndex={setWidgetIndex} update={add}/>
+                setWidgetIndex={setWidgetIndex} updatePage={updatePage}/>
 
                 <RightBar isEdit={isEdit} selectType={"Widget"} curPage={curPage} selected={widgetIndex} onDragStart={onDragStart} add={add} setAdd={setAdd} pages={pages}/>
             </div>

@@ -9,11 +9,10 @@ const ReactGridLayout = WidthProvider(RGL);
 const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
     platformName, moduleName, pageName, 
     platformId, moduleId, pageId, curPage,
-    setWidgetIndex, update})=>{
+    setWidgetIndex, updatePage})=>{
 
     const [layout, setLayout] = useState();
     // const [selectedWidget,setSelectedWidget]= useState("");
-    const [add,setAdd]= useState(0);
     const [oldPage, setOldPage] = useState("");
     const [newWidget,setNewWidget]=useState(false);
 
@@ -26,7 +25,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
             return {i: ''+key, x: val.x, y: val.y, w: val.width, h: val.height, static: !isEdit}
         }));
         setOldPage(curPage)
-    }, [curPage, isEdit,add,update] 
+    }, [curPage, isEdit] 
     );
 
     if (curPage._id === undefined)
@@ -177,7 +176,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
         setOldPage(curPage);
         // console.log(curPage);
         setNewWidget(true);
-        setAdd(add+1);
+        updatePage();
     }
     const selectWidget=(key)=>{
         // console.log(curPage[key]);
@@ -248,7 +247,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
                     curPage.widgets.map((val,key) => {
                         return (
                             <div key={''+key} className="widget">
-                                <Widget internals={val.internals} setAction={setAction}/>
+                                <Widget internals={val.internals} setAction={setAction} isEdit={false}/>
                             </div>
                         );
                     })
