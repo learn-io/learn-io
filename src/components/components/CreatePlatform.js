@@ -1,7 +1,6 @@
-import React, { useState }  from 'react';
+import React from 'react';
 import '../ComponentStyle.css';
 import closeIcon from '../images/close.png';
-import {Form} from 'react-bootstrap';
 import axios_instance from '../axios_instance.js';
 
 const CreatePlatform=({create,setCreate,save,setSave})=>{

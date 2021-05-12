@@ -365,7 +365,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 
                 <GamePlay username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
                 setAction={setAction} setPageName={setPageName}
-                platformName={platformName} moduleName={moduleName} pageName={pageName}
+                platformName={platformName} moduleName={moduleName} pageName={curPage.pageName}
                 platformId={platformId} moduleId={moduleId} pageId={pageId} curPage={curPage}
                 setWidgetIndex={setWidgetIndex} updatePage={updatePage}
                 layout={layout} setLayout={setLayout}/>
