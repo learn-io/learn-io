@@ -29,6 +29,23 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
     //         }
     //     }
     // }
+    const onChangeSnack=(event,position,index)=>{
+        for(let i=0;i<curPage.widgets.length;i++){
+            if(curPage.widgets[i]===selectedWidget){
+                while(curPage.widgets[i].internals.options.length<=index){
+                    let ob={"rightImage":"","wrongImage":""}
+                    curPage.widgets[i].internals.options.push(ob);
+                }
+                if(position==="correct"){
+                    curPage.widgets[i].internals.options[index].rightImage=event.target.value;
+                }else{
+                    curPage.widgets[i].internals.options[index].wrongImage=event.target.value;
+                }
+                break;
+            }
+        }
+        // console.log(curPage);
+    }
     const onChangeAnswerTarget=(event,answer)=>{
         for(let i=0;i<curPage.widgets.length;i++){
             if(curPage.widgets[i]===selectedWidget){
@@ -74,6 +91,16 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
     }else{
         text=selectedWidget.internals.rightAnswer.target;
     }
+
+    let textArray=[]
+    for(let i=0;i<2;i++){
+        let ob={"rightImage":"","wrongImage":""}
+        if(i<selectedWidget.internals.options.length){
+            ob.rightImage=selectedWidget.internals.options[i].rightImage;
+            ob.wrongImage=selectedWidget.internals.options[i].wrongImage;
+        }
+        textArray.push(ob);
+    }
     let game=<div>
                 <Table striped bordered hover>
                     <thead>
@@ -100,14 +127,14 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
                     </thead>
                     <tbody>
                         <tr>
-                        <td><input className='inputStyle' type="text" id="correctText1" name="correctText"/></td>
-                        <td><input className='inputStyle' type="text" id="wrongText1" name="wrongText"/></td>
+                        <td><input defaultValue={textArray[0].rightImage} onChange={(event)=>{onChangeSnack(event,"correct",0)}} className='inputStyle' type="text" id="correctText1" name="correctText"/></td>
+                        <td><input defaultValue={textArray[0].wrongImage} onChange={(event)=>{onChangeSnack(event,"wrong",0)}} className='inputStyle' type="text" id="wrongText1" name="wrongText"/></td>
                         </tr>
                     </tbody>
                     <tbody>
                         <tr>
-                        <td><input className='inputStyle' type="text" id="correctText2" name="correctText"/></td>
-                        <td><input className='inputStyle' type="text" id="wrongText2" name="wrongText"/></td>
+                        <td><input defaultValue={textArray[1].rightImage} onChange={(event)=>{onChangeSnack(event,"correct",1)}} className='inputStyle' type="text" id="correctText2" name="correctText"/></td>
+                        <td><input defaultValue={textArray[1].wrongImage} onChange={(event)=>{onChangeSnack(event,"wrong",1)}} className='inputStyle' type="text" id="wrongText2" name="wrongText"/></td>
                         </tr>
                     </tbody>
                 </Table>
