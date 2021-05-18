@@ -3,7 +3,7 @@ import '../../ComponentStyle.css';
 import {Button, Container, Row, Col} from 'react-bootstrap';
 
 
-const QuickTime=({internals, setAction})=>
+const QuickTime=({internals, setAction,widgetClicked})=>
 {
     const [started, setStarted] = useState(false);
 
@@ -44,17 +44,17 @@ const QuickTime=({internals, setAction})=>
         <Container>
             <Row>
                 <Col></Col>
-                <Col><Button onClick={()=>{setAction(top)}}>{top.text}</Button></Col>
+                <Col><Button onClick={()=>{setAction(top); widgetClicked();}}>{top.text}</Button></Col>
                 <Col></Col>
             </Row>
             <Row>
-                <Col><Button onClick={()=>{setAction(left)}}>{left.text}</Button></Col>
+                <Col><Button onClick={()=>{setAction(left); widgetClicked();}}>{left.text}</Button></Col>
                 <Col></Col>
-                <Col><Button onClick={()=>{setAction(right)}}>{right.text}</Button></Col>
+                <Col><Button onClick={()=>{setAction(right); widgetClicked();}}>{right.text}</Button></Col>
             </Row>
             <Row>
                 <Col></Col>
-                <Col><Button onClick={()=>{setAction(bottom)}}>{bottom.text}</Button></Col>
+                <Col><Button onClick={()=>{setAction(bottom); widgetClicked();}}>{bottom.text}</Button></Col>
                 <Col></Col>
             </Row>
         </Container>

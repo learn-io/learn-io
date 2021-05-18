@@ -3,6 +3,7 @@ import '../ComponentStyle.css';
 import '../GridStyle.css';
 import Widget from './widgets/Widget.js';
 import RGL, { WidthProvider } from "react-grid-layout";
+import axios_instance from '../axios_instance';
 
 const ReactGridLayout = WidthProvider(RGL);
 
@@ -184,6 +185,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
         setWidgetIndex(key);
         // console.log(1);
     }
+
     const onLayoutChanged=(newLayout)=>{
         if(newWidget){
             setNewWidget(false);
@@ -202,6 +204,39 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
         // setLayout(newLayout);
         // setAdd(add+1);
     }
+
+    const widgetClicked = () => {
+		axios_instance({
+			method:'get',
+			url:"profile/stats/"+username+"/0/100"
+		}).then(function(response){
+			console.log(response.data.resp);
+			alert("We made it to widgets clicked")
+
+			let curPlatformInfo = response.data.resp.filter((obj) => {
+				return obj.platformId === platformId;
+			});
+
+			console.log(curPlatformInfo);
+
+			curPlatformInfo[0].widgetsClicked+=1;
+
+			// console.log(curPlatformInfo);
+
+			axios_instance({
+				method:'post',
+				url:'profile/update',
+				data:curPlatformInfo[0]
+			}).then(function(response){
+				console.log(response);
+			});
+			
+		}).catch(function(err){
+			// history.push("/home");
+			console.log(err);
+		});
+	}
+    // console.log(widgetClicked);
     if(isEdit){
         // console.log(layout);
         return(
@@ -247,7 +282,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
                     curPage.widgets.map((val,key) => {
                         return (
                             <div key={''+key} className="widget">
-                                <Widget internals={val.internals} setAction={setAction} isEdit={false}/>
+                                <Widget internals={val.internals} setAction={setAction} isEdit={false} widgetClicked={widgetClicked}/>
                             </div>
                         );
                     })

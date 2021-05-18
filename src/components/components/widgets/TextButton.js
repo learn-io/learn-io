@@ -3,10 +3,10 @@ import '../../ComponentStyle.css';
 import {Button} from 'react-bootstrap';
 
 
-const TextButton=({internals, setAction})=>
+const TextButton=({internals, setAction, widgetClicked})=>
 {
     return (
-        <Button className='textbutton' onClick={()=>{setAction(internals.click)}}>
+        <Button className='textbutton' onClick={()=>{setAction(internals.click); widgetClicked();}}>
             {internals.text}
         </Button>
     )    

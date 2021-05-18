@@ -1,5 +1,5 @@
-import React from 'react';
-import {Table} from 'react-bootstrap';
+import React, {useEffect, useState} from 'react';
+import {Table,Dropdown} from 'react-bootstrap';
 import axios_instance from '../axios_instance.js';
 import EditFlashcard from './editwidgets/EditFlashcard.js';
 import EditMatching from './editwidgets/EditMatching.js';
@@ -9,6 +9,13 @@ import EditTextButton from './editwidgets/EditTextButton.js';
 import EditSnackSnake from './editwidgets/EditSnackSnake.js';
 
 const RightbottomBar = ({curPage, selectType, selected, add,setAdd,pages, updatePage}) =>{ //selectedWidget,curPage
+    const [update,setUpdate]= useState(0);
+    // const [textArray,setTextArray]= useState([]);
+    // const hiddenFileInput = React.useRef(null);
+    useEffect(
+        ()=>{
+        },[update]
+    );
     const hiddenFileInput = React.useRef(null);
     if(selected === undefined && selectType !== "Module"){
         return (
@@ -128,22 +135,24 @@ const RightbottomBar = ({curPage, selectType, selected, add,setAdd,pages, update
             // console.log(event.target.value);
         }
         
-        const onChangePorS=(event)=>{
+        const onChangePorS=(value)=>{
             for(let i=0;i<curPage.widgets.length;i++){
                 if(curPage.widgets[i]===selected){
-                    curPage.widgets[i].internals.click.actionType=event.target.value;
+                    curPage.widgets[i].internals.click.actionType=value;
+                    curPage.widgets[i].internals.click.target="";
                     break;
                 }
             }
+            setUpdate(update+1);
         }
 
-        const onChangeTarget=(event)=>{
+        const onChangeTarget=(event, pageN)=>{
             for(let i=0;i<curPage.widgets.length;i++){
                 let value="";
                 if(curPage.widgets[i]===selected){
                     if(curPage.widgets[i].internals.click.actionType==='P'){
                         for(let j=0;j<pages.length;j++){
-                            if(pages[j].pageName===event.target.value){
+                            if(pages[j].pageName===pageN){
                                 value=pages[j]._id;
                                 break;
                             }
@@ -155,6 +164,7 @@ const RightbottomBar = ({curPage, selectType, selected, add,setAdd,pages, update
                     break;
                 }
             }
+            setUpdate(update+1);
             // console.log(curPage);
         }
         // let textInput=<div>Input Text:<input style={{width:'90%'}} type="text" id="textinput" name="textinput" onChange={onChangeText}/></div>
@@ -189,6 +199,35 @@ const RightbottomBar = ({curPage, selectType, selected, add,setAdd,pages, update
             }else{
                 text=selected.internals.click.target;
             }
+            let targetPart;
+            // console.log(pages);
+            if(selected.internals.click.actionType==="P"){
+                let title="";
+                for(let k=0;k<pages.length;k++){
+                    if(pages[k]._id===selected.internals.click.target){
+                        title=pages[k].pageName;
+                    }
+                }
+                targetPart=<Dropdown>
+                                <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
+                                    {title}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    {
+                                        pages.map((x,i)=>{
+                                            return(
+                                                <Dropdown.Item onClick={(event)=>onChangeTarget(event,x.pageName)} key={i}>{x.pageName}</Dropdown.Item>
+                                            );
+                                        })
+                                    }
+                                    {/* <Dropdown.Item>P</Dropdown.Item>
+                                    <Dropdown.Item>S</Dropdown.Item> */}
+                                    {/* <Dropdown.Item onClick={()=>{onChangeLimit(20)}}>20</Dropdown.Item> */}
+                                </Dropdown.Menu>
+                            </Dropdown>
+            }else{
+                targetPart=<input defaultValue={text} style={{border:'none',backgroundColor:"transparent",width:'100%'}} onChange={(event)=>onChangeTarget(event)} type="text" id="target" name="target"/>
+            }
             game=<div>
                     <div>
                         <button style={{backgroundColor:'#96CCFF',borderRadius: '.5rem',marginTop: '10%'}} onClick={handleClick}>Upload Image</button>
@@ -204,8 +243,20 @@ const RightbottomBar = ({curPage, selectType, selected, add,setAdd,pages, update
                                     </thead>
                                     <tbody>
                                         <tr>
-                                        <td><input defaultValue={selected.internals.click.actionType} style={{border:'none',backgroundColor:"transparent",width:'100%'}} onChange={(event)=>onChangePorS(event)} type="text" id="pors" name="pors"/></td>
-                                        <td><input defaultValue={text} style={{border:'none',backgroundColor:"transparent",width:'100%'}} onChange={(event)=>onChangeTarget(event)} type="text" id="target" name="target"/></td>
+                                        <td>
+                                            <Dropdown>
+                                                <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
+                                                    {selected.internals.click.actionType}
+                                                </Dropdown.Toggle>
+                                                <Dropdown.Menu>
+                                                    <Dropdown.Item onClick={()=>onChangePorS("P")}>P</Dropdown.Item>
+                                                    <Dropdown.Item onClick={()=>onChangePorS("S")}>S</Dropdown.Item>
+                                                    {/* <Dropdown.Item onClick={()=>{onChangeLimit(20)}}>20</Dropdown.Item> */}
+                                                </Dropdown.Menu>
+                                            </Dropdown>
+                                            {/* <input defaultValue={selected.internals.click.actionType} style={{border:'none',backgroundColor:"transparent",width:'100%'}} onChange={(event)=>onChangePorS(event)} type="text" id="pors" name="pors"/> */}
+                                        </td>
+                                        <td style={{width:'60%'}}>{targetPart}</td>
                                         </tr>
                                     </tbody>
                                 </Table>

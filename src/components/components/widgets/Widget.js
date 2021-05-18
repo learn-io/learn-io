@@ -15,31 +15,31 @@ import MatchingEdit from './MatchingEdit.js'
 import MultipleChoiceEdit from './MultipleChoiceEdit.js';
 
 
-const Widget = ({internals, setAction,isEdit})=>{
+const Widget = ({internals, setAction,isEdit,widgetClicked})=>{
     let game;
     switch(internals.widgetFlavor)
     {
         case "Flashcard":
-            game=<Flashcard internals={internals}/>
+            game=<Flashcard internals={internals} widgetClicked={widgetClicked}/>
         break;
         case "ImageButton":
-            game=<ImageQuestion internals={internals} hash={internals.hash} setAction={setAction}/>
+            game=<ImageQuestion internals={internals} hash={internals.hash} setAction={setAction} widgetClicked={widgetClicked}/>
         break;
         case "MultipleChoice":
             if(isEdit){
                 game=<MultipleChoiceEdit internals={internals} setAction={setAction}/>
             }else{
-                game=<MultipleChoice internals={internals} setAction={setAction}/>
+                game=<MultipleChoice internals={internals} setAction={setAction} widgetClicked={widgetClicked}/>
             }
         break;
         case "Sound":
-            game=<SoundQuestion internals={internals} hash={internals.hash}/>
+            game=<SoundQuestion internals={internals} hash={internals.hash} widgetClicked={widgetClicked}/>
         break;
         case "Matching":
             if(isEdit){
                 game=<MatchingEdit internals={internals} setAction={setAction}/>
             }else{
-                game=<Matching internals={internals} setAction={setAction}/>
+                game=<Matching internals={internals} setAction={setAction} widgetClicked={widgetClicked}/>
             }
             
         break;
@@ -47,16 +47,16 @@ const Widget = ({internals, setAction,isEdit})=>{
             game=<ImageBox internals={internals} hash={internals.hash}/>
         break;
         case "QuickTimeChoice":
-            game=<QuickTime internals={internals} setAction={setAction}/>
+            game=<QuickTime internals={internals} setAction={setAction} widgetClicked={widgetClicked}/>
         break;
         case "TextBox":
-            game=<TextBox internals={internals}/>
+            game=<TextBox internals={internals} widgetClicked={widgetClicked}/>
         break;
         case "TextButton":
-            game=<TextButton internals={internals} setAction={setAction}/>
+            game=<TextButton internals={internals} setAction={setAction} widgetClicked={widgetClicked}/>
         break;
         case "Snacksnake":
-            game=<Snacksnake internals={internals} setAction={setAction}/>
+            game=<Snacksnake internals={internals} setAction={setAction} widgetClicked={widgetClicked}/>
         break;
         default:
             game=<div>No Widget!</div>

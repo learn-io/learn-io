@@ -287,14 +287,14 @@ const Stats=({allInfo})=>{
                                     <p>{pI.platforms.pageVisited}</p>
                                 </Col>
                             </Form.Row>
-                            <Form.Row>
+                            {/* <Form.Row>
                                 <Col>
                                     <p>Time Spent:</p>
                                 </Col>
                                 <Col>
                                     <p>{pI.platforms.timeSpend}</p>
                                 </Col>
-                            </Form.Row>
+                            </Form.Row> */}
                             <Form.Row>
                                 <Col>
                                     <p>Widgets Clicked:</p>
