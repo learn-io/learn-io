@@ -4,7 +4,7 @@ import '../../ComponentStyle.css';
 
 import axios_instance from '../../axios_instance.js';
 
-const Snacksnake=({internals, setAction})=>{
+const Snacksnake=({internals, setAction, widgetClicked})=>{
     const canvasRef = useRef();
 
     const[options,setOptions] = useState([]);
@@ -324,8 +324,9 @@ const Snacksnake=({internals, setAction})=>{
 
     return  <div className="snacksnake">
                 <div className="btn-toolbar" style={{justifyContent:'space-between'}}>
-                    <Button id="playButton" onClick={e=>{setStartGame(!startGame)}}>Play/Pause</Button>
+                    <Button id="playButton" onClick={e=>{setStartGame(!startGame); widgetClicked();}}>Play/Pause</Button>
                     <Button onClick={e=>{
+                        widgetClicked();
                         setStartGame(false);
                         setSnakeBody([{x:initialx, y:initialy},{x:initialx,y:initialy-boxHeight+5}])
                         // document.getElementById("playButton").disabled = false;

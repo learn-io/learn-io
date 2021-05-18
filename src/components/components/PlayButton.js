@@ -4,7 +4,7 @@ import useSound from 'use-sound';
 import soundIcon from '../images/sound.png';
 import stopIcon from '../images/stop.png';
 
-const PlayButton=({sound})=>{
+const PlayButton=({sound, widgetClicked})=>{
     const [play,{ stop,isPlaying }] = useSound(sound);
     useEffect(() => {
         return () => {
@@ -15,9 +15,9 @@ const PlayButton=({sound})=>{
     }, [isPlaying,stop])
     let but;
     if(isPlaying){
-        but=<button className='deleteButton' onClick={stop}><img src={stopIcon} height='50px' width='50px' alt=""/></button>;
+        but=<button className='deleteButton' onClick={()=>{stop(); widgetClicked();}}><img src={stopIcon} height='50px' width='50px' alt=""/></button>;
     }else{
-        but=<button className='deleteButton' onClick={play}><img src={soundIcon} height='50px' width='50px' alt=""/></button>;
+        but=<button className='deleteButton' onClick={()=>{play(); widgetClicked();}}><img src={soundIcon} height='50px' width='50px' alt=""/></button>;
     }
     return but;
 }

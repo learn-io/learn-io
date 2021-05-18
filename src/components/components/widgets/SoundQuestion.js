@@ -4,7 +4,7 @@ import PlayButton from '../PlayButton.js';
 import axios_instance from '../../axios_instance.js';
 
 
-const SoundQuestion=({internals,hash})=>{
+const SoundQuestion=({internals,hash,widgetClicked})=>{
     // const [play,{ stop,isPlaying }] = useSound(testSound);
     const [soundData,setSoundData]=useState('');
     useEffect(
@@ -25,13 +25,13 @@ const SoundQuestion=({internals,hash})=>{
     if(!soundData){
         soundquestion=<div className='flashcard'>
                         <div className='widgetText'>
-                            <PlayButton />
+                            <PlayButton widgetClicked={widgetClicked} />
                         </div>
                     </div>
     }else{
         soundquestion=<div className='flashcard'>
                         <div className='widgetText'>
-                            <PlayButton sound={soundData}/>
+                            <PlayButton sound={soundData} widgetClicked={widgetClicked}/>
                         </div>
                     </div>;
     }
