@@ -59,7 +59,7 @@ const EditMultipleChoice = ({selectedWidget,curPage,add,setAdd,pages})=>{
             }
         }
         setUpdate(update+1);
-        console.log(curPage);
+        // console.log(curPage);
     }
     const onChangeCheckBox=(index)=>{
         // console.log(index);

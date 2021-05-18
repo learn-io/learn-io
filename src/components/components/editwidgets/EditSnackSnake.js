@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Table,Button} from 'react-bootstrap';
+import {Table,Button,Dropdown} from 'react-bootstrap';
 import './editStyle.css';
 import axios_instance from '../../axios_instance.js';
 import EditSnackRow from './EditSnackRow';
@@ -7,8 +7,6 @@ import deleteIcon from '../../images/delete.png';
 
 const EditSnackSnake = ({selectedWidget,curPage,updatePage,pages})=>{
     const [update,setUpdate]= useState(0);
-    // const [textArray,setTextArray]= useState([]);
-    // const hiddenFileInput = React.useRef(null);
     useEffect(
         ()=>{
         },[update]
@@ -19,17 +17,20 @@ const EditSnackSnake = ({selectedWidget,curPage,updatePage,pages})=>{
     //     console.log(hiddenFileInput.current);
 	// 	hiddenFileInput.current.click();
 	// };
-    const onChangeAnswer=(event,answer)=>{
+    const onChangeAnswer=(value,answer)=>{
         for(let i=0;i<curPage.widgets.length;i++){
             if(curPage.widgets[i]===selectedWidget){
                 if(answer==="Correct"){
-                    curPage.widgets[i].internals.rightAnswer.actionType=event.target.value;
+                    curPage.widgets[i].internals.rightAnswer.actionType=value;
+                    curPage.widgets[i].internals.rightAnswer.target="";
                 }else{
-                    curPage.widgets[i].internals.wrongAnswer.actionType=event.target.value;
+                    curPage.widgets[i].internals.wrongAnswer.actionType=value;
+                    curPage.widgets[i].internals.wrongAnswer.target="";
                 }
                 break;
             }
         }
+        setUpdate(update+1);
         // console.log(curPage);
     }
     // const onChangeAnswerTarget=(event,answer)=>{
@@ -109,14 +110,14 @@ const EditSnackSnake = ({selectedWidget,curPage,updatePage,pages})=>{
             }
         }
     }
-    const onChangeAnswerTarget=(event,answer)=>{
+    const onChangeAnswerTarget=(event,answer,pageN)=>{
         for(let i=0;i<curPage.widgets.length;i++){
             if(curPage.widgets[i]===selectedWidget){
                 let value="";
                 if(answer==="Correct"){
                     if(selectedWidget.internals.rightAnswer.actionType==='P'){
                         for(let j=0;j<pages.length;j++){
-                            if(pages[j].pageName===event.target.value){
+                            if(pages[j].pageName===pageN){
                                 value=pages[j]._id;
                                 break;
                             }
@@ -128,7 +129,7 @@ const EditSnackSnake = ({selectedWidget,curPage,updatePage,pages})=>{
                 }else{
                     if(selectedWidget.internals.wrongAnswer.actionType==='P'){
                         for(let j=0;j<pages.length;j++){
-                            if(pages[j].pageName===event.target.value){
+                            if(pages[j].pageName===pageN){
                                 value=pages[j]._id;
                                 break;
                             }
@@ -141,6 +142,7 @@ const EditSnackSnake = ({selectedWidget,curPage,updatePage,pages})=>{
                 break;
             }
         }
+        setUpdate(update+1);
         // console.log(curPage);
     }
     const addText=()=>{
@@ -164,6 +166,7 @@ const EditSnackSnake = ({selectedWidget,curPage,updatePage,pages})=>{
         }
     }
     let text="";
+    let targetPart;
     if(selectedWidget.internals.rightAnswer.actionType==='P'){
         for(let i=0;i<pages.length;i++){
             if(pages[i]._id===selectedWidget.internals.rightAnswer.target){
@@ -171,8 +174,22 @@ const EditSnackSnake = ({selectedWidget,curPage,updatePage,pages})=>{
                 break;
             }
         }
+        targetPart=<Dropdown>
+                        <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
+                            {text}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            {
+                                pages.map((x,i)=>{
+                                    return(
+                                        <Dropdown.Item onClick={(event)=>onChangeAnswerTarget(event,"Correct",x.pageName)} key={i}>{x.pageName}</Dropdown.Item>
+                                    );
+                                })
+                            }
+                        </Dropdown.Menu>
+                    </Dropdown>
     }else{
-        text=selectedWidget.internals.rightAnswer.target;
+        targetPart=<input defaultValue={selectedWidget.internals.rightAnswer.target} onChange={(event)=>onChangeAnswerTarget(event,"Correct")} className='inputStyle' type="text" id="target" name="target"/>
     }
     // console.log(textArray);
     let textArray=[]
@@ -224,8 +241,20 @@ const EditSnackSnake = ({selectedWidget,curPage,updatePage,pages})=>{
                     <tbody>
                         <tr>
                         <td>Correct</td>
-                        <td><input defaultValue={selectedWidget.internals.rightAnswer.actionType} onChange={(event)=>onChangeAnswer(event,"Correct")} className='inputStyle' type="text" id="pors" name="pors"/></td>
-                        <td><input defaultValue={text} onChange={(event)=>onChangeAnswerTarget(event,"Correct")} className='inputStyle' type="text" id="target" name="target"/></td>
+                        <td>
+                            <Dropdown>
+                                <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
+                                    {selectedWidget.internals.rightAnswer.actionType}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item onClick={()=>onChangeAnswer("P","Correct")}>P</Dropdown.Item>
+                                    <Dropdown.Item onClick={()=>onChangeAnswer("S","Correct")}>S</Dropdown.Item>
+                                    {/* <Dropdown.Item onClick={()=>{onChangeLimit(20)}}>20</Dropdown.Item> */}
+                                </Dropdown.Menu>
+                            </Dropdown>
+                            {/* <input defaultValue={selectedWidget.internals.rightAnswer.actionType} onChange={(event)=>onChangeAnswer(event,"Correct")} className='inputStyle' type="text" id="pors" name="pors"/> */}
+                        </td>
+                        <td style={{width:'60%'}}>{targetPart}</td>
                         </tr>
                     </tbody>
                 </Table>
