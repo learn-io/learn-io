@@ -8,7 +8,7 @@ import EditQuickTimeChoice from './editwidgets/EditQuickTimeChoice.js';
 import EditTextButton from './editwidgets/EditTextButton.js';
 import EditSnackSnake from './editwidgets/EditSnackSnake.js';
 
-const RightbottomBar = ({curPage, selectType, selected, add,setAdd,pages}) =>{ //selectedWidget,curPage
+const RightbottomBar = ({curPage, selectType, selected, add,setAdd,pages, updatePage}) =>{ //selectedWidget,curPage
     const hiddenFileInput = React.useRef(null);
     if(selected === undefined && selectType !== "Module"){
         return (
@@ -220,7 +220,7 @@ const RightbottomBar = ({curPage, selectType, selected, add,setAdd,pages}) =>{ /
         }else if(selected.internals.widgetFlavor==="TextButton"){
             game=<EditTextButton selectedWidget={selected} curPage={curPage} add={add} setAdd={setAdd} pages={pages}/>
         }else if(selected.internals.widgetFlavor==="Snacksnake"){
-            game=<EditSnackSnake selectedWidget={selected} curPage={curPage} add={add} setAdd={setAdd} pages={pages}/>
+            game=<EditSnackSnake selectedWidget={selected} curPage={curPage} add={add} setAdd={setAdd} pages={pages} updatePage={updatePage}/>
         }
         selectedInfo = game;
     } else {

@@ -295,7 +295,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     }
 
     const updatePage = () => 
-    {
+    {   
         let newdata = {...curPage}
         let index = allPages[moduleId].findIndex(x => x._id === pageId);
         allPages[moduleId][index] = newdata;
@@ -370,7 +370,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 setWidgetIndex={setWidgetIndex} updatePage={updatePage}
                 layout={layout} setLayout={setLayout}/>
 
-                <RightBar isEdit={isEdit} selectType={"Widget"} curPage={curPage} selected={widgetIndex} onDragStart={onDragStart} add={add} setAdd={setAdd} pages={pages}/>
+                <RightBar isEdit={isEdit} selectType={"Widget"} curPage={curPage} selected={widgetIndex} onDragStart={onDragStart} add={add} setAdd={setAdd} pages={pages} updatePage={updatePage}/>
                 {saveAlert}
             </div>
         );

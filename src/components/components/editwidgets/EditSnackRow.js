@@ -4,7 +4,7 @@ import './editStyle.css';
 import deleteIcon from '../../images/delete.png';
 
 const loading = "https://i.gifer.com/4V0b.gif";
-const EditSnackRow =({row,onChangeSnack,i,imageChange,onDelete})=>{
+const EditSnackRow =({row,onChangeSnack,i,onDelete,updatePage})=>{
 	const [right,setRight]=useState(loading);
     const [wrong,setWrong]=useState(loading);
 	useEffect(
@@ -45,7 +45,7 @@ const EditSnackRow =({row,onChangeSnack,i,imageChange,onDelete})=>{
 			// 		console.log(err);
 			// 	});
 			// }
-        },[row,imageChange]
+        },[row.rightImage, row.wrongImage]
     );
 	
 	return(

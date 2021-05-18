@@ -5,9 +5,8 @@ import axios_instance from '../../axios_instance.js';
 import EditSnackRow from './EditSnackRow';
 import deleteIcon from '../../images/delete.png';
 
-const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
+const EditSnackSnake = ({selectedWidget,curPage,updatePage,pages})=>{
     const [update,setUpdate]= useState(0);
-    const [imageChange,setImageChange]= useState(0);
     // const [textArray,setTextArray]= useState([]);
     // const hiddenFileInput = React.useRef(null);
     useEffect(
@@ -84,6 +83,7 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
                                 }else{
                                     curPage.widgets[i].internals.options[index].wrongImage=res.data.hash;
                                 }
+                                updatePage();
                                 // console.log(curPage.widgets[i].internals.options);
                                 break;
                             }
@@ -93,7 +93,6 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
                     })
                 };
                 reader.readAsDataURL(imageFile);
-                setImageChange(imageChange+1);
                 setUpdate(update+1);
             }
         }
@@ -281,7 +280,7 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
                                     // }
                                     return (
                                         <tr key={i}>
-                                            <EditSnackRow row={x} onChangeSnack={onChangeSnack} i={i} imageChange={imageChange} onDelete={onDelete}/>
+                                            <EditSnackRow row={x} onChangeSnack={onChangeSnack} i={i} onDelete={onDelete} updatePage={updatePage}/>
                                             {/* <td>
                                                 <button className='deleteButton' onClick={(event)=>{handleClick(event,i)}}><img src={x.rightImage} height='50px' width='50%' alt="image"/></button>
 							                    <input type="file" ref={hiddenFileInput} style={{ display: "none" }} onChange={(event)=>{onChangeSnack(event,"correct",i,"image")}} />
