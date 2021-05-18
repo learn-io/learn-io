@@ -8,7 +8,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, upd
     modules, setSelectedModule, setSelectedDisable,
     dragging, setDragging, platformId, editMode, 
     setEditMode, redraw, setRedraw,
-    setModuleDeleteId})=>{
+    moduleDeleteId, setModuleDeleteId})=>{
 
     const imgLock = useRef(new Image())
     const imgUnlock = useRef(new Image())
@@ -161,16 +161,28 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, upd
         
 		const { fontSize = 30, fontFamily = 'Arial', color = 'black', textAlign = 'left', textBaseline = 'middle'} = style;
 
+
+
         // make outline
         ctx.beginPath();
         ctx.arc(x, y, radius+2, 0, 2 * Math.PI);
         ctx.fillStyle = 'grey';
         ctx.fill();
 
+        if (module._id === moduleDeleteId)
+        {
+            ctx.beginPath();
+            ctx.arc(x, y, radius+4, 0, 2 * Math.PI);
+            ctx.fillStyle = 'red';
+            ctx.fill();
+        }
+
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, 2 * Math.PI);
 		ctx.fillStyle = 'lightblue';
         ctx.fill();
+
+        
 
         let words = moduleName.split(" ");
         let lines = [];

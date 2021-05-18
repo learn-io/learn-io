@@ -10,8 +10,6 @@ import EditSnackSnake from './editwidgets/EditSnackSnake.js';
 
 const RightbottomBar = ({curPage, selectType, selected, add,setAdd,pages, updatePage}) =>{ //selectedWidget,curPage
     const [update,setUpdate]= useState(0);
-    // const [textArray,setTextArray]= useState([]);
-    // const hiddenFileInput = React.useRef(null);
     useEffect(
         ()=>{
         },[update]
