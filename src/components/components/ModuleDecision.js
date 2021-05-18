@@ -82,7 +82,6 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 				document.getElementById(i).style.border = "none";
 			}
 		}
-		
 
 		setPageIndex(key);
 	}
