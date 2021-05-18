@@ -3,7 +3,7 @@ import '../../ComponentStyle.css';
 import {Button, Container, Row, Col} from 'react-bootstrap';
 
 
-const QuickTime=({internals, setAction,widgetClicked})=>
+const QuickTime=({internals, setAction,widgetClicked,isEdit})=>
 {
     const [started, setStarted] = useState(false);
 
@@ -44,17 +44,17 @@ const QuickTime=({internals, setAction,widgetClicked})=>
         <Container>
             <Row>
                 <Col></Col>
-                <Col><Button onClick={()=>{setAction(top); widgetClicked();}}>{top.text}</Button></Col>
+                <Col><Button onClick={()=>{setAction(top); if(!isEdit){widgetClicked();}}}>{top.text}</Button></Col>
                 <Col></Col>
             </Row>
             <Row>
-                <Col><Button onClick={()=>{setAction(left); widgetClicked();}}>{left.text}</Button></Col>
+                <Col><Button onClick={()=>{setAction(left); if(!isEdit){widgetClicked();}}}>{left.text}</Button></Col>
                 <Col></Col>
-                <Col><Button onClick={()=>{setAction(right); widgetClicked();}}>{right.text}</Button></Col>
+                <Col><Button onClick={()=>{setAction(right); if(!isEdit){widgetClicked();}}}>{right.text}</Button></Col>
             </Row>
             <Row>
                 <Col></Col>
-                <Col><Button onClick={()=>{setAction(bottom); widgetClicked();}}>{bottom.text}</Button></Col>
+                <Col><Button onClick={()=>{setAction(bottom); if(!isEdit){widgetClicked();}}}>{bottom.text}</Button></Col>
                 <Col></Col>
             </Row>
         </Container>
