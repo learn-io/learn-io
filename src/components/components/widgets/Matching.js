@@ -2,7 +2,7 @@ import React, { useRef,useEffect,useState} from 'react';
 import '../../ComponentStyle.css';
 import {Button} from 'react-bootstrap';
 
-const Matching=({internals,setAction, widgetClicked})=>{
+const Matching=({internals,setAction, widgetClicked,isEdit})=>{
     const [options,setOptions]=useState([]);
     const canvasRef = useRef();
     const [selectLeft,setSelectLeft]=useState(-1);
@@ -254,7 +254,7 @@ const Matching=({internals,setAction, widgetClicked})=>{
     }else{
         matching=<div className='flashcard'> 
                     <canvas style={{backgroundColor:'#9EEBCF'}} className='canvasStyle' ref={canvasRef} onClick={handleCanvasClick}/>
-                    <Button style={{display:'center'}} className='cavasButton'  onClick={()=>{checkResult(); widgetClicked();}}> {internals.buttonText}</Button> 
+                    <Button style={{display:'center'}} className='cavasButton'  onClick={()=>{checkResult(); if(!isEdit){widgetClicked();}}}> {internals.buttonText}</Button> 
                 </div>;
     }
     return (matching);
