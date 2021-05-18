@@ -33,8 +33,8 @@ const Snacksnake=({internals, setAction})=>{
         ()=>{
             if(internals===''||internals===undefined)
                 return;
-            console.log("internals");
-            console.log(internals);
+            // console.log("internals");
+            // console.log(internals);
             setOptions(internals.options);
             //setRightAnswer(internals.rightAnswer);
         },[internals]   
@@ -52,7 +52,7 @@ const Snacksnake=({internals, setAction})=>{
             let tempArr2=[];
 
             for(let i=0;i<options.length;i++){
-                console.log(options[i]);
+                // console.log(options[i]);
                 if(options[i].rightImage === undefined){
                     tempArr2.push(options[i]);
                     continue;
@@ -62,7 +62,7 @@ const Snacksnake=({internals, setAction})=>{
                     url: "media/"+encodeURIComponent(options[i].rightImage)
                 }));
                 
-                console.log(options[i]);
+                // console.log(options[i]);
                 promisesWrong.push(axios_instance({
                     method: 'get',
                     url: "media/"+encodeURIComponent(options[i].wrongImage)
@@ -75,13 +75,13 @@ const Snacksnake=({internals, setAction})=>{
                     // console.log(values[j].data)
                     tempArr.push({data:values[j].data.data, x:Math.floor(Math.random()*20)*30, y: Math.floor(Math.random()*20)*30});
                 }
-                console.log(tempArr2);
+                // console.log(tempArr2);
                 for(j=0;j<tempArr2.length;j++){
                     tempArr.push({text:tempArr2[j].rightText, x:Math.floor(Math.random()*20)*30, y: Math.floor(Math.random()*20)*30});
                 }
 
                 setImageDataRight(tempArr);
-                console.log(tempArr);
+                // console.log(tempArr);
             });
 
             Promise.all(promisesWrong).then((values)=>{
@@ -90,12 +90,12 @@ const Snacksnake=({internals, setAction})=>{
                     // console.log(values[j].data)
                     tempArr.push({data: values[j].data.data, x:Math.floor(Math.random()*20)*30, y: Math.floor(Math.random()*20)*30});
                 }
-                console.log(tempArr2);
+                // console.log(tempArr2);
                 for(j=0;j<tempArr2.length;j++){
                     tempArr.push({text:tempArr2[j].wrongText, x:Math.floor(Math.random()*20)*30, y: Math.floor(Math.random()*20)*30});
                 }
                 setImageDataWrong(tempArr);
-                console.log(tempArr);
+                // console.log(tempArr);
             });
             // axios_instance({
             //     method: 'get',

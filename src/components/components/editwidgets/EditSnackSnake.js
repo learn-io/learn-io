@@ -235,7 +235,7 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
                         <tr>
                         <th>Delete</th>
                         <th>Correct Option</th>
-                        <th>Wrong Opstion</th>
+                        <th>Wrong Option</th>
                         </tr>
                     </thead>
                     {/* <tbody>
