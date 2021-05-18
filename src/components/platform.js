@@ -342,7 +342,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             setModuleName={setModuleName} setModuleId={setModuleId}
             dragging={dragging} setDragging={setDragging}
             editMode={editMode} setEditMode={setEditMode}
-            setModuleDeleteId={setModuleDeleteId}/>
+            moduleDeleteId={moduleDeleteId} setModuleDeleteId={setModuleDeleteId}/>
             <RightBar isEdit={isEdit} selectType="Module" onDragStart={()=>setDragging(true)} add={editMode} setAdd={setEditMode}/>
             {saveAlert}
         </div>
