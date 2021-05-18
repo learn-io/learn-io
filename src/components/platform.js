@@ -295,8 +295,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     }
 
     const updatePage = () => 
-    {
-        console.log("Updating...");    
+    {   
         let newdata = {...curPage}
         let index = allPages[moduleId].findIndex(x => x._id === pageId);
         allPages[moduleId][index] = newdata;
