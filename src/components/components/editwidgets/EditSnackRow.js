@@ -1,9 +1,10 @@
 import React , { useEffect, useState } from 'react';
 import axios_instance from '../../axios_instance.js';
 import './editStyle.css';
+import deleteIcon from '../../images/delete.png';
 
 const loading = "https://i.gifer.com/4V0b.gif";
-const EditSnackRow =({row,onChangeSnack,i,imageChange})=>{
+const EditSnackRow =({row,onChangeSnack,i,imageChange,onDelete})=>{
 	const [right,setRight]=useState(loading);
     const [wrong,setWrong]=useState(loading);
 	useEffect(
@@ -49,6 +50,7 @@ const EditSnackRow =({row,onChangeSnack,i,imageChange})=>{
 	
 	return(
 		<>
+            <td><button onClick={()=>{onDelete(i)}} className='deleteButton'><img src={deleteIcon} height='40px' width='40px' alt="delete"/></button></td>
             <td><input onChange={(event)=>{onChangeSnack(event,"correct",i,"image")}} className='inputStyle' type="file" name="correctText"/><img src={right} height='50px' width='50%' alt=''/></td>
             <td><input onChange={(event)=>{onChangeSnack(event,"wrong",i,"image")}} className='inputStyle' type="file" name="wrongText"/><img src={wrong} height='50px' width='50%' alt=''/></td>
         </>

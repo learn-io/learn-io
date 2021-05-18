@@ -3,6 +3,7 @@ import {Table,Button} from 'react-bootstrap';
 import './editStyle.css';
 import axios_instance from '../../axios_instance.js';
 import EditSnackRow from './EditSnackRow';
+import deleteIcon from '../../images/delete.png';
 
 const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
     const [update,setUpdate]= useState(0);
@@ -98,6 +99,16 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
         }
         
         // console.log(curPage);
+    }
+    const onDelete=(i)=>{
+        for(let j=0;j<curPage.widgets.length;j++){
+            if(curPage.widgets[j]===selectedWidget){
+                let filter=curPage.widgets[j].internals.options.filter((x)=>x!==selectedWidget.internals.options[i]);
+                curPage.widgets[j].internals.options=filter;
+                setUpdate(update+1);
+                break;
+            }
+        }
     }
     const onChangeAnswerTarget=(event,answer)=>{
         for(let i=0;i<curPage.widgets.length;i++){
@@ -222,6 +233,7 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
                 <Table striped bordered hover>
                     <thead>
                         <tr>
+                        <th>Delete</th>
                         <th>Correct Option</th>
                         <th>Wrong Opstion</th>
                         </tr>
@@ -239,6 +251,7 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
                                 if(x.rightImage===undefined){
                                     return (
                                         <tr key={i}>
+                                            <td><button onClick={()=>{onDelete(i)}} className='deleteButton'><img src={deleteIcon} height='40px' width='40px' alt="delete"/></button></td>
                                             <td><input defaultValue={x.rightText} onChange={(event)=>{onChangeSnack(event,"correct",i,"text")}} className='inputStyle' type="text" name="correctText"/></td>
                                             <td><input defaultValue={x.wrongText} onChange={(event)=>{onChangeSnack(event,"wrong",i,"text")}} className='inputStyle' type="text" name="wrongText"/></td>
                                         </tr>
@@ -268,7 +281,7 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
                                     // }
                                     return (
                                         <tr key={i}>
-                                            <EditSnackRow row={x} onChangeSnack={onChangeSnack} i={i} imageChange={imageChange}/>
+                                            <EditSnackRow row={x} onChangeSnack={onChangeSnack} i={i} imageChange={imageChange} onDelete={onDelete}/>
                                             {/* <td>
                                                 <button className='deleteButton' onClick={(event)=>{handleClick(event,i)}}><img src={x.rightImage} height='50px' width='50%' alt="image"/></button>
 							                    <input type="file" ref={hiddenFileInput} style={{ display: "none" }} onChange={(event)=>{onChangeSnack(event,"correct",i,"image")}} />
