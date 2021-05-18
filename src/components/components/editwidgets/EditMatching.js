@@ -1,29 +1,37 @@
-import React from 'react';
-import {Table} from 'react-bootstrap';
+import React, {useEffect, useState} from 'react';
+import {Table,Dropdown} from 'react-bootstrap';
 import './editStyle.css';
 
 const EditMatching = ({selectedWidget,curPage,add,setAdd, pages})=>{
-    const onChangeAnswer=(event,answer)=>{
+    const [update,setUpdate]= useState(0);
+    useEffect(
+        ()=>{
+        },[update]
+    );
+    const onChangeAnswer=(value,answer)=>{
         for(let i=0;i<curPage.widgets.length;i++){
             if(curPage.widgets[i]===selectedWidget){
                 if(answer==="Correct"){
-                    curPage.widgets[i].internals.rightAnswer.actionType=event.target.value;
+                    curPage.widgets[i].internals.rightAnswer.actionType=value;
+                    curPage.widgets[i].internals.rightAnswer.target="";
                 }else{
-                    curPage.widgets[i].internals.wrongAnswer.actionType=event.target.value;
+                    curPage.widgets[i].internals.wrongAnswer.actionType=value;
+                    curPage.widgets[i].internals.wrongAnswer.target="";
                 }
                 break;
             }
         }
+        setUpdate(update+1);
         // console.log(curPage);
     }
-    const onChangeAnswerTarget=(event,answer)=>{
+    const onChangeAnswerTarget=(event,answer,pageN)=>{
         for(let i=0;i<curPage.widgets.length;i++){
             if(curPage.widgets[i]===selectedWidget){
                 let value="";
                 if(answer==="Correct"){
                     if(curPage.widgets[i].internals.rightAnswer.actionType==='P'){
                         for(let j=0;j<pages.length;j++){
-                            if(pages[j].pageName===event.target.value){
+                            if(pages[j].pageName===pageN){
                                 value=pages[j]._id;
                                 break;
                             }
@@ -35,7 +43,7 @@ const EditMatching = ({selectedWidget,curPage,add,setAdd, pages})=>{
                 }else{
                     if(curPage.widgets[i].internals.wrongAnswer.actionType==='P'){
                         for(let j=0;j<pages.length;j++){
-                            if(pages[j].pageName===event.target.value){
+                            if(pages[j].pageName===pageN){
                                 value=pages[j]._id;
                                 break;
                             }
@@ -48,6 +56,7 @@ const EditMatching = ({selectedWidget,curPage,add,setAdd, pages})=>{
                 break;
             }
         }
+        setUpdate(update+1);
         console.log(curPage);
     }
 
@@ -89,6 +98,8 @@ const EditMatching = ({selectedWidget,curPage,add,setAdd, pages})=>{
         }
     let correcttext="";
     let wrongtext="";
+    let correctTarget;
+    let wrongTarget;
     if(selectedWidget.internals.rightAnswer.actionType==='P'){
         for(let i=0;i<pages.length;i++){
             if(pages[i]._id===selectedWidget.internals.rightAnswer.target){
@@ -96,8 +107,22 @@ const EditMatching = ({selectedWidget,curPage,add,setAdd, pages})=>{
                 break;
             }
         }
+        correctTarget=<Dropdown>
+                        <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
+                            {correcttext}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            {
+                                pages.map((x,i)=>{
+                                    return(
+                                        <Dropdown.Item onClick={(event)=>onChangeAnswerTarget(event,"Correct",x.pageName)} key={i}>{x.pageName}</Dropdown.Item>
+                                    );
+                                })
+                            }
+                        </Dropdown.Menu>
+                    </Dropdown>
     }else{
-        correcttext=selectedWidget.internals.rightAnswer.target;
+        correctTarget=<input className='inputStyle' defaultValue={selectedWidget.internals.rightAnswer.target} onChange={(event)=>onChangeAnswerTarget(event,"Correct")} type="text" id="correcttarget" name="target"/>
     }
     if(selectedWidget.internals.wrongAnswer.actionType==='P'){
         for(let i=0;i<pages.length;i++){
@@ -106,8 +131,22 @@ const EditMatching = ({selectedWidget,curPage,add,setAdd, pages})=>{
                 break;
             }
         }
+        wrongTarget=<Dropdown>
+                        <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
+                            {wrongtext}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            {
+                                pages.map((x,i)=>{
+                                    return(
+                                        <Dropdown.Item onClick={(event)=>onChangeAnswerTarget(event,"Wrong",x.pageName)} key={i}>{x.pageName}</Dropdown.Item>
+                                    );
+                                })
+                            }
+                        </Dropdown.Menu>
+                    </Dropdown>
     }else{
-        wrongtext=selectedWidget.internals.wrongAnswer.target;
+        wrongTarget=<input className='inputStyle' defaultValue={selectedWidget.internals.wrongAnswer.target} onChange={(event)=>onChangeAnswerTarget(event,"Wrong")} type="text" id="wrongtarget" name="target"/>
     }
     let game=<div>
                 <Table striped bordered hover>
@@ -121,13 +160,35 @@ const EditMatching = ({selectedWidget,curPage,add,setAdd, pages})=>{
                     <tbody>
                         <tr>
                         <td>Correct</td>
-                        <td><input className='inputStyle' defaultValue={selectedWidget.internals.rightAnswer.actionType} onChange={(event)=>onChangeAnswer(event,"Correct")} type="text" id="correctpors" name="pors"/></td>
-                        <td><input className='inputStyle' defaultValue={correcttext} onChange={(event)=>onChangeAnswerTarget(event,"Correct")} type="text" id="correcttarget" name="target"/></td>
+                        <td>
+                            <Dropdown>
+                                <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
+                                    {selectedWidget.internals.rightAnswer.actionType}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item onClick={()=>onChangeAnswer("P","Correct")}>P</Dropdown.Item>
+                                    <Dropdown.Item onClick={()=>onChangeAnswer("S","Correct")}>S</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                            {/* <input className='inputStyle' defaultValue={selectedWidget.internals.rightAnswer.actionType} onChange={(event)=>onChangeAnswer(event,"Correct")} type="text" id="correctpors" name="pors"/> */}
+                        </td>
+                        <td style={{width:'60%'}}>{correctTarget}</td>
                         </tr>
                         <tr>
                         <td>Wrong</td>
-                        <td><input className='inputStyle' defaultValue={selectedWidget.internals.wrongAnswer.actionType} onChange={(event)=>onChangeAnswer(event,"Wrong")} type="text" id="wrongpors" name="pors"/></td>
-                        <td><input className='inputStyle' defaultValue={wrongtext} onChange={(event)=>onChangeAnswerTarget(event,"Wrong")} type="text" id="wrongtarget" name="target"/></td>
+                        <td>
+                            <Dropdown>
+                                <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
+                                    {selectedWidget.internals.wrongAnswer.actionType}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item onClick={()=>onChangeAnswer("P","Wrong")}>P</Dropdown.Item>
+                                    <Dropdown.Item onClick={()=>onChangeAnswer("S","Wrong")}>S</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                            {/* <input className='inputStyle' defaultValue={selectedWidget.internals.wrongAnswer.actionType} onChange={(event)=>onChangeAnswer(event,"Wrong")} type="text" id="wrongpors" name="pors"/> */}
+                        </td>
+                        <td style={{width:'60%'}}>{wrongTarget}</td>
                         </tr>
                     </tbody>
                 </Table>
