@@ -7,7 +7,8 @@ import unlockIcon from '../images/unlock.png'
 const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, updatePlatform, 
     modules, setSelectedModule, setSelectedDisable,
     dragging, setDragging, platformId, editMode, 
-    setEditMode, redraw, setRedraw})=>{
+    setEditMode, redraw, setRedraw,
+    setModuleDeleteId})=>{
 
     const imgLock = useRef(new Image())
     const imgUnlock = useRef(new Image())
@@ -249,13 +250,18 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, upd
         const x = (e.clientX - rect.left) * scaleX;
         const y = (e.clientY - rect.top) * scaleY;
 
-        if (isEdit && editMode !== -1) //enter mode only when editing
-            return;
         let id = getModuleId(x, y);
-        //console.log(id);
+        
+        
         if (id === -1)
             return;
             //console.log(isEdit);
+
+        setModuleDeleteId(modules[id]._id);
+
+        if (isEdit && editMode !== -1)
+            return;
+
         // if is unlocked
         if(unlockList.includes(modules[id]._id)){
             setSelectedModule(modules[id]);
@@ -277,7 +283,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, upd
         var rect = ctx.canvas.getBoundingClientRect();
         const x = (e.clientX - rect.left) * scaleX;
         const y = (e.clientY - rect.top) * scaleY;
-        console.log(editSelected);
+        //console.log(editSelected);
         if (editMode === 0)
         {
             let toX = x-editXOFF;
@@ -353,12 +359,16 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, upd
         var rect = ctx.canvas.getBoundingClientRect();
         const x = (e.clientX - rect.left) * scaleX;
         const y = (e.clientY - rect.top) * scaleY;
-        if (!isEdit || editMode === -1)
-            return;
+        
         let id = getModuleId(x, y);
         if (id === -1)
             return;
 
+
+        setModuleDeleteId(modules[id]._id);
+        if (!isEdit || editMode === -1)
+            return;
+        
         if (editMode === 0) //drag
         {
             setEditXOFF(x - modules[id].x);
