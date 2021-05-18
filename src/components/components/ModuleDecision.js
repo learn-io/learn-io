@@ -3,6 +3,7 @@ import '../ComponentStyle.css';
 // import RGL, { WidthProvider } from "react-grid-layout";
 import Page from './Page.js';
 import axios_instance from '../axios_instance';
+import { useParams } from 'react-router';
 
 // const ReactGridLayout = WidthProvider(RGL);
 
@@ -55,7 +56,10 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 			}
 			else
 			{;
+				pageVisited();
+
 				setPageName(pages[choice].pageName)
+				
 				setPageId(pages[choice]._id)
 				setPageEntry(pages[choice]._id)
 			}
@@ -69,18 +73,65 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 		console.log(pages[key]);
 		// setSelectType("Page");
 		// setSelectedPage(pages[key]);
+		console.log(document.getElementById(key));
+
+		for(let i=0;i<pages.length;i++){
+			if(i === key){
+				document.getElementById(key).style.border = "5px solid black";
+			} else {
+				document.getElementById(i).style.border = "none";
+			}
+		}
+		
+
 		setPageIndex(key);
 	}
 
 	const deselectPage = (e) => {
-		// console.log(e.target.className);
-		if(e.target.className === "react-grid-layout grid"){
-			console.log("deselectPage");
+		console.log(e.target);
+		if(e.target.id === "pageGrid"){
+			// console.log("deselectPage");
 			// setSelectType("");
 			// setSelectedPage({});
+			for(let i=0;i<pages.length;i++){
+				document.getElementById(i).style.border = "none";
+			}
+			
 			setPageIndex();
 		}
 
+	}
+
+	const pageVisited = () => {
+		return axios_instance({
+			method:'get',
+			url:"profile/stats/"+username+"/0/100"
+		}).then(function(response){
+			console.log(response.data.resp);
+			// alert("We made it to page Visited")
+
+			let curPlatformInfo = response.data.resp.filter((obj) => {
+				return obj.platformId === platformId;
+			});
+
+			// console.log(curPlatformInfo);
+
+			curPlatformInfo[0].pageVisited+=1;
+
+			// console.log(curPlatformInfo);
+
+			axios_instance({
+				method:'post',
+				url:'profile/update',
+				data:curPlatformInfo[0]
+			}).then(function(response){
+				console.log(response);
+			});
+			
+		}).catch(function(err){
+			// history.push("/home");
+			console.log(err);
+		});
 	}
 
 	// const onDragStart=(event,text)=> {
@@ -142,7 +193,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 							console.log(val);
 							console.log(key);
 							return (
-								<div key={''+key} className="page pageHelper" onClick={()=>{ selectPage(key) }} > 
+								<div key={''+key} id={''+key} className="page pageHelper" onClick={()=>{ selectPage(key) }} > 
 									<Page pageInfo={val.pageName} name={''+key} />
 								</div>
 							)
