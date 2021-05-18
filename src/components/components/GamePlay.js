@@ -211,7 +211,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
 			url:"profile/stats/"+username+"/0/100"
 		}).then(function(response){
 			console.log(response.data.resp);
-			alert("We made it to widgets clicked")
+			//alert("We made it to widgets clicked")
 
 			let curPlatformInfo = response.data.resp.filter((obj) => {
 				return obj.platformId === platformId;

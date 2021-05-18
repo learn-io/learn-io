@@ -35,6 +35,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     const [pages, setPages] = useState({loading: true});
     const [curPage, setCurPage] = useState({});
 
+    const [moduleDeleteId, setModuleDeleteId] = useState();
     const [pageIndex, setPageIndex] = useState();
     const [widgetIndex, setWidgetIndex] = useState();
 
@@ -216,7 +217,23 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 setPages(filter);
             }).catch(err=>console.log(err));
         }else if(type==="Module"){
-            console.log(type);
+            axios_instance({
+                method: 'post',
+                url: "platform/deleteModule",
+                data: {
+                    platformId:platformId,
+                    moduleId:moduleDeleteId
+                }
+            }).then((res)=>{
+                let newPlatformModules = platform.modules.filter(item => item._id != moduleDeleteId)
+                platform.modules = newPlatformModules;
+                updatePlatform();
+                if (allPages[moduleDeleteId])
+                {
+                    delete allPages[moduleDeleteId];
+                    updatePages();
+                }
+            }).catch(err=>console.log(err));
         }
         // console.log(type);
     }
@@ -324,7 +341,8 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             platformName={platformName} setPlatformName = {setPlatformName}
             setModuleName={setModuleName} setModuleId={setModuleId}
             dragging={dragging} setDragging={setDragging}
-            editMode={editMode} setEditMode={setEditMode}/>
+            editMode={editMode} setEditMode={setEditMode}
+            moduleDeleteId={moduleDeleteId} setModuleDeleteId={setModuleDeleteId}/>
             <RightBar isEdit={isEdit} selectType="Module" onDragStart={()=>setDragging(true)} add={editMode} setAdd={setEditMode}/>
             {saveAlert}
         </div>
