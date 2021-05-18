@@ -169,7 +169,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, upd
         ctx.fillStyle = 'grey';
         ctx.fill();
 
-        if (module._id === moduleDeleteId)
+        if (isEdit && module._id === moduleDeleteId)
         {
             ctx.beginPath();
             ctx.arc(x, y, radius+4, 0, 2 * Math.PI);
