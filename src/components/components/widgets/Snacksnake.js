@@ -49,14 +49,20 @@ const Snacksnake=({internals, setAction})=>{
             let promisesRight=[];
             let promisesWrong=[];
 
+            let tempArr2=[];
+
             for(let i=0;i<options.length;i++){
-                // console.log(options[i].rightImage);
+                console.log(options[i]);
+                if(options[i].rightImage === undefined){
+                    tempArr2.push(options[i]);
+                    continue;
+                }
                 promisesRight.push(axios_instance({
                     method: 'get',
                     url: "media/"+encodeURIComponent(options[i].rightImage)
                 }));
                 
-                // console.log(options[i].wrongImage);
+                console.log(options[i]);
                 promisesWrong.push(axios_instance({
                     method: 'get',
                     url: "media/"+encodeURIComponent(options[i].wrongImage)
@@ -69,6 +75,11 @@ const Snacksnake=({internals, setAction})=>{
                     // console.log(values[j].data)
                     tempArr.push({data:values[j].data.data, x:Math.floor(Math.random()*20)*30, y: Math.floor(Math.random()*20)*30});
                 }
+                console.log(tempArr2);
+                for(j=0;j<tempArr2.length;j++){
+                    tempArr.push({text:tempArr2[j].rightText, x:Math.floor(Math.random()*20)*30, y: Math.floor(Math.random()*20)*30});
+                }
+
                 setImageDataRight(tempArr);
                 console.log(tempArr);
             });
@@ -78,6 +89,10 @@ const Snacksnake=({internals, setAction})=>{
                 for(var j=0; j<values.length; j++){
                     // console.log(values[j].data)
                     tempArr.push({data: values[j].data.data, x:Math.floor(Math.random()*20)*30, y: Math.floor(Math.random()*20)*30});
+                }
+                console.log(tempArr2);
+                for(j=0;j<tempArr2.length;j++){
+                    tempArr.push({text:tempArr2[j].wrongText, x:Math.floor(Math.random()*20)*30, y: Math.floor(Math.random()*20)*30});
                 }
                 setImageDataWrong(tempArr);
                 console.log(tempArr);
@@ -233,20 +248,31 @@ const Snacksnake=({internals, setAction})=>{
 
         // console.log(imageDataRight[0]);
         // console.log(imageDataWrong[0]);
+        if(imageDataRight[index].data === undefined){
+            var rightText = imageDataRight[index].text;
+            var rightTextX = imageDataRight[index].x;
+            var rightTextY = imageDataRight[index].y;
 
-        var rightImage = new Image();
-        rightImage.src = imageDataRight[index].data;
-        var rightImageX = imageDataRight[index].x;
-        var rightImageY = imageDataRight[index].y;
+            var wrongText = imageDataWrong[index].text;
+            var wrongTextX = imageDataWrong[index].x;
+            var wrongTextY = imageDataWrong[index].y;
 
-        var wrongImage = new Image();
-        wrongImage.src = imageDataWrong[index].data;
-        var wrongImageX = imageDataWrong[index].x;
-        var wrongImageY = imageDataWrong[index].y;
+            ctx.fillText(rightText,rightTextX,rightTextY+20,boxWidth);
+            ctx.fillText(wrongText,wrongTextX,wrongTextY+20,boxWidth);
+        } else {
+            var rightImage = new Image();
+            rightImage.src = imageDataRight[index].data;
+            var rightImageX = imageDataRight[index].x;
+            var rightImageY = imageDataRight[index].y;
 
-        ctx.drawImage(rightImage,rightImageX,rightImageY,boxWidth,boxHeight);
-        ctx.drawImage(wrongImage,wrongImageX,wrongImageY,boxWidth,boxHeight);
+            var wrongImage = new Image();
+            wrongImage.src = imageDataWrong[index].data;
+            var wrongImageX = imageDataWrong[index].x;
+            var wrongImageY = imageDataWrong[index].y;
 
+            ctx.drawImage(rightImage,rightImageX,rightImageY,boxWidth,boxHeight);
+            ctx.drawImage(wrongImage,wrongImageX,wrongImageY,boxWidth,boxHeight);
+        }
     }
 
     function clearCanvas(){
