@@ -73,15 +73,30 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 		console.log(pages[key]);
 		// setSelectType("Page");
 		// setSelectedPage(pages[key]);
+		console.log(document.getElementById(key));
+
+		for(let i=0;i<pages.length;i++){
+			if(i === key){
+				document.getElementById(key).style.border = "5px solid black";
+			} else {
+				document.getElementById(i).style.border = "none";
+			}
+		}
+		
+
 		setPageIndex(key);
 	}
 
 	const deselectPage = (e) => {
-		// console.log(e.target.className);
-		if(e.target.className === "react-grid-layout grid"){
-			console.log("deselectPage");
+		console.log(e.target);
+		if(e.target.id === "pageGrid"){
+			// console.log("deselectPage");
 			// setSelectType("");
 			// setSelectedPage({});
+			for(let i=0;i<pages.length;i++){
+				document.getElementById(i).style.border = "none";
+			}
+			
 			setPageIndex();
 		}
 
@@ -178,7 +193,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 							console.log(val);
 							console.log(key);
 							return (
-								<div key={''+key} className="page pageHelper" onClick={()=>{ selectPage(key) }} > 
+								<div key={''+key} id={''+key} className="page pageHelper" onClick={()=>{ selectPage(key) }} > 
 									<Page pageInfo={val.pageName} name={''+key} />
 								</div>
 							)
