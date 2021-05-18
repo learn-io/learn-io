@@ -2,9 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {Table,Button} from 'react-bootstrap';
 import './editStyle.css';
 import axios_instance from '../../axios_instance.js';
+import EditSnackRow from './EditSnackRow';
 
 const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
     const [update,setUpdate]= useState(0);
+    const [imageChange,setImageChange]= useState(0);
     // const [textArray,setTextArray]= useState([]);
     // const hiddenFileInput = React.useRef(null);
     useEffect(
@@ -90,6 +92,7 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
                     })
                 };
                 reader.readAsDataURL(imageFile);
+                setImageChange(imageChange+1);
                 setUpdate(update+1);
             }
         }
@@ -163,39 +166,42 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
     }
     // console.log(textArray);
     let textArray=[]
-    console.log(selectedWidget.internals.options);
+    // console.log(selectedWidget.internals.options);
+    // for(let i=0;i<selectedWidget.internals.options.length;i++){
+    //     if(selectedWidget.internals.options[i].rightImage===undefined){
+    //         textArray.push(selectedWidget.internals.options[i]);
+    //     }else{
+    //         // console.log(i);
+    //         let ob={"rightImage":"","wrongImage":""};
+    //         // console.log(selectedWidget.internals.options);
+    //         if(selectedWidget.internals.options[i].rightImage!==""){
+    //             axios_instance({
+    //                 method: 'get',
+    //                 url: "media/"+encodeURIComponent(selectedWidget.internals.options[i].rightImage),
+    //             }).then((res)=>{
+    //                 ob.rightImage=res.data.data;
+    //             }).catch((err)=>{
+    //                 console.log(err);
+    //             });
+    //         }
+    //         if(selectedWidget.internals.options[i].wrongImage!==""){
+    //             axios_instance({
+    //                 method: 'get',
+    //                 url: "media/"+encodeURIComponent(selectedWidget.internals.options[i].wrongImage),
+    //             }).then((res)=>{
+    //                 ob.wrongImage=res.data.data;
+    //             }).catch((err)=>{
+    //                 console.log(err);
+    //             });
+    //         }
+    //         // console.log(ob);
+    //         textArray.push(ob);
+    //     }
+    // }
     for(let i=0;i<selectedWidget.internals.options.length;i++){
-        if(selectedWidget.internals.options[i].rightImage===undefined){
-            textArray.push(selectedWidget.internals.options[i]);
-        }else{
-            console.log(i);
-            let ob={"rightImage":"","wrongImage":""};
-            console.log(selectedWidget.internals.options);
-            if(selectedWidget.internals.options[i].rightImage!==""){
-                axios_instance({
-                    method: 'get',
-                    url: "media/"+encodeURIComponent(selectedWidget.internals.options[i].rightImage),
-                }).then((res)=>{
-                    ob.rightImage=res.data.data;
-                }).catch((err)=>{
-                    console.log(err);
-                });
-            }
-            if(selectedWidget.internals.options[i].wrongImage!==""){
-                axios_instance({
-                    method: 'get',
-                    url: "media/"+encodeURIComponent(selectedWidget.internals.options[i].wrongImage),
-                }).then((res)=>{
-                    ob.wrongImage=res.data.data;
-                }).catch((err)=>{
-                    console.log(err);
-                });
-            }
-            console.log(ob);
-            textArray.push(ob);
-        }
+        textArray.push(selectedWidget.internals.options[i]);
     }
-    console.log(textArray);
+    // console.log(textArray);
     let game=<div>
                 <Table striped bordered hover>
                     <thead>
@@ -227,7 +233,7 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
                         </tr>
                     </tbody> */}
                     <tbody>
-                        {console.log(textArray)}
+                        {/* {console.log(textArray)} */}
                         {
                             textArray.map((x,i) => {
                                 if(x.rightImage===undefined){
@@ -238,9 +244,31 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
                                         </tr>
                                     );
                                 }else{
-                                    console.log(x);
+                                    // let rightdata="";
+                                    // let wrongdata="";
+                                    // if(x.rightImage!==""){
+                                    //     axios_instance({
+                                    //         method: 'get',
+                                    //         url: "media/"+encodeURIComponent(x.rightImage),
+                                    //     }).then((res)=>{
+                                    //         ob.rightImage=res.data.data;
+                                    //     }).catch((err)=>{
+                                    //         console.log(err);
+                                    //     });
+                                    // }
+                                    // if(x.wrongImage!==""){
+                                    //     axios_instance({
+                                    //         method: 'get',
+                                    //         url: "media/"+encodeURIComponent(x.wrongImage),
+                                    //     }).then((res)=>{
+                                    //         ob.wrongImage=res.data.data;
+                                    //     }).catch((err)=>{
+                                    //         console.log(err);
+                                    //     });
+                                    // }
                                     return (
                                         <tr key={i}>
+                                            <EditSnackRow row={x} onChangeSnack={onChangeSnack} i={i} imageChange={imageChange}/>
                                             {/* <td>
                                                 <button className='deleteButton' onClick={(event)=>{handleClick(event,i)}}><img src={x.rightImage} height='50px' width='50%' alt="image"/></button>
 							                    <input type="file" ref={hiddenFileInput} style={{ display: "none" }} onChange={(event)=>{onChangeSnack(event,"correct",i,"image")}} />
@@ -249,8 +277,8 @@ const EditSnackSnake = ({selectedWidget,curPage,add,setAdd,pages})=>{
                                                 <button className='deleteButton' onClick={handleClick}><img src={x.wrongImage} height='50px' width='50%' alt="image"/></button>
 							                    <input type="file" ref={hiddenFileInput} style={{ display: "none" }} onChange={(event)=>{onChangeSnack(event,"wrong",i,"image")}} />
                                             </td> */}
-                                            <td><input onChange={(event)=>{onChangeSnack(event,"correct",i,"image")}} className='inputStyle' type="file" name="correctText"/><img src={textArray[i].rightImage} height='50px' width='50%' alt=''/></td>
-                                            <td><input onChange={(event)=>{onChangeSnack(event,"wrong",i,"image")}} className='inputStyle' type="file" name="wrongText"/><img src={textArray[i].wrongImage} height='50px' width='50%' alt=''/></td>
+                                            {/* <td><input onChange={(event)=>{onChangeSnack(event,"correct",i,"image")}} className='inputStyle' type="file" name="correctText"/><img src={textArray[i].rightImage} height='50px' width='50%' alt=''/></td>
+                                            <td><input onChange={(event)=>{onChangeSnack(event,"wrong",i,"image")}} className='inputStyle' type="file" name="wrongText"/><img src={textArray[i].wrongImage} height='50px' width='50%' alt=''/></td> */}
                                         </tr>
                                     );
                                 }
