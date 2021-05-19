@@ -1,9 +1,9 @@
 import React, { useEffect,useState} from 'react';
 import '../../ComponentStyle.css';
-import {Button, Container, Row, Col} from 'react-bootstrap';
+import {Button, Table} from 'react-bootstrap';
 
 
-const QuickTime=({internals, setAction})=>
+const QuickTime=({internals, setAction,widgetClicked,isEdit})=>
 {
     const [started, setStarted] = useState(false);
 
@@ -41,23 +41,23 @@ const QuickTime=({internals, setAction})=>
     else
     {
     return (<div className="flashcard">
-        <Container>
-            <Row>
-                <Col></Col>
-                <Col><Button onClick={()=>{setAction(top)}}>{top.text}</Button></Col>
-                <Col></Col>
-            </Row>
-            <Row>
-                <Col><Button onClick={()=>{setAction(left)}}>{left.text}</Button></Col>
-                <Col></Col>
-                <Col><Button onClick={()=>{setAction(right)}}>{right.text}</Button></Col>
-            </Row>
-            <Row>
-                <Col></Col>
-                <Col><Button onClick={()=>{setAction(bottom)}}>{bottom.text}</Button></Col>
-                <Col></Col>
-            </Row>
-        </Container>
+        <Table size="sm" borderless>    
+            <tbody>
+                <tr>
+                    <td/>
+                    <td><Button onClick={()=>{setAction(top); if(!isEdit){widgetClicked();}}}>{top.text}</Button></td>
+                </tr>
+                <tr>
+                    <td><Button onClick={()=>{setAction(left); if(!isEdit){widgetClicked();}}}>{left.text}</Button></td>
+                    <td><img height="50px" src="https://www.pinclipart.com/picdir/big/554-5549663_cross-clipart-cute-arrow-cross-png-download.png"></img></td>
+                    <td><Button onClick={()=>{setAction(right); if(!isEdit){widgetClicked();}}}>{right.text}</Button></td>
+                </tr>
+                <tr>
+                    <td/>
+                    <td><Button onClick={()=>{setAction(bottom); if(!isEdit){widgetClicked();}}}>{bottom.text}</Button></td>
+                </tr>
+            </tbody>
+        </Table>
     </div>)
     }
 }

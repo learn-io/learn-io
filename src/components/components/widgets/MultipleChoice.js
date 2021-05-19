@@ -1,7 +1,7 @@
 import React, { useEffect,useState} from 'react';
 import '../../ComponentStyle.css';
 import {Button} from 'react-bootstrap';
-const MultipleChoice=({internals,setAction})=>{
+const MultipleChoice=({internals,setAction,widgetClicked,isEdit})=>{
     const [options,setOptions]=useState([]);
     const [answer,setAnswer]=useState([]);
     const [result,setResult]=useState(-1);
@@ -51,9 +51,9 @@ const MultipleChoice=({internals,setAction})=>{
         let opt=options.map((x,i) => {
             return (
                 <label className="container" key={i} >{options[i].option}
-                    <div onClick={()=>{onCheckValue(i)}}>
+                    <div onClick={()=>{onCheckValue(i); if(!isEdit){widgetClicked();}}}>
                         <input type="checkbox" value={options[i].option}/>
-                        <span className="checkmark" onClick={()=>{onCheckValue(i)}}/>
+                        <span className="checkmark" onClick={()=>{onCheckValue(i);}}/>
                     </div>
                 </label>
             );
@@ -64,7 +64,7 @@ const MultipleChoice=({internals,setAction})=>{
                             <div id="check" style={{paddingTop:'5%'}}>
                                 {opt}
                             </div>
-                            <Button style={{display:'center'}} className='playButton' onClick={()=>{checkResult()}}> {internals.buttonText}</Button> 
+                            <Button style={{display:'center'}} className='playButton' onClick={()=>{checkResult(); if(!isEdit){widgetClicked();}}}> {internals.buttonText}</Button> 
                         </div>;
     }
     return(multipleChoice);

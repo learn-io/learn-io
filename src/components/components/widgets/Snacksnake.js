@@ -4,7 +4,7 @@ import '../../ComponentStyle.css';
 
 import axios_instance from '../../axios_instance.js';
 
-const Snacksnake=({internals, setAction})=>{
+const Snacksnake=({internals, setAction, widgetClicked,isEdit})=>{
     const canvasRef = useRef();
 
     const[options,setOptions] = useState([]);
@@ -33,8 +33,8 @@ const Snacksnake=({internals, setAction})=>{
         ()=>{
             if(internals===''||internals===undefined)
                 return;
-            console.log("internals");
-            console.log(internals);
+            // console.log("internals");
+            // console.log(internals);
             setOptions(internals.options);
             //setRightAnswer(internals.rightAnswer);
         },[internals]   
@@ -49,14 +49,20 @@ const Snacksnake=({internals, setAction})=>{
             let promisesRight=[];
             let promisesWrong=[];
 
+            let tempArr2=[];
+
             for(let i=0;i<options.length;i++){
-                // console.log(options[i].rightImage);
+                // console.log(options[i]);
+                if(options[i].rightImage === undefined){
+                    tempArr2.push(options[i]);
+                    continue;
+                }
                 promisesRight.push(axios_instance({
                     method: 'get',
                     url: "media/"+encodeURIComponent(options[i].rightImage)
                 }));
                 
-                // console.log(options[i].wrongImage);
+                // console.log(options[i]);
                 promisesWrong.push(axios_instance({
                     method: 'get',
                     url: "media/"+encodeURIComponent(options[i].wrongImage)
@@ -69,8 +75,13 @@ const Snacksnake=({internals, setAction})=>{
                     // console.log(values[j].data)
                     tempArr.push({data:values[j].data.data, x:Math.floor(Math.random()*20)*30, y: Math.floor(Math.random()*20)*30});
                 }
+                // console.log(tempArr2);
+                for(j=0;j<tempArr2.length;j++){
+                    tempArr.push({text:tempArr2[j].rightText, x:Math.floor(Math.random()*20)*30, y: Math.floor(Math.random()*20)*30});
+                }
+
                 setImageDataRight(tempArr);
-                console.log(tempArr);
+                // console.log(tempArr);
             });
 
             Promise.all(promisesWrong).then((values)=>{
@@ -79,8 +90,12 @@ const Snacksnake=({internals, setAction})=>{
                     // console.log(values[j].data)
                     tempArr.push({data: values[j].data.data, x:Math.floor(Math.random()*20)*30, y: Math.floor(Math.random()*20)*30});
                 }
+                // console.log(tempArr2);
+                for(j=0;j<tempArr2.length;j++){
+                    tempArr.push({text:tempArr2[j].wrongText, x:Math.floor(Math.random()*20)*30, y: Math.floor(Math.random()*20)*30});
+                }
                 setImageDataWrong(tempArr);
-                console.log(tempArr);
+                // console.log(tempArr);
             });
             // axios_instance({
             //     method: 'get',
@@ -233,20 +248,31 @@ const Snacksnake=({internals, setAction})=>{
 
         // console.log(imageDataRight[0]);
         // console.log(imageDataWrong[0]);
+        if(imageDataRight[index].data === undefined){
+            var rightText = imageDataRight[index].text;
+            var rightTextX = imageDataRight[index].x;
+            var rightTextY = imageDataRight[index].y;
 
-        var rightImage = new Image();
-        rightImage.src = imageDataRight[index].data;
-        var rightImageX = imageDataRight[index].x;
-        var rightImageY = imageDataRight[index].y;
+            var wrongText = imageDataWrong[index].text;
+            var wrongTextX = imageDataWrong[index].x;
+            var wrongTextY = imageDataWrong[index].y;
 
-        var wrongImage = new Image();
-        wrongImage.src = imageDataWrong[index].data;
-        var wrongImageX = imageDataWrong[index].x;
-        var wrongImageY = imageDataWrong[index].y;
+            ctx.fillText(rightText,rightTextX,rightTextY+20,boxWidth);
+            ctx.fillText(wrongText,wrongTextX,wrongTextY+20,boxWidth);
+        } else {
+            var rightImage = new Image();
+            rightImage.src = imageDataRight[index].data;
+            var rightImageX = imageDataRight[index].x;
+            var rightImageY = imageDataRight[index].y;
 
-        ctx.drawImage(rightImage,rightImageX,rightImageY,boxWidth,boxHeight);
-        ctx.drawImage(wrongImage,wrongImageX,wrongImageY,boxWidth,boxHeight);
+            var wrongImage = new Image();
+            wrongImage.src = imageDataWrong[index].data;
+            var wrongImageX = imageDataWrong[index].x;
+            var wrongImageY = imageDataWrong[index].y;
 
+            ctx.drawImage(rightImage,rightImageX,rightImageY,boxWidth,boxHeight);
+            ctx.drawImage(wrongImage,wrongImageX,wrongImageY,boxWidth,boxHeight);
+        }
     }
 
     function clearCanvas(){
@@ -298,8 +324,9 @@ const Snacksnake=({internals, setAction})=>{
 
     return  <div className="snacksnake">
                 <div className="btn-toolbar" style={{justifyContent:'space-between'}}>
-                    <Button id="playButton" onClick={e=>{setStartGame(!startGame)}}>Play/Pause</Button>
+                    <Button id="playButton" onClick={e=>{setStartGame(!startGame); if(!isEdit){widgetClicked();}}}>Play/Pause</Button>
                     <Button onClick={e=>{
+                        if(!isEdit){widgetClicked();}
                         setStartGame(false);
                         setSnakeBody([{x:initialx, y:initialy},{x:initialx,y:initialy-boxHeight+5}])
                         // document.getElementById("playButton").disabled = false;

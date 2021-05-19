@@ -14,7 +14,7 @@ const LeftBarHeader = ({saveAll}) =>
     )
 }
 
-const LeftBarAccordion = ({platform, modules, pages, setPageId, setModuleId}) =>
+const LeftBarAccordion = ({platform, modules, pages, setPageId, setModuleId, len}) =>
 {
     const getPageAccordion = (page, index) =>
     {
@@ -55,26 +55,22 @@ const LeftBarAccordion = ({platform, modules, pages, setPageId, setModuleId}) =>
         }
     }
 
-    const getPlatformAccordion = (platform) =>
-    {
-        let platformButton = <Button className="moduleTreeButton" variant="primary" onClick={()=>{setModuleId(""); setPageId("");}}>
-            {platform.platformName}
-            </Button>
-        if (!platform.modules)
-            return platformButton;
-        return  <>
-            {platformButton}
-            <br/>
-            {
-            platform.modules.map( (module, i) =>
-            {
-                return getModuleAccordion(module, i);
-            })
-            }
-            </>
-    }
-    return getPlatformAccordion(platform);
-        
+
+    let platformButton = <Button className="moduleTreeButton" variant="primary" onClick={()=>{setModuleId(""); setPageId("");}}>
+        {platform.platformName}
+        </Button>
+    if (!modules || len === -1)
+        return platformButton;
+    return  <div className="LeftAccordian">
+        {platformButton}
+        <br/>
+        {
+        modules.map( (module, i) =>
+        {
+            return getModuleAccordion(module, i);
+        })
+        }
+        </div>        
 }
 const LeftBarBigDelete = ({doDelete}) =>
 {
@@ -85,7 +81,7 @@ const LeftBarBigDelete = ({doDelete}) =>
     )
 }
 
-const LeftBar = ({isEdit, doDelete, saveAll, platform, pages, setPageId, setModuleId}) =>
+const LeftBar = ({isEdit, doDelete, saveAll, platform, len, pages, setPageId, setModuleId}) =>
 {
     if (!isEdit)
     return(<div className="leftbaroff">
@@ -95,7 +91,7 @@ const LeftBar = ({isEdit, doDelete, saveAll, platform, pages, setPageId, setModu
     return (
     <div className="leftbar">
         <LeftBarHeader saveAll={saveAll}/>
-        <LeftBarAccordion setPageId={setPageId} setModuleId={setModuleId} platform={platform} modules={platform.modules} pages={pages}/>
+        <LeftBarAccordion len={len} setPageId={setPageId} setModuleId={setModuleId} platform={platform} modules={platform.modules} pages={pages}/>
         <LeftBarBigDelete doDelete={doDelete}/>
     </div>
     )

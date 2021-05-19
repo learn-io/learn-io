@@ -1,89 +1,69 @@
 import React, { useState, useEffect} from 'react';
 import '../ComponentStyle.css';
-import {Row, Col} from 'react-bootstrap';
-import deleteIcon from '../images/delete.png';
-import saveIcon from '../images/save.png';
-import RGL, { WidthProvider } from "react-grid-layout";
+// import RGL, { WidthProvider } from "react-grid-layout";
 import Page from './Page.js';
-import RightBar from './RightBar.js';
 import axios_instance from '../axios_instance';
+import { useParams } from 'react-router';
 
-const ReactGridLayout = WidthProvider(RGL);
+// const ReactGridLayout = WidthProvider(RGL);
 
 const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformName, 
 	setModuleId, moduleName, platformId, moduleId,
 	setPageName, setPageId, setPageEntry, pages,
-	setPageIndex, update})=>{
-
-	// const [layout, setLayout] = useState([]);
-	// const [pages, setPages] = useState([]);
-	// const [selectedPage, setSelectedPage] = useState({});
-	const [add,setAdd]= useState(0);
-	const [layout,setLayout] = useState();
-	// const [selectType, setSelectType] = useState("");
-	useEffect(
-		()=>{
-			if(pages===undefined)
-				return;
-			console.log(pages);
-			setLayout(pages.map((val, key) => {
-				return (
-					{i: ''+key, pageInfo:val}
-					// <div key={''+key} className="page" onClick={()=>{ selectPage(key) }} > 
-					// 	<Page pageInfo={val} name={''+key}/>
-					// </div>
-				)
-			}))	
-		},[update,pages]
-	)
+	setPageIndex, updatePages})=>{
 
 	useEffect(
         ()=>{
-				if(isEdit)
+			if(isEdit)
+				return;
+			if (pages.loading)
+				return;
+			let info = userPlatformInfo
+			//now we select a page
+			let choice = -1;
+			let count = 1;
+			let module_record = info.completeId.find(e => e.moduleId === moduleId);
+			let entrypoints = module_record? module_record.entryPoints : undefined;
+			pages.forEach( (item, index)=> 
+			{
+				//console.log(item);
+				//only entry points can be server
+				if (item.entry === false)
 					return;
-				let info = userPlatformInfo
-				//now we select a page
-				let choice = -1;
-				let count = 1;
-				let module_record = info.completeId.find(e => e.moduleId === moduleId);
-				let entrypoints = module_record? module_record.entryPoints : undefined;
-				pages.forEach( (item, index)=> 
-				{
-					//console.log(item);
-					//only entry points can be server
-					if (item.entry === false)
-						return;
-					//and only if we haven't completed them
-					if (entrypoints && entrypoints.find(e => e.score > 0 && e.pageId === item._id))
-						return;
+				//and only if we haven't completed them
+				if (entrypoints && entrypoints.find(e => e.score > 0 && e.pageId === item._id))
+					return;
 
-					if (choice === -1 || item.rank === pages[choice].rank)
+				if (choice === -1 || item.rank === pages[choice].rank)
+				{
+					//let's use a streaming algorithm to decide which to pick
+					if (1.0/count >= Math.random())
 					{
-						//let's use a streaming algorithm to decide which to pick
-						if (1.0/count >= Math.random())
-						{
-							choice = index;
-						}
-						count++;
-					}
-					else if (item.rank < pages[choice].rank)
-					{
-						count = 1;
 						choice = index;
 					}
-				} );
-				if(choice === -1)
+					count++;
+				}
+				else if (item.rank < pages[choice].rank)
 				{
-					alert("Module Done!");
-					setModuleId("");
+					count = 1;
+					choice = index;
 				}
-				else
-				{;
-					setPageName(pages[choice].pageName)
-					setPageId(pages[choice]._id)
-					setPageEntry(pages[choice]._id)
-				}
-        },[pages, username, platformId, moduleId, isSignedIn, setModuleId, setPageEntry, setPageId, setPageName, userPlatformInfo, update]
+			} );
+			if(choice === -1)
+			{
+				alert("Module Done!");
+				setModuleId("");
+			}
+			else
+			{;
+				pageVisited();
+
+				setPageName(pages[choice].pageName)
+				
+				setPageId(pages[choice]._id)
+				setPageEntry(pages[choice]._id)
+			}
+        },[pages, username, platformId, moduleId, isSignedIn, setModuleId, setPageEntry, setPageId, setPageName, userPlatformInfo, isEdit]
     );
 
 	const selectPage = (key) =>{
@@ -93,18 +73,64 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 		console.log(pages[key]);
 		// setSelectType("Page");
 		// setSelectedPage(pages[key]);
+		console.log(document.getElementById(key));
+
+		for(let i=0;i<pages.length;i++){
+			if(i === key){
+				document.getElementById(key).style.border = "5px solid black";
+			} else {
+				document.getElementById(i).style.border = "none";
+			}
+		}
+
 		setPageIndex(key);
 	}
 
 	const deselectPage = (e) => {
-		// console.log(e.target.className);
-		if(e.target.className === "react-grid-layout grid"){
-			console.log("deselectPage");
+		console.log(e.target);
+		if(e.target.id === "pageGrid"){
+			// console.log("deselectPage");
 			// setSelectType("");
 			// setSelectedPage({});
+			for(let i=0;i<pages.length;i++){
+				document.getElementById(i).style.border = "none";
+			}
+			
 			setPageIndex();
 		}
 
+	}
+
+	const pageVisited = () => {
+		return axios_instance({
+			method:'get',
+			url:"profile/stats/"+username+"/0/100"
+		}).then(function(response){
+			console.log(response.data.resp);
+			// alert("We made it to page Visited")
+
+			let curPlatformInfo = response.data.resp.filter((obj) => {
+				return obj.platformId === platformId;
+			});
+
+			// console.log(curPlatformInfo);
+
+			curPlatformInfo[0].pageVisited+=1;
+
+			// console.log(curPlatformInfo);
+
+			axios_instance({
+				method:'post',
+				url:'profile/update',
+				data:curPlatformInfo[0]
+			}).then(function(response){
+				console.log(response);
+			});
+			
+		}).catch(function(err){
+			// history.push("/home");
+			console.log(err);
+		});
 	}
 
 	// const onDragStart=(event,text)=> {
@@ -118,7 +144,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 
 	const onDrop=(event)=>{
 		event.preventDefault();
-		let data = event.dataTransfer.getData("Text");
+		// let data = event.dataTransfer.getData("Text");
 		// let newPage = {
 		// 	pageName:"New Page",
 		// 	entry: false,
@@ -151,48 +177,29 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 			}).then((res)=>{
 				// console.log(res.data);
 				pages.push(res.data);
-				setAdd(add+1)
+				updatePages();
 			})
 		});
 	}
-
+	if (pages.loading)
+				return <div className="">Loading...</div>;
 	if(isEdit){
-		console.log(layout);
-		if(layout === undefined){
-			return <div>Loading...</div>
-		}
-		return (	
-			// <div className="platformContainer">
+		return (
 				//@TODO CHANGE CSS TO 100% with new class
-				<div id="pageGrid" className="content pageLayoutHelper" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}} onClick={(e)=>{deselectPage(e)}}>  {/*deselectPage() */}
-					{/* <ReactGridLayout
-					className="grid" 
-					compactType={null} 
-					layout={layout} 
-					onLayoutChange={()=>{}} //FOR SAVING LAYOUT CHANGES
-					cols={8}
-					> */}
+				<div id="pageGrid" style={{overflowY:'scroll', border: '1px solid black'}} className="content pageLayoutHelper" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}} onClick={(e)=>{deselectPage(e)}}>  {/*deselectPage() */}
 					{
-						layout.map((val, key) => {
+						pages.map((val, key) => {
 							console.log(val);
 							console.log(key);
 							return (
-								<div key={''+key} className="page" onClick={()=>{ selectPage(key) }} > 
-									<Page pageInfo={val.pageInfo.pageName} name={''+key} />
+								<div key={''+key} id={''+key} className="page pageHelper" onClick={()=>{ selectPage(key) }} > 
+									<Page pageInfo={val.pageName} name={''+key} />
 								</div>
 							)
 						})	
 					}
-					{/* </ReactGridLayout> */}
 				</div>
-				
-				// {/* <RightBar selectType={selectType} selected={selectedPage} setSelectedPage={setSelectedPage} onDragStart={onDragStart} add={add} setAdd={setAdd}/> */}
-				// {/* <div className="rightbar"> 
-					
-				// </div> */}
-			// </div>
 		);
-
 	} else {
 		return(
 			<div className="">Routing...</div>

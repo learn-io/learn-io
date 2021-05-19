@@ -11,6 +11,8 @@ import badge1 from './images/50.png';
 import badge2 from './images/75.png';
 import badge3 from './images/100.png';
 
+const localBadges = [badge0,badge1,badge2,badge3];
+
 const Switch = require("react-router-dom").Switch;
 const Route = require("react-router-dom").Route;
 
@@ -110,23 +112,22 @@ const Profile=()=>{
             <div style={{display:'flex', justifyContent:"left", padding:"2rem"}}>
                 <h1>Profile</h1>
             </div>
-            <div className="container">
-                <Form.Group controlId="skipBy" >
+            <div className="" style={{display:'flex',justifyContent:"center"}}>
+                <Form.Group controlId="skipBy" className="profileControls">
                     <Form.Label className="profileFormGroupLabel">Skip By:</Form.Label>
-                    <Form.Control type="number" onBlur={(e)=>{e.preventDefault(); setSkip(e.target.value);}}></Form.Control>
+                    <Form.Control style={{width:'10vw',backgroundColor: '#cdecff'}} className="profileControls" defaultValue="0" type="number" onBlur={(e)=>{e.preventDefault(); setSkip(e.target.value);}}></Form.Control>
                 </Form.Group>
-                
-                <Form.Group controlId="countBy" >
+                <Form.Group controlId="countBy" className="profileControls">
                     <Form.Label className="profileFormGroupLabel">Platforms per page:</Form.Label>
                     <Dropdown>
-                        <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
+                        <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000', width:'10vw'}} variant="success" id="dropdown-basic">
                             {count}
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={(e)=>{e.preventDefault(); setCount(5)}}>5</Dropdown.Item>
-                            <Dropdown.Item onClick={(e)=>{e.preventDefault(); setCount(10)}}>10</Dropdown.Item>
-                            <Dropdown.Item onClick={(e)=>{e.preventDefault(); setCount(15)}}>15</Dropdown.Item>
-                            <Dropdown.Item onClick={(e)=>{e.preventDefault(); setCount(20)}}>20</Dropdown.Item>
+                            <Dropdown.Item style={{width:"10vw"}} onClick={(e)=>{e.preventDefault(); setCount(5)}}>5</Dropdown.Item>
+                            <Dropdown.Item style={{width:"10vw"}} onClick={(e)=>{e.preventDefault(); setCount(10)}}>10</Dropdown.Item>
+                            <Dropdown.Item style={{width:"10vw"}} onClick={(e)=>{e.preventDefault(); setCount(15)}}>15</Dropdown.Item>
+                            <Dropdown.Item style={{width:"10vw"}} onClick={(e)=>{e.preventDefault(); setCount(20)}}>20</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </Form.Group>
@@ -176,8 +177,12 @@ const Progress=({allInfo})=>{
                 {allInfo.map((pI)=>{
                     return(
                         <div key={pI.platformInfo.platformName} className="userPlatformInfoPadding">
-                            <h2 className="text-left ml-4">{pI.platformInfo.platformName}</h2>
-                            <div className="container">
+                            <div style={{display:'flex', justifyContent:'space-between'}}> 
+                                <h2 style={{float:'left', display:'inline'}}>{pI.platformInfo.platformName}</h2>
+                                <h2 style={{float:'right', display:'inline'}}>{`${Math.floor((pI.platforms.modulesCompleted/pI.platformInfo.modules.length)*100)}%`}</h2>
+                            </div>
+                            <br/>
+                            <div className="container" style={{padding:"10px"}}>
                                 <ProgressBar animated now={pI.platforms.modulesCompleted} max={pI.platformInfo.modules.length}/>
                             </div>
                         </div>
@@ -194,29 +199,47 @@ const Badges=({allInfo})=>{
     // console.log("allInfo");
     // console.log(allInfo);
 
-    if(false){ //typeof allInfo==='undefined'
+    if(typeof allInfo==='undefined'){ //typeof allInfo==='undefined'
         return (
             <div className="userPlatformInfoPadding container">
-                <h1>No badges to display at this time.</h1>
+                <h1 style={{paddingTop:"10px"}}>No badges to display at this time.</h1>
             </div>
         )
     } else {
         return (
             <div className="container userPlatformInfoPaddingBottom">
                 {allInfo.map((pI)=>{
+                    let temp = pI.platforms.badges;
+                    if(!temp[0] && !temp[1] && !temp[2] && !temp[3]){
+                        return (
+                            <div key={pI.platformInfo.platformName} className="userPlatformInfoPadding">
+                                <h2 className="text-left ml-4">{pI.platformInfo.platformName}</h2>
+                                <p style={{padding:'20px'}}> No badges to display at this time. </p>
+                            </div>
+                        );
+                    }
                     return(
                         <div key={pI.platformInfo.platformName} className="userPlatformInfoPadding">
                             <h2 className="text-left ml-4">{pI.platformInfo.platformName}</h2>
                             <div className="container badgeContainer">
-                                {/* {pI.platformInfo.modules.map((val, index)=>{
-                                    return (
-                                        <img height="250px" width="250px" src={"badge"+index} alt="No badges to display at this time."></img>
-                                    );
-                                })} */}
-                                <img height="250px" width="250px" src={badge0} alt="No badges to display at this time."></img>
+                                {pI.platforms.badges.map((val, index)=>{
+                                    // console.log("val")
+                                    // console.log(val)
+                                    // console.log("index")
+                                    // console.log(index)
+                                    if(val === true){
+                                        return (
+                                            <img key={''+index} height="250px" width="250px" src={localBadges[index]} alt="No badges to display at this time."></img>
+                                        );
+                                        
+                                    } else {
+                                        return <></>
+                                    }
+                                })}
+                                {/* <img height="250px" width="250px" src={badge0} alt="No badges to display at this time."></img>
                                 <img height="250px" width="250px" src={badge1} alt="No badges to display at this time."></img>
                                 <img height="250px" width="250px" src={badge2} alt="No badges to display at this time."></img>
-                                <img height="250px" width="250px" src={badge3} alt="No badges to display at this time."></img>
+                                <img height="250px" width="250px" src={badge3} alt="No badges to display at this time."></img> */}
                             </div>
                         </div>
                     );
@@ -264,14 +287,14 @@ const Stats=({allInfo})=>{
                                     <p>{pI.platforms.pageVisited}</p>
                                 </Col>
                             </Form.Row>
-                            <Form.Row>
+                            {/* <Form.Row>
                                 <Col>
                                     <p>Time Spent:</p>
                                 </Col>
                                 <Col>
                                     <p>{pI.platforms.timeSpend}</p>
                                 </Col>
-                            </Form.Row>
+                            </Form.Row> */}
                             <Form.Row>
                                 <Col>
                                     <p>Widgets Clicked:</p>

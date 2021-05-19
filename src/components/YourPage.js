@@ -10,7 +10,8 @@ import SearchBox from './components/SearchBox';
 import ConfirmBox from './components/ConfirmBox';
 import DeletePlatformList from './components/DeletePlatformList';
 import DeleteConfirmBox from './components/DeleteConfirmBox';
-import {Link} from 'react-router-dom';
+import CreatePlatform from './components/CreatePlatform';
+// import {Link} from 'react-router-dom';
 
 
 const YourPagesController = (props) =>{
@@ -22,6 +23,7 @@ const YourPagesController = (props) =>{
     const [nextPlatforms, setNextPlatforms] = useState(false);
     const [selectPlatform, setSelectPlatform] = useState("");
     const [save,setSave]=useState(0);
+	const [create,setCreate]=useState(false);
     useEffect(
         ()=>{
         	let queryText = text
@@ -77,13 +79,13 @@ const YourPagesController = (props) =>{
 		    <div className='appStyle'>
 		    	<div style={{display:'flex',justifyContent: 'space-between',padding:'2rem'}}>
 			    	<h1>Your Pages</h1>
-			    	{/* <button className='deleteButton' onClick={()=>{console.log(1)}}><img src={plusIcon} height='50px' width='50px' alt="plus"/></button> */}
-					<Link className='deleteButton' to={''}> <img src={plusIcon} height='50px' width='50px' alt="plus"/></Link>
+			    	<button className='deleteButton' onClick={()=>{setCreate(true)}}><img src={plusIcon} height='50px' width='50px' alt="plus"/></button>
+					{/* <Link className='deleteButton' to={''}> <img src={plusIcon} height='50px' width='50px' alt="plus"/></Link> */}
 		    	</div>
 		        <SearchBox onSearchPlatform={onSearchPlatform} />
 		        <Dropdown>
 					<Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
-				    	Platfroms per page: {limit}
+				    	Platforms per page: {limit}
 					</Dropdown.Toggle>
 					<Dropdown.Menu>
 				    	<Dropdown.Item onClick={()=>{onChangeLimit(10)}}>10</Dropdown.Item>
@@ -93,6 +95,7 @@ const YourPagesController = (props) =>{
 				</Dropdown>
 		        <DeletePlatformList platforms={platforms} setDeletePlatform={setDeletePlatform} setSelectPlatform={setSelectPlatform}/>
 		        <DeleteConfirmBox deletePlatform={deletePlatform} onDeletePlatform={onDeletePlatform} setDeletePlatform={setDeletePlatform}/>
+				<CreatePlatform create={create} setCreate={setCreate} save={save} setSave={setSave}/>
 		        <ConfirmBox username={props.username} selectPlatform={selectPlatform} setSelectPlatform={setSelectPlatform} setSave={setSave} save={save}/>
 		        <PreviousButton limit={limit} skip={skip} setSkip={setSkip} />
 	        	<NextButton limit={limit} nextPlatforms={nextPlatforms} skip={skip} setSkip={setSkip}/>

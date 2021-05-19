@@ -3,28 +3,30 @@ import '../ComponentStyle.css';
 import '../GridStyle.css';
 import Widget from './widgets/Widget.js';
 import RGL, { WidthProvider } from "react-grid-layout";
+import axios_instance from '../axios_instance';
 
 const ReactGridLayout = WidthProvider(RGL);
 
 const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
     platformName, moduleName, pageName, 
     platformId, moduleId, pageId, curPage,
-    setWidgetIndex, update})=>{
+    setWidgetIndex, updatePage, layout, setLayout})=>{
 
-    const [layout, setLayout] = useState();
+    
     // const [selectedWidget,setSelectedWidget]= useState("");
-    const [add,setAdd]= useState(0);
     const [oldPage, setOldPage] = useState("");
     const [newWidget,setNewWidget]=useState(false);
 
     useEffect( () => {
         if (curPage._id === undefined)
             return;
+        // console.log(curPage.widgets);
+        // setLayout("");
         setLayout(curPage.widgets.map((val,key) => {
             return {i: ''+key, x: val.x, y: val.y, w: val.width, h: val.height, static: !isEdit}
         }));
         setOldPage(curPage)
-    }, [curPage, isEdit,add,update] 
+    }, [curPage, isEdit] 
     );
 
     if (curPage._id === undefined)
@@ -175,7 +177,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
         setOldPage(curPage);
         // console.log(curPage);
         setNewWidget(true);
-        setAdd(add+1);
+        updatePage();
     }
     const selectWidget=(key)=>{
         // console.log(curPage[key]);
@@ -183,6 +185,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
         setWidgetIndex(key);
         // console.log(1);
     }
+
     const onLayoutChanged=(newLayout)=>{
         if(newWidget){
             setNewWidget(false);
@@ -201,6 +204,39 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
         // setLayout(newLayout);
         // setAdd(add+1);
     }
+
+    const widgetClicked = () => {
+		axios_instance({
+			method:'get',
+			url:"profile/stats/"+username+"/0/100"
+		}).then(function(response){
+			console.log(response.data.resp);
+			//alert("We made it to widgets clicked")
+
+			let curPlatformInfo = response.data.resp.filter((obj) => {
+				return obj.platformId === platformId;
+			});
+
+			console.log(curPlatformInfo);
+
+			curPlatformInfo[0].widgetsClicked+=1;
+
+			// console.log(curPlatformInfo);
+
+			axios_instance({
+				method:'post',
+				url:'profile/update',
+				data:curPlatformInfo[0]
+			}).then(function(response){
+				console.log(response);
+			});
+			
+		}).catch(function(err){
+			// history.push("/home");
+			console.log(err);
+		});
+	}
+    // console.log(widgetClicked);
     if(isEdit){
         // console.log(layout);
         return(
@@ -209,7 +245,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
                 <h3 style={{color:'white'}}>{moduleName} : {pageName}</h3>
                 <div id="reactgrid" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}}>
                     <ReactGridLayout 
-                    className="grid" 
+                    className="grid noAnimate" 
                     compactType={null}
                     layout={layout}
                     onLayoutChange={(newLayout)=>{onLayoutChanged(newLayout)}}
@@ -219,7 +255,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
                         curPage.widgets.map((val,key) => {
                             return (
                                 <div key={''+key} className="widget" onClick={()=>{selectWidget(key)}}>
-                                    <Widget internals={val.internals} setAction={setAction}/>
+                                    <Widget internals={val.internals} setAction={setAction} updatePage={updatePage} isEdit={true}/>
                                 </div>
                             );
                         })
@@ -246,7 +282,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
                     curPage.widgets.map((val,key) => {
                         return (
                             <div key={''+key} className="widget">
-                                <Widget internals={val.internals} setAction={setAction}/>
+                                <Widget internals={val.internals} setAction={setAction} isEdit={false} widgetClicked={widgetClicked}/>
                             </div>
                         );
                     })

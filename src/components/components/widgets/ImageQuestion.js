@@ -3,7 +3,7 @@ import '../../ComponentStyle.css';
 // import {Button} from 'react-bootstrap';
 import axios_instance from '../../axios_instance.js';
 
-const ImageQuestion=({internals,setAction})=>{
+const ImageQuestion=({internals,hash,setAction,widgetClicked,isEdit})=>{
     const [imageData,setImageData]=useState('');
     useEffect(
         ()=>{
@@ -17,7 +17,7 @@ const ImageQuestion=({internals,setAction})=>{
             }).catch((err)=>{
 				console.log(err);
 			});
-        },[internals]   
+        },[internals,hash]   
 	);
     const checkResult=()=>{
         setAction(internals.click);
@@ -27,7 +27,7 @@ const ImageQuestion=({internals,setAction})=>{
         imagequestion=<div className='flashcard'/>;
     }else{
         imagequestion=<div className='flashcard'>
-                            <button className='imageButton' onClick={()=>{checkResult()}} ><img src={imageData} height='100%' width='100%' alt=""/></button>
+                            <button className='imageButton' onClick={()=>{checkResult(); if(!isEdit){widgetClicked();}}} ><img src={imageData} height='100%' width='100%' alt=""/></button>
                         </div>;
     }
     return(imagequestion);
