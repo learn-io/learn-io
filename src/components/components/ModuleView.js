@@ -86,7 +86,7 @@ const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlat
     }else{
         return(
             <>
-				<h2 style={{color:'white'}}>{platformName}</h2>
+				<h2 style={{color:'white', textAlign:'center'}} className="content">{platformName}</h2>
 				<ModuleList setRedraw={setRedraw} redraw={redraw} dragging={dragging} setDragging={setDragging} updatePlatform={updatePlatform} 
 				toggleConnection = {toggleConnection} isEdit={isEdit} moveModuleTo={moveModuleTo} 
 				modules={platform.modules} setSelectedModule={setSelectedModule} userPlatformInfo={userPlatformInfo} 

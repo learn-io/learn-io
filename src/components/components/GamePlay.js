@@ -213,7 +213,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
         // console.log(layout);
         return(
             <div className="content">
-                <h2 style={{color:'white'}}>{platformName}</h2>
+                <h2 style={{color:'white', textAlign:'center'}}>{platformName}</h2>
                 <h3 style={{color:'white'}}>{moduleName} : {pageName}</h3>
                 <div id="reactgrid" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}}>
                     <ReactGridLayout 
@@ -240,7 +240,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
     }else{
         return (
             <div className="page">
-                <h2 style={{color:'white'}}>{platformName}</h2>
+                <h2 style={{color:'white', textAlign:'center'}}>{platformName}</h2>
                 <h3 style={{color:'white'}}>{moduleName} : {pageName}</h3>
                 <ReactGridLayout 
                 className="grid" 
