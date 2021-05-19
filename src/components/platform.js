@@ -204,6 +204,8 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             // console.log(pages[pageIndex]._id);
             // console.log(moduleId);
             // console.log(platformId);
+            if (pages[pageIndex] === undefined)
+                return;
             axios_instance({
                 method: 'post',
                 url: "page/delete",
@@ -214,6 +216,8 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 }
             }).then((res)=>{
                 let filter = pages.filter(item => item !== pages[pageIndex])
+                console.log(allPages[moduleId]);
+                allPages[moduleId] = filter;
                 setPages(filter);
             }).catch(err=>console.log(err));
         }else if(type==="Module"){
@@ -304,8 +308,8 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     const updatePages = () =>
     {
         let newdata = [...pages];
-        console.log(pages);
-        console.log(newdata);
+        //console.log(pages);
+        //console.log(newdata);
         setPages(newdata);
         allPages[moduleId] = newdata;
         //updatePlatform();
