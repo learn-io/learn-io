@@ -557,6 +557,7 @@ input.largeCheckbox{
 .content{
 	width: 70%;
 	max-height: 100%;
+	margin: 0;
 	float:left;
 }
 
@@ -619,5 +620,5 @@ input.largeCheckbox{
 }
 
 .topPadding{
-	height:5%;
+	height: 4vh;
 }
