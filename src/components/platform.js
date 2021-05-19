@@ -73,6 +73,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
             if (allPages[moduleId])
             {
                 setPages(allPages[moduleId]);
+                platform.modules.forEach( (x)=>{if (x._id === moduleId) setModuleName(x.moduleName);}); 
                 if (pageId !== "")
                 {
                     let thepage = allPages[moduleId].find(x => x._id === pageId);
