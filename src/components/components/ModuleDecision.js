@@ -1,9 +1,9 @@
-import React, { useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import '../ComponentStyle.css';
 // import RGL, { WidthProvider } from "react-grid-layout";
 import Page from './Page.js';
 import axios_instance from '../axios_instance';
-import { useParams } from 'react-router';
+
 
 // const ReactGridLayout = WidthProvider(RGL);
 
@@ -102,35 +102,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 	}
 
 	const pageVisited = () => {
-		return axios_instance({
-			method:'get',
-			url:"profile/stats/"+username+"/0/100"
-		}).then(function(response){
-			console.log(response.data.resp);
-			// alert("We made it to page Visited")
-
-			let curPlatformInfo = response.data.resp.filter((obj) => {
-				return obj.platformId === platformId;
-			});
-
-			// console.log(curPlatformInfo);
-
-			curPlatformInfo[0].pageVisited+=1;
-
-			// console.log(curPlatformInfo);
-
-			axios_instance({
-				method:'post',
-				url:'profile/update',
-				data:curPlatformInfo[0]
-			}).then(function(response){
-				// console.log(response);
-			});
-			
-		}).catch(function(err){
-			// history.push("/home");
-			console.log(err);
-		});
+		userPlatformInfo.pageVisited+=1;
 	}
 
 	// const onDragStart=(event,text)=> {

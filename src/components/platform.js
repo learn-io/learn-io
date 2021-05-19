@@ -229,7 +229,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                     moduleId:moduleDeleteId
                 }
             }).then((res)=>{
-                let newPlatformModules = platform.modules.filter(item => item._id != moduleDeleteId)
+                let newPlatformModules = platform.modules.filter(item => item._id !== moduleDeleteId)
                 platform.modules = newPlatformModules;
                 updatePlatform();
                 if (allPages[moduleDeleteId])
@@ -386,7 +386,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 <LeftBar doDelete={()=>{doDelete("Widget")}} len={platform.modules? platform.modules.length : -1} isEdit={isEdit} saveAll={saveAll} platform={platform} pages={pages} setPageId={setPageId} setModuleId={setModuleId}/>
                 
                 <GamePlay username={username} isSignedIn={isSignedIn} isEdit={isEdit} 
-                setAction={setAction} setPageName={setPageName}
+                setAction={setAction} setPageName={setPageName} userPlatformInfo={userPlatformInfo}
                 platformName={platformName} moduleName={moduleName} pageName={curPage.pageName}
                 platformId={platformId} moduleId={moduleId} pageId={pageId} curPage={curPage}
                 setWidgetIndex={setWidgetIndex} updatePage={updatePage}
