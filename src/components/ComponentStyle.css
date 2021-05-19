@@ -617,3 +617,7 @@ input.largeCheckbox{
 	justify-content:space-between;
 	height:100vh;
 }
+
+.topPadding{
+	height:5%;
+}
