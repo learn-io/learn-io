@@ -63,7 +63,7 @@ const ModuleConfirmBox=({platform, username,selectedModule,setSelectedModule,upd
     const onSaveModuleInfo=()=>{
 		console.log(selectedModule);
 		selectedModule.moduleName = header;
-		selectedModule.description=description;
+		selectedModule.moduleDescription=description;
 		selectedModule.image=imageHash;
 		updatePlatform();
 	}

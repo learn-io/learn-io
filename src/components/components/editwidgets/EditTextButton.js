@@ -1,8 +1,13 @@
-import React from 'react';
-import {Table} from 'react-bootstrap';
+import React, {useEffect, useState} from 'react';
+import {Table,Dropdown} from 'react-bootstrap';
 import './editStyle.css';
 
 const EditTextButton = ({selectedWidget,curPage,add,setAdd,pages})=>{
+    const [update,setUpdate]= useState(0);
+    useEffect(
+        ()=>{
+        },[update]
+    );
     const onChangeText=(event)=>{
         // console.log(curPage);
         for(let i=0;i<curPage.widgets.length;i++){
@@ -16,21 +21,22 @@ const EditTextButton = ({selectedWidget,curPage,add,setAdd,pages})=>{
         // console.log(event.target.value);
     }
     
-    const onChangePorS=(event)=>{
+    const onChangePorS=(value)=>{
         for(let i=0;i<curPage.widgets.length;i++){
             if(curPage.widgets[i]===selectedWidget){
-                curPage.widgets[i].internals.click.actionType=event.target.value;
+                curPage.widgets[i].internals.click.actionType=value;
                 break;
             }
         }
+        setUpdate(update+1);
     }
-    const onChangeTarget=(event)=>{
+    const onChangeTarget=(event,pageN)=>{
         for(let i=0;i<curPage.widgets.length;i++){
             let value="";
             if(curPage.widgets[i]===selectedWidget){
                 if(curPage.widgets[i].internals.click.actionType==='P'){
                     for(let j=0;j<pages.length;j++){
-                        if(pages[j].pageName===event.target.value){
+                        if(pages[j].pageName===pageN){
                             value=pages[j]._id;
                             break;
                         }
@@ -42,9 +48,11 @@ const EditTextButton = ({selectedWidget,curPage,add,setAdd,pages})=>{
                 break;
             }
         }
+        setUpdate(update+1);
         // console.log(curPage);
     }
     let text="";
+    let targetPart;
     if(selectedWidget.internals.click.actionType==='P'){
         for(let i=0;i<pages.length;i++){
             if(pages[i]._id===selectedWidget.internals.click.target){
@@ -52,8 +60,22 @@ const EditTextButton = ({selectedWidget,curPage,add,setAdd,pages})=>{
                 break;
             }
         }
+        targetPart=<Dropdown>
+                        <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
+                            {text}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            {
+                                pages.map((x,i)=>{
+                                    return(
+                                        <Dropdown.Item onClick={(event)=>onChangeTarget(event,x.pageName)} key={i}>{x.pageName}</Dropdown.Item>
+                                    );
+                                })
+                            }
+                        </Dropdown.Menu>
+                    </Dropdown>
     }else{
-        text=selectedWidget.internals.click.target;
+        targetPart=<input defaultValue={selectedWidget.internals.click.target} onChange={(event)=>{onChangeTarget(event)}} className='inputStyle' type="text" id="target" name="target"/>
     }
     let game=<div style={{paddingTop:'5%'}}>
                 <Table striped bordered hover>
@@ -67,8 +89,19 @@ const EditTextButton = ({selectedWidget,curPage,add,setAdd,pages})=>{
                     <tbody>
                         <tr>
                         <td><input defaultValue={selectedWidget.internals.text} onChange={onChangeText} className='inputStyle' type="text" id="buttontext" name="buttontext"/></td>
-                        <td><input defaultValue={selectedWidget.internals.click.actionType} onChange={onChangePorS} className='inputStyle' type="text" id="pors" name="pors"/></td>
-                        <td><input defaultValue={text} onChange={onChangeTarget} className='inputStyle' type="text" id="target" name="target"/></td>
+                        <td>
+                            <Dropdown>
+                                <Dropdown.Toggle style={{backgroundColor: '#cdecff',color:'#000'}} variant="success" id="dropdown-basic">
+                                    {selectedWidget.internals.click.actionType}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item onClick={()=>onChangePorS("P")}>P</Dropdown.Item>
+                                    <Dropdown.Item onClick={()=>onChangePorS("S")}>S</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                            {/* <input defaultValue={selectedWidget.internals.click.actionType} onChange={onChangePorS} className='inputStyle' type="text" id="pors" name="pors"/> */}
+                        </td>
+                        <td style={{width:'60%'}}>{targetPart}</td>
                         </tr>
                     </tbody>
                 </Table>
