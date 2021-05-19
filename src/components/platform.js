@@ -166,7 +166,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 newUPinfo.modulesCompleted += 1;
             }   
 
-            console.log(newUPinfo);
+            // console.log(newUPinfo);
             if (isSignedIn)
             {
                 axios_instance({
@@ -190,9 +190,9 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
     }
     const doDelete=(type)=>{
         if(type==="Widget"){
-            console.log(curPage.widgets);
-            console.log(layout);
-            console.log(widgetIndex);
+            // console.log(curPage.widgets);
+            // console.log(layout);
+            // console.log(widgetIndex);
 
             curPage.widgets.splice(widgetIndex, 1);
             setLayout(curPage.widgets.map((val,key) => {
@@ -216,7 +216,7 @@ const PlatformController=({username, isSignedIn, isEdit})=>{
                 }
             }).then((res)=>{
                 let filter = pages.filter(item => item !== pages[pageIndex])
-                console.log(allPages[moduleId]);
+                // console.log(allPages[moduleId]);
                 allPages[moduleId] = filter;
                 setPages(filter);
             }).catch(err=>console.log(err));

@@ -67,13 +67,13 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
     );
 
 	const selectPage = (key) =>{
-		console.log("key")
-		console.log(key)
+		// console.log("key")
+		// console.log(key)
 
-		console.log(pages[key]);
+		// console.log(pages[key]);
 		// setSelectType("Page");
 		// setSelectedPage(pages[key]);
-		console.log(document.getElementById(key));
+		// console.log(document.getElementById(key));
 
 		for(let i=0;i<pages.length;i++){
 			if(i === key){
@@ -87,7 +87,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 	}
 
 	const deselectPage = (e) => {
-		console.log(e.target);
+		// console.log(e.target);
 		if(e.target.id === "pageGrid"){
 			// console.log("deselectPage");
 			// setSelectType("");
@@ -124,7 +124,7 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 				url:'profile/update',
 				data:curPlatformInfo[0]
 			}).then(function(response){
-				console.log(response);
+				// console.log(response);
 			});
 			
 		}).catch(function(err){
@@ -189,8 +189,8 @@ const ModuleDecision=({username, isSignedIn, isEdit, userPlatformInfo, platformN
 				<div id="pageGrid" style={{overflowY:'scroll', border: '1px solid black'}} className="content pageLayoutHelper" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}} onClick={(e)=>{deselectPage(e)}}>  {/*deselectPage() */}
 					{
 						pages.map((val, key) => {
-							console.log(val);
-							console.log(key);
+							// console.log(val);
+							// console.log(key);
 							return (
 								<div key={''+key} id={''+key} className="page pageHelper" onClick={()=>{ selectPage(key) }} > 
 									<Page pageInfo={val.pageName} name={''+key} />
