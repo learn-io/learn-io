@@ -433,7 +433,7 @@ const ModuleList=({toggleConnection, isEdit, moveModuleTo, userPlatformInfo, upd
     }
 
 	return(   
-            <canvas className='canvasStyle content' ref={canvasRef} 
+            <canvas style={{width:'100%', height:'90%'}} className='canvasStyle content' ref={canvasRef} 
             onClick={handleCanvasClick} onMouseMove={handleMouseMove}
             onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}
             onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}}/>

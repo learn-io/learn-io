@@ -28,6 +28,7 @@ const RightBar = ({isEdit, selectType, curPage, selected, onDragStart, add, setA
 
     return(
         <div className="rightbar">
+            <div className="topPadding"></div>
             {rightBarTop}
             {rightBarBottom}
         </div>

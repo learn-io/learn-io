@@ -47,13 +47,13 @@ const RighttopBar = ({selectType, onDragStart}) =>{
         let matchChoice=<div draggable onDragStart={(e)=>{onDragStart(e,"Matching")}} style={{backgroundColor:'#96CCFF',borderRadius: '.3rem',marginTop: '10%',width:'80%',height:'150px', marginLeft:'10%'}}>
                             <p>Matching</p>
                         </div>
-        rightTopContent=<div> {textBut} {textBox} {imageBox} {imageBut} {soundBut} {flash} {snack} {choice} {quickChoice} {matchChoice} </div>;
+        rightTopContent=<div> {textBut} {textBox} {imageBox} {imageBut} {soundBut} {flash} {snack} {choice} {quickChoice} {matchChoice} <div style={{height:"20px"}}></div> </div>;
     } else {
         rightTopContent=<div></div>
     }
     
     return (
-        <div style={{overflowY:'scroll', border: '1px solid black', height: '50%'}}>
+        <div style={{overflowY:'scroll', border: '1px solid black'}} className="forTopRightBar">
             {rightTopContent}
         </div>
     );

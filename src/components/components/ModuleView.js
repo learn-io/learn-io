@@ -86,13 +86,15 @@ const ModuleView=({username, isSignedIn, isEdit, platform, setPlatform, userPlat
     }else{
         return(
             <>
-				<h2 style={{color:'white'}}>{platformName}</h2>
-				<ModuleList setRedraw={setRedraw} redraw={redraw} dragging={dragging} setDragging={setDragging} updatePlatform={updatePlatform} 
-				toggleConnection = {toggleConnection} isEdit={isEdit} moveModuleTo={moveModuleTo} 
-				modules={platform.modules} setSelectedModule={setSelectedModule} userPlatformInfo={userPlatformInfo} 
-				setSelectedDisable={setSelectedDisable} platformId={platformId}
-				editMode={editMode} setEditMode={setEditMode}
-				moduleDeleteId={moduleDeleteId} setModuleDeleteId={setModuleDeleteId}/>
+				<div className="content">
+					<h2 style={{color:'white', textAlign:'center', width:'100%'}} className="content topPadding">{platformName}</h2>
+					<ModuleList setRedraw={setRedraw} redraw={redraw} dragging={dragging} setDragging={setDragging} updatePlatform={updatePlatform} 
+					toggleConnection = {toggleConnection} isEdit={isEdit} moveModuleTo={moveModuleTo} 
+					modules={platform.modules} setSelectedModule={setSelectedModule} userPlatformInfo={userPlatformInfo} 
+					setSelectedDisable={setSelectedDisable} platformId={platformId}
+					editMode={editMode} setEditMode={setEditMode}
+					moduleDeleteId={moduleDeleteId} setModuleDeleteId={setModuleDeleteId}/>
+				</div>
 				<ModuleConfirmBox isEdit={isEdit} username={username} platform={platform} selectedModule={selectedModule} setSelectedModule={setSelectedModule} 
 				updatePlatform={()=>{updatePlatform();setRedraw(r=>!r)}} setModuleName={setModuleName} setModuleId={setModuleId} selectedDisable={selectedDisable}/>
             </>

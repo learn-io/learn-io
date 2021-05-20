@@ -283,6 +283,7 @@ const RightbottomBar = ({curPage, selectType, selected, add,setAdd,pages, update
     return (
         <div style={{overflowY:'scroll', border: '1px solid black', height: '50%'}}>
             {selectedInfo}
+            <div style={{height:"20px"}}></div>
         </div>
     );
 }

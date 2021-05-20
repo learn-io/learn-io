@@ -7,7 +7,7 @@ import '../ComponentStyle.css';
 const LeftBarHeader = ({saveAll}) =>
 {
     return (
-    <button className='deleteButton' 
+    <button className='deleteButton topPadding' 
     onClick={()=>{saveAll()}}>
         <img src={saveIcon} height='40px' width='40px' alt="save"/>
     </button>

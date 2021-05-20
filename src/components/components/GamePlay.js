@@ -8,7 +8,7 @@ import axios_instance from '../axios_instance';
 const ReactGridLayout = WidthProvider(RGL);
 
 const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
-    platformName, moduleName, pageName, 
+    platformName, moduleName, pageName, userPlatformInfo,
     platformId, moduleId, pageId, curPage,
     setWidgetIndex, updatePage, layout, setLayout})=>{
 
@@ -206,42 +206,14 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
     }
 
     const widgetClicked = () => {
-		axios_instance({
-			method:'get',
-			url:"profile/stats/"+username+"/0/100"
-		}).then(function(response){
-			console.log(response.data.resp);
-			//alert("We made it to widgets clicked")
-
-			let curPlatformInfo = response.data.resp.filter((obj) => {
-				return obj.platformId === platformId;
-			});
-
-			console.log(curPlatformInfo);
-
-			curPlatformInfo[0].widgetsClicked+=1;
-
-			// console.log(curPlatformInfo);
-
-			axios_instance({
-				method:'post',
-				url:'profile/update',
-				data:curPlatformInfo[0]
-			}).then(function(response){
-				console.log(response);
-			});
-			
-		}).catch(function(err){
-			// history.push("/home");
-			console.log(err);
-		});
+        userPlatformInfo.widgetsClicked+=1;
 	}
     // console.log(widgetClicked);
     if(isEdit){
         // console.log(layout);
         return(
             <div className="content">
-                <h2 style={{color:'white'}}>{platformName}</h2>
+                <h2 style={{color:'white', textAlign:'center'}}>{platformName}</h2>
                 <h3 style={{color:'white'}}>{moduleName} : {pageName}</h3>
                 <div id="reactgrid" onDragOver={(e)=>{onDragOver(e)}} onDrop={(e)=>{onDrop(e)}}>
                     <ReactGridLayout 
@@ -268,7 +240,7 @@ const GamePlay=({username, isSignedIn, isEdit, setAction, setPageName,
     }else{
         return (
             <div className="page">
-                <h2 style={{color:'white'}}>{platformName}</h2>
+                <h2 style={{color:'white', textAlign:'center'}}>{platformName}</h2>
                 <h3 style={{color:'white'}}>{moduleName} : {pageName}</h3>
                 <ReactGridLayout 
                 className="grid" 
