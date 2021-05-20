@@ -622,3 +622,7 @@ input.largeCheckbox{
 .topPadding{
 	height: 4vh;
 }
+
+.forTopRightBar{
+	height: 46vh;
+}

@@ -53,7 +53,7 @@ const RighttopBar = ({selectType, onDragStart}) =>{
     }
     
     return (
-        <div style={{overflowY:'scroll', border: '1px solid black', height: 'calc(50%-4vh)'}}>
+        <div style={{overflowY:'scroll', border: '1px solid black'}} className="forTopRightBar">
             {rightTopContent}
         </div>
     );
